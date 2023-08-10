@@ -1,0 +1,140 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using TDBAccess;
+
+namespace Madden.CustomPlaybook
+{
+    [Serializable]
+    public class PSAL
+    {
+        public int rec { get; set; }
+        public int val1 { get; set; }
+        public int val2 { get; set; }
+        public int val3 { get; set; }
+        public int psal { get; set; }
+        public int code { get; set; }
+        public int step { get; set; }
+
+        public override string ToString()
+        {
+            return
+                "Rec#: " + rec +
+                "   val1: " + val1 +
+                "   val2: " + val2 +
+                "   val3: " + val3 +
+                "   psal: " + psal +
+                "   code: " + code +
+                "   step: " + step;
+        }
+
+        public static List<PSAL> GetPSAL(string Type, int filter = 0, int DBIndex = 0)
+        {
+            List<PSAL> _PSAL = new List<PSAL>();
+
+            TdbTableProperties TableProps = new TdbTableProperties();
+            TableProps.Name = new string((char)0, 5);
+
+            // Get Tableprops based on the selected index
+            if (!TDB.TDBTableGetProperties(DBIndex, TableNames.GetTables().Find(item => item.name == Type).rec, ref TableProps))
+                return null;
+
+            for (int i = 0; i < TableProps.RecordCount; i++)
+            {
+                if (filter != 0 && (int)(UInt32)TDB.TDBFieldGetValueAsInteger(DBIndex, TDB.StrReverse(Type), TDB.StrReverse(Type), i) == filter)
+                {
+                    _PSAL.Add(new PSAL
+                    {
+                        rec = i,
+                        val1 = (int)(UInt32)TDB.TDBFieldGetValueAsInteger(DBIndex, TDB.StrReverse(Type), TDB.StrReverse("val1"), i),
+                        val2 = (int)(UInt32)TDB.TDBFieldGetValueAsInteger(DBIndex, TDB.StrReverse(Type), TDB.StrReverse("val2"), i),
+                        val3 = (int)(UInt32)TDB.TDBFieldGetValueAsInteger(DBIndex, TDB.StrReverse(Type), TDB.StrReverse("val3"), i),
+                        psal = (int)(UInt32)TDB.TDBFieldGetValueAsInteger(DBIndex, TDB.StrReverse(Type), TDB.StrReverse("PSAL"), i),
+                        code = (int)(UInt32)TDB.TDBFieldGetValueAsInteger(DBIndex, TDB.StrReverse(Type), TDB.StrReverse("code"), i),
+                        step = (int)(UInt32)TDB.TDBFieldGetValueAsInteger(DBIndex, TDB.StrReverse(Type), TDB.StrReverse("step"), i)
+                    });
+                }
+                else if (filter == 0)
+                {
+                    _PSAL.Add(new PSAL
+                    {
+                        rec = i,
+                        val1 = (int)(UInt32)TDB.TDBFieldGetValueAsInteger(DBIndex, TDB.StrReverse(Type), TDB.StrReverse("val1"), i),
+                        val2 = (int)(UInt32)TDB.TDBFieldGetValueAsInteger(DBIndex, TDB.StrReverse(Type), TDB.StrReverse("val2"), i),
+                        val3 = (int)(UInt32)TDB.TDBFieldGetValueAsInteger(DBIndex, TDB.StrReverse(Type), TDB.StrReverse("val3"), i),
+                        psal = (int)(UInt32)TDB.TDBFieldGetValueAsInteger(DBIndex, TDB.StrReverse(Type), TDB.StrReverse("PSAL"), i),
+                        code = (int)(UInt32)TDB.TDBFieldGetValueAsInteger(DBIndex, TDB.StrReverse(Type), TDB.StrReverse("code"), i),
+                        step = (int)(UInt32)TDB.TDBFieldGetValueAsInteger(DBIndex, TDB.StrReverse(Type), TDB.StrReverse("step"), i)
+                    });
+                }
+            }
+
+            //_PSAL = _PSAL.OrderBy(psal => psal.psal).ThenBy(psal => psal.step).ToList();
+            return _PSAL;
+        }
+
+        public static void SetPSAL(string Type, List<PSAL> PSAL, int DBIndex = 0)
+        {
+            TdbTableProperties TableProps = new TdbTableProperties();
+            TableProps.Name = new string((char)0, 5);
+
+            // Get Tableprops based on the selected index
+            TDB.TDBTableGetProperties(DBIndex, TableNames.GetTables().Find(item => item.name == Type).rec, ref TableProps);
+
+            if (PSAL.Count > TableProps.RecordCount)
+                for (int i = TableProps.RecordCount - 1; i < PSAL.Count - 1; i++)
+                {
+                    TDB.TDBTableRecordAdd(DBIndex, TDB.StrReverse(Type), true);
+                }
+            else if (PSAL.Count < TableProps.RecordCount)
+            {
+                for (int i = TableProps.RecordCount - 1; i > PSAL.Count - 1; i--)
+                {
+                    TDB.TDBTableRecordRemove(DBIndex, TDB.StrReverse(Type), i);
+                }
+            }
+
+            for (int i = 0; i < PSAL.Count; i++)
+            {
+                TDB.TDBFieldSetValueAsInteger(DBIndex, TDB.StrReverse(Type), TDB.StrReverse("val1"), PSAL[i].rec, PSAL[i].val1);
+                TDB.TDBFieldSetValueAsInteger(DBIndex, TDB.StrReverse(Type), TDB.StrReverse("val2"), PSAL[i].rec, PSAL[i].val2);
+                TDB.TDBFieldSetValueAsInteger(DBIndex, TDB.StrReverse(Type), TDB.StrReverse("val3"), PSAL[i].rec, PSAL[i].val3);
+                TDB.TDBFieldSetValueAsInteger(DBIndex, TDB.StrReverse(Type), TDB.StrReverse("PSAL"), PSAL[i].rec, PSAL[i].psal);
+                TDB.TDBFieldSetValueAsInteger(DBIndex, TDB.StrReverse(Type), TDB.StrReverse("code"), PSAL[i].rec, PSAL[i].code);
+                TDB.TDBFieldSetValueAsInteger(DBIndex, TDB.StrReverse(Type), TDB.StrReverse("step"), PSAL[i].rec, PSAL[i].step);
+            }
+        }
+
+        public static List<PSAL> Sort(List<PSAL> PSAL)
+        {
+            return PSAL.OrderBy(s => s.psal).ThenBy(s => s.step).Cast<PSAL>().ToList();
+        }
+
+        public enum DoesPSALExist { No = 0, Yes = 1, IsIdentical = 2 }
+
+        public bool IsIdentical(PSAL _psal)
+        {
+            return Convert.ToBoolean(
+                ((psal == _psal.psal) ? 1 : 0) * 
+                ((code == _psal.code) ? 1 : 0) * 
+                ((step == _psal.step) ? 1 : 0) * 
+                ((val1 == _psal.val1) ? 1 : 0) * 
+                ((val2 == _psal.val2) ? 1 : 0) * 
+                ((val3 == _psal.val3) ? 1 : 0)
+                );
+        }
+
+        public bool IsIdentical(MaddenCustomPlaybookEditor.PSAL _psal)
+        {
+            return Convert.ToBoolean(
+                ((psal == _psal.psal) ? 1 : 0) *
+                ((code == _psal.code) ? 1 : 0) *
+                ((step == _psal.step) ? 1 : 0) *
+                ((val1 == _psal.val1) ? 1 : 0) *
+                ((val2 == _psal.val2) ? 1 : 0) *
+                ((val3 == _psal.val3) ? 1 : 0)
+                );
+        }
+
+    }
+}

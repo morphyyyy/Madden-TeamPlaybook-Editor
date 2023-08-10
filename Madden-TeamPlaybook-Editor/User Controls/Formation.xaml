@@ -1,0 +1,60 @@
+﻿<UserControl 
+    x:Class="MaddenTeamPlaybookEditor.User_Controls.Formation"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    mc:Ignorable="d" 
+    d:DesignHeight="512" d:DesignWidth="512"
+    x:Name="uclFormation"
+    >
+
+    <UserControl.Resources>
+        <ItemsPanelTemplate x:Key="MenuItemPanelTemplate">
+            <StackPanel Margin="-20,0,0,0"/>
+        </ItemsPanelTemplate>
+        <Style TargetType="{x:Type MenuItem}">
+            <Setter Property="ItemsPanel" Value="{StaticResource MenuItemPanelTemplate}"/>
+        </Style>
+        <Style TargetType="{x:Type ContextMenu}">
+            <Setter Property="ItemsPanel" Value="{StaticResource MenuItemPanelTemplate}"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ContextMenu">
+                        <Border CornerRadius="10" BorderThickness="0" Background="DarkOliveGreen" SnapsToDevicePixels="True">
+                            <ItemsPresenter />
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
+    
+    <DockPanel>
+        <DockPanel.ContextMenu>
+            <ContextMenu>
+                <TextBlock  
+                    Background="Transparent" 
+                    Foreground="LightGreen"
+                    Text="{Binding PBFM}"
+                    />
+                <TextBlock  
+                    Background="Transparent" 
+                    Foreground="LightGreen"
+                    Text="{Binding FORM}"
+                    />
+            </ContextMenu>
+        </DockPanel.ContextMenu>
+        <TextBlock 
+            DockPanel.Dock="Top" 
+            Text="{Binding PBFM.name}" 
+            FontFamily="DK Crayon Crumble"
+            FontSize="30"
+            TextWrapping="Wrap" 
+            TextAlignment="Center" 
+            Background="Transparent" 
+            Foreground="White" 
+        />
+    </DockPanel>
+
+</UserControl>

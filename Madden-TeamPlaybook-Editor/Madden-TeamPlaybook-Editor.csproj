@@ -1,0 +1,512 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\Costura.Fody.3.3.3\build\Costura.Fody.props" Condition="Exists('..\packages\Costura.Fody.3.3.3\build\Costura.Fody.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{45B82AA8-C0DC-44DC-AF4A-4F45CB8DEF97}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>Madden.TeamPlaybook.Editor</RootNamespace>
+    <AssemblyName>Madden-TeamPlaybook-Editor</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+    <TargetFrameworkProfile />
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <LangVersion>7.3</LangVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <LangVersion>7.3</LangVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Costura, Version=3.3.3.0, Culture=neutral, PublicKeyToken=9919ef960d84173d, processorArchitecture=MSIL">
+      <HintPath>..\packages\Costura.Fody.3.3.3\lib\net40\Costura.dll</HintPath>
+    </Reference>
+    <Reference Include="Dragablz, Version=0.0.3.203, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Dragablz.0.0.3.203\lib\net45\Dragablz.dll</HintPath>
+    </Reference>
+    <Reference Include="MathConverter, Version=1.2.1.6, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MathConverter.1.2.1.6\lib\net40-client\MathConverter.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Expression.Blend.Sdk.1.0.2\lib\net45\System.Windows.Interactivity.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Compile Include="Classes\CustomPlaybook\CustomPlaybook.cs" />
+    <Compile Include="Classes\CustomPlaybook\Tables\ARTL.cs" />
+    <Compile Include="Classes\CustomPlaybook\Tables\PGPL.cs" />
+    <Compile Include="Classes\CustomPlaybook\Tables\BSMP.cs" />
+    <Compile Include="Classes\CustomPlaybook\Tables\BSMO.cs" />
+    <Compile Include="Classes\CustomPlaybook\Tables\CPFM.cs" />
+    <Compile Include="Classes\CustomPlaybook\Tables\PGFM.cs" />
+    <Compile Include="Classes\CustomPlaybook\Tables\PBPN.cs" />
+    <Compile Include="Classes\CustomPlaybook\Tables\PBFI.cs" />
+    <Compile Include="Classes\CustomPlaybook\Tables\CPFT.cs" />
+    <Compile Include="Classes\CustomPlaybook\Tables\PBAI.cs" />
+    <Compile Include="Classes\CustomPlaybook\Tables\PBAU.cs" />
+    <Compile Include="Classes\CustomPlaybook\Tables\PBFM.cs" />
+    <Compile Include="Classes\CustomPlaybook\Tables\PBPL.cs" />
+    <Compile Include="Classes\CustomPlaybook\Tables\PIDX.cs" />
+    <Compile Include="Classes\CustomPlaybook\Tables\PLCM.cs" />
+    <Compile Include="Classes\CustomPlaybook\Tables\PLPD.cs" />
+    <Compile Include="Classes\CustomPlaybook\Tables\STSP.cs" />
+    <Compile Include="Classes\CustomPlaybook\Tables\STLS.cs" />
+    <Compile Include="Classes\CustomPlaybook\Tables\PLRD.cs" />
+    <Compile Include="Classes\CustomPlaybook\Tables\STID.cs" />
+    <Compile Include="Classes\CustomPlaybook\Tables\PLYS.cs" />
+    <Compile Include="Classes\CustomPlaybook\Tables\PPCT.cs" />
+    <Compile Include="Classes\CustomPlaybook\Tables\PSAL.cs" />
+    <Compile Include="Classes\CustomPlaybook\Tables\SDEF.cs" />
+    <Compile Include="Classes\CustomPlaybook\Tables\SETG.cs" />
+    <Compile Include="Classes\CustomPlaybook\Tables\SETL.cs" />
+    <Compile Include="Classes\CustomPlaybook\Tables\SETP.cs" />
+    <Compile Include="Classes\CustomPlaybook\Tables\SGFF.cs" />
+    <Compile Include="Classes\CustomPlaybook\Tables\SPKF.cs" />
+    <Compile Include="Classes\CustomPlaybook\Tables\SPKG.cs" />
+    <Compile Include="Classes\CustomPlaybook\Tables\SRFT.cs" />
+    <Compile Include="Classes\CustomPlaybook\ViewModels\FormationViewModel.cs" />
+    <Compile Include="Classes\CustomPlaybook\ViewModels\PlayerViewModel.cs" />
+    <Compile Include="Classes\CustomPlaybook\ViewModels\PlayViewModel.cs" />
+    <Compile Include="Classes\CustomPlaybook\ViewModels\SubFormationViewModel.cs" />
+    <Compile Include="Classes\DraggableAdorner.cs" />
+    <Compile Include="Classes\TeamPlaybook\Tables\FORM.cs" />
+    <Compile Include="Classes\TeamPlaybook\Tables\PBCC.cs" />
+    <Compile Include="Classes\TeamPlaybook\Tables\PBAU.cs" />
+    <Compile Include="Classes\TeamPlaybook\Tables\PBFM.cs" />
+    <Compile Include="Classes\CustomPlaybook\CustomPlaybookEditor.cs" />
+    <Compile Include="Classes\TeamPlaybook\Tables\PLCM.cs" />
+    <Compile Include="Classes\TeamPlaybook\Tables\PBPL.cs" />
+    <Compile Include="Classes\TeamPlaybook\Tables\PBST.cs" />
+    <Compile Include="Classes\TeamPlaybook\Tables\ARTL.cs" />
+    <Compile Include="Classes\TeamPlaybook\Tables\PLPD.cs" />
+    <Compile Include="Classes\TeamPlaybook\Tables\PBAI.cs" />
+    <Compile Include="Classes\TeamPlaybook\Tables\PPCT.cs" />
+    <Compile Include="Classes\TeamPlaybook\Tables\PLRD.cs" />
+    <Compile Include="Classes\TeamPlaybook\Tables\PLYL.cs" />
+    <Compile Include="Classes\TeamPlaybook\Tables\PSAL.cs" />
+    <Compile Include="Classes\TeamPlaybook\Tables\PLYS.cs" />
+    <Compile Include="Classes\TeamPlaybook\Tables\SETG.cs" />
+    <Compile Include="Classes\TeamPlaybook\Tables\SDEF.cs" />
+    <Compile Include="Classes\TeamPlaybook\Tables\SETL.cs" />
+    <Compile Include="Classes\TeamPlaybook\Tables\SETP.cs" />
+    <Compile Include="Classes\TeamPlaybook\Tables\SGFM.cs" />
+    <Compile Include="Classes\TeamPlaybook\Tables\SRFT.cs" />
+    <Compile Include="Classes\TeamPlaybook\Tables\SPKG.cs" />
+    <Compile Include="Classes\TeamPlaybook\Tables\SPKF.cs" />
+    <Compile Include="Classes\TDBAccess\TableNames.cs" />
+    <Compile Include="Classes\UniformGridWithOrientation.cs" />
+    <Compile Include="User Controls\Field.xaml.cs">
+      <DependentUpon>Field.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="User Controls\Playart.xaml.cs">
+      <DependentUpon>Playart.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="User Controls\PlayerIcon.xaml.cs">
+      <DependentUpon>PlayerIcon.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="User Controls\PSAL_Editor.xaml.cs">
+      <DependentUpon>PSAL_Editor.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="User Controls\RouteHighlight.xaml.cs">
+      <DependentUpon>RouteHighlight.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="User Controls\Situation.xaml.cs">
+      <DependentUpon>Situation.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="User Controls\Play.xaml.cs">
+      <DependentUpon>Play.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="User Controls\Tables\ARTL.xaml.cs">
+      <DependentUpon>ARTL.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="User Controls\Tables\FORM.xaml.cs">
+      <DependentUpon>FORM.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="User Controls\Formation.xaml.cs">
+      <DependentUpon>Formation.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="User Controls\SubFormation.xaml.cs">
+      <DependentUpon>SubFormation.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Classes\TeamPlaybook\ViewModels\SituationViewModel.cs" />
+    <Compile Include="VirtualOneClickExpandButtonBehavior.cs" />
+    <Compile Include="User Controls\Tables\PBCC.xaml.cs">
+      <DependentUpon>PBCC.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="User Controls\Tables\PPCT.xaml.cs">
+      <DependentUpon>PPCT.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="User Controls\Tables\PLCM.xaml.cs">
+      <DependentUpon>PLCM.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="User Controls\Tables\PBAU.xaml.cs">
+      <DependentUpon>PBAU.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="User Controls\Tables\PBAI.xaml.cs">
+      <DependentUpon>PBAI.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="User Controls\Tables\PSAL.xaml.cs">
+      <DependentUpon>PSAL.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="User Controls\Tables\PLYS.xaml.cs">
+      <DependentUpon>PLYS.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="User Controls\Tables\PLRD.xaml.cs">
+      <DependentUpon>PLRD.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="User Controls\Tables\PLPD.xaml.cs">
+      <DependentUpon>PLPD.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="User Controls\Tables\PLYL.xaml.cs">
+      <DependentUpon>PLYL.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="User Controls\Tables\SETG.xaml.cs">
+      <DependentUpon>SETG.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="User Controls\Tables\PBPL.xaml.cs">
+      <DependentUpon>PBPL.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="User Controls\Tables\SDEF.xaml.cs">
+      <DependentUpon>SDEF.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="User Controls\Tables\SGFM.xaml.cs">
+      <DependentUpon>SGFM.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="User Controls\Tables\SRFT.xaml.cs">
+      <DependentUpon>SRFT.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="User Controls\Tables\SPKG.xaml.cs">
+      <DependentUpon>SPKG.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="User Controls\Tables\SPKF.xaml.cs">
+      <DependentUpon>SPKF.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="User Controls\Tables\SETP.xaml.cs">
+      <DependentUpon>SETP.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="User Controls\Tables\SETL.xaml.cs">
+      <DependentUpon>SETL.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="User Controls\Tables\PBST.xaml.cs">
+      <DependentUpon>PBST.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="User Controls\Tables\PBFM.xaml.cs">
+      <DependentUpon>PBFM.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Classes\TeamPlaybook\ViewModels\PlayerViewModel.cs" />
+    <Compile Include="Classes\TeamPlaybook\TeamPlaybook.cs" />
+    <Compile Include="Classes\TeamPlaybook\ViewModels\PlayViewModel.cs" />
+    <Compile Include="Classes\TeamPlaybook\ViewModels\SubFormationViewModel.cs" />
+    <Compile Include="Classes\TeamPlaybook\ViewModels\FormationViewModel.cs" />
+    <Compile Include="Classes\TDBAccess\TDB.cs" />
+    <Page Include="Styles\AudibleRun.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\AudibleFake.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\AudibleDeep.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\AudibleQuick.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\SituationStyle.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\NameTextBox.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\SubFormationStyle.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\PlayStyle.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Page Include="Styles\FormationStyle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="User Controls\Field.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="User Controls\Playart.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="User Controls\PlayerIcon.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="User Controls\PSAL_Editor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="User Controls\RouteHighlight.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="User Controls\Situation.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="User Controls\Play.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="User Controls\Tables\ARTL.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="User Controls\Tables\FORM.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="User Controls\Tables\PBCC.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="User Controls\Tables\PPCT.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="User Controls\Tables\PLCM.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="User Controls\Tables\PBAU.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="User Controls\Tables\PBAI.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="User Controls\Tables\PSAL.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="User Controls\Tables\PLYS.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="User Controls\Tables\PLRD.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="User Controls\Tables\PLPD.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="User Controls\Tables\PLYL.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="User Controls\Tables\SETG.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="User Controls\Tables\PBPL.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="User Controls\Tables\SDEF.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="User Controls\Tables\SGFM.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="User Controls\Tables\SRFT.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="User Controls\Tables\SPKG.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="User Controls\Tables\SPKF.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="User Controls\Tables\SETP.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="User Controls\Tables\SETL.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="User Controls\Tables\PBST.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="User Controls\Tables\PBFM.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="User Controls\Formation.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="User Controls\SubFormation.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\field_blank_lines.png" />
+    <Resource Include="Resources\field_blank_resized.jpg" />
+    <Resource Include="Resources\field_blank_resized_blue.jpg" />
+    <Resource Include="Resources\field_blank_resized_Desaturated.jpg" />
+    <Resource Include="Resources\field_blank_resized_transparent.png" />
+    <Resource Include="Resources\Playbook_Editor.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\tdbaccess.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\chalkboard.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Button_XBOX_LB.png" />
+    <Resource Include="Resources\Button_XBOX_RB.png" />
+    <Resource Include="Resources\Button_XBOX_X.png" />
+    <Resource Include="Resources\Button_XBOX_Y.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\chalkboard2.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Classes\AST\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\full_field.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.8">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.8 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="..\packages\Fody.4.0.2\build\Fody.targets" Condition="Exists('..\packages\Fody.4.0.2\build\Fody.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Fody.4.0.2\build\Fody.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Fody.4.0.2\build\Fody.targets'))" />
+    <Error Condition="!Exists('..\packages\Costura.Fody.3.3.3\build\Costura.Fody.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Costura.Fody.3.3.3\build\Costura.Fody.props'))" />
+  </Target>
+</Project>

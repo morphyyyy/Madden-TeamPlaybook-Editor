@@ -1,0 +1,225 @@
+﻿<UserControl 
+    x:Class="MaddenTeamPlaybookEditor.User_Controls.SubFormation"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:UserControls="clr-namespace:MaddenTeamPlaybookEditor.User_Controls"
+    xmlns:math="http://hexinnovation.com/math" 
+    xmlns:Classes="clr-namespace:MaddenTeamPlaybookEditor.Classes"
+    x:Name="uclSubFormationVM"
+    AllowDrop="True"
+    >
+
+    <UserControl.Resources>
+        <math:MathConverter x:Key="math" />
+        <ItemsPanelTemplate x:Key="MenuItemPanelTemplate">
+            <StackPanel Margin="-20,0,0,0"/>
+        </ItemsPanelTemplate>
+        <Style TargetType="{x:Type MenuItem}">
+            <Setter Property="ItemsPanel" Value="{StaticResource MenuItemPanelTemplate}"/>
+        </Style>
+        <Style TargetType="{x:Type ContextMenu}">
+            <Setter Property="ItemsPanel" Value="{StaticResource MenuItemPanelTemplate}"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ContextMenu">
+                        <Border CornerRadius="10" BorderThickness="0" Background="DarkOliveGreen" SnapsToDevicePixels="True">
+                            <ItemsPresenter />
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
+
+    <DockPanel HorizontalAlignment="Center">
+
+        <DockPanel.ContextMenu>
+            <ContextMenu>
+                <TextBlock  
+                    Background="Transparent" 
+                    Foreground="LightGreen"
+                    Text="{Binding PBST}"
+                    />
+                <TextBlock  
+                    Background="Transparent" 
+                    Foreground="LightGreen"
+                    Text="{Binding SETL}"
+                    />
+                <TextBlock  
+                    Background="Transparent" 
+                    Foreground="LightGreen"
+                    Text="{Binding Packages}"
+                    />
+                <TextBlock  
+                    Background="Transparent" 
+                    Foreground="LightGreen"
+                    Text="{Binding CurrentPackage}"
+                    />
+                <TextBlock  
+                    Background="Transparent" 
+                    Foreground="LightGreen"
+                    Text="{Binding Alignments}"
+                    />
+                <TextBlock  
+                    Background="Transparent" 
+                    Foreground="LightGreen"
+                    Text="{Binding CurrentAlignment}"
+                    />
+            </ContextMenu>
+        </DockPanel.ContextMenu>
+
+        <TextBlock 
+            DockPanel.Dock="Top"
+            Text="{Binding PBST.name}" 
+            FontFamily="DK Crayon Crumble" 
+            FontSize="18"
+            TextWrapping="Wrap" 
+            TextAlignment="Center" 
+            Background="Transparent" 
+            Foreground="White"/>
+
+        <StackPanel 
+            IsEnabled="False"
+            DockPanel.Dock="Top" 
+            Orientation="Horizontal" 
+            HorizontalAlignment="Center"
+            >
+
+            <StackPanel 
+                Orientation="Horizontal" 
+                Margin="2,2" 
+                HorizontalAlignment="Center"
+                >
+
+                <TextBlock 
+                    Text="{Binding Position1count}" 
+                    Foreground="Orange" 
+                    FontSize="15" 
+                    FontWeight="Bold" 
+                    FontFamily="DK Crayon Crumble" 
+                    />
+
+                <TextBlock 
+                    Text=" " 
+                    FontSize="8" 
+                    />
+
+                <TextBlock 
+                    Text="{Binding Position1name}" 
+                    Foreground="LightGray" 
+                    FontSize="15" 
+                    FontFamily="DK Crayon Crumble" 
+                    />
+
+            </StackPanel>
+
+            <StackPanel 
+                Orientation="Horizontal" 
+                Margin="2,2" 
+                HorizontalAlignment="Center"
+                >
+
+                <TextBlock 
+                    Text="{Binding Position2count}" 
+                    Foreground="Orange" 
+                    FontSize="15" 
+                    FontWeight="Bold" 
+                    FontFamily="DK Crayon Crumble" 
+                    />
+
+                <TextBlock 
+                    Text=" " 
+                    FontSize="8" 
+                    />
+
+                <TextBlock 
+                    Text="{Binding Position2name}" 
+                    Foreground="LightGray" 
+                    FontSize="15" 
+                    FontFamily="DK Crayon Crumble" 
+                    />
+
+            </StackPanel>
+
+            <StackPanel 
+                Orientation="Horizontal"
+                Margin="2,2"
+                HorizontalAlignment="Center"
+                >
+
+                <TextBlock 
+                    Text="{Binding Position3count}"
+                    Foreground="Orange"
+                    FontSize="15" 
+                    FontWeight="Bold" 
+                    FontFamily="DK Crayon Crumble"
+                    />
+
+                <TextBlock 
+                    Text=" "
+                    FontSize="8"
+                    />
+
+                <TextBlock
+                    Text="{Binding Position3name}" 
+                    Foreground="LightGray"
+                    FontSize="15" 
+                    FontFamily="DK Crayon Crumble" 
+                    />
+
+            </StackPanel>
+
+        </StackPanel>
+
+        <ItemsControl 
+        IsEnabled="False"
+        x:Name="iclPlayers"
+        DockPanel.Dock="Top"
+        ItemsSource="{Binding CurrentPackage}">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <Canvas 
+                        x:Name="cvsSubFormation"
+                        HorizontalAlignment="Left"
+                        Width="360" 
+                        Height="120"
+                    />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Ellipse
+                        x:Name="clnIcon"
+                        Width="8"
+                        Height="8"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Fill="Ivory">
+                        <Ellipse.RenderTransform>
+                            <ScaleTransform 
+                                ScaleX="2.5"
+                                ScaleY="2.5"/>
+                        </Ellipse.RenderTransform>
+                    </Ellipse>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+            <ItemsControl.ItemContainerStyle>
+                <Style>
+                    <Setter 
+                    Property="Canvas.Left" 
+                    Value="{Binding fmtx}"/>
+                    <Setter 
+                    Property="Canvas.Top" 
+                    Value="{Binding fmty}"/>
+                </Style>
+            </ItemsControl.ItemContainerStyle>
+            <ItemsControl.LayoutTransform>
+                <ScaleTransform 
+                    ScaleX="0.333"
+                    ScaleY="0.333"/>
+            </ItemsControl.LayoutTransform>
+        </ItemsControl>
+
+    </DockPanel>
+
+</UserControl>

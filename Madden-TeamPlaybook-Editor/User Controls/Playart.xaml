@@ -1,0 +1,39 @@
+﻿<UserControl 
+    x:Class="MaddenTeamPlaybookEditor.User_Controls.Playart"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+    mc:Ignorable="d" 
+    x:Name="uclPlayart"
+    AllowDrop="True"
+    >
+
+    <UserControl.ContextMenu>
+        <ContextMenu>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock  
+                    Background="Transparent" 
+                    Foreground="LightGreen"
+                    Text="{Binding EPos}"
+                    />
+                <TextBlock  
+                    Background="Transparent" 
+                    Foreground="LightGreen"
+                    Text=" "
+                    />
+                <TextBlock  
+                    Background="Transparent" 
+                    Foreground="LightGreen"
+                    Text="{Binding DPos}"
+                    />
+            </StackPanel>
+            <TextBlock  
+                Background="Transparent" 
+                Foreground="LightGreen"
+                Text="{Binding ARTL}"
+                />
+        </ContextMenu>
+    </UserControl.ContextMenu>
+
+</UserControl>

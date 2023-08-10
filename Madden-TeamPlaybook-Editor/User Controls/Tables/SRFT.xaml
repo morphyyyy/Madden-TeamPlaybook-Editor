@@ -1,0 +1,21 @@
+﻿<UserControl
+    x:Class="MaddenTeamPlaybookEditor.User_Controls.SRFTTable"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    x:Name="uclSRFTTable"
+    >
+
+    <DataGrid 
+        x:Name="dgdSRFT" 
+        Background="{x:Null}" 
+        BorderBrush="{x:Null}" 
+        Foreground="Black"
+        ItemsSource="{Binding ElementName=uclSRFTTable, Path=SRFT}"
+        HorizontalGridLinesBrush="#FFD6D6D6"
+        VerticalGridLinesBrush="Black"
+        GridLinesVisibility="Horizontal"
+        CanUserAddRows="False"
+        CanUserDeleteRows="False"
+        />
+
+</UserControl>

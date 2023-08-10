@@ -1,0 +1,94 @@
+D:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\bin\Release\Madden-TeamPlaybook-Editor.exe.config
+D:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\bin\Release\Madden-TeamPlaybook-Editor.exe
+D:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\bin\Release\Madden-TeamPlaybook-Editor.pdb
+D:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\bin\Release\Dragablz.xml
+D:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\obj\Release\Madden-TeamPlaybook-Editor.csproj.AssemblyReference.cache
+D:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\obj\Release\Madden-TeamPlaybook-Editor.csproj.SuggestedBindingRedirects.cache
+D:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\obj\Release\Styles\AudibleRun.baml
+D:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\obj\Release\Styles\AudibleFake.baml
+D:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\obj\Release\Styles\AudibleDeep.baml
+D:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\obj\Release\Styles\AudibleQuick.baml
+D:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\obj\Release\Styles\NameTextBox.baml
+D:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\obj\Release\Styles\PlayStyle.baml
+D:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\obj\Release\Styles\FormationStyle.baml
+D:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\obj\Release\User Controls\Playart.baml
+D:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\obj\Release\User Controls\Tables\ARTL.baml
+D:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\obj\Release\User Controls\Tables\FORM.baml
+D:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\obj\Release\User Controls\Tables\PBCC.baml
+D:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\obj\Release\User Controls\Tables\PPCT.baml
+D:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\obj\Release\User Controls\Tables\PLCM.baml
+D:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\obj\Release\User Controls\Tables\PBAU.baml
+D:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\obj\Release\User Controls\Tables\PBAI.baml
+D:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\obj\Release\User Controls\Tables\PSAL.baml
+D:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\obj\Release\User Controls\Tables\PLYS.baml
+D:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\obj\Release\User Controls\Tables\PLRD.baml
+D:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\obj\Release\User Controls\Tables\PLPD.baml
+D:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\obj\Release\User Controls\Tables\PLYL.baml
+D:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\obj\Release\User Controls\Tables\SETG.baml
+D:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\obj\Release\User Controls\Tables\PBPL.baml
+D:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\obj\Release\User Controls\Tables\SDEF.baml
+D:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\obj\Release\User Controls\Tables\SGFM.baml
+D:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\obj\Release\User Controls\Tables\SRFT.baml
+D:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\obj\Release\User Controls\Tables\SPKG.baml
+D:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\obj\Release\User Controls\Tables\SPKF.baml
+D:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\obj\Release\User Controls\Tables\SETP.baml
+D:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\obj\Release\User Controls\Tables\SETL.baml
+D:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\obj\Release\User Controls\Tables\PBST.baml
+D:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\obj\Release\User Controls\Tables\PBFM.baml
+D:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\obj\Release\User Controls\Formation.baml
+D:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\obj\Release\App.baml
+D:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\obj\Release\MainWindow.g.cs
+D:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\obj\Release\User Controls\Field.g.cs
+D:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\obj\Release\User Controls\Playart.g.cs
+D:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\obj\Release\User Controls\PlayerIcon.g.cs
+D:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\obj\Release\User Controls\PSAL_Editor.g.cs
+D:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\obj\Release\User Controls\RouteHighlight.g.cs
+D:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\obj\Release\User Controls\Situation.g.cs
+D:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\obj\Release\User Controls\Play.g.cs
+D:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\obj\Release\User Controls\Tables\ARTL.g.cs
+D:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\obj\Release\User Controls\Tables\FORM.g.cs
+D:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\obj\Release\User Controls\Tables\PBCC.g.cs
+D:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\obj\Release\User Controls\Tables\PPCT.g.cs
+D:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\obj\Release\User Controls\Tables\PLCM.g.cs
+D:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\obj\Release\User Controls\Tables\PBAU.g.cs
+D:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\obj\Release\User Controls\Tables\PBAI.g.cs
+D:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\obj\Release\User Controls\Tables\PSAL.g.cs
+D:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\obj\Release\User Controls\Tables\PLYS.g.cs
+D:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\obj\Release\User Controls\Tables\PLRD.g.cs
+D:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\obj\Release\User Controls\Tables\PLPD.g.cs
+D:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\obj\Release\User Controls\Tables\PLYL.g.cs
+D:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\obj\Release\User Controls\Tables\SETG.g.cs
+D:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\obj\Release\User Controls\Tables\PBPL.g.cs
+D:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\obj\Release\User Controls\Tables\SDEF.g.cs
+D:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\obj\Release\User Controls\Tables\SGFM.g.cs
+D:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\obj\Release\User Controls\Tables\SRFT.g.cs
+D:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\obj\Release\User Controls\Tables\SPKG.g.cs
+D:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\obj\Release\User Controls\Tables\SPKF.g.cs
+D:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\obj\Release\User Controls\Tables\SETP.g.cs
+D:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\obj\Release\User Controls\Tables\SETL.g.cs
+D:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\obj\Release\User Controls\Tables\PBST.g.cs
+D:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\obj\Release\User Controls\Tables\PBFM.g.cs
+D:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\obj\Release\User Controls\Formation.g.cs
+D:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\obj\Release\User Controls\SubFormation.g.cs
+D:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\obj\Release\App.g.cs
+D:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\obj\Release\GeneratedInternalTypeHelper.g.cs
+D:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\obj\Release\Madden-TeamPlaybook-Editor_MarkupCompile.cache
+D:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\obj\Release\Madden-TeamPlaybook-Editor_MarkupCompile.lref
+D:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\obj\Release\Styles\SituationStyle.baml
+D:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\obj\Release\Styles\SubFormationStyle.baml
+D:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\obj\Release\MainWindow.baml
+D:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\obj\Release\User Controls\Field.baml
+D:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\obj\Release\User Controls\PlayerIcon.baml
+D:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\obj\Release\User Controls\PSAL_Editor.baml
+D:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\obj\Release\User Controls\RouteHighlight.baml
+D:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\obj\Release\User Controls\Situation.baml
+D:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\obj\Release\User Controls\Play.baml
+D:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\obj\Release\User Controls\SubFormation.baml
+D:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\obj\Release\Madden-TeamPlaybook-Editor.g.resources
+D:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\obj\Release\Madden.TeamPlaybook.Editor.Properties.Resources.resources
+D:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\obj\Release\Madden-TeamPlaybook-Editor.csproj.GenerateResource.cache
+D:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\obj\Release\Madden-TeamPlaybook-Editor.csproj.CoreCompileInputs.cache
+D:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\obj\Release\Madden-TeamPlaybook-Editor.csproj.Fody.CopyLocal.cache
+D:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\obj\Release\Madden-TeamPlaybook-Editor.csproj.CopyComplete
+D:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\obj\Release\Madden-TeamPlaybook-Editor.exe
+D:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\obj\Release\Madden-TeamPlaybook-Editor.pdb
