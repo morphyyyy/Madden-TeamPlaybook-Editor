@@ -4,13 +4,16 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     StartupUri="MainWindow.xaml"
     >
-    
+
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/Styles/FormationStyle.xaml" />
+                <ResourceDictionary Source="/Styles/FormationTabItemStyle.xaml" />
                 <ResourceDictionary Source="/Styles/SubFormationStyle.xaml" />
+                <ResourceDictionary Source="/Styles/SubFormationTabItemStyle.xaml" />
                 <ResourceDictionary Source="/Styles/PlayStyle.xaml" />
+                <ResourceDictionary Source="/Styles/PlayTabItemStyle.xaml" />
                 <ResourceDictionary Source="/Styles/SituationStyle.xaml" />
                 <ResourceDictionary Source="/Styles/AudibleDeep.xaml" />
                 <ResourceDictionary Source="/Styles/AudibleFake.xaml" />
@@ -19,5 +22,5 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>
-    
+
 </Application>

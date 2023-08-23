@@ -79,6 +79,7 @@ namespace MaddenTeamPlaybookEditor
             tvwPlaybook.DataContext = Playbook;
             lvwSituations.DataContext = Playbook;
             tclTables.DataContext = Playbook;
+            //tabPlaybook.DataContext = Playbook;
         }
 
         public void BindPlaybook(MaddenCustomPlaybookEditor.ViewModels.CustomPlaybook Playbook)
@@ -105,7 +106,7 @@ namespace MaddenTeamPlaybookEditor
                 //uclFieldView.subFormation = (SubFormationVM)((TreeView)sender).SelectedItem;
                 //uclFieldView.DataContext = (SubFormationVM)((TreeView)sender).SelectedItem;
                 //uclFieldView.cvsField.Children.RemoveRange(1, uclFieldView.cvsField.Children.Count - 1);
-                //foreach (PlayerVM player in uclFieldView.play.Players) uclFieldView.cvsField.Children.Add(new PlayerIcon(player));
+                //foreach (PlayerVM player in uclFieldView.play.PlayerPlayartView) uclFieldView.cvsField.Children.Add(new PlayerIcon(player));
                 //uclFieldView.UpdateLayout();
             }
 
@@ -134,6 +135,7 @@ namespace MaddenTeamPlaybookEditor
         {
 
             OpenFileDialog openFileDialog1 = new OpenFileDialog();
+            openFileDialog1.Title = "Open Team Playbook Database";
             openFileDialog1.Filter = "DB Files | *.db";
             openFileDialog1.FileName = "";
 
@@ -156,35 +158,57 @@ namespace MaddenTeamPlaybookEditor
                         MessageBox.Show("Error Saving");
                     }
                     TDBAccess.TDB.TDBClose(OpenIndex);
+                    TDBAccess.TDB.TDBClose(OpenIndex + 1);
                 }
                 else if (messageBoxResult == MessageBoxResult.No)
                 {
                     TDBAccess.TDB.TDBClose(OpenIndex);
+                    TDBAccess.TDB.TDBClose(OpenIndex + 1);
                 }
                 else if (messageBoxResult == MessageBoxResult.Cancel)
                 {
                     return;
                 }
             }
+
             OpenIndex = TDBAccess.TDB.TDBOpen(filePath);
+
             if (OpenIndex != -1)
             {
                 Dictionary<int, string> dictionaty = TDBAccess.TableNames.GetTables().ToDictionary(t => t.rec, t => t.name);
                 if (dictionaty.Except(MaddenTeamPlaybookEditor.ViewModels.TeamPlaybook.Tables).Count() == 0)
                 {
                     TeamPlaybook = new TeamPlaybook(filePath);
+
+                    MessageBoxResult messageBoxResult2 = MessageBox.Show("Would you like to load a Team Roster?", "Load Team Roster?", MessageBoxButton.YesNo);
+
+                    if (messageBoxResult2 == MessageBoxResult.Yes)
+                    {
+                        OpenFileDialog openFileDialog1 = new OpenFileDialog();
+                        openFileDialog1.Title = "Open Team Roster Database";
+                        openFileDialog1.Filter = "DB Files | *.db";
+                        openFileDialog1.FileName = "";
+
+                        if (openFileDialog1.ShowDialog() != false || openFileDialog1.FileName != "")
+                        {
+                            int RosterOpenIndex = TDBAccess.TDB.TDBOpen(openFileDialog1.FileName);
+                            TeamPlaybook.GetRoster();
+                            TeamPlaybook.BuildPlaybook();
+                        }
+                    }
+
                     BindPlaybook(TeamPlaybook);
                 }
-                else if (dictionaty.Except(MaddenCustomPlaybookEditor.ViewModels.CustomPlaybook.Tables).Count() == 0)
-                {
-                    CustomPlaybook = new MaddenCustomPlaybookEditor.ViewModels.CustomPlaybook(filePath);
-                    //TeamPlaybook = new TeamPlaybook();
-                    //foreach (Madden20CustomPlaybookEditor.ViewModels.FormationVM formation in CustomPlaybook.Formations)
-                    //{
-                    //    TeamPlaybook.AddFormation(formation, TeamPlaybook.Formations.Count);
-                    //}
-                    BindPlaybook(CustomPlaybook);
-                }
+                //else if (dictionaty.Except(MaddenCustomPlaybookEditor.ViewModels.CustomPlaybook.Tables).Count() == 0)
+                //{
+                //    CustomPlaybook = new MaddenCustomPlaybookEditor.ViewModels.CustomPlaybook(filePath);
+                //    //TeamPlaybook = new TeamPlaybook();
+                //    //foreach (Madden20CustomPlaybookEditor.ViewModels.FormationVM formation in CustomPlaybook.Formations)
+                //    //{
+                //    //    TeamPlaybook.AddFormation(formation, TeamPlaybook.Formations.Count);
+                //    //}
+                //    BindPlaybook(CustomPlaybook);
+                //}
                 tvwPlaybook.Items.Refresh();
                 tvwPlaybook.UpdateLayout();
             }

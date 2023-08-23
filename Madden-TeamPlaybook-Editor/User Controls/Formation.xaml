@@ -49,7 +49,7 @@
             DockPanel.Dock="Top" 
             Text="{Binding PBFM.name}" 
             FontFamily="DK Crayon Crumble"
-            FontSize="30"
+            FontSize="22"
             TextWrapping="Wrap" 
             TextAlignment="Center" 
             Background="Transparent" 

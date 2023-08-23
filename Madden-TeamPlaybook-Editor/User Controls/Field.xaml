@@ -34,7 +34,7 @@
 
     <Canvas x:Name="cvsField" Height="600" Width="533">
 
-        <Image x:Name="imgField" Height="1200" Width="533" Stretch="UniformToFill" Visibility="Visible" Source="/Resources/full_field.jpg" />
+        <Image x:Name="imgField" Height="1000" Width="533" Stretch="UniformToFill" Visibility="Visible" Source="/Resources/full_field.jpg" />
 
         <!--<ItemsControl 
             IsEnabled="true"

@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
+using System.Reflection;
 using System.Windows;
 using System.Windows.Data;
 using Madden.TeamPlaybook;
+using TDBAccess;
 
 namespace MaddenCustomPlaybookEditor.ViewModels
 {
@@ -121,38 +123,55 @@ namespace MaddenCustomPlaybookEditor.ViewModels
                 PLPD = new Madden.TeamPlaybook.PLPD
                 {
                     rec = _PLPD.rec,
-                    com1 = _PLPD.com1,
-                    com2 = _PLPD.com2,
-                    com3 = _PLPD.com3,
-                    com4 = _PLPD.com4,
-                    com5 = _PLPD.com5,
-                    con1 = _PLPD.con1,
-                    con2 = _PLPD.con2,
-                    con3 = _PLPD.con3,
-                    con4 = _PLPD.con4,
-                    con5 = _PLPD.con5,
-                    icx1 = 0,
-                    icx2 = 0,
-                    icx3 = 0,
-                    icx4 = 0,
-                    icx5 = 0,
-                    icy1 = 0,
-                    icy2 = 0,
-                    icy3 = 0,
-                    icy4 = 0,
-                    icy5 = 0,
-                    per1 = _PLPD.per1,
-                    per2 = _PLPD.per2,
-                    per3 = _PLPD.per3,
-                    per4 = _PLPD.per4,
-                    per5 = _PLPD.per5,
-                    rcv1 = _PLPD.rcv1,
-                    rcv2 = _PLPD.rcv2,
-                    rcv3 = _PLPD.rcv3,
-                    rcv4 = _PLPD.rcv4,
-                    rcv5 = _PLPD.rcv5,
                     PLYL = _PLPD.PLYL
                 };
+
+                PLPD.progressions = new List<Progression>();
+                PLPD.progressions.Add(new Progression
+                {
+                    com = _PLPD.com1,
+                    con = _PLPD.con1,
+                    per = _PLPD.per1,
+                    rcv = _PLPD.rcv1,
+                    icx = 0,
+                    icy = 0
+                });
+                PLPD.progressions.Add(new Progression
+                {
+                    com = _PLPD.com2,
+                    con = _PLPD.con2,
+                    per = _PLPD.per2,
+                    rcv = _PLPD.rcv2,
+                    icx = 0,
+                    icy = 0
+                });
+                PLPD.progressions.Add(new Progression
+                {
+                    com = _PLPD.com3,
+                    con = _PLPD.con3,
+                    per = _PLPD.per3,
+                    rcv = _PLPD.rcv3,
+                    icx = 0,
+                    icy = 0
+                });
+                PLPD.progressions.Add(new Progression
+                {
+                    com = _PLPD.com4,
+                    con = _PLPD.con4,
+                    per = _PLPD.per4,
+                    rcv = _PLPD.rcv4,
+                    icx = 0,
+                    icy = 0
+                });
+                PLPD.progressions.Add(new Progression
+                {
+                    com = _PLPD.com5,
+                    con = _PLPD.con5,
+                    per = _PLPD.per5,
+                    rcv = _PLPD.rcv5,
+                    icx = 0,
+                    icy = 0
+                });
             }
             else
             {

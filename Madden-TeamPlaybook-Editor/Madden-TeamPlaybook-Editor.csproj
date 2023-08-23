@@ -150,6 +150,8 @@
     <Compile Include="Classes\TeamPlaybook\Tables\SPKG.cs" />
     <Compile Include="Classes\TeamPlaybook\Tables\SPKF.cs" />
     <Compile Include="Classes\TDBAccess\TableNames.cs" />
+    <Compile Include="Classes\Team\DCHT.cs" />
+    <Compile Include="Classes\Team\PLAY.cs" />
     <Compile Include="Classes\UniformGridWithOrientation.cs" />
     <Compile Include="User Controls\Field.xaml.cs">
       <DependentUpon>Field.xaml</DependentUpon>
@@ -271,11 +273,23 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Styles\FormationTabItemStyle.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\PlayTabItemStyle.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Styles\SituationStyle.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Styles\NameTextBox.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\SubFormationTabItemStyle.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

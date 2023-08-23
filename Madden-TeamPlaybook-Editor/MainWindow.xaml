@@ -95,16 +95,18 @@
             
         </Expander>
 
-        <TreeView x:Name="tvwPlaybook"
+        <DockPanel Width="Auto" Height="Auto" HorizontalAlignment="Stretch" DockPanel.Dock="Left">
+
+            <TreeView x:Name="tvwPlaybook"
             Background="{x:Null}"
             BorderBrush="{x:Null}"
             Foreground="{x:Null}"
-            ItemsSource="{Binding Formations}"
-            DockPanel.Dock="Left"
+            DockPanel.Dock="Top"
             SelectedItemChanged="tvwPlaybook_SelectedItemChanged"
             AllowDrop="True"
-            MaxWidth="590"
-            >
+            MaxWidth="600"
+            MaxHeight="900"
+            ItemsSource="{Binding Formations}">
 
             <TreeView.CommandBindings>
                 <CommandBinding Command="ApplicationCommands.Copy" Executed="CopyToClipboard" />
@@ -243,12 +245,58 @@
             
         </TreeView>
 
+        </DockPanel>
+
         <UserControls:Field 
             x:Name="uclFieldView" 
             DockPanel.Dock="Left"
             VerticalAlignment="Top"
             play="{Binding ElementName=tvwPlaybook, Path=SelectedValue}">
         </UserControls:Field>
+        
+        <!--<TabControl x:Name="tabPlaybook" ItemsSource="{Binding Formations}" Background="Transparent" BorderBrush="Transparent"  VerticalAlignment="Top" HorizontalAlignment="Left">
+            <TabControl.ItemTemplate>
+                <DataTemplate DataType="{x:Type TeamPlaybookViewModels:FormationVM}">
+                    <UserControls:Formation x:Name="tabFormation" formation="{Binding}"/>
+                </DataTemplate>
+            </TabControl.ItemTemplate>
+            <TabControl.ContentTemplate>
+                <DataTemplate>
+                    <TabControl ItemsSource="{Binding SubFormations}" Background="Transparent" BorderBrush="Transparent" VerticalAlignment="Top" HorizontalAlignment="Left">
+                        <TabControl.ItemTemplate>
+                            <DataTemplate DataType="{x:Type TeamPlaybookViewModels:SubFormationVM}">
+                                <UserControls:SubFormation x:Name="tabSubFormation" subFormation="{Binding}" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+                            </DataTemplate>
+                        </TabControl.ItemTemplate>
+                        <TabControl.ContentTemplate>
+                            <DataTemplate>
+                                <TabControl ItemsSource="{Binding Plays}" Background="Transparent" BorderBrush="Transparent" VerticalAlignment="Top" HorizontalAlignment="Left">
+                                    <TabControl.ItemTemplate>
+                                        <DataTemplate DataType="{x:Type TeamPlaybookViewModels:PlayVM}">
+                                            <UserControls:Play x:Name="tabSubFormation" play="{Binding}" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+                                        </DataTemplate>
+                                    </TabControl.ItemTemplate>
+                                    <TabControl.ContentTemplate>
+                                        <DataTemplate>
+
+                                        </DataTemplate>
+                                    </TabControl.ContentTemplate>
+                                    <TabControl.ItemContainerStyle>
+                                        <Style TargetType="{x:Type TabItem}" BasedOn="{StaticResource SubFormationTabItem}"> </Style>
+                                    </TabControl.ItemContainerStyle>
+                                </TabControl>
+                            </DataTemplate>
+                        </TabControl.ContentTemplate>
+                        <TabControl.ItemContainerStyle>
+                            <Style TargetType="{x:Type TabItem}" BasedOn="{StaticResource PlayTabItem}"> </Style>
+                        </TabControl.ItemContainerStyle>
+                    </TabControl>
+                </DataTemplate>
+            </TabControl.ContentTemplate>
+            <TabControl.ItemContainerStyle>
+                <Style TargetType="{x:Type TabItem}" BasedOn="{StaticResource FormationTabItem}"> </Style>
+            </TabControl.ItemContainerStyle>
+        </TabControl>-->
 
         <Expander ExpandDirection="Right">
         

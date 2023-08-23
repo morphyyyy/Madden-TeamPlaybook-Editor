@@ -36,8 +36,21 @@ namespace MaddenTeamPlaybookEditor.User_Controls
             double angleInRadians;
             double angleInDegrees;
             TransformGroup tg;
-            SolidColorBrush RouteBrush = Player.artlColor is null ? null : new SolidColorBrush { Color = Player.artlColor.Color };
-            SolidColorBrush optionRouteBrush = Player.artlColor is null ? null : new SolidColorBrush { Color = Player.artlColor.Color, Opacity = 0.5 };
+            SolidColorBrush RouteBrush = null;
+            SolidColorBrush optionRouteBrush = null;
+            RadialGradientBrush progressionBrush = null;
+            if (Player.artlColor != null)
+            {
+                RouteBrush = new SolidColorBrush { Color = Player.artlColor.Color };
+                optionRouteBrush = new SolidColorBrush { Color = Player.artlColor.Color, Opacity = 0.5 };
+                progressionBrush = new RadialGradientBrush();
+                progressionBrush.GradientOrigin = new Point(0.5, 0.5);
+                progressionBrush.Center = new Point(0.5, 0.5);
+                progressionBrush.RadiusX = 0.5;
+                progressionBrush.RadiusX = 0.5;
+                progressionBrush.GradientStops.Add(new GradientStop(Player.artlColor.Color, 0.0));
+                progressionBrush.GradientStops.Add(new GradientStop(Colors.Transparent, 1.0));
+            }
             Pen routePen = new Pen(RouteBrush, Scale * 4);
             Pen endCapPen = new Pen(RouteBrush, 0);
             Pen optionRoutePen = new Pen(optionRouteBrush, Scale * 4);
@@ -45,6 +58,7 @@ namespace MaddenTeamPlaybookEditor.User_Controls
             PathGeometry basePath;
             PathGeometry option1Path;
             PathGeometry option2Path;
+
             if (Route == null || Route.Count == 0)
             {
                 basePath = new PathGeometry();
@@ -151,6 +165,15 @@ namespace MaddenTeamPlaybookEditor.User_Controls
                     dc.DrawGeometry(optionRouteBrush, optionEndCapPen, Player.RouteCap);
                     dc.Pop();
                 }
+            }
+
+            if (PSALView && Player.progression != null)
+            {
+                tg = new TransformGroup();
+                tg.Children.Add(new ScaleTransform(4, 4));
+                tg.Children.Add(new TranslateTransform(Player.progression.icx * 10, Player.progression.icy * -10));
+                dc.PushTransform(tg);
+                dc.DrawGeometry(progressionBrush, null, Player.Icon);
             }
 
             //if (basePath.Bounds.Size != new Size(0, 0))

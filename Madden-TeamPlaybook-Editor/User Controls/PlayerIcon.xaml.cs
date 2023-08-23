@@ -36,7 +36,7 @@ namespace MaddenTeamPlaybookEditor.User_Controls
             this.ToolTip = this.Player;
             ShowPosition = false;
             Scale = 1.5;
-            Animate = true;
+            Animate = false;
             AbsolutePositioning = true;
             this.MouseLeftButtonDown += new MouseButtonEventHandler(UserControl_MouseLeftButtonDown);
             this.MouseLeftButtonUp += new MouseButtonEventHandler(UserControl_MouseLeftButtonUp);
@@ -49,9 +49,8 @@ namespace MaddenTeamPlaybookEditor.User_Controls
             TransformGroup tg;
             SolidColorBrush playerIconBrush = new SolidColorBrush(Madden.TeamPlaybook.ARTLColor.PlayerIconColor);
             Pen iconPen = new Pen(playerIconBrush, 0);
-            SolidColorBrush EPosBrush = new SolidColorBrush(Colors.BlueViolet);
-            SolidColorBrush BlackBrush = new SolidColorBrush(Colors.Black);
-            Pen EPosPen = new Pen(playerIconBrush, 0.2);
+            SolidColorBrush EPosBrush = new SolidColorBrush(Colors.Black);
+            Pen EPosPen = new Pen(playerIconBrush, 0.3);
 
             tg = new TransformGroup();
             if (AbsolutePositioning) pos = new Point(Player.XY.X + TeamPlaybook.LOS.X, Player.XY.Y + TeamPlaybook.LOS.Y);
@@ -65,12 +64,22 @@ namespace MaddenTeamPlaybookEditor.User_Controls
                 dc.DrawGeometry(playerIconBrush, iconPen, Player.Icon);
                 if (ShowPosition)
                 {
+                    string depth;
+                    if (Int32.Parse(Player.DPos) > 1)
+                    {
+                        depth = " " + Player.DPos;
+                    }
+                        else
+                    {
+                        depth = "";
+                    };
                     FormattedText EPos = new FormattedText(
-                        Player.EPos,
+                        //Player.EPos + depth,
+                        Player.Number.ToString(),
                         CultureInfo.GetCultureInfo("en-us"),
                         FlowDirection.LeftToRight,
                         new Typeface(new FontFamily("Tahoma"), FontStyles.Normal, FontWeights.Black, FontStretches.Normal),
-                        6,
+                        9,
                         EPosBrush
                         );
                     PathGeometry EPosPath = EPos.BuildGeometry(new Point(EPos.Width * -.5, EPos.Height * -.5)).GetFlattenedPathGeometry();

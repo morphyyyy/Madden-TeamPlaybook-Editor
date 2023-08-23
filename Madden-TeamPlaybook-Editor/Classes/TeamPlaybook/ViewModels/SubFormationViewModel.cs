@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Windows;
 using Madden.TeamPlaybook;
 
@@ -742,28 +743,55 @@ namespace MaddenTeamPlaybookEditor.ViewModels
                 PLPD CPBplpd = new PLPD
                 {
                     rec = Formation.Playbook.PLPD.Count,
-                    com1 = Play.PLPD[0].com1,
-                    con1 = Play.PLPD[0].con1,
-                    per1 = Play.PLPD[0].per1,
-                    rcv1 = Play.PLPD[0].rcv1,
-                    com2 = Play.PLPD[0].com2,
-                    con2 = Play.PLPD[0].con2,
-                    per2 = Play.PLPD[0].per2,
-                    rcv2 = Play.PLPD[0].rcv2,
-                    com3 = Play.PLPD[0].com3,
-                    con3 = Play.PLPD[0].con3,
-                    per3 = Play.PLPD[0].per3,
-                    rcv3 = Play.PLPD[0].rcv3,
-                    com4 = Play.PLPD[0].com4,
-                    con4 = Play.PLPD[0].con4,
-                    per4 = Play.PLPD[0].per4,
-                    rcv4 = Play.PLPD[0].rcv4,
-                    com5 = Play.PLPD[0].com5,
-                    con5 = Play.PLPD[0].con5,
-                    per5 = Play.PLPD[0].per5,
-                    rcv5 = Play.PLPD[0].rcv5,
                     PLYL = Play.PLPD[0].PLYL
                 };
+
+                CPBplpd.progressions = new List<Progression>();
+                CPBplpd.progressions.Add(new Progression
+                {
+                    com = Play.PLPD[0].com1,
+                    con = Play.PLPD[0].con1,
+                    per = Play.PLPD[0].per1,
+                    rcv = Play.PLPD[0].rcv1,
+                    icx = 0,
+                    icy = 0
+                });
+                CPBplpd.progressions.Add(new Progression
+                {
+                    com = Play.PLPD[0].com1,
+                    con = Play.PLPD[0].con1,
+                    per = Play.PLPD[0].per1,
+                    rcv = Play.PLPD[0].rcv1,
+                    icx = 0,
+                    icy = 0
+                });
+                CPBplpd.progressions.Add(new Progression
+                {
+                    com = Play.PLPD[0].com1,
+                    con = Play.PLPD[0].con1,
+                    per = Play.PLPD[0].per1,
+                    rcv = Play.PLPD[0].rcv1,
+                    icx = 0,
+                    icy = 0
+                });
+                CPBplpd.progressions.Add(new Progression
+                {
+                    com = Play.PLPD[0].com1,
+                    con = Play.PLPD[0].con1,
+                    per = Play.PLPD[0].per1,
+                    rcv = Play.PLPD[0].rcv1,
+                    icx = 0,
+                    icy = 0
+                });
+                CPBplpd.progressions.Add(new Progression
+                {
+                    com = Play.PLPD[0].com1,
+                    con = Play.PLPD[0].con1,
+                    per = Play.PLPD[0].per1,
+                    rcv = Play.PLPD[0].rcv1,
+                    icx = 0,
+                    icy = 0
+                });
 
                 Formation.Playbook.PLPD.Add(CPBplpd);
 

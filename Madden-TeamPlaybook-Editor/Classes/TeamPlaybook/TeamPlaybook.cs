@@ -6,7 +6,9 @@ using System.IO;
 using System.Linq;
 using TDBAccess;
 using Madden.TeamPlaybook;
+using Madden.Team;
 using System.Windows;
+using System.Reflection;
 
 namespace MaddenTeamPlaybookEditor.ViewModels
 {
@@ -227,7 +229,7 @@ namespace MaddenTeamPlaybookEditor.ViewModels
 
         public ObservableCollection<FormationVM> Formations { get; set; }
 
-        public static Point LOS { get { return new Point(266.5, 400); } }
+        public static Point LOS { get { return new Point(266.5, 600); } }
 
         public string Type { get; set; }
         public Dictionary<int, string> Situations { get; set; }
@@ -255,6 +257,8 @@ namespace MaddenTeamPlaybookEditor.ViewModels
         public List<SPKF> SPKF { get; set; }
         public List<SPKG> SPKG { get; set; }
         public List<SRFT> SRFT { get; set; }
+        public List<DCHT> DCHT { get; set; }
+        public List<PLAY> PLAY { get; set; }
 
         public TeamPlaybook()
         {
@@ -474,6 +478,12 @@ namespace MaddenTeamPlaybookEditor.ViewModels
             SPKF = Madden.TeamPlaybook.SPKF.GetSPKF();
             SPKG = Madden.TeamPlaybook.SPKG.GetSPKG();
             SRFT = Madden.TeamPlaybook.SRFT.GetSRFT();
+        }
+
+        public void GetRoster()
+        {
+            DCHT = Madden.Team.DCHT.GetDCHT(DBIndex: 1);
+            PLAY = Madden.Team.PLAY.GetPLAY(DBIndex: 1);
         }
 
         public void BuildPlaybook()

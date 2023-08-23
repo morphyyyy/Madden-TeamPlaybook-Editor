@@ -5,6 +5,7 @@ using System.Linq;
 using System.Windows.Shapes;
 using TDBAccess;
 using Madden.TeamPlaybook;
+using Madden.Team;
 using System.Windows;
 using System.Windows.Media;
 using System.Globalization;
@@ -34,9 +35,15 @@ namespace MaddenTeamPlaybookEditor.ViewModels
         public List<PSAL> PSAL { get; set; }
         public ARTL ARTL { get; set; }
         public Point XY { get; set; }
+        public Progression progression { get; set; }
+        public DCHT DCHT { get; set; }
+        public PLAY Player { get; set; }
 
         public string DPos { get; set; }
         public string EPos { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public int Number { get; set; }
         public int Speed { get; set; }
 
         [field: NonSerializedAttribute()]
@@ -58,6 +65,7 @@ namespace MaddenTeamPlaybookEditor.ViewModels
             GetARTL();
             GetPSAL();
             GetRouteCap();
+            if (Play.PLPD != null) GetIcxIcy();
             GetAttributes();
         }
 
@@ -93,6 +101,31 @@ namespace MaddenTeamPlaybookEditor.ViewModels
             }
 
             foreach (Path path in PSALpath) ((PathGeometry)path.Data).Freeze();
+        }
+
+        public void GetIcxIcy()
+        {
+            switch (PLYS.poso)
+            {
+                case 1:
+                    progression = Play.PLPD.progressions.Where(progression => progression.rcv == 1).FirstOrDefault();
+                    break;
+                case 2:
+                    progression = Play.PLPD.progressions.Where(progression => progression.rcv == 2).FirstOrDefault();
+                    break;
+                case 3:
+                    progression = Play.PLPD.progressions.Where(progression => progression.rcv == 3).FirstOrDefault();
+                    break;
+                case 4:
+                    progression = Play.PLPD.progressions.Where(progression => progression.rcv == 4).FirstOrDefault();
+                    break;
+                case 5:
+                    progression = Play.PLPD.progressions.Where(progression => progression.rcv == 5).FirstOrDefault();
+                    break;
+                default:
+                    break;
+            }
+
         }
 
         public void UpdateXY(Point point)
@@ -439,6 +472,18 @@ namespace MaddenTeamPlaybookEditor.ViewModels
                 default:
                     Speed = 70;
                     break;
+            }
+
+            if (Play.SubFormation.Formation.Playbook.DCHT != null)
+            {
+                int _epos = Play.SubFormation.CurrentPackage.Where(poso => poso.poso == PLYS.poso).FirstOrDefault().EPos;
+                DCHT = Play.SubFormation.Formation.Playbook.DCHT.Where(player => player.PPOS == SETP.EPos && player.ddep == SETP.DPos - 1).FirstOrDefault();
+                if (DCHT != null)
+                {
+                    Number = Play.SubFormation.Formation.Playbook.PLAY.Where(player => player.PGID == DCHT.PGID).FirstOrDefault().PJEN;
+                    FirstName = Play.SubFormation.Formation.Playbook.PLAY.Where(player => player.PGID == DCHT.PGID).FirstOrDefault().PFNA;
+                    LastName = Play.SubFormation.Formation.Playbook.PLAY.Where(player => player.PGID == DCHT.PGID).FirstOrDefault().PLNA;
+                }
             }
         }
 

@@ -10,73 +10,25 @@ namespace Madden.TeamPlaybook
     public class PLPD
     {
         public int rec { get; set; }
-        public int com1 { get; set; }
-        public int con1 { get; set; }
-        public int per1 { get; set; }
-        public int rcv1 { get; set; }
-        public int icx1 { get; set; }
-        public int icy1 { get; set; }
-        public int com2 { get; set; }
-        public int con2 { get; set; }
-        public int per2 { get; set; }
-        public int rcv2 { get; set; }
-        public int icx2 { get; set; }
-        public int icy2 { get; set; }
-        public int com3 { get; set; }
-        public int con3 { get; set; }
-        public int per3 { get; set; }
-        public int rcv3 { get; set; }
-        public int icx3 { get; set; }
-        public int icy3 { get; set; }
-        public int com4 { get; set; }
-        public int con4 { get; set; }
-        public int per4 { get; set; }
-        public int rcv4 { get; set; }
-        public int icx4 { get; set; }
-        public int icy4 { get; set; }
-        public int com5 { get; set; }
-        public int con5 { get; set; }
-        public int per5 { get; set; }
-        public int rcv5 { get; set; }
-        public int icx5 { get; set; }
-        public int icy5 { get; set; }
         public int PLYL { get; set; }
+
+        public List<Progression> progressions { get; set; }
 
         public override string ToString()
         {
-            return
-                "Rec#: " + rec +
-                "   com1: " + com1 +
-                "   con1: " + con1 +
-                "   per1: " + per1 +
-                "   rcv1: " + rcv1 +
-                "   icx1: " + rcv1 +
-                "   icy1: " + rcv1 +
-                "   com2: " + com2 +
-                "   con2: " + con2 +
-                "   per2: " + per2 +
-                "   rcv2: " + rcv2 +
-                "   icx2: " + rcv1 +
-                "   icy2: " + rcv1 +
-                "   com3: " + com3 +
-                "   con3: " + con3 +
-                "   per3: " + per3 +
-                "   rcv3: " + rcv3 +
-                "   icx3: " + rcv1 +
-                "   icy3: " + rcv1 +
-                "   com4: " + com4 +
-                "   con4: " + con4 +
-                "   per4: " + per4 +
-                "   rcv4: " + rcv4 +
-                "   icx4: " + rcv1 +
-                "   icy4: " + rcv1 +
-                "   com5: " + com5 +
-                "   con5: " + con5 +
-                "   per5: " + per5 +
-                "   rcv5: " + rcv5 +
-                "   icx5: " + rcv1 +
-                "   icy5: " + rcv1 +
-                "   PLYL: " + PLYL;
+            string PLPDtoString = "";
+            PLPDtoString += "Rec#: " + rec + "   PLYL: " + PLYL + "\n";
+            for (int x = 0; x < progressions.Count(); x++)
+            {
+                PLPDtoString +=
+                    "   com" + (x + 1) + ": " + progressions[x].com +
+                    "   con" + (x + 1) + ": " + progressions[x].con +
+                    "   per" + (x + 1) + ": " + progressions[x].per +
+                    "   rcv" + (x + 1) + ": " + progressions[x].rcv +
+                    "   icx" + (x + 1) + ": " + progressions[x].icx +
+                    "   icy" + (x + 1) + ": " + progressions[x].icy + "\n";
+            }
+            return PLPDtoString;
         }
 
         public static List<PLPD> GetPLPD(int filter = 0, int DBIndex = 0)
@@ -97,76 +49,42 @@ namespace Madden.TeamPlaybook
                     _PLPD.Add(new PLPD
                     {
                         rec = i,
-                        com1 = (int)(UInt32)TDB.TDBFieldGetValueAsInteger(DBIndex, TDB.StrReverse("PLPD"), TDB.StrReverse("com1"), i),
-                        con1 = (int)(UInt32)TDB.TDBFieldGetValueAsInteger(DBIndex, TDB.StrReverse("PLPD"), TDB.StrReverse("con1"), i),
-                        per1 = (int)(UInt32)TDB.TDBFieldGetValueAsInteger(DBIndex, TDB.StrReverse("PLPD"), TDB.StrReverse("per1"), i),
-                        rcv1 = (int)(UInt32)TDB.TDBFieldGetValueAsInteger(DBIndex, TDB.StrReverse("PLPD"), TDB.StrReverse("rcv1"), i),
-                        icx1 = (int)(UInt32)TDB.TDBFieldGetValueAsInteger(DBIndex, TDB.StrReverse("PLPD"), TDB.StrReverse("icx1"), i),
-                        icy1 = (int)(UInt32)TDB.TDBFieldGetValueAsInteger(DBIndex, TDB.StrReverse("PLPD"), TDB.StrReverse("icy1"), i),
-                        com2 = (int)(UInt32)TDB.TDBFieldGetValueAsInteger(DBIndex, TDB.StrReverse("PLPD"), TDB.StrReverse("com2"), i),
-                        con2 = (int)(UInt32)TDB.TDBFieldGetValueAsInteger(DBIndex, TDB.StrReverse("PLPD"), TDB.StrReverse("con2"), i),
-                        per2 = (int)(UInt32)TDB.TDBFieldGetValueAsInteger(DBIndex, TDB.StrReverse("PLPD"), TDB.StrReverse("per2"), i),
-                        rcv2 = (int)(UInt32)TDB.TDBFieldGetValueAsInteger(DBIndex, TDB.StrReverse("PLPD"), TDB.StrReverse("rcv2"), i),
-                        icx2 = (int)(UInt32)TDB.TDBFieldGetValueAsInteger(DBIndex, TDB.StrReverse("PLPD"), TDB.StrReverse("icx2"), i),
-                        icy2 = (int)(UInt32)TDB.TDBFieldGetValueAsInteger(DBIndex, TDB.StrReverse("PLPD"), TDB.StrReverse("icy2"), i),
-                        com3 = (int)(UInt32)TDB.TDBFieldGetValueAsInteger(DBIndex, TDB.StrReverse("PLPD"), TDB.StrReverse("com3"), i),
-                        con3 = (int)(UInt32)TDB.TDBFieldGetValueAsInteger(DBIndex, TDB.StrReverse("PLPD"), TDB.StrReverse("con3"), i),
-                        per3 = (int)(UInt32)TDB.TDBFieldGetValueAsInteger(DBIndex, TDB.StrReverse("PLPD"), TDB.StrReverse("per3"), i),
-                        rcv3 = (int)(UInt32)TDB.TDBFieldGetValueAsInteger(DBIndex, TDB.StrReverse("PLPD"), TDB.StrReverse("rcv3"), i),
-                        icx3 = (int)(UInt32)TDB.TDBFieldGetValueAsInteger(DBIndex, TDB.StrReverse("PLPD"), TDB.StrReverse("icx3"), i),
-                        icy3 = (int)(UInt32)TDB.TDBFieldGetValueAsInteger(DBIndex, TDB.StrReverse("PLPD"), TDB.StrReverse("icy3"), i),
-                        com4 = (int)(UInt32)TDB.TDBFieldGetValueAsInteger(DBIndex, TDB.StrReverse("PLPD"), TDB.StrReverse("com4"), i),
-                        con4 = (int)(UInt32)TDB.TDBFieldGetValueAsInteger(DBIndex, TDB.StrReverse("PLPD"), TDB.StrReverse("con4"), i),
-                        per4 = (int)(UInt32)TDB.TDBFieldGetValueAsInteger(DBIndex, TDB.StrReverse("PLPD"), TDB.StrReverse("per4"), i),
-                        rcv4 = (int)(UInt32)TDB.TDBFieldGetValueAsInteger(DBIndex, TDB.StrReverse("PLPD"), TDB.StrReverse("rcv4"), i),
-                        icx4 = (int)(UInt32)TDB.TDBFieldGetValueAsInteger(DBIndex, TDB.StrReverse("PLPD"), TDB.StrReverse("icx4"), i),
-                        icy4 = (int)(UInt32)TDB.TDBFieldGetValueAsInteger(DBIndex, TDB.StrReverse("PLPD"), TDB.StrReverse("icy4"), i),
-                        com5 = (int)(UInt32)TDB.TDBFieldGetValueAsInteger(DBIndex, TDB.StrReverse("PLPD"), TDB.StrReverse("com5"), i),
-                        con5 = (int)(UInt32)TDB.TDBFieldGetValueAsInteger(DBIndex, TDB.StrReverse("PLPD"), TDB.StrReverse("con5"), i),
-                        per5 = (int)(UInt32)TDB.TDBFieldGetValueAsInteger(DBIndex, TDB.StrReverse("PLPD"), TDB.StrReverse("per5"), i),
-                        rcv5 = (int)(UInt32)TDB.TDBFieldGetValueAsInteger(DBIndex, TDB.StrReverse("PLPD"), TDB.StrReverse("rcv5"), i),
-                        icx5 = (int)(UInt32)TDB.TDBFieldGetValueAsInteger(DBIndex, TDB.StrReverse("PLPD"), TDB.StrReverse("icx5"), i),
-                        icy5 = (int)(UInt32)TDB.TDBFieldGetValueAsInteger(DBIndex, TDB.StrReverse("PLPD"), TDB.StrReverse("icy5"), i),
                         PLYL = (int)(UInt32)TDB.TDBFieldGetValueAsInteger(DBIndex, TDB.StrReverse("PLPD"), TDB.StrReverse("PLYL"), i)
                     });
+                    _PLPD[i].progressions = new List<Progression>();
+                    for (int x = 1; x <= 5; x++)
+                    {
+                        _PLPD[i].progressions.Add(new Progression
+                        {
+                            com = (int)(UInt32)TDB.TDBFieldGetValueAsInteger(DBIndex, TDB.StrReverse("PLPD"), TDB.StrReverse("com" + x.ToString()), i),
+                            con = (int)(UInt32)TDB.TDBFieldGetValueAsInteger(DBIndex, TDB.StrReverse("PLPD"), TDB.StrReverse("con" + x.ToString()), i),
+                            per = (int)(UInt32)TDB.TDBFieldGetValueAsInteger(DBIndex, TDB.StrReverse("PLPD"), TDB.StrReverse("per" + x.ToString()), i),
+                            rcv = (int)(UInt32)TDB.TDBFieldGetValueAsInteger(DBIndex, TDB.StrReverse("PLPD"), TDB.StrReverse("rcv" + x.ToString()), i),
+                            icx = (int)(UInt32)TDB.TDBFieldGetValueAsInteger(DBIndex, TDB.StrReverse("PLPD"), TDB.StrReverse("icx" + x.ToString()), i),
+                            icy = (int)(UInt32)TDB.TDBFieldGetValueAsInteger(DBIndex, TDB.StrReverse("PLPD"), TDB.StrReverse("icy" + x.ToString()), i)
+                        });
+                    }
                 }
                 else if (filter == 0)
                 {
                     _PLPD.Add(new PLPD
                     {
                         rec = i,
-                        com1 = (int)(UInt32)TDB.TDBFieldGetValueAsInteger(DBIndex, TDB.StrReverse("PLPD"), TDB.StrReverse("com1"), i),
-                        con1 = (int)(UInt32)TDB.TDBFieldGetValueAsInteger(DBIndex, TDB.StrReverse("PLPD"), TDB.StrReverse("con1"), i),
-                        per1 = (int)(UInt32)TDB.TDBFieldGetValueAsInteger(DBIndex, TDB.StrReverse("PLPD"), TDB.StrReverse("per1"), i),
-                        rcv1 = (int)(UInt32)TDB.TDBFieldGetValueAsInteger(DBIndex, TDB.StrReverse("PLPD"), TDB.StrReverse("rcv1"), i),
-                        icx1 = (int)(UInt32)TDB.TDBFieldGetValueAsInteger(DBIndex, TDB.StrReverse("PLPD"), TDB.StrReverse("icx1"), i),
-                        icy1 = (int)(UInt32)TDB.TDBFieldGetValueAsInteger(DBIndex, TDB.StrReverse("PLPD"), TDB.StrReverse("icy1"), i),
-                        com2 = (int)(UInt32)TDB.TDBFieldGetValueAsInteger(DBIndex, TDB.StrReverse("PLPD"), TDB.StrReverse("com2"), i),
-                        con2 = (int)(UInt32)TDB.TDBFieldGetValueAsInteger(DBIndex, TDB.StrReverse("PLPD"), TDB.StrReverse("con2"), i),
-                        per2 = (int)(UInt32)TDB.TDBFieldGetValueAsInteger(DBIndex, TDB.StrReverse("PLPD"), TDB.StrReverse("per2"), i),
-                        rcv2 = (int)(UInt32)TDB.TDBFieldGetValueAsInteger(DBIndex, TDB.StrReverse("PLPD"), TDB.StrReverse("rcv2"), i),
-                        icx2 = (int)(UInt32)TDB.TDBFieldGetValueAsInteger(DBIndex, TDB.StrReverse("PLPD"), TDB.StrReverse("icx2"), i),
-                        icy2 = (int)(UInt32)TDB.TDBFieldGetValueAsInteger(DBIndex, TDB.StrReverse("PLPD"), TDB.StrReverse("icy2"), i),
-                        com3 = (int)(UInt32)TDB.TDBFieldGetValueAsInteger(DBIndex, TDB.StrReverse("PLPD"), TDB.StrReverse("com3"), i),
-                        con3 = (int)(UInt32)TDB.TDBFieldGetValueAsInteger(DBIndex, TDB.StrReverse("PLPD"), TDB.StrReverse("con3"), i),
-                        per3 = (int)(UInt32)TDB.TDBFieldGetValueAsInteger(DBIndex, TDB.StrReverse("PLPD"), TDB.StrReverse("per3"), i),
-                        rcv3 = (int)(UInt32)TDB.TDBFieldGetValueAsInteger(DBIndex, TDB.StrReverse("PLPD"), TDB.StrReverse("rcv3"), i),
-                        icx3 = (int)(UInt32)TDB.TDBFieldGetValueAsInteger(DBIndex, TDB.StrReverse("PLPD"), TDB.StrReverse("icx3"), i),
-                        icy3 = (int)(UInt32)TDB.TDBFieldGetValueAsInteger(DBIndex, TDB.StrReverse("PLPD"), TDB.StrReverse("icy3"), i),
-                        com4 = (int)(UInt32)TDB.TDBFieldGetValueAsInteger(DBIndex, TDB.StrReverse("PLPD"), TDB.StrReverse("com4"), i),
-                        con4 = (int)(UInt32)TDB.TDBFieldGetValueAsInteger(DBIndex, TDB.StrReverse("PLPD"), TDB.StrReverse("con4"), i),
-                        per4 = (int)(UInt32)TDB.TDBFieldGetValueAsInteger(DBIndex, TDB.StrReverse("PLPD"), TDB.StrReverse("per4"), i),
-                        rcv4 = (int)(UInt32)TDB.TDBFieldGetValueAsInteger(DBIndex, TDB.StrReverse("PLPD"), TDB.StrReverse("rcv4"), i),
-                        icx4 = (int)(UInt32)TDB.TDBFieldGetValueAsInteger(DBIndex, TDB.StrReverse("PLPD"), TDB.StrReverse("icx4"), i),
-                        icy4 = (int)(UInt32)TDB.TDBFieldGetValueAsInteger(DBIndex, TDB.StrReverse("PLPD"), TDB.StrReverse("icy4"), i),
-                        com5 = (int)(UInt32)TDB.TDBFieldGetValueAsInteger(DBIndex, TDB.StrReverse("PLPD"), TDB.StrReverse("com5"), i),
-                        con5 = (int)(UInt32)TDB.TDBFieldGetValueAsInteger(DBIndex, TDB.StrReverse("PLPD"), TDB.StrReverse("con5"), i),
-                        per5 = (int)(UInt32)TDB.TDBFieldGetValueAsInteger(DBIndex, TDB.StrReverse("PLPD"), TDB.StrReverse("per5"), i),
-                        rcv5 = (int)(UInt32)TDB.TDBFieldGetValueAsInteger(DBIndex, TDB.StrReverse("PLPD"), TDB.StrReverse("rcv5"), i),
-                        icx5 = (int)(UInt32)TDB.TDBFieldGetValueAsInteger(DBIndex, TDB.StrReverse("PLPD"), TDB.StrReverse("icx5"), i),
-                        icy5 = (int)(UInt32)TDB.TDBFieldGetValueAsInteger(DBIndex, TDB.StrReverse("PLPD"), TDB.StrReverse("icy5"), i),
                         PLYL = (int)(UInt32)TDB.TDBFieldGetValueAsInteger(DBIndex, TDB.StrReverse("PLPD"), TDB.StrReverse("PLYL"), i)
                     });
+                    _PLPD[i].progressions = new List<Progression>();
+                    for (int x = 1; x <= 5; x++)
+                    {
+                        _PLPD[i].progressions.Add(new Progression
+                        {
+                            com = (int)(UInt32)TDB.TDBFieldGetValueAsInteger(DBIndex, TDB.StrReverse("PLPD"), TDB.StrReverse("com" + x.ToString()), i),
+                            con = (int)(UInt32)TDB.TDBFieldGetValueAsInteger(DBIndex, TDB.StrReverse("PLPD"), TDB.StrReverse("con" + x.ToString()), i),
+                            per = (int)(UInt32)TDB.TDBFieldGetValueAsInteger(DBIndex, TDB.StrReverse("PLPD"), TDB.StrReverse("per" + x.ToString()), i),
+                            rcv = (int)(UInt32)TDB.TDBFieldGetValueAsInteger(DBIndex, TDB.StrReverse("PLPD"), TDB.StrReverse("rcv" + x.ToString()), i),
+                            icx = (int)(UInt32)TDB.TDBFieldGetValueAsInteger(DBIndex, TDB.StrReverse("PLPD"), TDB.StrReverse("icx" + x.ToString()), i),
+                            icy = (int)(UInt32)TDB.TDBFieldGetValueAsInteger(DBIndex, TDB.StrReverse("PLPD"), TDB.StrReverse("icy" + x.ToString()), i)
+                        });
+                    }
                 }
             }
             return _PLPD;
@@ -197,37 +115,15 @@ namespace Madden.TeamPlaybook
 
             foreach (PLPD item in PLPD)
             {
-                TDB.TDBFieldSetValueAsInteger(DBIndex, TDB.StrReverse("PLPD"), TDB.StrReverse("com1"), item.rec, item.com1);
-                TDB.TDBFieldSetValueAsInteger(DBIndex, TDB.StrReverse("PLPD"), TDB.StrReverse("con1"), item.rec, item.con1);
-                TDB.TDBFieldSetValueAsInteger(DBIndex, TDB.StrReverse("PLPD"), TDB.StrReverse("per1"), item.rec, item.per1);
-                TDB.TDBFieldSetValueAsInteger(DBIndex, TDB.StrReverse("PLPD"), TDB.StrReverse("rcv1"), item.rec, item.rcv1);
-                TDB.TDBFieldSetValueAsInteger(DBIndex, TDB.StrReverse("PLPD"), TDB.StrReverse("icx1"), item.rec, item.icx1);
-                TDB.TDBFieldSetValueAsInteger(DBIndex, TDB.StrReverse("PLPD"), TDB.StrReverse("icy1"), item.rec, item.icy1);
-                TDB.TDBFieldSetValueAsInteger(DBIndex, TDB.StrReverse("PLPD"), TDB.StrReverse("com2"), item.rec, item.com2);
-                TDB.TDBFieldSetValueAsInteger(DBIndex, TDB.StrReverse("PLPD"), TDB.StrReverse("con2"), item.rec, item.con2);
-                TDB.TDBFieldSetValueAsInteger(DBIndex, TDB.StrReverse("PLPD"), TDB.StrReverse("per2"), item.rec, item.per2);
-                TDB.TDBFieldSetValueAsInteger(DBIndex, TDB.StrReverse("PLPD"), TDB.StrReverse("rcv2"), item.rec, item.rcv2);
-                TDB.TDBFieldSetValueAsInteger(DBIndex, TDB.StrReverse("PLPD"), TDB.StrReverse("icx2"), item.rec, item.icx2);
-                TDB.TDBFieldSetValueAsInteger(DBIndex, TDB.StrReverse("PLPD"), TDB.StrReverse("icy2"), item.rec, item.icy2);
-                TDB.TDBFieldSetValueAsInteger(DBIndex, TDB.StrReverse("PLPD"), TDB.StrReverse("com3"), item.rec, item.com3);
-                TDB.TDBFieldSetValueAsInteger(DBIndex, TDB.StrReverse("PLPD"), TDB.StrReverse("con3"), item.rec, item.con3);
-                TDB.TDBFieldSetValueAsInteger(DBIndex, TDB.StrReverse("PLPD"), TDB.StrReverse("per3"), item.rec, item.per3);
-                TDB.TDBFieldSetValueAsInteger(DBIndex, TDB.StrReverse("PLPD"), TDB.StrReverse("rcv3"), item.rec, item.rcv3);
-                TDB.TDBFieldSetValueAsInteger(DBIndex, TDB.StrReverse("PLPD"), TDB.StrReverse("icx3"), item.rec, item.icx3);
-                TDB.TDBFieldSetValueAsInteger(DBIndex, TDB.StrReverse("PLPD"), TDB.StrReverse("icy3"), item.rec, item.icy3);
-                TDB.TDBFieldSetValueAsInteger(DBIndex, TDB.StrReverse("PLPD"), TDB.StrReverse("com4"), item.rec, item.com4);
-                TDB.TDBFieldSetValueAsInteger(DBIndex, TDB.StrReverse("PLPD"), TDB.StrReverse("con4"), item.rec, item.con4);
-                TDB.TDBFieldSetValueAsInteger(DBIndex, TDB.StrReverse("PLPD"), TDB.StrReverse("per4"), item.rec, item.per4);
-                TDB.TDBFieldSetValueAsInteger(DBIndex, TDB.StrReverse("PLPD"), TDB.StrReverse("rcv4"), item.rec, item.rcv4);
-                TDB.TDBFieldSetValueAsInteger(DBIndex, TDB.StrReverse("PLPD"), TDB.StrReverse("icx4"), item.rec, item.icx4);
-                TDB.TDBFieldSetValueAsInteger(DBIndex, TDB.StrReverse("PLPD"), TDB.StrReverse("icy4"), item.rec, item.icy4);
-                TDB.TDBFieldSetValueAsInteger(DBIndex, TDB.StrReverse("PLPD"), TDB.StrReverse("com5"), item.rec, item.com5);
-                TDB.TDBFieldSetValueAsInteger(DBIndex, TDB.StrReverse("PLPD"), TDB.StrReverse("con5"), item.rec, item.con5);
-                TDB.TDBFieldSetValueAsInteger(DBIndex, TDB.StrReverse("PLPD"), TDB.StrReverse("per5"), item.rec, item.per5);
-                TDB.TDBFieldSetValueAsInteger(DBIndex, TDB.StrReverse("PLPD"), TDB.StrReverse("rcv5"), item.rec, item.rcv5);
-                TDB.TDBFieldSetValueAsInteger(DBIndex, TDB.StrReverse("PLPD"), TDB.StrReverse("icx5"), item.rec, item.icx5);
-                TDB.TDBFieldSetValueAsInteger(DBIndex, TDB.StrReverse("PLPD"), TDB.StrReverse("icy5"), item.rec, item.icy5);
-                TDB.TDBFieldSetValueAsInteger(DBIndex, TDB.StrReverse("PLPD"), TDB.StrReverse("PLYL"), item.rec, item.PLYL);
+                for (int x = 1; x <= 5; x++)
+                {
+                    TDB.TDBFieldSetValueAsInteger(DBIndex, TDB.StrReverse("PLPD"), TDB.StrReverse("com" + x.ToString()), item.rec, item.progressions[x - 1].com);
+                    TDB.TDBFieldSetValueAsInteger(DBIndex, TDB.StrReverse("PLPD"), TDB.StrReverse("con" + x.ToString()), item.rec, item.progressions[x - 1].con);
+                    TDB.TDBFieldSetValueAsInteger(DBIndex, TDB.StrReverse("PLPD"), TDB.StrReverse("per" + x.ToString()), item.rec, item.progressions[x - 1].per);
+                    TDB.TDBFieldSetValueAsInteger(DBIndex, TDB.StrReverse("PLPD"), TDB.StrReverse("rcv" + x.ToString()), item.rec, item.progressions[x - 1].rcv);
+                    TDB.TDBFieldSetValueAsInteger(DBIndex, TDB.StrReverse("PLPD"), TDB.StrReverse("icx" + x.ToString()), item.rec, item.progressions[x - 1].icx);
+                    TDB.TDBFieldSetValueAsInteger(DBIndex, TDB.StrReverse("PLPD"), TDB.StrReverse("icy" + x.ToString()), item.rec, item.progressions[x - 1].icy);
+                }
             }
         }
 
@@ -235,5 +131,27 @@ namespace Madden.TeamPlaybook
         {
             return PLPD.OrderBy(s => s.PLYL).Cast<PLPD>().ToList();
         }
+    }
+
+    [Serializable]
+    public class Progression
+    {
+        public override string ToString()
+        {
+            return
+                "com: " + "[" + string.Join(", ", com) + "]\t" +
+                "con: " + "[" + string.Join(", ", con) + "]\t" +
+                "per: " + "[" + string.Join(", ", per) + "]\t" +
+                "rcv: " + "[" + string.Join(", ", rcv) + "]\t" +
+                "icx: " + "[" + string.Join(", ", icx) + "]\t" +
+                "icy: " + "[" + string.Join(", ", icy) + "]\t";
+        }
+
+        public int com;
+        public int con;
+        public int per;
+        public int rcv;
+        public int icx;
+        public int icy;
     }
 }
