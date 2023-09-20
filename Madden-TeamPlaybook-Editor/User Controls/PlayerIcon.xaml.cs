@@ -35,7 +35,7 @@ namespace MaddenTeamPlaybookEditor.User_Controls
             Player = player;
             this.ContextMenu.DataContext = this.Player;
             this.ToolTip = this.Player;
-            ShowPosition = true;
+            ShowPosition = player.DCHT == null ? false : true;
             Scale = 1.5;
             Animate = false;
             AbsolutePositioning = true;
