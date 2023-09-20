@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Madden20CustomPlaybookEditor
+namespace MaddenCustomPlaybookEditor
 {
     [Serializable]
     public class CustomPlaybookFormation

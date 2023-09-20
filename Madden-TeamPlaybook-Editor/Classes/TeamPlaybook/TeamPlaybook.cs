@@ -356,7 +356,7 @@ namespace MaddenTeamPlaybookEditor.ViewModels
             }
         }
 
-        public void AddFormation(Madden20CustomPlaybookEditor.CustomPlaybookFormation Formation, int ord = 0)
+        public void AddFormation(MaddenCustomPlaybookEditor.CustomPlaybookFormation Formation, int ord = 0)
         {
             FORM existingFORM = FORM.Where(formation => formation.form == Formation.CPFM.FORM).FirstOrDefault();
             if (existingFORM == null)
@@ -419,7 +419,7 @@ namespace MaddenTeamPlaybookEditor.ViewModels
                     count++;
                 }
 
-                foreach (Madden20CustomPlaybookEditor.CustomPlaybookSubFormation subFormation in Formation.SubFormations)
+                foreach (MaddenCustomPlaybookEditor.CustomPlaybookSubFormation subFormation in Formation.SubFormations)
                 {
                     formation.AddSubFormation(subFormation);
                     formation.SubFormations[formation.SubFormations.Count - 1].IsVisible = false;

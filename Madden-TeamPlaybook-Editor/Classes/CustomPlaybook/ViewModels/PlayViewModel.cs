@@ -9,7 +9,7 @@ using System.Windows.Data;
 using Madden.TeamPlaybook;
 using TDBAccess;
 
-namespace Madden20CustomPlaybookEditor.ViewModels
+namespace MaddenCustomPlaybookEditor.ViewModels
 {
     [Serializable]
     public class PlayVM : INotifyPropertyChanged

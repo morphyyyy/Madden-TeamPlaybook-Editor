@@ -648,7 +648,7 @@ namespace MaddenTeamPlaybookEditor.ViewModels
             }
         }
 
-        public void AddPlay(Madden20CustomPlaybookEditor.CustomPlaybookPLAY Play, int ord = 0)
+        public void AddPlay(MaddenCustomPlaybookEditor.CustomPlaybookPLAY Play, int ord = 0)
         {
             #region PLYL
 
@@ -663,27 +663,27 @@ namespace MaddenTeamPlaybookEditor.ViewModels
                 {
                     Play.PLRD[0].PLYL = Play.PBPL[0].PLYL;
                 }
-                foreach (Madden20CustomPlaybookEditor.PLYS play in Play.PLYS)
+                foreach (MaddenCustomPlaybookEditor.PLYS play in Play.PLYS)
                 {
                     play.PLYL = Play.PBPL[0].PLYL;
                 }
                 if (Play.PLCM.Count > 0)
                 {
-                    foreach (Madden20CustomPlaybookEditor.PLCM play in Play.PLCM)
+                    foreach (MaddenCustomPlaybookEditor.PLCM play in Play.PLCM)
                     {
                         play.PLYL = Play.PBPL[0].PLYL;
                     }
                 }
                 if (Play.PPCT.Count > 0)
                 {
-                    foreach (Madden20CustomPlaybookEditor.PPCT play in Play.PPCT)
+                    foreach (MaddenCustomPlaybookEditor.PPCT play in Play.PPCT)
                     {
                         play.PLYL = Play.PBPL[0].PLYL;
                     }
                 }
                 if (Play.SRFT.Count > 0)
                 {
-                    foreach (Madden20CustomPlaybookEditor.SRFT play in Play.SRFT)
+                    foreach (MaddenCustomPlaybookEditor.SRFT play in Play.SRFT)
                     {
                         play.PLYL = Play.PBPL[0].PLYL;
                     }
@@ -884,7 +884,7 @@ namespace MaddenTeamPlaybookEditor.ViewModels
                     );
                     Play.PLYS[poso].PSAL = nextAvailablePSALID;
 
-                    foreach (Madden20CustomPlaybookEditor.PSAL step in Play.PSAL[poso])
+                    foreach (MaddenCustomPlaybookEditor.PSAL step in Play.PSAL[poso])
                     {
                         PSAL CPBpsal = new PSAL
                         {
@@ -902,7 +902,7 @@ namespace MaddenTeamPlaybookEditor.ViewModels
                 }
                 else if (PSALexists == Madden.TeamPlaybook.PSAL.DoesPSALExist.No)
                 {
-                    foreach (Madden20CustomPlaybookEditor.PSAL step in Play.PSAL[poso])
+                    foreach (MaddenCustomPlaybookEditor.PSAL step in Play.PSAL[poso])
                     {
                         PSAL CPBpsal = new PSAL
                         {

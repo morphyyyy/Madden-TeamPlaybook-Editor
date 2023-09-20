@@ -9,7 +9,7 @@ using System.Windows.Controls;
 using System.Diagnostics;
 using System.Windows.Navigation;
 using System.Windows.Input;
-using Madden20CustomPlaybookEditor;
+using MaddenCustomPlaybookEditor;
 using System.Windows.Media;
 using MaddenTeamPlaybookEditor.Classes;
 using System.Windows.Documents;
@@ -23,7 +23,7 @@ namespace MaddenTeamPlaybookEditor
         public string filePath;
         public int OpenIndex = -1;
         public TeamPlaybook TeamPlaybook;
-        public Madden20CustomPlaybookEditor.ViewModels.CustomPlaybook CustomPlaybook;
+        public MaddenCustomPlaybookEditor.ViewModels.CustomPlaybook CustomPlaybook;
         private Point _lastMouseDown;
         public TreeViewItem draggedItem, _target;
         [DllImport("user32.dll")]
@@ -82,7 +82,7 @@ namespace MaddenTeamPlaybookEditor
             //tabPlaybook.DataContext = Playbook;
         }
 
-        public void BindPlaybook(Madden20CustomPlaybookEditor.ViewModels.CustomPlaybook Playbook)
+        public void BindPlaybook(MaddenCustomPlaybookEditor.ViewModels.CustomPlaybook Playbook)
         {
             wdwPlaybookEditor.Title = "Madden Team Playbook Editor - " + Path.GetFileName(Playbook.filePath);
             tvwPlaybook.DataContext = Playbook;
@@ -122,7 +122,7 @@ namespace MaddenTeamPlaybookEditor
                 uclFieldView.UpdateLayout();
             }
 
-            if (((TreeView)sender).SelectedItem is Madden20CustomPlaybookEditor.ViewModels.PlayVM)
+            if (((TreeView)sender).SelectedItem is MaddenCustomPlaybookEditor.ViewModels.PlayVM)
             {
             }
         }

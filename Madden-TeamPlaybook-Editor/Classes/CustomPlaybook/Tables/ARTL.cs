@@ -174,7 +174,7 @@ namespace Madden.CustomPlaybook
             return Convert.ToBoolean(same);
         }
 
-        public bool IsIdentical(Madden20CustomPlaybookEditor.ARTL _artl)
+        public bool IsIdentical(MaddenCustomPlaybookEditor.ARTL _artl)
         {
             int same =
                 ((rec == _artl.rec) ? 1 : 0) *

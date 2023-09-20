@@ -8,7 +8,7 @@ using TDBAccess;
 using Madden.CustomPlaybook;
 using System.Windows;
 
-namespace Madden20CustomPlaybookEditor.ViewModels
+namespace MaddenCustomPlaybookEditor.ViewModels
 {
     [Serializable]
     public class CustomPlaybook : INotifyPropertyChanged
