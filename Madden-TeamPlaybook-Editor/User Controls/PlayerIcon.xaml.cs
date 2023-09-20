@@ -67,7 +67,6 @@ namespace MaddenTeamPlaybookEditor.User_Controls
                 {
                     string label = Player.DCHT == null ? Player.EPos + (Int32.Parse(Player.DPos) > 1 ? " " + Player.DPos : "") : Player.Number.ToString();
                     FormattedText EPos = new FormattedText(
-                        //Player.EPos + depth,
                         label,
                         CultureInfo.GetCultureInfo("en-us"),
                         FlowDirection.LeftToRight,
@@ -205,7 +204,6 @@ namespace MaddenTeamPlaybookEditor.User_Controls
 
         public static DependencyProperty PlayerProperty =
             DependencyProperty.Register("Player", typeof(PlayerVM), typeof(PlayerIcon));
-
         public PlayerVM Player
         {
             get { return (PlayerVM)GetValue(PlayerProperty); }
@@ -214,7 +212,6 @@ namespace MaddenTeamPlaybookEditor.User_Controls
 
         public static DependencyProperty ShowPositionProperty =
             DependencyProperty.Register("ShowPosition", typeof(bool), typeof(PlayerIcon));
-
         public bool ShowPosition
         {
             get { return (bool)GetValue(ShowPositionProperty); }

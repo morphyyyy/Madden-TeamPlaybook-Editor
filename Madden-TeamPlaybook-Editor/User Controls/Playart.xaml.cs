@@ -18,12 +18,14 @@ namespace MaddenTeamPlaybookEditor.User_Controls
         {
             InitializeComponent();
             this.ContextMenu.DataContext = this.Player;
+            bool ShowProgression = false;
         }
 
         public Playart(PlayerVM player, bool PSALView)
         {
             InitializeComponent();
             Player = player;
+            bool ShowProgression = false;
             this.ContextMenu.DataContext = this.Player;
             Scale = 1.5;
             AbsolutePositioning = true;
@@ -167,7 +169,7 @@ namespace MaddenTeamPlaybookEditor.User_Controls
                 }
             }
 
-            if (PSALView && Player.progression != null)
+            if (PSALView && Player.progression != null && ShowProgression)
             {
                 tg = new TransformGroup();
                 tg.Children.Add(new ScaleTransform(4, 4));
@@ -222,6 +224,14 @@ namespace MaddenTeamPlaybookEditor.User_Controls
                 return (PlayerVM)GetValue(PlayerProperty);
             }
             set { SetValue(PlayerProperty, value); }
+        }
+
+        public static DependencyProperty ShowProgressionProperty =
+            DependencyProperty.Register("ShowProgression", typeof(bool), typeof(Playart));
+        public bool ShowProgression
+        {
+            get { return (bool)GetValue(ShowProgressionProperty); }
+            set { SetValue(ShowProgressionProperty, value); }
         }
 
         public static DependencyProperty PSALViewProperty =
