@@ -35,7 +35,7 @@ namespace MaddenTeamPlaybookEditor.User_Controls
             Player = player;
             this.ContextMenu.DataContext = this.Player;
             this.ToolTip = this.Player;
-            ShowPosition = player.DCHT == null ? false : true;
+            ShowPosition = true;
             Scale = 1.5;
             Animate = false;
             AbsolutePositioning = true;
@@ -65,18 +65,10 @@ namespace MaddenTeamPlaybookEditor.User_Controls
                 dc.DrawGeometry(playerIconBrush, iconPen, Player.Icon);
                 if (ShowPosition)
                 {
-                    string depth;
-                    if (Int32.Parse(Player.DPos) > 1)
-                    {
-                        depth = " " + Player.DPos;
-                    }
-                        else
-                    {
-                        depth = "";
-                    };
+                    string label = Player.DCHT == null ? Player.EPos + (Int32.Parse(Player.DPos) > 1 ? " " + Player.DPos : "") : Player.Number.ToString();
                     FormattedText EPos = new FormattedText(
                         //Player.EPos + depth,
-                        Player.Number.ToString(),
+                        label,
                         CultureInfo.GetCultureInfo("en-us"),
                         FlowDirection.LeftToRight,
                         new Typeface(new FontFamily("Tahoma"), FontStyles.Normal, FontWeights.Black, FontStretches.Normal),
