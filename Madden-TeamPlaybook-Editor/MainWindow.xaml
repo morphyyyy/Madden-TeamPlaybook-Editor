@@ -107,7 +107,7 @@
             SelectedItemChanged="tvwPlaybook_SelectedItemChanged"
             AllowDrop="True"
             MaxWidth="600"
-            MaxHeight="900"
+            Height="750"
             ItemsSource="{Binding Formations}">
 
             <TreeView.CommandBindings>
