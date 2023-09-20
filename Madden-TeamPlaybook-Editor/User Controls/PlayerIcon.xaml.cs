@@ -36,7 +36,7 @@ namespace MaddenTeamPlaybookEditor.User_Controls
             this.ContextMenu.DataContext = this.Player;
             this.ToolTip = this.Player;
             ShowPosition = true;
-            Scale = 1.5;
+            Scale = 2;
             Animate = false;
             AbsolutePositioning = true;
             this.MouseLeftButtonDown += new MouseButtonEventHandler(UserControl_MouseLeftButtonDown);
@@ -71,7 +71,7 @@ namespace MaddenTeamPlaybookEditor.User_Controls
                         CultureInfo.GetCultureInfo("en-us"),
                         FlowDirection.LeftToRight,
                         new Typeface(new FontFamily("Tahoma"), FontStyles.Normal, FontWeights.Black, FontStretches.Normal),
-                        9,
+                        6.75,
                         EPosBrush
                         );
                     PathGeometry EPosPath = EPos.BuildGeometry(new Point(EPos.Width * -.5, EPos.Height * -.5)).GetFlattenedPathGeometry();
@@ -157,6 +157,7 @@ namespace MaddenTeamPlaybookEditor.User_Controls
                 prevY = transform.Y;
             }
             draggable.ReleaseMouseCapture();
+            Player.UpdateAlignment();
             if (playerPlayart != null)
             {
                 playerPlayart.InvalidateVisual();

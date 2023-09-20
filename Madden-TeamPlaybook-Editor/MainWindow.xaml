@@ -249,14 +249,22 @@
 
         </DockPanel>
 
-        <UserControls:Field 
-            x:Name="uclFieldView" 
+        <!--<UserControls:SubFormationModal 
+            x:Name="uclSubFormationModal" 
+            DockPanel.Dock="Left"
+            VerticalAlignment="Top"
+            subFormation="{Binding tvwPlaybook.SelectedItem}"
+            DataContext="{Binding tvwPlaybook.SelectedItem}">
+        </UserControls:SubFormationModal>-->
+
+        <UserControls:PlayModal 
+            x:Name="uclPlayModal" 
             DockPanel.Dock="Left"
             VerticalAlignment="Top"
             play="{Binding tvwPlaybook.SelectedItem}"
             DataContext="{Binding tvwPlaybook.SelectedItem}">
-        </UserControls:Field>
-        
+        </UserControls:PlayModal>
+
         <!--<TabControl x:Name="tabPlaybook" ItemsSource="{Binding Formations}" Background="Transparent" BorderBrush="Transparent"  VerticalAlignment="Top" HorizontalAlignment="Left">
             <TabControl.ItemTemplate>
                 <DataTemplate DataType="{x:Type TeamPlaybookViewModels:FormationVM}">

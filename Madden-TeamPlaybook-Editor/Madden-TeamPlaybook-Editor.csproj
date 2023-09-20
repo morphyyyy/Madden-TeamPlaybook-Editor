@@ -153,8 +153,11 @@
     <Compile Include="Classes\Team\DCHT.cs" />
     <Compile Include="Classes\Team\PLAY.cs" />
     <Compile Include="Classes\UniformGridWithOrientation.cs" />
-    <Compile Include="User Controls\Field.xaml.cs">
-      <DependentUpon>Field.xaml</DependentUpon>
+    <Compile Include="User Controls\SubFormation_Modal.xaml.cs">
+      <DependentUpon>SubFormation_Modal.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="User Controls\Play_Modal.xaml.cs">
+      <DependentUpon>Play_Modal.xaml</DependentUpon>
     </Compile>
     <Compile Include="User Controls\Playart.xaml.cs">
       <DependentUpon>Playart.xaml</DependentUpon>
@@ -317,7 +320,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="User Controls\Field.xaml">
+    <Page Include="User Controls\SubFormation_Modal.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="User Controls\Play_Modal.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

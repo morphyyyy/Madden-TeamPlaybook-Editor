@@ -57,6 +57,11 @@ namespace MaddenTeamPlaybookEditor.ViewModels
         [field: NonSerializedAttribute()]
         public PathGeometry RouteCap { get; set; }
 
+        public PlayerVM()
+        {
+
+        }
+
         public PlayerVM(PLYS plys, PlayVM _Play)
         {
             Play = _Play;
@@ -87,18 +92,18 @@ namespace MaddenTeamPlaybookEditor.ViewModels
             PSAL.OrderBy(step => step.step);
             PSALpath = ConvertPSAL(PSAL);
 
-            if (PSAL.Count == 0)
-            {
-                MessageBox.Show(
-                    Play.SubFormation.Formation.PBFM.name + " " +
-                    Play.SubFormation.PBST.name + " - " +
-                    Play.PBPL.name + "\n\n" +
-                    DPos + EPos +
-                    "\nPSAL: " + PLYS.PSAL +
-                    "\nARTL: " + PLYS.ARTL,
-                    "Missing PSAL"
-                    );
-            }
+            //if (PSAL.Count == 0)
+            //{
+            //    MessageBox.Show(
+            //        Play.SubFormation.Formation.PBFM.name + " " +
+            //        Play.SubFormation.PBST.name + " - " +
+            //        Play.PBPL.name + "\n\n" +
+            //        DPos + EPos +
+            //        "\nPSAL: " + PLYS.PSAL +
+            //        "\nARTL: " + PLYS.ARTL,
+            //        "Missing PSAL"
+            //        );
+            //}
 
             foreach (Path path in PSALpath) ((PathGeometry)path.Data).Freeze();
         }
@@ -140,12 +145,23 @@ namespace MaddenTeamPlaybookEditor.ViewModels
             }
             else
             {
+                float xRatio = (float)(point.X * -.0875) / this.SETG.x___;
+                float yRatio = (float)(point.Y * -.1) / this.SETG.y___;
                 this.SETG.x___ = (float)(point.X * .0875);
                 this.SETG.y___ = (float)(point.Y * -.1);
+                this.SETP.fmtx = (int)(this.SETP.fmtx * xRatio);
+                this.SETP.fmty = (int)(this.SETP.fmty * yRatio);
+                this.SETP.artx = (int)(this.SETP.artx * xRatio);
+                this.SETP.arty = (int)(this.SETP.arty * yRatio);
                 this.Play.SubFormation.CurrentAlignment.SETG.Where(set => set == this.SETG).LastOrDefault().x___ = this.SETG.x___;
                 this.Play.SubFormation.CurrentAlignment.SETG.Where(set => set == this.SETG).LastOrDefault().y___ = this.SETG.y___;
                 XY = new Point { X = SETG.x___ * 11.4286, Y = SETG.y___ * -10 };
             }
+        }
+
+        public void UpdateAlignment()
+        {
+
         }
 
         public void UpdatePSAL(PSAL psal, Point point)
