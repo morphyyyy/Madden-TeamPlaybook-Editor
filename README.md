@@ -1,4 +1,4 @@
-# Madden-20-Team-Playbook-Editor
+# [Madden Team Playbook Editor](https://github.com/morphyyyy/Madden-TeamPlaybook-Editor/tree/master/Madden-TeamPlaybook-Editor/bin/Release)
 
 App is located in Madden20PlaybookEditor\Madden20PlaybookEditor\bin\Release
 
