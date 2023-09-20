@@ -7,6 +7,8 @@ App is located in Madden20PlaybookEditor\Madden20PlaybookEditor\bin\Release
 **All files need to live in the same folder to work correctly.
 *** Works with multiple instances running.
 
+## v2.4.0 - Added option to load roster for player numbers File>Load Roster.
+
 ## v2.3.4 - Functions > PSAL Editor now converts line/route drawings to code 8 values.  The list is copied to the clipboard for now.
 
 ## v2.3.3 - Added context menu (right-click) for Formations, Sub-Formations, Plays in PlayArt as well as players and routes in FieldArt.  Added drag and drop in FieldArt, although it doesn't update/save to the database and sticks until reloading the playbook ¯\\_(ツ)_/¯
