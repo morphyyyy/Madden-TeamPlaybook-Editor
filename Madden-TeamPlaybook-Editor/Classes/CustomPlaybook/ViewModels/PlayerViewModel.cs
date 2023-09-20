@@ -9,7 +9,7 @@ using System.Windows;
 using System.Windows.Media;
 using System.Globalization;
 
-namespace MaddenCustomPlaybookEditor.ViewModels
+namespace Madden20CustomPlaybookEditor.ViewModels
 {
     [Serializable]
     public class PlayerVM : INotifyPropertyChanged

@@ -6,7 +6,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Windows;
 using Madden.TeamPlaybook;
-using MaddenCustomPlaybookEditor.ViewModels;
+using Madden20CustomPlaybookEditor.ViewModels;
 
 namespace MaddenTeamPlaybookEditor.ViewModels
 {
@@ -346,7 +346,7 @@ namespace MaddenTeamPlaybookEditor.ViewModels
             }
         }
 
-        public void AddSubFormation(MaddenCustomPlaybookEditor.CustomPlaybookSubFormation SubFormation, int ord = 0)
+        public void AddSubFormation(Madden20CustomPlaybookEditor.CustomPlaybookSubFormation SubFormation, int ord = 0)
         {
             if (Playbook.PBST.Where(set => set.SETL == SubFormation.PGPL[0].SETL).FirstOrDefault() == null)
             {
@@ -516,7 +516,7 @@ namespace MaddenTeamPlaybookEditor.ViewModels
 
                 SubFormationVM subFormation = new SubFormationVM(CPBpbst, this);
 
-                foreach (MaddenCustomPlaybookEditor.CustomPlaybookPLAY play in SubFormation.Plays)
+                foreach (Madden20CustomPlaybookEditor.CustomPlaybookPLAY play in SubFormation.Plays)
                 {
                     subFormation.AddPlay(play);
                 }

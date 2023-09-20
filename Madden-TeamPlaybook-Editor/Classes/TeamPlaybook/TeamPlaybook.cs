@@ -356,7 +356,7 @@ namespace MaddenTeamPlaybookEditor.ViewModels
             }
         }
 
-        public void AddFormation(MaddenCustomPlaybookEditor.CustomPlaybookFormation Formation, int ord = 0)
+        public void AddFormation(Madden20CustomPlaybookEditor.CustomPlaybookFormation Formation, int ord = 0)
         {
             FORM existingFORM = FORM.Where(formation => formation.form == Formation.CPFM.FORM).FirstOrDefault();
             if (existingFORM == null)
@@ -419,7 +419,7 @@ namespace MaddenTeamPlaybookEditor.ViewModels
                     count++;
                 }
 
-                foreach (MaddenCustomPlaybookEditor.CustomPlaybookSubFormation subFormation in Formation.SubFormations)
+                foreach (Madden20CustomPlaybookEditor.CustomPlaybookSubFormation subFormation in Formation.SubFormations)
                 {
                     formation.AddSubFormation(subFormation);
                     formation.SubFormations[formation.SubFormations.Count - 1].IsVisible = false;
@@ -671,19 +671,22 @@ namespace MaddenTeamPlaybookEditor.ViewModels
             }
         }
 
-        public static int NextAvailableID(List<int> IDs)
+        public static int NextAvailableID(List<int> IDs, bool insert = false, int buffer = 0)
         {
             if (IDs == null || IDs.Count == 0) return 1;
             int ID = IDs.Max() + 1;
-            for (int i = 1; i <= ID; i++)
+            if (insert)
             {
-                if (!IDs.Contains(i))
+                for (int i = 1; i <= ID; i++)
                 {
-                    ID = i;
-                    break;
+                    if (!IDs.Contains(i))
+                    {
+                        ID = i;
+                        break;
+                    }
                 }
             }
-            return ID;
+            return ID + buffer;
         }
 
         #region IsUsing

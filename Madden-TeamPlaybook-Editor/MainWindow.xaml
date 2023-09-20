@@ -3,7 +3,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:UserControls="clr-namespace:MaddenTeamPlaybookEditor.User_Controls"
     xmlns:TeamPlaybookViewModels="clr-namespace:MaddenTeamPlaybookEditor.ViewModels"
-    xmlns:CustomPlaybookViewModels="clr-namespace:MaddenCustomPlaybookEditor.ViewModels"
+    xmlns:CustomPlaybookViewModels="clr-namespace:Madden20CustomPlaybookEditor.ViewModels"
     xmlns:local="clr-namespace:MaddenTeamPlaybookEditor"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -41,6 +41,8 @@
         <Menu DockPanel.Dock="Top" IsMainMenu="True">
             <MenuItem Header="_File">
                 <MenuItem Header="Open" Click="mnuOpen_Click"/>
+                <Separator />
+                <MenuItem Header="Load Roster" Click="mnuLoadRoster_Click"/>
                 <Separator />
                 <MenuItem Header="Save" Click="mnuSave_Click"/>
             </MenuItem>
@@ -136,7 +138,7 @@
                         </HierarchicalDataTemplate.ItemContainerStyle>
 
                         <UserControls:Formation x:Name="uclFormation" formation="{Binding}"/>
-
+                        
                     </HierarchicalDataTemplate>
 
                     <HierarchicalDataTemplate DataType="{x:Type CustomPlaybookViewModels:FormationVM}" ItemsSource="{Binding SubFormations}">
@@ -157,7 +159,7 @@
                         </HierarchicalDataTemplate.ItemContainerStyle>
 
                         <UserControls:Formation x:Name="uclFormation" formation="{Binding}"/>
-
+                        
                     </HierarchicalDataTemplate>
 
                     <HierarchicalDataTemplate DataType="{x:Type TeamPlaybookViewModels:SubFormationVM}" ItemsSource="{Binding Plays}">
@@ -251,7 +253,8 @@
             x:Name="uclFieldView" 
             DockPanel.Dock="Left"
             VerticalAlignment="Top"
-            play="{Binding ElementName=tvwPlaybook, Path=SelectedValue}">
+            play="{Binding tvwPlaybook.SelectedItem}"
+            DataContext="{Binding tvwPlaybook.SelectedItem}">
         </UserControls:Field>
         
         <!--<TabControl x:Name="tabPlaybook" ItemsSource="{Binding Formations}" Background="Transparent" BorderBrush="Transparent"  VerticalAlignment="Top" HorizontalAlignment="Left">

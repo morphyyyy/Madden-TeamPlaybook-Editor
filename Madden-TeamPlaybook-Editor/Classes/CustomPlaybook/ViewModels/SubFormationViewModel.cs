@@ -7,7 +7,7 @@ using System.Linq;
 using System.Windows;
 using Madden.TeamPlaybook;
 
-namespace MaddenCustomPlaybookEditor.ViewModels
+namespace Madden20CustomPlaybookEditor.ViewModels
 {
     [Serializable]
     public class SubFormationVM : INotifyPropertyChanged

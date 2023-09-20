@@ -124,7 +124,7 @@ namespace Madden.CustomPlaybook
                 );
         }
 
-        public bool IsIdentical(MaddenCustomPlaybookEditor.PSAL _psal)
+        public bool IsIdentical(Madden20CustomPlaybookEditor.PSAL _psal)
         {
             return Convert.ToBoolean(
                 ((psal == _psal.psal) ? 1 : 0) *

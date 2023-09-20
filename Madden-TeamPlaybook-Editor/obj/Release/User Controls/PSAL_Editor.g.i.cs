@@ -68,7 +68,7 @@ namespace MaddenTeamPlaybookEditor.User_Controls {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/Madden-TeamPlaybook-Editor;component/user%20controls/psal_editor.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/Madden-Playbook-Editor;component/user%20controls/psal_editor.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\User Controls\PSAL_Editor.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);

@@ -67,7 +67,7 @@ namespace MaddenTeamPlaybookEditor.User_Controls {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/Madden-TeamPlaybook-Editor;component/user%20controls/tables/plyl.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/Madden-Playbook-Editor;component/user%20controls/tables/plyl.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\..\User Controls\Tables\PLYL.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);

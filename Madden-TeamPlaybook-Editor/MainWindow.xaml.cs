@@ -9,7 +9,7 @@ using System.Windows.Controls;
 using System.Diagnostics;
 using System.Windows.Navigation;
 using System.Windows.Input;
-using MaddenCustomPlaybookEditor;
+using Madden20CustomPlaybookEditor;
 using System.Windows.Media;
 using MaddenTeamPlaybookEditor.Classes;
 using System.Windows.Documents;
@@ -23,7 +23,7 @@ namespace MaddenTeamPlaybookEditor
         public string filePath;
         public int OpenIndex = -1;
         public TeamPlaybook TeamPlaybook;
-        public MaddenCustomPlaybookEditor.ViewModels.CustomPlaybook CustomPlaybook;
+        public Madden20CustomPlaybookEditor.ViewModels.CustomPlaybook CustomPlaybook;
         private Point _lastMouseDown;
         public TreeViewItem draggedItem, _target;
         [DllImport("user32.dll")]
@@ -82,7 +82,7 @@ namespace MaddenTeamPlaybookEditor
             //tabPlaybook.DataContext = Playbook;
         }
 
-        public void BindPlaybook(MaddenCustomPlaybookEditor.ViewModels.CustomPlaybook Playbook)
+        public void BindPlaybook(Madden20CustomPlaybookEditor.ViewModels.CustomPlaybook Playbook)
         {
             wdwPlaybookEditor.Title = "Madden Team Playbook Editor - " + Path.GetFileName(Playbook.filePath);
             tvwPlaybook.DataContext = Playbook;
@@ -122,7 +122,7 @@ namespace MaddenTeamPlaybookEditor
                 uclFieldView.UpdateLayout();
             }
 
-            if (((TreeView)sender).SelectedItem is MaddenCustomPlaybookEditor.ViewModels.PlayVM)
+            if (((TreeView)sender).SelectedItem is Madden20CustomPlaybookEditor.ViewModels.PlayVM)
             {
             }
         }
@@ -158,12 +158,10 @@ namespace MaddenTeamPlaybookEditor
                         MessageBox.Show("Error Saving");
                     }
                     TDBAccess.TDB.TDBClose(OpenIndex);
-                    TDBAccess.TDB.TDBClose(OpenIndex + 1);
                 }
                 else if (messageBoxResult == MessageBoxResult.No)
                 {
                     TDBAccess.TDB.TDBClose(OpenIndex);
-                    TDBAccess.TDB.TDBClose(OpenIndex + 1);
                 }
                 else if (messageBoxResult == MessageBoxResult.Cancel)
                 {
@@ -179,24 +177,6 @@ namespace MaddenTeamPlaybookEditor
                 if (dictionaty.Except(MaddenTeamPlaybookEditor.ViewModels.TeamPlaybook.Tables).Count() == 0)
                 {
                     TeamPlaybook = new TeamPlaybook(filePath);
-
-                    MessageBoxResult messageBoxResult2 = MessageBox.Show("Would you like to load a Team Roster?", "Load Team Roster?", MessageBoxButton.YesNo);
-
-                    if (messageBoxResult2 == MessageBoxResult.Yes)
-                    {
-                        OpenFileDialog openFileDialog1 = new OpenFileDialog();
-                        openFileDialog1.Title = "Open Team Roster Database";
-                        openFileDialog1.Filter = "DB Files | *.db";
-                        openFileDialog1.FileName = "";
-
-                        if (openFileDialog1.ShowDialog() != false || openFileDialog1.FileName != "")
-                        {
-                            int RosterOpenIndex = TDBAccess.TDB.TDBOpen(openFileDialog1.FileName);
-                            TeamPlaybook.GetRoster();
-                            TeamPlaybook.BuildPlaybook();
-                        }
-                    }
-
                     BindPlaybook(TeamPlaybook);
                 }
                 //else if (dictionaty.Except(MaddenCustomPlaybookEditor.ViewModels.CustomPlaybook.Tables).Count() == 0)
@@ -215,6 +195,22 @@ namespace MaddenTeamPlaybookEditor
             else
             {
                 MessageBox.Show("Unable to open the database", "Error");
+            }
+        }
+
+        private void mnuLoadRoster_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog openFileDialog1 = new OpenFileDialog();
+            openFileDialog1.Title = "Open Team Roster Database";
+            openFileDialog1.Filter = "DB Files | *.db";
+            openFileDialog1.FileName = "";
+
+            if (openFileDialog1.ShowDialog() != false || openFileDialog1.FileName != "")
+            {
+                int RosterOpenIndex = TDBAccess.TDB.TDBOpen(openFileDialog1.FileName);
+                TeamPlaybook.GetRoster();
+                TeamPlaybook.BuildPlaybook();
+                TDBAccess.TDB.TDBClose(RosterOpenIndex);
             }
         }
 

@@ -310,8 +310,8 @@
             </ItemsControl.ItemContainerStyle>
             <ItemsControl.LayoutTransform>
                 <ScaleTransform 
-                    ScaleX=".45"
-                    ScaleY=".45"/>
+                    ScaleX=".333"
+                    ScaleY=".333"/>
             </ItemsControl.LayoutTransform>
         </ItemsControl>
 

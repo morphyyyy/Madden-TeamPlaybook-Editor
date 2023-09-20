@@ -23,6 +23,7 @@ namespace MaddenTeamPlaybookEditor.User_Controls
             InitializeComponent();
             this.ContextMenu.DataContext = this.Player;
             this.ToolTip = this.Player;
+            ShowPosition = false;
             this.MouseLeftButtonDown += new MouseButtonEventHandler(UserControl_MouseLeftButtonDown);
             this.MouseLeftButtonUp += new MouseButtonEventHandler(UserControl_MouseLeftButtonUp);
             this.MouseMove += new MouseEventHandler(UserControl_MouseMove);
@@ -34,7 +35,7 @@ namespace MaddenTeamPlaybookEditor.User_Controls
             Player = player;
             this.ContextMenu.DataContext = this.Player;
             this.ToolTip = this.Player;
-            ShowPosition = false;
+            ShowPosition = true;
             Scale = 1.5;
             Animate = false;
             AbsolutePositioning = true;
