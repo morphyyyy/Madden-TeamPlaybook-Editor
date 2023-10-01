@@ -27,7 +27,7 @@ namespace MaddenTeamPlaybookEditor.User_Controls
             Player = player;
             bool ShowProgression = false;
             this.ContextMenu.DataContext = this.Player;
-            Scale = 2;
+            Scale = 1.5;
             AbsolutePositioning = true;
             this.PSALView = PSALView;
         }

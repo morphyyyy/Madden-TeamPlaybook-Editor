@@ -57,11 +57,6 @@ namespace MaddenTeamPlaybookEditor.ViewModels
         [field: NonSerializedAttribute()]
         public PathGeometry RouteCap { get; set; }
 
-        public PlayerVM()
-        {
-
-        }
-
         public PlayerVM(PLYS plys, PlayVM _Play)
         {
             Play = _Play;
@@ -92,18 +87,18 @@ namespace MaddenTeamPlaybookEditor.ViewModels
             PSAL.OrderBy(step => step.step);
             PSALpath = ConvertPSAL(PSAL);
 
-            //if (PSAL.Count == 0)
-            //{
-            //    MessageBox.Show(
-            //        Play.SubFormation.Formation.PBFM.name + " " +
-            //        Play.SubFormation.PBST.name + " - " +
-            //        Play.PBPL.name + "\n\n" +
-            //        DPos + EPos +
-            //        "\nPSAL: " + PLYS.PSAL +
-            //        "\nARTL: " + PLYS.ARTL,
-            //        "Missing PSAL"
-            //        );
-            //}
+            if (PSAL.Count == 0)
+            {
+                MessageBox.Show(
+                    Play.SubFormation.Formation.PBFM.name + " " +
+                    Play.SubFormation.PBST.name + " - " +
+                    Play.PBPL.name + "\n\n" +
+                    DPos + EPos +
+                    "\nPSAL: " + PLYS.PSAL +
+                    "\nARTL: " + PLYS.ARTL,
+                    "Missing PSAL"
+                    );
+            }
 
             foreach (Path path in PSALpath) ((PathGeometry)path.Data).Freeze();
         }
@@ -145,23 +140,12 @@ namespace MaddenTeamPlaybookEditor.ViewModels
             }
             else
             {
-                float xRatio = (float)(point.X * .0875) / this.SETG.x___;
-                float yRatio = (float)(point.Y * -.1) / this.SETG.y___;
                 this.SETG.x___ = (float)(point.X * .0875);
                 this.SETG.y___ = (float)(point.Y * -.1);
-                this.SETP.fmtx = (int)(this.SETP.fmtx * xRatio);
-                this.SETP.fmty = (int)(this.SETP.fmty * yRatio);
-                this.SETP.artx = (int)(this.SETP.artx * xRatio);
-                this.SETP.arty = (int)(this.SETP.arty * yRatio);
                 this.Play.SubFormation.CurrentAlignment.SETG.Where(set => set == this.SETG).LastOrDefault().x___ = this.SETG.x___;
                 this.Play.SubFormation.CurrentAlignment.SETG.Where(set => set == this.SETG).LastOrDefault().y___ = this.SETG.y___;
                 XY = new Point { X = SETG.x___ * 11.4286, Y = SETG.y___ * -10 };
             }
-        }
-
-        public void UpdateAlignment()
-        {
-
         }
 
         public void UpdatePSAL(PSAL psal, Point point)
@@ -180,7 +164,6 @@ namespace MaddenTeamPlaybookEditor.ViewModels
             #region ARTL
 
             ARTL = Play.SubFormation.Formation.Playbook.ARTL.FirstOrDefault(step => step.artl == PLYS.ARTL);
-            ARTLpath = new List<Path>();
             if (ARTL == null)
             {
                 MessageBox.Show(
@@ -200,6 +183,7 @@ namespace MaddenTeamPlaybookEditor.ViewModels
             }
             else
             {
+                ARTLpath = new List<Path>();
                 List<int> routeIndices = new List<int>();
                 for (int i = 0; i <= 11; i++)
                 {
@@ -357,30 +341,27 @@ namespace MaddenTeamPlaybookEditor.ViewModels
                 //Get Zone Size
                 int EndOfList = ARTL.ARTList.FindIndex(playart => playart.ct != 0);
                 if (EndOfList < 0) EndOfList = 0;
-                if (ARTL.ARTList.Count > 0)
+                switch (ARTL.ARTList[EndOfList].ct)
                 {
-                    switch (ARTL.ARTList[EndOfList].ct)
-                    {
-                        case 3: //Deep quarter, hook, flat
-                            RouteCap = ARTL.QuarterHookFlat;
-                            break;
+                    case 3: //Deep quarter, hook, flat
+                        RouteCap = ARTL.QuarterHookFlat;
+                        break;
 
-                        case 4: //Deep third
-                            RouteCap = ARTL.DeepThird;
-                            break;
+                    case 4: //Deep third
+                        RouteCap = ARTL.DeepThird;
+                        break;
 
-                        case 5: //Deep half
-                            RouteCap = ARTL.DeepHalf;
-                            break;
+                    case 5: //Deep half
+                        RouteCap = ARTL.DeepHalf;
+                        break;
 
-                        case 6: //QB spy
-                            RouteCap = ARTL.QBSpy;
-                            break;
-
-                        default: //Arrow
-                            RouteCap = ARTL.Arrow;
-                            break;
-                    }
+                    case 6: //QB spy
+                        RouteCap = ARTL.QBSpy;
+                        break;
+                    
+                    default: //Arrow
+                        RouteCap = ARTL.Arrow;
+                        break;
                 }
             }
         }

@@ -99,11 +99,6 @@ namespace MaddenTeamPlaybookEditor.ViewModels
         private bool _isVisible { get; set; }
         private bool _isSelected { get; set; }
 
-        public PlayVM()
-        {
-
-        }
-
         public PlayVM(PBPL pbpl, SubFormationVM _SubFormation = null, SituationVM _Gameplan = null)
         {
             IsVisible = false;

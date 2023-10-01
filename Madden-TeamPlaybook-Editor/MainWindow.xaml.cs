@@ -98,45 +98,28 @@ namespace MaddenTeamPlaybookEditor
         {
             if (((TreeView)sender).SelectedItem is MaddenTeamPlaybookEditor.ViewModels.FormationVM)
             {
-                uclPlayModal.cvsField.Children.RemoveRange(1, uclPlayModal.cvsField.Children.Count - 1);
+                //((FormationVM)((TreeView)sender).SelectedItem).IsSelected = true;
             }
 
             if (((TreeView)sender).SelectedItem is MaddenTeamPlaybookEditor.ViewModels.SubFormationVM)
             {
-                uclPlayModal.subFormation = (SubFormationVM)((TreeView)sender).SelectedItem;
-                uclPlayModal.DataContext = (SubFormationVM)((TreeView)sender).SelectedItem;
-                uclPlayModal.cvsField.Children.RemoveRange(1, uclPlayModal.cvsField.Children.Count - 1);
-                foreach (Madden.TeamPlaybook.SETG setg in uclPlayModal.subFormation.CurrentAlignment.SETG)
-                {
-                    Madden.TeamPlaybook.PLYS plys = new Madden.TeamPlaybook.PLYS { poso = uclPlayModal.subFormation.CurrentPackage.Where(poso => poso.setp == setg.SETP).FirstOrDefault().poso };
-                    uclPlayModal.cvsField.Children.Add(
-                        new PlayerIcon(
-                            new PlayerVM(
-                                plys,
-                                new PlayVM{ 
-                                    SubFormation = uclPlayModal.subFormation, 
-                                    PLYS = new List<Madden.TeamPlaybook.PLYS> { plys },
-                                    SRFT = new List<Madden.TeamPlaybook.SRFT>(),
-                                    PBPL = new Madden.TeamPlaybook.PBPL(),
-                                    PLYL = new Madden.TeamPlaybook.PLYL()
-                                }
-                            )
-                        )
-                    );
-                }
-                uclPlayModal.UpdateLayout();
+                //uclFieldView.subFormation = (SubFormationVM)((TreeView)sender).SelectedItem;
+                //uclFieldView.DataContext = (SubFormationVM)((TreeView)sender).SelectedItem;
+                //uclFieldView.cvsField.Children.RemoveRange(1, uclFieldView.cvsField.Children.Count - 1);
+                //foreach (PlayerVM player in uclFieldView.play.PlayerPlayartView) uclFieldView.cvsField.Children.Add(new PlayerIcon(player));
+                //uclFieldView.UpdateLayout();
             }
 
             if (((TreeView)sender).SelectedItem is MaddenTeamPlaybookEditor.ViewModels.PlayVM)
             {
-                uclPlayModal.play = (PlayVM)((TreeView)sender).SelectedItem;
-                uclPlayModal.DataContext = (PlayVM)((TreeView)sender).SelectedItem;
-                //uclPlayModal.iclPSALs.ItemsSource = ((PlayVM)((TreeView)sender).SelectedItem).PlayerPlayartView;
-                //uclPlayModal.iclIcons.ItemsSource = ((PlayVM)((TreeView)sender).SelectedItem).PlayerPlayartView;
-                uclPlayModal.cvsField.Children.RemoveRange(1, uclPlayModal.cvsField.Children.Count - 1);
-                foreach (PlayerVM player in uclPlayModal.play.PlayerPlayartView) uclPlayModal.cvsField.Children.Add(new Playart(player, true));
-                foreach (PlayerVM player in uclPlayModal.play.PlayerPlayartView) uclPlayModal.cvsField.Children.Add(new PlayerIcon(player));
-                uclPlayModal.UpdateLayout();
+                uclFieldView.play = (PlayVM)((TreeView)sender).SelectedItem;
+                uclFieldView.DataContext = (PlayVM)((TreeView)sender).SelectedItem;
+                //uclFieldView.iclPSALs.ItemsSource = ((PlayVM)((TreeView)sender).SelectedItem).PlayerPlayartView;
+                //uclFieldView.iclIcons.ItemsSource = ((PlayVM)((TreeView)sender).SelectedItem).PlayerPlayartView;
+                uclFieldView.cvsField.Children.RemoveRange(1, uclFieldView.cvsField.Children.Count - 1);
+                foreach (PlayerVM player in uclFieldView.play.PlayerPlayartView) uclFieldView.cvsField.Children.Add(new Playart(player, true));
+                foreach (PlayerVM player in uclFieldView.play.PlayerPlayartView) uclFieldView.cvsField.Children.Add(new PlayerIcon(player));
+                uclFieldView.UpdateLayout();
             }
 
             if (((TreeView)sender).SelectedItem is MaddenCustomPlaybookEditor.ViewModels.PlayVM)

@@ -31,11 +31,6 @@ namespace MaddenTeamPlaybookEditor.ViewModels
         private bool _isVisible { get; set; }
         private bool _isSelected { get; set; }
 
-        public FormationVM()
-        {
-
-        }
-
         public FormationVM(PBFM pbfm, TeamPlaybook _Playbook, TeamPlaybook _PlaybookSource = null)
         {
             IsVisible = true;

@@ -36,7 +36,7 @@ namespace MaddenTeamPlaybookEditor.User_Controls
             this.ContextMenu.DataContext = this.Player;
             this.ToolTip = this.Player;
             ShowPosition = true;
-            Scale = 2;
+            Scale = 1.5;
             Animate = false;
             AbsolutePositioning = true;
             this.MouseLeftButtonDown += new MouseButtonEventHandler(UserControl_MouseLeftButtonDown);
@@ -71,7 +71,7 @@ namespace MaddenTeamPlaybookEditor.User_Controls
                         CultureInfo.GetCultureInfo("en-us"),
                         FlowDirection.LeftToRight,
                         new Typeface(new FontFamily("Tahoma"), FontStyles.Normal, FontWeights.Black, FontStretches.Normal),
-                        6.75,
+                        9,
                         EPosBrush
                         );
                     PathGeometry EPosPath = EPos.BuildGeometry(new Point(EPos.Width * -.5, EPos.Height * -.5)).GetFlattenedPathGeometry();
@@ -151,14 +151,12 @@ namespace MaddenTeamPlaybookEditor.User_Controls
             isDragging = false;
             var draggable = sender as UserControl;
             var transform = draggable.RenderTransform as TranslateTransform;
-            var currentPosition = e.GetPosition((UIElement)Parent);
             if (transform != null)
             {
                 prevX = transform.X;
                 prevY = transform.Y;
             }
             draggable.ReleaseMouseCapture();
-            Player.UpdateAlignment();
             if (playerPlayart != null)
             {
                 playerPlayart.InvalidateVisual();
@@ -186,7 +184,7 @@ namespace MaddenTeamPlaybookEditor.User_Controls
                     playerPlayart.InvalidateVisual();
                 }
                 Console.WriteLine(currentPosition);
-                Console.WriteLine("SETP.fmtx:{0}\tSETP.fmty:{1}\tSETP.artx:{2}\tSETP.arty:{3}\t", Player.SETP.fmtx, Player.SETP.fmty, Player.SETP.artx, Player.SETP.arty);
+                Console.WriteLine(transform.X + "," + transform.Y);
             }
         }
 
