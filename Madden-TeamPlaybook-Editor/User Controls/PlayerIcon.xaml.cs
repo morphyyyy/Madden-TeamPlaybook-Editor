@@ -151,6 +151,7 @@ namespace MaddenTeamPlaybookEditor.User_Controls
             isDragging = false;
             var draggable = sender as UserControl;
             var transform = draggable.RenderTransform as TranslateTransform;
+            var currentPosition = e.GetPosition((UIElement)Parent);
             if (transform != null)
             {
                 prevX = transform.X;
@@ -185,7 +186,7 @@ namespace MaddenTeamPlaybookEditor.User_Controls
                     playerPlayart.InvalidateVisual();
                 }
                 Console.WriteLine(currentPosition);
-                Console.WriteLine(transform.X + "," + transform.Y);
+                Console.WriteLine("SETP.fmtx:{0}\tSETP.fmty:{1}\tSETP.artx:{2}\tSETP.arty:{3}\t", Player.SETP.fmtx, Player.SETP.fmty, Player.SETP.artx, Player.SETP.arty);
             }
         }
 
