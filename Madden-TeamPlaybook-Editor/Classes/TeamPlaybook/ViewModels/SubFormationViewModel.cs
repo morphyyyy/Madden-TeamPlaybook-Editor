@@ -130,6 +130,11 @@ namespace MaddenTeamPlaybookEditor.ViewModels
         private bool _isVisible { get; set; }
         private bool _isSelected { get; set; }
 
+        public SubFormationVM()
+        {
+
+        }
+
         public SubFormationVM(PBST pbst, FormationVM _Formation)
         {
             IsVisible = false;
