@@ -36,7 +36,7 @@
 
         <Image x:Name="imgField" Height="900" Width="533" Stretch="UniformToFill" Visibility="Visible" Source="/Resources/full_field.jpg" />
 
-        <!--<ItemsControl 
+        <ItemsControl 
             IsEnabled="true"
             x:Name="iclPSALs"
             DockPanel.Dock="Top"
@@ -112,20 +112,6 @@
                     <Setter 
                     Property="Canvas.Top" 
                     Value="{Binding XY.Y, Mode=TwoWay}"/>
-                    --><!--<Style.Triggers>
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Effect">
-                                <Setter.Value>
-                                    <DropShadowEffect ShadowDepth="0" Color="MediumPurple" Opacity="1" BlurRadius="20"/>
-                                </Setter.Value>
-                            </Setter>
-                            <Setter Property="RenderTransform">
-                                <Setter.Value>
-                                    <ScaleTransform ScaleX="2" ScaleY="2"/>
-                                </Setter.Value>
-                            </Setter>
-                        </Trigger>
-                    </Style.Triggers>--><!--
                 </Style>
             </ItemsControl.ItemContainerStyle>
             <ItemsControl.RenderTransform>
@@ -133,7 +119,7 @@
                     X="266.5"
                     Y="450"/>
             </ItemsControl.RenderTransform>
-        </ItemsControl>-->
+        </ItemsControl>
         
     </Canvas>
     

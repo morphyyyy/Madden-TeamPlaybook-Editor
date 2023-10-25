@@ -1,6 +1,7 @@
 ﻿using MaddenTeamPlaybookEditor.ViewModels;
 using System;
 using System.Globalization;
+using System.Linq;
 using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Controls;
@@ -17,6 +18,7 @@ namespace MaddenTeamPlaybookEditor.User_Controls
     {
         [DllImport("User32.dll")]
         private static extern bool SetCursorPos(int X, int Y);
+        public bool draggable = true;
 
         public PlayerIcon()
         {
@@ -120,73 +122,82 @@ namespace MaddenTeamPlaybookEditor.User_Controls
 
         private void UserControl_MouseLeftButtonDown(Object sender, MouseButtonEventArgs e)
         {
-            ContextMenu.IsOpen = false;
-            isDragging = true;
-            var draggableControl = sender as UserControl;
-            DependencyObject parent = VisualTreeHelper.GetParent(sender as DependencyObject);
-            Console.WriteLine(Canvas.GetLeft(sender as UIElement) + "," + Canvas.GetTop(sender as UIElement));
-            mousePosition = e.GetPosition((UIElement)Parent);
-            draggableControl.CaptureMouse();
-            playerPlayart = GetPlayart();
+            if (draggable)
+            {
+                ContextMenu.IsOpen = false;
+                isDragging = true;
+                var draggableControl = sender as UserControl;
+                DependencyObject parent = VisualTreeHelper.GetParent(sender as DependencyObject);
+                Console.WriteLine(Canvas.GetLeft(sender as UIElement) + "," + Canvas.GetTop(sender as UIElement));
+                mousePosition = e.GetPosition((UIElement)Parent);
+                draggableControl.CaptureMouse();
+                playerPlayart = GetPlayart();
 
-            //Convert PSALPath back to DistDir to check PSALEditor
+                //Convert PSALPath back to DistDir to check PSALEditor
 
-            //PathGeometry pathGeo = Player.PSALpath[0].Data as PathGeometry;
-            //PolyLineSegment polyLineSeg = pathGeo.Figures[0].Segments[0] as PolyLineSegment;
-            //for (int i = 0; i < polyLineSeg.Points.Count; i++)
-            //{
-            //    if (i > 0)
-            //    {
-            //        Console.WriteLine(PlayerVM.XYtoMoveDistDir(new Point(polyLineSeg.Points[i].X - polyLineSeg.Points[i-1].X, -polyLineSeg.Points[i].Y - -polyLineSeg.Points[i - 1].Y)));
-            //    }
-            //    else
-            //    {
-            //        Console.WriteLine(PlayerVM.XYtoMoveDistDir(new Point(polyLineSeg.Points[i].X, -polyLineSeg.Points[i].Y)));
-            //    }
-            //}
+                //PathGeometry pathGeo = Player.PSALpath[0].Data as PathGeometry;
+                //PolyLineSegment polyLineSeg = pathGeo.Figures[0].Segments[0] as PolyLineSegment;
+                //for (int i = 0; i < polyLineSeg.Points.Count; i++)
+                //{
+                //    if (i > 0)
+                //    {
+                //        Console.WriteLine(PlayerVM.XYtoMoveDistDir(new Point(polyLineSeg.Points[i].X - polyLineSeg.Points[i-1].X, -polyLineSeg.Points[i].Y - -polyLineSeg.Points[i - 1].Y)));
+                //    }
+                //    else
+                //    {
+                //        Console.WriteLine(PlayerVM.XYtoMoveDistDir(new Point(polyLineSeg.Points[i].X, -polyLineSeg.Points[i].Y)));
+                //    }
+                //}
+            }
         }
 
         private void UserControl_MouseLeftButtonUp(Object sender, MouseButtonEventArgs e)
         {
-            isDragging = false;
-            var draggable = sender as UserControl;
-            var transform = draggable.RenderTransform as TranslateTransform;
-            var currentPosition = e.GetPosition((UIElement)Parent);
-            if (transform != null)
+            if (draggable)
             {
-                prevX = transform.X;
-                prevY = transform.Y;
-            }
-            draggable.ReleaseMouseCapture();
-            Player.UpdateAlignment();
-            if (playerPlayart != null)
-            {
-                playerPlayart.InvalidateVisual();
+                isDragging = false;
+                var draggable = sender as UserControl;
+                var transform = draggable.RenderTransform as TranslateTransform;
+                var currentPosition = e.GetPosition((UIElement)Parent);
+                if (transform != null)
+                {
+                    prevX = transform.X;
+                    prevY = transform.Y;
+                }
+                Player.UpdatePlayer();
+                draggable.ReleaseMouseCapture();
+                if (playerPlayart != null)
+                {
+                    playerPlayart.InvalidateVisual();
+                }
             }
         }
 
         private void UserControl_MouseMove(Object sender, MouseEventArgs e)
         {
-            var draggableControl = sender as UserControl;
-            if (isDragging && draggableControl != null)
+            if (draggable)
             {
-                var currentPosition = e.GetPosition((UIElement)Parent);
-                var transform = draggableControl.RenderTransform as TranslateTransform;
-                if (transform == null)
+                var draggableControl = sender as UserControl;
+                if (isDragging && draggableControl != null)
                 {
-                    transform = new TranslateTransform();
-                    draggableControl.RenderTransform = transform;
+                    var currentPosition = e.GetPosition((UIElement)Parent);
+                    var transform = draggableControl.RenderTransform as TranslateTransform;
+                    if (transform == null)
+                    {
+                        transform = new TranslateTransform();
+                        draggableControl.RenderTransform = transform;
+                    }
+                    transform.X = currentPosition.X - mousePosition.X + prevX;
+                    transform.Y = currentPosition.Y - mousePosition.Y + prevY;
+                    Player.UpdateXY(new Point(currentPosition.X - TeamPlaybook.LOS.X, currentPosition.Y - TeamPlaybook.LOS.Y));
+                    if (playerPlayart != null)
+                    {
+                        playerPlayart.InvalidateVisual();
+                    }
+                    Console.WriteLine(currentPosition);
+                    Console.WriteLine("SETP.fmtx:{0}\tSETP.fmty:{1}\tSETP.artx:{2}\tSETP.arty:{3}\t", Player.SETP.fmtx, Player.SETP.fmty, Player.SETP.artx, Player.SETP.arty);
                 }
-                transform.X = currentPosition.X - mousePosition.X + prevX;
-                transform.Y = currentPosition.Y - mousePosition.Y + prevY;
-                Player.UpdateXY(new Point(currentPosition.X - TeamPlaybook.LOS.X, currentPosition.Y - TeamPlaybook.LOS.Y));
-                Player.GetPSAL();
-                if (playerPlayart != null)
-                {
-                    playerPlayart.InvalidateVisual();
-                }
-                Console.WriteLine(currentPosition);
-                Console.WriteLine("SETP.fmtx:{0}\tSETP.fmty:{1}\tSETP.artx:{2}\tSETP.arty:{3}\t", Player.SETP.fmtx, Player.SETP.fmty, Player.SETP.artx, Player.SETP.arty);
+
             }
         }
 

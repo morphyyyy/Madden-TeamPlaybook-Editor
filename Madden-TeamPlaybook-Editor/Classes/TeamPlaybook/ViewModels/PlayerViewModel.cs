@@ -66,6 +66,11 @@ namespace MaddenTeamPlaybookEditor.ViewModels
         {
             Play = _Play;
             PLYS = Play.PLYS.Where(player => player.poso == plys.poso).FirstOrDefault();
+            UpdatePlayer();
+        }
+
+        public void UpdatePlayer()
+        {
             GetAssignment();
             GetARTL();
             GetPSAL();

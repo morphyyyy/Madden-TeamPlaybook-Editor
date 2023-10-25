@@ -115,6 +115,7 @@ namespace Madden.TeamPlaybook
 
             foreach (PLPD item in PLPD)
             {
+                TDB.TDBFieldSetValueAsInteger(DBIndex, TDB.StrReverse("PLPD"), TDB.StrReverse("PLYL"), item.rec, item.PLYL);
                 for (int x = 1; x <= 5; x++)
                 {
                     TDB.TDBFieldSetValueAsInteger(DBIndex, TDB.StrReverse("PLPD"), TDB.StrReverse("com" + x.ToString()), item.rec, item.progressions[x - 1].com);
