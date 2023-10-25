@@ -32,9 +32,9 @@
         </Style>
     </UserControl.Resources>
 
-    <Canvas x:Name="cvsField" Height="900" Width="533">
+    <Canvas x:Name="cvsField" Height="800" Width="533">
 
-        <Image x:Name="imgField" Height="900" Width="533" Stretch="UniformToFill" Visibility="Visible" Source="/Resources/full_field.jpg" />
+        <Image x:Name="imgField" Height="800" Width="533" Stretch="UniformToFill" Visibility="Visible" Source="/Resources/full_field.jpg" />
 
         <ItemsControl 
             IsEnabled="true"
