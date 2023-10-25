@@ -1,4 +1,5 @@
 ﻿using MaddenTeamPlaybookEditor.ViewModels;
+using System;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -31,12 +32,11 @@ namespace MaddenTeamPlaybookEditor.User_Controls
         {
             get
             {
-                PlayVM playVM = GetValue(PlayProperty) as PlayVM;
-                return playVM;
+                Console.WriteLine(iclPSALs.ItemsSource);
+                return GetValue(PlayProperty) as PlayVM;
             }
             set
             {
-                var property = value;
                 SetValue(PlayProperty, value);
             }
         }

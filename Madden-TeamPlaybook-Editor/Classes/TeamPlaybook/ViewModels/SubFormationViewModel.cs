@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
-using System.Security.Cryptography;
 using System.Windows;
 using Madden.TeamPlaybook;
 
@@ -763,37 +761,37 @@ namespace MaddenTeamPlaybookEditor.ViewModels
                 });
                 CPBplpd.progressions.Add(new Progression
                 {
-                    com = Play.PLPD[0].com1,
-                    con = Play.PLPD[0].con1,
-                    per = Play.PLPD[0].per1,
-                    rcv = Play.PLPD[0].rcv1,
+                    com = Play.PLPD[0].com2,
+                    con = Play.PLPD[0].con2,
+                    per = Play.PLPD[0].per2,
+                    rcv = Play.PLPD[0].rcv2,
                     icx = 0,
                     icy = 0
                 });
                 CPBplpd.progressions.Add(new Progression
                 {
-                    com = Play.PLPD[0].com1,
-                    con = Play.PLPD[0].con1,
-                    per = Play.PLPD[0].per1,
-                    rcv = Play.PLPD[0].rcv1,
+                    com = Play.PLPD[0].com3,
+                    con = Play.PLPD[0].con3,
+                    per = Play.PLPD[0].per3,
+                    rcv = Play.PLPD[0].rcv3,
                     icx = 0,
                     icy = 0
                 });
                 CPBplpd.progressions.Add(new Progression
                 {
-                    com = Play.PLPD[0].com1,
-                    con = Play.PLPD[0].con1,
-                    per = Play.PLPD[0].per1,
-                    rcv = Play.PLPD[0].rcv1,
+                    com = Play.PLPD[0].com4,
+                    con = Play.PLPD[0].con4,
+                    per = Play.PLPD[0].per4,
+                    rcv = Play.PLPD[0].rcv4,
                     icx = 0,
                     icy = 0
                 });
                 CPBplpd.progressions.Add(new Progression
                 {
-                    com = Play.PLPD[0].com1,
-                    con = Play.PLPD[0].con1,
-                    per = Play.PLPD[0].per1,
-                    rcv = Play.PLPD[0].rcv1,
+                    com = Play.PLPD[0].com5,
+                    con = Play.PLPD[0].con5,
+                    per = Play.PLPD[0].per5,
+                    rcv = Play.PLPD[0].rcv5,
                     icx = 0,
                     icy = 0
                 });

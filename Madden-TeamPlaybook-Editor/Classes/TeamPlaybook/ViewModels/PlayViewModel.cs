@@ -116,8 +116,19 @@ namespace MaddenTeamPlaybookEditor.ViewModels
                 PLYL = new PLYL();
                 MessageBox.Show(SubFormation.Formation.PBFM.name + " - " + SubFormation.PBST.name + " - " + PBPL.name, "Missing PLYL!!!");
             }
-            PLPD = SubFormation.Formation.Playbook.PLPD.Where(play => play.PLYL == pbpl.PLYL).FirstOrDefault();
-            PLRD = SubFormation.Formation.Playbook.PLRD.Where(play => play.PLYL == pbpl.PLYL).FirstOrDefault();
+            UpdatePlay();
+            GetPlayers();
+
+            try { PlayType = TeamPlaybook.PlayType[PLYL.PLYT]; }
+            catch { PlayType = ""; }
+
+            PlayArtFilePath = "pack://siteoforigin:,,,/playart/File" + pbpl.PLYL.ToString().PadLeft(5, '0') + ".PNG";
+        }
+
+        public void UpdatePlay()
+        {
+            PLPD = SubFormation.Formation.Playbook.PLPD.Where(play => play.PLYL == PBPL.PLYL).FirstOrDefault();
+            PLRD = SubFormation.Formation.Playbook.PLRD.Where(play => play.PLYL == PBPL.PLYL).FirstOrDefault();
             GetAudibles();
             GetSituations();
             GetPBAU();
@@ -126,12 +137,6 @@ namespace MaddenTeamPlaybookEditor.ViewModels
             GetPPCT();
             GetSDEF();
             GetSRFT();
-            GetPlayers();
-
-            try { PlayType = TeamPlaybook.PlayType[PLYL.PLYT]; }
-            catch { PlayType = ""; }
-
-            PlayArtFilePath = "pack://siteoforigin:,,,/playart/File" + pbpl.PLYL.ToString().PadLeft(5, '0') + ".PNG";
         }
 
         public void AddHiddenSubFormation(PlayVM Play, TeamPlaybook Playbook)
@@ -170,6 +175,11 @@ namespace MaddenTeamPlaybookEditor.ViewModels
                 PLYS.Add(player);
                 Players.Add(new PlayerVM(player, this));
             }
+            GetPlayerPlayartViewList();
+        }
+
+        public void GetPlayerPlayartViewList()
+        {
             PlayerPlayartView = CollectionViewSource.GetDefaultView(Players);
             PlayerPlayartView.SortDescriptions.Add(new SortDescription("artlColor.Order", ListSortDirection.Ascending));
         }

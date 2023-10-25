@@ -109,7 +109,7 @@
             IsEnabled="False"
             x:Name="iclPlayarts"
             DockPanel.Dock="Top"
-            ItemsSource="{Binding PlayerPlayartView}">
+            ItemsSource="{Binding Players}">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
                         <Canvas 
@@ -146,7 +146,7 @@
             IsEnabled="False"
             x:Name="iclIcons"
             DockPanel.Dock="Top"
-            ItemsSource="{Binding PlayerPlayartView}">
+            ItemsSource="{Binding Players}">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
                         <Canvas 

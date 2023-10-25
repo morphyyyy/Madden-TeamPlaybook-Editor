@@ -66,6 +66,11 @@ namespace MaddenTeamPlaybookEditor.ViewModels
         {
             Play = _Play;
             PLYS = Play.PLYS.Where(player => player.poso == plys.poso).FirstOrDefault();
+            UpdatePlayer();
+        }
+
+        public void UpdatePlayer()
+        {
             GetAssignment();
             GetARTL();
             GetPSAL();
@@ -145,7 +150,7 @@ namespace MaddenTeamPlaybookEditor.ViewModels
             }
             else
             {
-                float xRatio = (float)(point.X * -.0875) / this.SETG.x___;
+                float xRatio = (float)(point.X * .0875) / this.SETG.x___;
                 float yRatio = (float)(point.Y * -.1) / this.SETG.y___;
                 this.SETG.x___ = (float)(point.X * .0875);
                 this.SETG.y___ = (float)(point.Y * -.1);
@@ -180,6 +185,7 @@ namespace MaddenTeamPlaybookEditor.ViewModels
             #region ARTL
 
             ARTL = Play.SubFormation.Formation.Playbook.ARTL.FirstOrDefault(step => step.artl == PLYS.ARTL);
+            ARTLpath = new List<Path>();
             if (ARTL == null)
             {
                 MessageBox.Show(
@@ -199,7 +205,6 @@ namespace MaddenTeamPlaybookEditor.ViewModels
             }
             else
             {
-                ARTLpath = new List<Path>();
                 List<int> routeIndices = new List<int>();
                 for (int i = 0; i <= 11; i++)
                 {
@@ -357,27 +362,30 @@ namespace MaddenTeamPlaybookEditor.ViewModels
                 //Get Zone Size
                 int EndOfList = ARTL.ARTList.FindIndex(playart => playart.ct != 0);
                 if (EndOfList < 0) EndOfList = 0;
-                switch (ARTL.ARTList[EndOfList].ct)
+                if (ARTL.ARTList.Count > 0)
                 {
-                    case 3: //Deep quarter, hook, flat
-                        RouteCap = ARTL.QuarterHookFlat;
-                        break;
+                    switch (ARTL.ARTList[EndOfList].ct)
+                    {
+                        case 3: //Deep quarter, hook, flat
+                            RouteCap = ARTL.QuarterHookFlat;
+                            break;
 
-                    case 4: //Deep third
-                        RouteCap = ARTL.DeepThird;
-                        break;
+                        case 4: //Deep third
+                            RouteCap = ARTL.DeepThird;
+                            break;
 
-                    case 5: //Deep half
-                        RouteCap = ARTL.DeepHalf;
-                        break;
+                        case 5: //Deep half
+                            RouteCap = ARTL.DeepHalf;
+                            break;
 
-                    case 6: //QB spy
-                        RouteCap = ARTL.QBSpy;
-                        break;
-                    
-                    default: //Arrow
-                        RouteCap = ARTL.Arrow;
-                        break;
+                        case 6: //QB spy
+                            RouteCap = ARTL.QBSpy;
+                            break;
+
+                        default: //Arrow
+                            RouteCap = ARTL.Arrow;
+                            break;
+                    }
                 }
             }
         }

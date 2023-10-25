@@ -138,10 +138,6 @@ namespace MaddenTeamPlaybookEditor
                 foreach (PlayerVM player in uclPlayModal.play.PlayerPlayartView) uclPlayModal.cvsField.Children.Add(new PlayerIcon(player));
                 uclPlayModal.UpdateLayout();
             }
-
-            if (((TreeView)sender).SelectedItem is MaddenCustomPlaybookEditor.ViewModels.PlayVM)
-            {
-            }
         }
 
         #endregion

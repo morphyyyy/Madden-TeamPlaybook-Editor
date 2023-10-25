@@ -52,12 +52,20 @@ namespace MaddenTeamPlaybookEditor.User_Controls
 
             if (RoutePoints.Count > 0)
             {
+                tg = new TransformGroup();
+                //for (int n = 0; n < RoutePoints.Count() - 1; n++)
+                //{
+                //    tg.Children.Add(new TranslateTransform(RoutePoints[n].X, RoutePoints[n].Y));
+                //    dc.PushTransform(tg);
+                //    dc.DrawGeometry(RouteBrush, routePen, new EllipseGeometry(new Rect(new Size(20, 20))));
+                //    dc.Pop();
+                //}
+
                 dc.DrawGeometry(null, routePen, Route);
 
                 Route.GetPointAtFractionLength(1, out pos1, out tangent1);
                 angleInRadians = Math.Atan2(tangent1.Y, tangent1.X);
                 angleInDegrees = angleInRadians * 180 / Math.PI;
-                tg = new TransformGroup();
                 tg.Children.Add(new RotateTransform(angleInDegrees));
                 tg.Children.Add(new ScaleTransform(2, 2));
                 tg.Children.Add(new TranslateTransform(pos1.X, pos1.Y));
@@ -65,6 +73,7 @@ namespace MaddenTeamPlaybookEditor.User_Controls
                 dc.DrawGeometry(RouteBrush, endCapPen, ARTL.Arrow);
                 dc.Pop();
             }
+
         }
 
         private void PSAL_Canvas_MouseDown(object sender, MouseButtonEventArgs e)
