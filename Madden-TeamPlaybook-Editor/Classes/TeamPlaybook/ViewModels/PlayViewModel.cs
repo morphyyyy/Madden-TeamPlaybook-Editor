@@ -178,6 +178,14 @@ namespace MaddenTeamPlaybookEditor.ViewModels
             GetPlayerPlayartViewList();
         }
 
+        public void UpdatePlayers()
+        {
+            foreach (PlayerVM player in Players)
+            {
+                player.UpdatePlayer();
+            }
+        }
+
         public void GetPlayerPlayartViewList()
         {
             PlayerPlayartView = CollectionViewSource.GetDefaultView(Players);

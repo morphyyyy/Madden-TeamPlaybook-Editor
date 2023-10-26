@@ -109,8 +109,6 @@ namespace MaddenTeamPlaybookEditor.ViewModels
             //        "Missing PSAL"
             //        );
             //}
-
-            foreach (Path path in PSALpath) ((PathGeometry)path.Data).Freeze();
         }
 
         public void GetIcxIcy()
@@ -150,14 +148,14 @@ namespace MaddenTeamPlaybookEditor.ViewModels
             }
             else
             {
-                float xRatio = (float)(point.X * .0875) / this.SETG.x___;
-                float yRatio = (float)(point.Y * -.1) / this.SETG.y___;
+                //float xRatio = (float)(point.X * .0875) / this.SETG.x___;
+                //float yRatio = (float)(point.Y * -.1) / this.SETG.y___;
+                //this.SETP.fmtx = (int)(this.SETP.fmtx * xRatio);
+                //this.SETP.fmty = (int)(this.SETP.fmty * yRatio);
+                //this.SETP.artx = (int)(this.SETP.artx * xRatio);
+                //this.SETP.arty = (int)(this.SETP.arty * yRatio);
                 this.SETG.x___ = (float)(point.X * .0875);
                 this.SETG.y___ = (float)(point.Y * -.1);
-                this.SETP.fmtx = (int)(this.SETP.fmtx * xRatio);
-                this.SETP.fmty = (int)(this.SETP.fmty * yRatio);
-                this.SETP.artx = (int)(this.SETP.artx * xRatio);
-                this.SETP.arty = (int)(this.SETP.arty * yRatio);
                 this.Play.SubFormation.CurrentAlignment.SETG.Where(set => set == this.SETG).LastOrDefault().x___ = this.SETG.x___;
                 this.Play.SubFormation.CurrentAlignment.SETG.Where(set => set == this.SETG).LastOrDefault().y___ = this.SETG.y___;
                 XY = new Point { X = SETG.x___ * 11.4286, Y = SETG.y___ * -10 };
@@ -185,115 +183,7 @@ namespace MaddenTeamPlaybookEditor.ViewModels
             #region ARTL
 
             ARTL = Play.SubFormation.Formation.Playbook.ARTL.FirstOrDefault(step => step.artl == PLYS.ARTL);
-            ARTLpath = new List<Path>();
-            if (ARTL == null)
-            {
-                MessageBox.Show(
-                    Play.SubFormation.Formation.PBFM.name + " " +
-                    Play.SubFormation.PBST.name + " - " +
-                    Play.PBPL.name + "\n\n" +
-                    DPos + EPos +
-                    "\nPSAL: " + PLYS.PSAL +
-                    "\nARTL: " + PLYS.ARTL,
-                    "Missing ARTL"
-                );
-
-                ARTL = new ARTL
-                {
-                    ARTList = new List<PlayArt>()
-                };
-            }
-            else
-            {
-                List<int> routeIndices = new List<int>();
-                for (int i = 0; i <= 11; i++)
-                {
-                    if (ARTL.ARTList[i].ct != 0)
-                    {
-                        routeIndices.Add(i);
-                    }
-                }
-                int optionStartIndex =
-                    routeIndices.Count != 0 ?
-                    routeIndices[0] == 0 ?
-                    0 :
-                    routeIndices[0] - 1 :
-                    0;
-
-                foreach (int step in routeIndices)
-                {
-                    PathGeometry RouteGeo = new PathGeometry();
-                    PathFigure RouteFigure = new PathFigure();
-                    PathSegmentCollection RouteSegments = new PathSegmentCollection();
-                    RouteFigure.Segments = RouteSegments;
-                    RouteGeo.Figures.Add(RouteFigure);
-                    PointCollection RoutePoints = new PointCollection();
-                    ARTLpath.Add(new Path());
-                    ARTLpath[ARTLpath.Count - 1].Data = RouteGeo;
-
-                    if (routeIndices.IndexOf(step) == 0)
-                    {
-                        RouteFigure.StartPoint = new Point { X = 0, Y = 0 };
-                    }
-                    else
-                    {
-                        RouteFigure.StartPoint =
-                            ARTL.ARTList[optionStartIndex].au == 0 && ARTL.ARTList[optionStartIndex].av == 0 ?
-                            new Point { X = ARTL.ARTList[optionStartIndex].ax, Y = ARTL.ARTList[optionStartIndex].ay } :
-                            new Point { X = ARTL.ARTList[optionStartIndex].au, Y = ARTL.ARTList[optionStartIndex].av };
-                    }
-
-                    for (int i = routeIndices.IndexOf(step) == 0 ? 0 : routeIndices[routeIndices.IndexOf(step) - 1] + 1; i <= step; i++)
-                    {
-                        if (ARTL.ARTList[i].au == 0 && ARTL.ARTList[i].av == 0)
-                        {
-                            RoutePoints.Add(new Point { X = ARTL.ARTList[i].ax, Y = ARTL.ARTList[i].ay });
-                            PolyLineSegment line_segment = new PolyLineSegment();
-                            line_segment.IsSmoothJoin = true;
-                            RouteSegments.Add(line_segment);
-
-                            if (ARTL.ARTList[i].ct != 0 || ARTL.ARTList[i + 1].au != 0 || ARTL.ARTList[i + 1].av != 0)
-                            {
-                                line_segment.Points = RoutePoints.Clone();
-                                RoutePoints.Clear();
-                            }
-                        }
-                        else
-                        {
-                            if (i == 0)
-                            {
-                                RoutePoints.Add(new Point { X = 0, Y = 0 });
-                            }
-                            else
-                            {
-                                if (ARTL.ARTList[i - 1].au == 0 && ARTL.ARTList[i - 1].av == 0)
-                                {
-                                    RoutePoints.Add(new Point { X = ARTL.ARTList[i - 1].ax, Y = ARTL.ARTList[i - 1].ay });
-                                }
-                                else
-                                {
-                                    RoutePoints.Add(new Point { X = ARTL.ARTList[i - 1].au, Y = ARTL.ARTList[i - 1].av });
-                                }
-                            }
-
-                            RoutePoints.Add(new Point { X = ARTL.ARTList[i].ax, Y = ARTL.ARTList[i].ay });
-                            RoutePoints.Add(new Point { X = ARTL.ARTList[i].au, Y = ARTL.ARTList[i].av });
-
-                            PolyBezierSegment bezier_segment = new PolyBezierSegment();
-                            bezier_segment.IsSmoothJoin = true;
-                            RouteSegments.Add(bezier_segment);
-
-                            if (ARTL.ARTList[i].ct != 0)
-                            {
-                                bezier_segment.Points = RoutePoints.Clone();
-                                RoutePoints.Clear();
-                            }
-                        }
-                    }
-                }
-            }
-
-            foreach (Path path in ARTLpath) ((PathGeometry)path.Data).Freeze();
+            ARTLpath = ConvertARTL(ARTL);
 
             #endregion
 
@@ -333,6 +223,13 @@ namespace MaddenTeamPlaybookEditor.ViewModels
 
             #region Color
 
+            GetARTLcolor();
+
+            #endregion
+        }
+
+        public void GetARTLcolor()
+        {
             artlColor =
                 PLYS.poso != 0 ?
                 Play.PLYL.vpos == PLYS.poso ?
@@ -347,8 +244,6 @@ namespace MaddenTeamPlaybookEditor.ViewModels
             //        artlColor = new ARTLColor(Colors.BlueViolet);
             //        break;
             //}
-
-            #endregion
         }
 
         public void GetRouteCap()
@@ -1487,7 +1382,124 @@ namespace MaddenTeamPlaybookEditor.ViewModels
                 }
             }
 
+            foreach (Path path in PSALpath) ((PathGeometry)path.Data).Freeze();
+
             return PSALpath;
+        }
+
+        public List<Path> ConvertARTL(ARTL ARTL)
+        {
+            List<Path> _ARTLpath = new List<Path>();
+            if (ARTL == null)
+            {
+                MessageBox.Show(
+                    Play.SubFormation.Formation.PBFM.name + " " +
+                    Play.SubFormation.PBST.name + " - " +
+                    Play.PBPL.name + "\n\n" +
+                    DPos + EPos +
+                    "\nPSAL: " + PLYS.PSAL +
+                    "\nARTL: " + PLYS.ARTL,
+                    "Missing ARTL"
+                );
+
+                ARTL = new ARTL
+                {
+                    ARTList = new List<PlayArt>()
+                };
+            }
+            else
+            {
+                List<int> routeIndices = new List<int>();
+                for (int i = 0; i <= 11; i++)
+                {
+                    if (ARTL.ARTList[i].ct != 0)
+                    {
+                        routeIndices.Add(i);
+                    }
+                }
+                int optionStartIndex =
+                    routeIndices.Count != 0 ?
+                    routeIndices[0] == 0 ?
+                    0 :
+                    routeIndices[0] - 1 :
+                    0;
+
+                foreach (int step in routeIndices)
+                {
+                    PathGeometry RouteGeo = new PathGeometry();
+                    PathFigure RouteFigure = new PathFigure();
+                    PathSegmentCollection RouteSegments = new PathSegmentCollection();
+                    RouteFigure.Segments = RouteSegments;
+                    RouteGeo.Figures.Add(RouteFigure);
+                    PointCollection RoutePoints = new PointCollection();
+                    _ARTLpath.Add(new Path());
+                    _ARTLpath[_ARTLpath.Count - 1].Data = RouteGeo;
+
+                    if (routeIndices.IndexOf(step) == 0)
+                    {
+                        RouteFigure.StartPoint = new Point { X = 0, Y = 0 };
+                    }
+                    else
+                    {
+                        RouteFigure.StartPoint =
+                            ARTL.ARTList[optionStartIndex].au == 0 && ARTL.ARTList[optionStartIndex].av == 0 ?
+                            new Point { X = ARTL.ARTList[optionStartIndex].ax, Y = ARTL.ARTList[optionStartIndex].ay } :
+                            new Point { X = ARTL.ARTList[optionStartIndex].au, Y = ARTL.ARTList[optionStartIndex].av };
+                    }
+
+                    for (int i = routeIndices.IndexOf(step) == 0 ? 0 : routeIndices[routeIndices.IndexOf(step) - 1] + 1; i <= step; i++)
+                    {
+                        if (ARTL.ARTList[i].au == 0 && ARTL.ARTList[i].av == 0)
+                        {
+                            RoutePoints.Add(new Point { X = ARTL.ARTList[i].ax, Y = ARTL.ARTList[i].ay });
+                            PolyLineSegment line_segment = new PolyLineSegment();
+                            line_segment.IsSmoothJoin = true;
+                            RouteSegments.Add(line_segment);
+
+                            if (ARTL.ARTList[i].ct != 0 || ARTL.ARTList[i + 1].au != 0 || ARTL.ARTList[i + 1].av != 0)
+                            {
+                                line_segment.Points = RoutePoints.Clone();
+                                RoutePoints.Clear();
+                            }
+                        }
+                        else
+                        {
+                            if (i == 0)
+                            {
+                                RoutePoints.Add(new Point { X = 0, Y = 0 });
+                            }
+                            else
+                            {
+                                if (ARTL.ARTList[i - 1].au == 0 && ARTL.ARTList[i - 1].av == 0)
+                                {
+                                    RoutePoints.Add(new Point { X = ARTL.ARTList[i - 1].ax, Y = ARTL.ARTList[i - 1].ay });
+                                }
+                                else
+                                {
+                                    RoutePoints.Add(new Point { X = ARTL.ARTList[i - 1].au, Y = ARTL.ARTList[i - 1].av });
+                                }
+                            }
+
+                            RoutePoints.Add(new Point { X = ARTL.ARTList[i].ax, Y = ARTL.ARTList[i].ay });
+                            RoutePoints.Add(new Point { X = ARTL.ARTList[i].au, Y = ARTL.ARTList[i].av });
+
+                            PolyBezierSegment bezier_segment = new PolyBezierSegment();
+                            bezier_segment.IsSmoothJoin = true;
+                            RouteSegments.Add(bezier_segment);
+
+                            if (ARTL.ARTList[i].ct != 0)
+                            {
+                                bezier_segment.Points = RoutePoints.Clone();
+                                RoutePoints.Clear();
+                            }
+                        }
+                    }
+                }
+            }
+
+            foreach (Path path in _ARTLpath) ((PathGeometry)path.Data).Freeze();
+
+            return _ARTLpath;
         }
 
         public static Point MoveDistDirToXY(int dist, int dir, Point Offset, bool flipPSAL)

@@ -9,6 +9,8 @@ using Madden.TeamPlaybook;
 using Madden.Team;
 using System.Windows;
 using System.Reflection;
+using System.Windows.Media;
+using Madden.CustomPlaybook;
 
 namespace MaddenTeamPlaybookEditor.ViewModels
 {
@@ -234,29 +236,29 @@ namespace MaddenTeamPlaybookEditor.ViewModels
         public string Type { get; set; }
         public Dictionary<int, string> Situations { get; set; }
         public List<TableNames> TableNames { get; set; }
-        public List<ARTL> ARTL { get; set; }
-        public List<FORM> FORM { get; set; }
-        public List<PBAI> PBAI { get; set; }
-        public List<PBAU> PBAU { get; set; }
-        public List<PBCC> PBCC { get; set; }
-        public List<PBFM> PBFM { get; set; }
-        public List<PBPL> PBPL { get; set; }
-        public List<PBST> PBST { get; set; }
-        public List<PLCM> PLCM { get; set; }
-        public List<PLPD> PLPD { get; set; }
-        public List<PLRD> PLRD { get; set; }
-        public List<PLYL> PLYL { get; set; }
-        public List<PLYS> PLYS { get; set; }
-        public List<PPCT> PPCT { get; set; }
-        public List<PSAL> PSAL { get; set; }
-        public List<SDEF> SDEF { get; set; }
-        public List<SETG> SETG { get; set; }
-        public List<SETL> SETL { get; set; }
-        public List<SETP> SETP { get; set; }
-        public List<SGFM> SGFM { get; set; }
-        public List<SPKF> SPKF { get; set; }
-        public List<SPKG> SPKG { get; set; }
-        public List<SRFT> SRFT { get; set; }
+        public List<Madden.TeamPlaybook.ARTL> ARTL { get; set; }
+        public List<Madden.TeamPlaybook.FORM> FORM { get; set; }
+        public List<Madden.TeamPlaybook.PBAI> PBAI { get; set; }
+        public List<Madden.TeamPlaybook.PBAU> PBAU { get; set; }
+        public List<Madden.TeamPlaybook.PBCC> PBCC { get; set; }
+        public List<Madden.TeamPlaybook.PBFM> PBFM { get; set; }
+        public List<Madden.TeamPlaybook.PBPL> PBPL { get; set; }
+        public List<Madden.TeamPlaybook.PBST> PBST { get; set; }
+        public List<Madden.TeamPlaybook.PLCM> PLCM { get; set; }
+        public List<Madden.TeamPlaybook.PLPD> PLPD { get; set; }
+        public List<Madden.TeamPlaybook.PLRD> PLRD { get; set; }
+        public List<Madden.TeamPlaybook.PLYL> PLYL { get; set; }
+        public List<Madden.TeamPlaybook.PLYS> PLYS { get; set; }
+        public List<Madden.TeamPlaybook.PPCT> PPCT { get; set; }
+        public List<Madden.TeamPlaybook.PSAL> PSAL { get; set; }
+        public List<Madden.TeamPlaybook.SDEF> SDEF { get; set; }
+        public List<Madden.TeamPlaybook.SETG> SETG { get; set; }
+        public List<Madden.TeamPlaybook.SETL> SETL { get; set; }
+        public List<Madden.TeamPlaybook.SETP> SETP { get; set; }
+        public List<Madden.TeamPlaybook.SGFM> SGFM { get; set; }
+        public List<Madden.TeamPlaybook.SPKF> SPKF { get; set; }
+        public List<Madden.TeamPlaybook.SPKG> SPKG { get; set; }
+        public List<Madden.TeamPlaybook.SRFT> SRFT { get; set; }
         public List<DCHT> DCHT { get; set; }
         public List<PLAY> PLAY { get; set; }
 
@@ -282,7 +284,7 @@ namespace MaddenTeamPlaybookEditor.ViewModels
             }
 
             int ftyp = Formation.PBFM.FTYP;
-            foreach (PBFM formation in PBFM.Where(form => form.FTYP == ftyp).Cast<PBFM>().ToList())
+            foreach (Madden.TeamPlaybook.PBFM formation in PBFM.Where(form => form.FTYP == ftyp).Cast<Madden.TeamPlaybook.PBFM>().ToList())
             {
                 PBFM[PBFM.IndexOf(PBFM.Where(form => form.rec == formation.rec).FirstOrDefault())].ord_--;
             }
@@ -306,7 +308,7 @@ namespace MaddenTeamPlaybookEditor.ViewModels
             if (existingFORM == null)
             {
                 int ftyp = Formation.PBFM.FTYP;
-                foreach (PBFM formation in PBFM.Where(form => form.FTYP == ftyp).Cast<PBFM>().ToList())
+                foreach (Madden.TeamPlaybook.PBFM formation in PBFM.Where(form => form.FTYP == ftyp).Cast<Madden.TeamPlaybook.PBFM>().ToList())
                 {
                     if (formation.ord_ >= ord)
                     {
@@ -373,7 +375,7 @@ namespace MaddenTeamPlaybookEditor.ViewModels
                     ord = Formations.Count + 1;
                 }
 
-                PBFM CPBpbfm = new PBFM
+                Madden.TeamPlaybook.PBFM CPBpbfm = new Madden.TeamPlaybook.PBFM
                 {
                     rec = PBST.Count,
                     FAU1 = -1,
@@ -486,6 +488,55 @@ namespace MaddenTeamPlaybookEditor.ViewModels
             PLAY = Madden.Team.PLAY.GetPLAY(DBIndex: 1);
         }
 
+        public List<SubFormationVM> GetPSALlist()
+        {
+            List<PlayVM> psals = new List<PlayVM>();
+            foreach (Madden.TeamPlaybook.PSAL psal in PSAL.Distinct())
+            {
+                psals.Add(new PlayVM());
+                psals[psals.Count() - 1].Players = new ObservableCollection<PlayerVM>
+                {
+                    new PlayerVM
+                    {
+                        PSAL = PSAL.Where(_psal => _psal.psal == psal.psal).OrderBy(s => s.step).ToList(),
+                        PLYS = PLYS.Where(plys => plys.PSAL == psal.psal).FirstOrDefault(),
+                        ARTL = ARTL.Where(_psal => _psal.artl == PLYS.Where(plys => plys.PSAL == psal.psal).FirstOrDefault().ARTL).FirstOrDefault(),
+                        artlColor = ARTLColor.BaseRoute,
+                        SETG = new Madden.TeamPlaybook.SETG
+                        {
+                            x___ = 0,
+                            y___ = 0,
+                            fx__ = 0,
+                            fy__ = 0
+                        },
+                        SETP = new Madden.TeamPlaybook.SETP
+                        {
+                            artx = 90,
+                            arty = 80
+                        },
+                        Icon = new EllipseGeometry(new Point(0, 0), 4, 4).GetFlattenedPathGeometry(),
+                        Play = psals[psals.Count() - 1]
+                    }
+                };
+                //psals[psals.Count() - 1].Players[0].PSALpath = psals[psals.Count() - 1].Players[0].ConvertPSAL(psals[psals.Count() - 1].Players[0].PSAL);
+                psals[psals.Count() - 1].Players[0].ARTLpath = psals[psals.Count() - 1].Players[0].ConvertARTL(psals[psals.Count() - 1].Players[0].ARTL);
+                psals[psals.Count() - 1].Players[0].GetRouteCap();
+            }
+            List<SubFormationVM> routeTypes = new List<SubFormationVM>();
+            foreach (int PLRR in PLYS.Select(x => x.PLRR).Distinct())
+            {
+                routeTypes.Add(
+                    new SubFormationVM
+                    {
+                        PBST = new PBST { name = "PLRR: " + PLRR.ToString() },
+                        Plays = new ObservableCollection<PlayVM>(psals.Where(play => play.Players[0].PLYS.PLRR == PLRR).ToList())
+                    });
+                routeTypes[routeTypes.Count()-1].IsVisible = true;
+            }
+                
+            return routeTypes.OrderBy(s => s.PBST.name).ToList();
+        }
+
         public void BuildPlaybook()
         {
             if (Formations == null)
@@ -497,7 +548,7 @@ namespace MaddenTeamPlaybookEditor.ViewModels
                 Formations.Clear();
             }
 
-            foreach (PBFM formation in PBFM)
+            foreach (Madden.TeamPlaybook.PBFM formation in PBFM)
             {
                 Formations.Add(new FormationVM(formation, this));
             }
@@ -691,10 +742,10 @@ namespace MaddenTeamPlaybookEditor.ViewModels
 
         #region IsUsing
 
-        public bool IsUsing(PSAL psal)
+        public bool IsUsing(Madden.TeamPlaybook.PSAL psal)
         {
             bool Using = false;
-            foreach (PLYS assignment in PLYS)
+            foreach (Madden.TeamPlaybook.PLYS assignment in PLYS)
             {
                 if (assignment.PSAL == psal.psal)
                 {
@@ -708,7 +759,7 @@ namespace MaddenTeamPlaybookEditor.ViewModels
         public bool IsUsing(Madden.TeamPlaybook.ARTL artl)
         {
             bool Using = false;
-            foreach (PLYS assignment in PLYS)
+            foreach (Madden.TeamPlaybook.PLYS assignment in PLYS)
             {
                 if (assignment.ARTL == artl.artl)
                 {

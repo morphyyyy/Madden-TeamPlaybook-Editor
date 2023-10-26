@@ -18,7 +18,7 @@ namespace MaddenTeamPlaybookEditor.User_Controls
     {
         [DllImport("User32.dll")]
         private static extern bool SetCursorPos(int X, int Y);
-        public bool draggable = false;
+        public bool draggable = true;
 
         public PlayerIcon()
         {
@@ -164,7 +164,7 @@ namespace MaddenTeamPlaybookEditor.User_Controls
                     prevX = transform.X;
                     prevY = transform.Y;
                 }
-                Player.UpdatePlayer();
+                Player.Play.UpdatePlayers();
                 draggable.ReleaseMouseCapture();
                 if (playerPlayart != null)
                 {

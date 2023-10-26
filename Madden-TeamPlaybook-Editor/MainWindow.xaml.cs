@@ -79,6 +79,7 @@ namespace MaddenTeamPlaybookEditor
             tvwPlaybook.DataContext = Playbook;
             lvwSituations.DataContext = Playbook;
             tclTables.DataContext = Playbook;
+            tvwPSALs.DataContext = Playbook.GetPSALlist();
             //tabPlaybook.DataContext = Playbook;
         }
 
@@ -108,7 +109,9 @@ namespace MaddenTeamPlaybookEditor
                 uclPlayModal.cvsField.Children.RemoveRange(1, uclPlayModal.cvsField.Children.Count - 1);
                 foreach (Madden.TeamPlaybook.SETG setg in uclPlayModal.subFormation.CurrentAlignment.SETG)
                 {
-                    Madden.TeamPlaybook.PLYS plys = new Madden.TeamPlaybook.PLYS { poso = uclPlayModal.subFormation.CurrentPackage.Where(poso => poso.setp == setg.SETP).FirstOrDefault().poso };
+                    Madden.TeamPlaybook.PLYS plys = new Madden.TeamPlaybook.PLYS { 
+                        poso = uclPlayModal.subFormation.CurrentPackage.Where(poso => poso.setp == setg.SETP).FirstOrDefault().poso 
+                    };
                     uclPlayModal.cvsField.Children.Add(
                         new PlayerIcon(
                             new PlayerVM(

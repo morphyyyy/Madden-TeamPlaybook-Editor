@@ -1511,7 +1511,10 @@ namespace MaddenTeamPlaybookEditor.ViewModels
                 {
                     _isExpanded = value;
                     this.OnPropertyChanged("IsExpanded");
-                    foreach (SubFormationVM subFormation in Formation.SubFormations.Where(set => set.PBST != this.PBST)) subFormation.IsVisible = !value;
+                    if (Formation != null)
+                    {
+                        foreach (SubFormationVM subFormation in Formation.SubFormations.Where(set => set.PBST != this.PBST)) subFormation.IsVisible = !value;
+                    }
                     foreach (PlayVM play in Plays) play.IsVisible = value;
                 }
             }
