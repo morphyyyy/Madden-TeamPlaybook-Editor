@@ -73,33 +73,37 @@
 
         <Expander ExpandDirection="Right" IsExpanded="False">
 
-            <ListView 
-                x:Name="lvwSituations" 
-                ItemsSource="{Binding Situations}" 
-                ScrollViewer.CanContentScroll="False"
-                Background="Transparent"
-                BorderBrush="Transparent"
-                >
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <Label Content="{Binding Path=Value}" Foreground="LightGray"/>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-                <ListView.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <classes:UniformGridOrientations Orientation="Vertical" VerticalOrientation="Top" FlowDirection="LeftToRight" IsItemsHost="True" Margin="0,0" Columns="2" Height="{Binding}"/>
-                    </ItemsPanelTemplate>
-                </ListView.ItemsPanel>
-                <ListView.ItemContainerStyle>
-                    <Style TargetType="{x:Type ListViewItem}" BasedOn="{StaticResource SituationListViewItem}">
-                        <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay}" />
-                    </Style>
-                </ListView.ItemContainerStyle>
-            </ListView>
-            
+            <DockPanel Width="Auto" Height="Auto" HorizontalAlignment="Stretch" DockPanel.Dock="Left">
+
+                <ListView 
+                    x:Name="lvwSituations" 
+                    ItemsSource="{Binding Situations}" 
+                    ScrollViewer.CanContentScroll="False"
+                    Background="Transparent"
+                    BorderBrush="Transparent"
+                    >
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <Label Content="{Binding Path=Value}" Foreground="LightGray"/>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                    <ListView.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <classes:UniformGridOrientations Orientation="Vertical" VerticalOrientation="Top" FlowDirection="LeftToRight" IsItemsHost="True" Margin="0,0" Columns="2" Height="{Binding}"/>
+                        </ItemsPanelTemplate>
+                    </ListView.ItemsPanel>
+                    <ListView.ItemContainerStyle>
+                        <Style TargetType="{x:Type ListViewItem}" BasedOn="{StaticResource SituationListViewItem}">
+                            <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay}" />
+                        </Style>
+                    </ListView.ItemContainerStyle>
+                </ListView>
+
+            </DockPanel>
+
         </Expander>
 
-        <Expander ExpandDirection="Right" IsExpanded="False">
+        <Expander ExpandDirection="Right" IsExpanded="True">
 
             <DockPanel Width="Auto" Height="Auto" HorizontalAlignment="Stretch" DockPanel.Dock="Left">
 
@@ -111,8 +115,7 @@
                 SelectedItemChanged="tvwPlaybook_SelectedItemChanged"
                 AllowDrop="True"
                 ItemsSource="{Binding Formations}"
-                MaxWidth="600"
-                Height="750">
+                MaxWidth="600">
 
                 <TreeView.CommandBindings>
                     <CommandBinding Command="ApplicationCommands.Copy" Executed="CopyToClipboard" />
@@ -255,7 +258,7 @@
         
         </Expander>
 
-        <Expander ExpandDirection="Right" IsExpanded="False">
+        <Expander ExpandDirection="Right" IsExpanded="True">
 
             <DockPanel Width="Auto" Height="Auto" HorizontalAlignment="Stretch" DockPanel.Dock="Left">
 
@@ -265,7 +268,8 @@
                 Foreground="{x:Null}"
                 DockPanel.Dock="Top"
                 AllowDrop="True"
-                ItemsSource="{Binding}">
+                ItemsSource="{Binding}"
+                MaxWidth="600">
 
                     <TreeView.Resources>
 
@@ -356,7 +360,7 @@
             DataContext="{Binding tvwPlaybook.SelectedItem}">
         </UserControls:SubFormationModal>-->
 
-        <Expander ExpandDirection="Right" IsExpanded="False">
+        <Expander ExpandDirection="Right" IsExpanded="True">
 
             <UserControls:PlayModal 
                 x:Name="uclPlayModal" 

@@ -44,7 +44,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type TreeViewItem}">
-                    <Grid Margin="2">
+                    <Grid Name="PlayGrid" Margin="2">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" MinHeight="50" />
                             <RowDefinition Height="Auto" />
@@ -85,6 +85,9 @@
                                 VerticalAlignment="Center"
                                 ContentSource="Header" />
                         </Border>
+                        <Grid.RenderTransform>
+                            <ScaleTransform CenterX="0.5" CenterY="0.5"/>
+                        </Grid.RenderTransform>
                     </Grid>
                     <ControlTemplate.Triggers>
 
@@ -123,6 +126,14 @@
                                             Storyboard.TargetName="BdrPlayHighlighted" 
                                             Storyboard.TargetProperty="Opacity"
                                             From="0.0" To="1.0" Duration="0:0:0.2" />
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="PlayGrid"
+                                            Storyboard.TargetProperty="(RenderTransform).(ScaleTransform.ScaleX)"
+                                            From="1" To="1.05" Duration="0:0:0.2"/>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="PlayGrid"
+                                            Storyboard.TargetProperty="(RenderTransform).(ScaleTransform.ScaleY)"
+                                            From="1" To="1.05" Duration="0:0:0.2"/>
                                     </Storyboard>
                                 </BeginStoryboard>
                             </Trigger.EnterActions>
@@ -133,7 +144,15 @@
                                         <DoubleAnimation
                                             Storyboard.TargetName="BdrPlayHighlighted" 
                                             Storyboard.TargetProperty="Opacity"
-                                            From="1.0" To="0.0" Duration="0:0:0.5" />
+                                            From="1.0" To="0.0" Duration="0:0:0.2" />
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="PlayGrid"
+                                            Storyboard.TargetProperty="(RenderTransform).(ScaleTransform.ScaleX)"
+                                            From="1.05" To="1" Duration="0:0:0.2"/>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="PlayGrid"
+                                            Storyboard.TargetProperty="(RenderTransform).(ScaleTransform.ScaleY)"
+                                            From="1.05" To="1" Duration="0:0:0.2"/>
                                     </Storyboard>
                                 </BeginStoryboard>
                             </Trigger.ExitActions>

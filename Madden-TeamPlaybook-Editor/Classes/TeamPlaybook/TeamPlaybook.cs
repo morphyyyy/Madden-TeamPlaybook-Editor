@@ -680,7 +680,16 @@ namespace MaddenTeamPlaybookEditor.ViewModels
                     {
                         PBST = new PBST { name = _type.Key.ToString() + ": " + _type.Value[1] },
                         Plays = types,
-                        Formation = route
+                        Formation = route,
+                        CurrentPackage = new List<Madden.TeamPlaybook.SETP>(),
+                        Packages = new List<SubFormationVM.Package>
+                        {
+                            new SubFormationVM.Package(new Madden.TeamPlaybook.SPKF(), new List<Madden.TeamPlaybook.SPKG>())
+                        },
+                        Alignments = new List<SubFormationVM.Alignment>
+                        {
+                            new SubFormationVM.Alignment(new Madden.TeamPlaybook.SGFM(), new List<Madden.TeamPlaybook.SETG>())
+                        }
                     };
                     foreach (var _route in PLYS.Select(x => new { x.PSAL, x.PLRR }).Where(x => x.PLRR == _type.Key).Distinct().OrderBy(x => x.PSAL))
                     {

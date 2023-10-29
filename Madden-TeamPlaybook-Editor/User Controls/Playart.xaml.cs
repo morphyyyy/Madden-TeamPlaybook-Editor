@@ -5,13 +5,11 @@ using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using System.Windows.Media.Effects;
 using System.Windows.Shapes;
 
 namespace MaddenTeamPlaybookEditor.User_Controls
 {
-    /// <summary>
-    /// Interaction logic for Playart.xaml
-    /// </summary>
     public partial class Playart : UserControl
     {
         public Playart()

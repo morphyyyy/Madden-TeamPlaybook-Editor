@@ -17,16 +17,6 @@ namespace Madden.TeamPlaybook
         public int step { get; set; }
         public static double AngleRatio = 0.35556;
 
-        public override bool Equals(object obj)
-        {
-            return ((PSAL)obj) == this;
-        }
-
-        public override int GetHashCode()
-        {
-            return psal.GetHashCode();
-        }
-
         public override string ToString()
         {
             return
