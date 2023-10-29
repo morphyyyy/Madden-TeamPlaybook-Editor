@@ -16,7 +16,7 @@ namespace MaddenTeamPlaybookEditor.User_Controls
     {
         [DllImport("User32.dll")]
         private static extern bool SetCursorPos(int X, int Y);
-        public bool draggable = true;
+        public bool draggable = false;
 
         public PlayerIcon()
         {

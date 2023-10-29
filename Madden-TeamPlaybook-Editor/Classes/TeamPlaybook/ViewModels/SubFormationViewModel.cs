@@ -29,7 +29,10 @@ namespace MaddenTeamPlaybookEditor.ViewModels
             {
                 string subs = SPKF.name + "\n";
                 foreach (SPKG sub in SPKG) subs += "    " + sub.ToString() + "\n";
-                subs.Substring(subs.Length - 2, 2);
+                if (subs.Length >= 2)
+                {
+                    subs.Substring(subs.Length - 2, 2);
+                }
                 return
                     subs;
             }
@@ -67,7 +70,10 @@ namespace MaddenTeamPlaybookEditor.ViewModels
             {
                 string alignments = SGFM.name + "\n";
                 foreach (SETG alignment in SETG) alignments += "    " + alignment.ToString() + "\n";
-                alignments.Substring(alignments.Length - 2, 2);
+                if (alignments.Length >= 2)
+                {
+                    alignments.Substring(alignments.Length - 2, 2);
+                }
                 return
                     alignments;
             }
