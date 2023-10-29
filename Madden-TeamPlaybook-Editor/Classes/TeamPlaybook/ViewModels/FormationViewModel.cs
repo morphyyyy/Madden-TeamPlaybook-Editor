@@ -7,6 +7,7 @@ using System.Linq;
 using System.Windows;
 using Madden.TeamPlaybook;
 using MaddenCustomPlaybookEditor.ViewModels;
+using MaddenTeamPlaybookEditor.User_Controls;
 
 namespace MaddenTeamPlaybookEditor.ViewModels
 {

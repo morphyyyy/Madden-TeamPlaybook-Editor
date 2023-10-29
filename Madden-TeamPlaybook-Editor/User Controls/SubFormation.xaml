@@ -173,147 +173,152 @@
             Background="Transparent" 
             Foreground="White"/>
 
-        <StackPanel 
+        <StackPanel x:Name="pnlSubFormation">
+        
+            <StackPanel 
+                IsEnabled="False"
+                x:Name="pnlInfo"
+                DockPanel.Dock="Top" 
+                Orientation="Horizontal" 
+                HorizontalAlignment="Center"
+                >
+
+                <StackPanel 
+                    Orientation="Horizontal" 
+                    Margin="2,2" 
+                    HorizontalAlignment="Center"
+                    >
+
+                    <TextBlock 
+                        Text="{Binding Position1count}" 
+                        Foreground="Orange" 
+                        FontSize="15" 
+                        FontWeight="Bold" 
+                        FontFamily="DK Crayon Crumble" 
+                        />
+
+                    <TextBlock 
+                        Text=" " 
+                        FontSize="8" 
+                        />
+
+                    <TextBlock 
+                        Text="{Binding Position1name}" 
+                        Foreground="LightGray" 
+                        FontSize="15" 
+                        FontFamily="DK Crayon Crumble" 
+                        />
+
+                </StackPanel>
+
+                <StackPanel 
+                    Orientation="Horizontal" 
+                    Margin="2,2" 
+                    HorizontalAlignment="Center"
+                    >
+
+                    <TextBlock 
+                        Text="{Binding Position2count}" 
+                        Foreground="Orange" 
+                        FontSize="15" 
+                        FontWeight="Bold" 
+                        FontFamily="DK Crayon Crumble" 
+                        />
+
+                    <TextBlock 
+                        Text=" " 
+                        FontSize="8" 
+                        />
+
+                    <TextBlock 
+                        Text="{Binding Position2name}" 
+                        Foreground="LightGray" 
+                        FontSize="15" 
+                        FontFamily="DK Crayon Crumble" 
+                        />
+
+                </StackPanel>
+
+                <StackPanel 
+                    Orientation="Horizontal"
+                    Margin="2,2"
+                    HorizontalAlignment="Center"
+                    >
+
+                    <TextBlock 
+                        Text="{Binding Position3count}"
+                        Foreground="Orange"
+                        FontSize="15" 
+                        FontWeight="Bold" 
+                        FontFamily="DK Crayon Crumble"
+                        />
+
+                    <TextBlock 
+                        Text=" "
+                        FontSize="8"
+                        />
+
+                    <TextBlock
+                        Text="{Binding Position3name}" 
+                        Foreground="LightGray"
+                        FontSize="15" 
+                        FontFamily="DK Crayon Crumble" 
+                        />
+
+                </StackPanel>
+
+            </StackPanel>
+
+            <ItemsControl 
             IsEnabled="False"
-            DockPanel.Dock="Top" 
-            Orientation="Horizontal" 
-            HorizontalAlignment="Center"
-            >
-
-            <StackPanel 
-                Orientation="Horizontal" 
-                Margin="2,2" 
-                HorizontalAlignment="Center"
-                >
-
-                <TextBlock 
-                    Text="{Binding Position1count}" 
-                    Foreground="Orange" 
-                    FontSize="15" 
-                    FontWeight="Bold" 
-                    FontFamily="DK Crayon Crumble" 
-                    />
-
-                <TextBlock 
-                    Text=" " 
-                    FontSize="8" 
-                    />
-
-                <TextBlock 
-                    Text="{Binding Position1name}" 
-                    Foreground="LightGray" 
-                    FontSize="15" 
-                    FontFamily="DK Crayon Crumble" 
-                    />
-
-            </StackPanel>
-
-            <StackPanel 
-                Orientation="Horizontal" 
-                Margin="2,2" 
-                HorizontalAlignment="Center"
-                >
-
-                <TextBlock 
-                    Text="{Binding Position2count}" 
-                    Foreground="Orange" 
-                    FontSize="15" 
-                    FontWeight="Bold" 
-                    FontFamily="DK Crayon Crumble" 
-                    />
-
-                <TextBlock 
-                    Text=" " 
-                    FontSize="8" 
-                    />
-
-                <TextBlock 
-                    Text="{Binding Position2name}" 
-                    Foreground="LightGray" 
-                    FontSize="15" 
-                    FontFamily="DK Crayon Crumble" 
-                    />
-
-            </StackPanel>
-
-            <StackPanel 
-                Orientation="Horizontal"
-                Margin="2,2"
-                HorizontalAlignment="Center"
-                >
-
-                <TextBlock 
-                    Text="{Binding Position3count}"
-                    Foreground="Orange"
-                    FontSize="15" 
-                    FontWeight="Bold" 
-                    FontFamily="DK Crayon Crumble"
-                    />
-
-                <TextBlock 
-                    Text=" "
-                    FontSize="8"
-                    />
-
-                <TextBlock
-                    Text="{Binding Position3name}" 
-                    Foreground="LightGray"
-                    FontSize="15" 
-                    FontFamily="DK Crayon Crumble" 
-                    />
-
-            </StackPanel>
+            x:Name="iclPlayers"
+            DockPanel.Dock="Top"
+            ItemsSource="{Binding CurrentPackage}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <Canvas 
+                            x:Name="cvsSubFormation"
+                            HorizontalAlignment="Left"
+                            Width="360" 
+                            Height="120"
+                        />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Ellipse
+                            x:Name="clnIcon"
+                            Width="8"
+                            Height="8"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Fill="Ivory">
+                            <Ellipse.RenderTransform>
+                                <ScaleTransform 
+                                    ScaleX="2.5"
+                                    ScaleY="2.5"/>
+                            </Ellipse.RenderTransform>
+                        </Ellipse>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+                <ItemsControl.ItemContainerStyle>
+                    <Style>
+                        <Setter 
+                        Property="Canvas.Left" 
+                        Value="{Binding fmtx}"/>
+                        <Setter 
+                        Property="Canvas.Top" 
+                        Value="{Binding fmty}"/>
+                    </Style>
+                </ItemsControl.ItemContainerStyle>
+                <ItemsControl.LayoutTransform>
+                    <ScaleTransform 
+                        ScaleX=".333"
+                        ScaleY=".333"/>
+                </ItemsControl.LayoutTransform>
+            </ItemsControl>
 
         </StackPanel>
-
-        <ItemsControl 
-        IsEnabled="False"
-        x:Name="iclPlayers"
-        DockPanel.Dock="Top"
-        ItemsSource="{Binding CurrentPackage}">
-            <ItemsControl.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <Canvas 
-                        x:Name="cvsSubFormation"
-                        HorizontalAlignment="Left"
-                        Width="360" 
-                        Height="120"
-                    />
-                </ItemsPanelTemplate>
-            </ItemsControl.ItemsPanel>
-            <ItemsControl.ItemTemplate>
-                <DataTemplate>
-                    <Ellipse
-                        x:Name="clnIcon"
-                        Width="8"
-                        Height="8"
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Center"
-                        Fill="Ivory">
-                        <Ellipse.RenderTransform>
-                            <ScaleTransform 
-                                ScaleX="2.5"
-                                ScaleY="2.5"/>
-                        </Ellipse.RenderTransform>
-                    </Ellipse>
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
-            <ItemsControl.ItemContainerStyle>
-                <Style>
-                    <Setter 
-                    Property="Canvas.Left" 
-                    Value="{Binding fmtx}"/>
-                    <Setter 
-                    Property="Canvas.Top" 
-                    Value="{Binding fmty}"/>
-                </Style>
-            </ItemsControl.ItemContainerStyle>
-            <ItemsControl.LayoutTransform>
-                <ScaleTransform 
-                    ScaleX=".333"
-                    ScaleY=".333"/>
-            </ItemsControl.LayoutTransform>
-        </ItemsControl>
 
     </DockPanel>
 

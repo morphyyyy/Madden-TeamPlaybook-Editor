@@ -209,27 +209,27 @@
                 >
                 
             </TextBlock>
-                                
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom">
-                                    
+
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom" x:Name="pnlAudibles">
+
                 <ToggleButton x:Name="AudibleQuick" ToolTip="Short Pass (X)" Height="18" IsChecked="{Binding isShortAudible}" >
                     <ToggleButton.Style>
                         <Style TargetType="{x:Type ToggleButton}" BasedOn="{StaticResource AudibleQuick}"/>
                     </ToggleButton.Style>
                 </ToggleButton>
-                                    
+
                 <ToggleButton x:Name="AudibleRun" ToolTip="Run (Y/Triangle)" Height="18" IsChecked="{Binding isRunAudible}" >
                     <ToggleButton.Style>
                         <Style TargetType="{x:Type ToggleButton}" BasedOn="{StaticResource AudibleRun}"/>
                     </ToggleButton.Style>
                 </ToggleButton>
-                                    
+
                 <ToggleButton x:Name="AudibleDeep" ToolTip="Deep Pass (LB/L1)" Height="18" IsChecked="{Binding isDeepAudible}" >
                     <ToggleButton.Style>
                         <Style TargetType="{x:Type ToggleButton}" BasedOn="{StaticResource AudibleDeep}"/>
                     </ToggleButton.Style>
                 </ToggleButton>
-                                    
+
                 <ToggleButton x:Name="AudibleFake" ToolTip="Play Action (RB/R1)" Height="18" IsChecked="{Binding isFakeAudible}" >
                     <ToggleButton.Style>
                         <Style TargetType="{x:Type ToggleButton}" BasedOn="{StaticResource AudibleFake}"/>

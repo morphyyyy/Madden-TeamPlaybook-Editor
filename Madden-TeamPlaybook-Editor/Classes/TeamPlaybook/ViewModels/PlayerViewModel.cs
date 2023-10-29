@@ -91,11 +91,8 @@ namespace MaddenTeamPlaybookEditor.ViewModels
 
         public void GetPSAL()
         {
-            PSAL = new List<PSAL>();
-            foreach (PSAL step in Play.SubFormation.Formation.Playbook.PSAL.Where(step => step.psal == PLYS.PSAL))
-                PSAL.Add(step);
-            PSAL.OrderBy(step => step.step);
-            PSALpath = ConvertPSAL(PSAL);
+            PSAL = Play.SubFormation.Formation.Playbook.PSAL.Where(step => step.psal == PLYS.PSAL).OrderBy(step => step.step).ToList();
+            ConvertPSAL(PSAL);
 
             //if (PSAL.Count == 0)
             //{
@@ -174,7 +171,7 @@ namespace MaddenTeamPlaybookEditor.ViewModels
                 default:
                     break;
             }
-            PSALpath = ConvertPSAL(PSAL);
+            ConvertPSAL(PSAL);
             foreach (Path path in PSALpath) ((PathGeometry)path.Data).Freeze();
         }
 
@@ -183,7 +180,7 @@ namespace MaddenTeamPlaybookEditor.ViewModels
             #region ARTL
 
             ARTL = Play.SubFormation.Formation.Playbook.ARTL.FirstOrDefault(step => step.artl == PLYS.ARTL);
-            ARTLpath = ConvertARTL(ARTL);
+            ConvertARTL(ARTL);
 
             #endregion
 
@@ -406,7 +403,7 @@ namespace MaddenTeamPlaybookEditor.ViewModels
             }
         }
 
-        public List<Path> ConvertPSAL(List<PSAL> PSAL, Point LOS = new Point(), bool flipPSAL = false)
+        public void ConvertPSAL(List<PSAL> PSAL, Point LOS = new Point(), bool flipPSAL = false)
         {
             List<Path> PSALpath = new List<Path>();
             PathGeometry RouteGeo = new PathGeometry();
@@ -1384,10 +1381,10 @@ namespace MaddenTeamPlaybookEditor.ViewModels
 
             foreach (Path path in PSALpath) ((PathGeometry)path.Data).Freeze();
 
-            return PSALpath;
+            this.PSALpath = PSALpath;
         }
 
-        public List<Path> ConvertARTL(ARTL ARTL)
+        public void ConvertARTL(ARTL ARTL)
         {
             List<Path> _ARTLpath = new List<Path>();
             if (ARTL == null)
@@ -1499,7 +1496,7 @@ namespace MaddenTeamPlaybookEditor.ViewModels
 
             foreach (Path path in _ARTLpath) ((PathGeometry)path.Data).Freeze();
 
-            return _ARTLpath;
+            ARTLpath = _ARTLpath;
         }
 
         public static Point MoveDistDirToXY(int dist, int dir, Point Offset, bool flipPSAL)

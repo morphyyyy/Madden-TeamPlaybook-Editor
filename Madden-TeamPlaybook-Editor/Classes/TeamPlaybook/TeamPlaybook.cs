@@ -11,6 +11,7 @@ using System.Windows;
 using System.Reflection;
 using System.Windows.Media;
 using Madden.CustomPlaybook;
+using MaddenCustomPlaybookEditor;
 
 namespace MaddenTeamPlaybookEditor.ViewModels
 {
@@ -164,6 +165,174 @@ namespace MaddenTeamPlaybookEditor.ViewModels
             {208, "Jet Pass"},
             {209, "Jet Sweep"}
        };
+
+        public static readonly Dictionary<int, List<string>> RouteType = new Dictionary<int, List<string>>
+        {
+            {0, new List<string> { "Invalid", "Invalid" } },
+            {1, new List<string> { "Block", "Pass" } },
+            {2, new List<string> { "Block", "Run" } },
+            {3, new List<string> { "Def", "Blitz" } },
+            {4, new List<string> { "Def", "Man Coverage" } },
+            {5, new List<string> { "Def", "Pass Rush" } },
+            {6, new List<string> { "Def", "QB Spy" } },
+            {7, new List<string> { "Def", "Zone Curl Flat Lt" } },
+            {8, new List<string> { "Def", "Zone Curl Flat Rt" } },
+            {9, new List<string> { "Def", "Zone Deep 2 Lt Half" } },
+            {10, new List<string> { "Def", "Zone Deep 2 Rt Half" } },
+            {11, new List<string> { "Def", "Zone Deep 4 In Lt" } },
+            {12, new List<string> { "Def", "Zone Deep 4 In Rt" } },
+            {13, new List<string> { "Def", "Zone Deep 4 Out Lt" } },
+            {14, new List<string> { "Def", "Zone Deep 4 Out Rt" } },
+            {15, new List<string> { "Def", "Zone Deep Lt 3rd" } },
+            {16, new List<string> { "Def", "Zone Deep Mid 3rd" } },
+            {17, new List<string> { "Def", "Zone Deep Rt 3rd" } },
+            {18, new List<string> { "Def", "Zone Flat Lt" } },
+            {19, new List<string> { "Def", "Zone Flat Rt" } },
+            {20, new List<string> { "Def", "Zone Hook Lt" } },
+            {21, new List<string> { "Def", "Zone Hook Mid" } },
+            {22, new List<string> { "Def", "Zone Hook Rt" } },
+            {23, new List<string> { "Def", "Zone Prevent" } },
+            {24, new List<string> { "K", "FG" } },
+            {25, new List<string> { "K", "FG Fake" } },
+            {26, new List<string> { "K", "Kickoff" } },
+            {27, new List<string> { "K", "Onside Kick" } },
+            {28, new List<string> { "K", "Squib Kick" } },
+            {29, new List<string> { "P", "Punt" } },
+            {30, new List<string> { "P", "Punt Fake Pass" } },
+            {31, new List<string> { "P", "Punt Fake Run" } },
+            {32, new List<string> { "QB", "Draw" } },
+            {33, new List<string> { "QB", "Fake FG Pitch" } },
+            {34, new List<string> { "QB", "Fake FG Run" } },
+            {35, new List<string> { "QB", "Fake Spike" } },
+            {36, new List<string> { "QB", "FG Fake Pass" } },
+            {37, new List<string> { "QB", "FG Hold" } },
+            {38, new List<string> { "QB", "Kneel" } },
+            {39, new List<string> { "QB", "Option Give" } },
+            {40, new List<string> { "QB", "Pass" } },
+            {41, new List<string> { "QB", "Play Action" } },
+            {42, new List<string> { "QB", "Power Option" } },
+            {43, new List<string> { "QB", "Shotgun Read Option" } },
+            {44, new List<string> { "QB", "Speed Option" } },
+            {45, new List<string> { "QB", "Spike" } },
+            {46, new List<string> { "QB", "Triple Option" } },
+            {47, new List<string> { "RB", "Counter" } },
+            {48, new List<string> { "RB", "Dive" } },
+            {49, new List<string> { "RB", "Draw" } },
+            {50, new List<string> { "RB", "Fake Punt Option" } },
+            {51, new List<string> { "RB", "Fake Punt Option Pass" } },
+            {52, new List<string> { "RB", "Fake Punt Run" } },
+            {53, new List<string> { "RB", "Option Follow" } },
+            {54, new List<string> { "RB", "Option Receive" } },
+            {55, new List<string> { "RB", "Pass" } },
+            {56, new List<string> { "RB", "Slam" } },
+            {57, new List<string> { "RB", "Stretch" } },
+            {58, new List<string> { "RB", "Sweep" } },
+            {59, new List<string> { "RR", "Block and Release" } },
+            {60, new List<string> { "RR", "Clown" } },
+            {61, new List<string> { "RR", "Comeback" } },
+            {62, new List<string> { "RR", "Corner Deep" } },
+            {63, new List<string> { "RR", "Corner Middle" } },
+            {64, new List<string> { "RR", "Corner Post" } },
+            {65, new List<string> { "RR", "Corner Stop" } },
+            {66, new List<string> { "RR", "Cover 2 Corner" } },
+            {67, new List<string> { "RR", "Cross" } },
+            {68, new List<string> { "RR", "Curl Long" } },
+            {69, new List<string> { "RR", "Curl Medium" } },
+            {70, new List<string> { "RR", "Curl n Go" } },
+            {71, new List<string> { "RR", "Drag" } },
+            {72, new List<string> { "RR", "Flat Lt" } },
+            {73, new List<string> { "RR", "Flat Rt" } },
+            {74, new List<string> { "RR", "Hitch" } },
+            {75, new List<string> { "RR", "Hitch N Go" } },
+            {76, new List<string> { "RR", "In Deep" } },
+            {77, new List<string> { "RR", "In Middle" } },
+            {78, new List<string> { "RR", "In N Up" } },
+            {79, new List<string> { "RR", "In Short" } },
+            {80, new List<string> { "RR", "Option Route" } },
+            {81, new List<string> { "RR", "Out Deep" } },
+            {82, new List<string> { "RR", "Out Middle" } },
+            {83, new List<string> { "RR", "Out N Up" } },
+            {84, new List<string> { "RR", "Out N Up Comeback" } },
+            {85, new List<string> { "RR", "Out Short" } },
+            {86, new List<string> { "RR", "Post Corner" } },
+            {87, new List<string> { "RR", "Post Deep" } },
+            {88, new List<string> { "RR", "Post Middle" } },
+            {89, new List<string> { "RR", "Post Stop" } },
+            {90, new List<string> { "RR", "RB Angle" } },
+            {91, new List<string> { "RR", "RB Flat Lt" } },
+            {92, new List<string> { "RR", "RB Flat Rt" } },
+            {93, new List<string> { "RR", "WR Screen" } },
+            {94, new List<string> { "RR", "RB Screen Left" } },
+            {95, new List<string> { "RR", "RB Screen Rt" } },
+            {96, new List<string> { "RR", "Slant" } },
+            {97, new List<string> { "RR", "Slant N Go" } },
+            {98, new List<string> { "RR", "Streak" } },
+            {99, new List<string> { "RR", "Swing Lt" } },
+            {100, new List<string> { "RR", "Swing Rt" } },
+            {101, new List<string> { "RR", "Wheel Lt" } },
+            {102, new List<string> { "RR", "Wheel Rt" } },
+            {103, new List<string> { "RR", "Whip In" } },
+            {104, new List<string> { "RR", "Whip Out" } },
+            {105, new List<string> { "ST", "Kickoff Block" } },
+            {106, new List<string> { "ST", "Kickoff Cover" } },
+            {107, new List<string> { "ST", "Kickoff Return" } },
+            {108, new List<string> { "ST", "Punt Block" } },
+            {109, new List<string> { "ST", "Punt Return" } },
+            {110, new List<string> { "WR", "Pass" } },
+            {111, new List<string> { "QB", "Handoff" } },
+            {112, new List<string> { "QB", "Run" } },
+            {113, new List<string> { "QB", "Pitch" } },
+            {114, new List<string> { "QB", "Option Pass" } },
+            {115, new List<string> { "RR", "Block Flats Lt" } },
+            {116, new List<string> { "RR", "Block Flats Rt" } },
+            {117, new List<string> { "RR", "Block Hook Mid" } },
+            {118, new List<string> { "RR", "Block TE Dump" } },
+            {119, new List<string> { "RR", "Block TE Cross" } },
+            {120, new List<string> { "RR", "Block TE In" } },
+            {121, new List<string> { "RR", "Block TE Out" } },
+            {122, new List<string> { "RR", "Block Streak" } },
+            {123, new List<string> { "RR", "Block Hook Lt" } },
+            {124, new List<string> { "RR", "Block Hook Rt" } },
+            {125, new List<string> { "RR", "Block Circle" } },
+            {126, new List<string> { "RR", "Slant Hook" } },
+            {127, new List<string> { "ST", "Punt Cover" } },
+            {128, new List<string> { "ST", "Fake Punt Rooskie" } },
+            {129, new List<string> { "ST", "Fake Punt Rooskie Pass" } },
+            {130, new List<string> { "WR", "Reverse" } },
+            {131, new List<string> { "WR", "Fake Reverse" } },
+            {132, new List<string> { "RB", "Handoff Reverse" } },
+            {133, new List<string> { "Def", "Man 1" } },
+            {134, new List<string> { "Def", "Man 2" } },
+            {135, new List<string> { "Def", "Man 3" } },
+            {136, new List<string> { "Def", "Man 4" } },
+            {137, new List<string> { "Def", "Man 5" } },
+            {138, new List<string> { "ST", "Onside Cover" } },
+            {139, new List<string> { "ST", "Onside Recover" } },
+            {140, new List<string> { "QB", "Fake Pass" } },
+            {141, new List<string> { "RR", "Fade" } },
+            {142, new List<string> { "RR", "Option Comeback Corner" } },
+            {143, new List<string> { "RR", "Option Comeback Fade" } },
+            {144, new List<string> { "RR", "Option Curl Corner" } },
+            {145, new List<string> { "RR", "Option Curl Dig" } },
+            {146, new List<string> { "RR", "Option Curl Fade" } },
+            {147, new List<string> { "RR", "Option Curl Post Seam" } },
+            {148, new List<string> { "RR", "Option Curl Seam" } },
+            {149, new List<string> { "RR", "Option Dig Post" } },
+            {150, new List<string> { "RR", "Option Drag Hitch" } },
+            {151, new List<string> { "RR", "Option HB Choice In" } },
+            {152, new List<string> { "RR", "Option HB Choice In Out" } },
+            {153, new List<string> { "RR", "Option HB Choice Out" } },
+            {154, new List<string> { "RR", "Option Hitch Fade" } },
+            {155, new List<string> { "RR", "Option Hitch Fade Slant" } },
+            {156, new List<string> { "RR", "Option Hitch In Out" } },
+            {157, new List<string> { "RR", "Option Hitch Out" } },
+            {158, new List<string> { "RR", "Option Juke" } },
+            {159, new List<string> { "RR", "Option Out Fade" } },
+            {160, new List<string> { "RR", "Option Out Fade Slant" } },
+            {161, new List<string> { "RR", "Option Seam Bender" } },
+            {162, new List<string> { "RR", "Option Post Corner" } },
+            {163, new List<string> { "Max", "Max" } }
+        };
 
         public static readonly Dictionary<int, string> SituationOff = new Dictionary<int, string>
         {
@@ -488,53 +657,81 @@ namespace MaddenTeamPlaybookEditor.ViewModels
             PLAY = Madden.Team.PLAY.GetPLAY(DBIndex: 1);
         }
 
-        public List<SubFormationVM> GetPSALlist()
+        public ObservableCollection<FormationVM> GetPSALlist()
         {
-            List<PlayVM> psals = new List<PlayVM>();
-            foreach (Madden.TeamPlaybook.PSAL psal in PSAL.Distinct())
+            ObservableCollection<FormationVM> routes = new ObservableCollection<FormationVM>();
+            TeamPlaybook routeTypes = new TeamPlaybook { Formations = routes };
+            var routePositions = RouteType.GroupBy(type => type.Value[0]).ToDictionary(type => type.Key, type => type.ToList());
+
+            foreach (var _position in routePositions)
             {
-                psals.Add(new PlayVM());
-                psals[psals.Count() - 1].Players = new ObservableCollection<PlayerVM>
+                ObservableCollection<SubFormationVM> positions = new ObservableCollection<SubFormationVM>();
+                FormationVM route = new FormationVM
                 {
-                    new PlayerVM
-                    {
-                        PSAL = PSAL.Where(_psal => _psal.psal == psal.psal).OrderBy(s => s.step).ToList(),
-                        PLYS = PLYS.Where(plys => plys.PSAL == psal.psal).FirstOrDefault(),
-                        ARTL = ARTL.Where(_psal => _psal.artl == PLYS.Where(plys => plys.PSAL == psal.psal).FirstOrDefault().ARTL).FirstOrDefault(),
-                        artlColor = ARTLColor.BaseRoute,
-                        SETG = new Madden.TeamPlaybook.SETG
-                        {
-                            x___ = 0,
-                            y___ = 0,
-                            fx__ = 0,
-                            fy__ = 0
-                        },
-                        SETP = new Madden.TeamPlaybook.SETP
-                        {
-                            artx = 90,
-                            arty = 80
-                        },
-                        Icon = new EllipseGeometry(new Point(0, 0), 4, 4).GetFlattenedPathGeometry(),
-                        Play = psals[psals.Count() - 1]
-                    }
+                    PBFM = new Madden.TeamPlaybook.PBFM { name = _position.Key },
+                    SubFormations = positions,
+                    Playbook = routeTypes,
+                    IsVisible = true
                 };
-                //psals[psals.Count() - 1].Players[0].PSALpath = psals[psals.Count() - 1].Players[0].ConvertPSAL(psals[psals.Count() - 1].Players[0].PSAL);
-                psals[psals.Count() - 1].Players[0].ARTLpath = psals[psals.Count() - 1].Players[0].ConvertARTL(psals[psals.Count() - 1].Players[0].ARTL);
-                psals[psals.Count() - 1].Players[0].GetRouteCap();
-            }
-            List<SubFormationVM> routeTypes = new List<SubFormationVM>();
-            foreach (int PLRR in PLYS.Select(x => x.PLRR).Distinct())
-            {
-                routeTypes.Add(
-                    new SubFormationVM
+                foreach (var _type in _position.Value)
+                {
+                    ObservableCollection<PlayVM> types = new ObservableCollection<PlayVM>();
+                    SubFormationVM position = new SubFormationVM
                     {
-                        PBST = new PBST { name = "PLRR: " + PLRR.ToString() },
-                        Plays = new ObservableCollection<PlayVM>(psals.Where(play => play.Players[0].PLYS.PLRR == PLRR).ToList())
-                    });
-                routeTypes[routeTypes.Count()-1].IsVisible = true;
+                        PBST = new PBST { name = _type.Key.ToString() + ": " + _type.Value[1] },
+                        Plays = types,
+                        Formation = route
+                    };
+                    foreach (var _route in PLYS.Select(x => new { x.PSAL, x.PLRR }).Where(x => x.PLRR == _type.Key).Distinct().OrderBy(x => x.PSAL))
+                    {
+                        PlayerVM player = new PlayerVM()
+                        {
+                            PSAL = PSAL.Where(_psal => _psal.psal == _route.PSAL).OrderBy(s => s.step).ToList(),
+                            PLYS = PLYS.Where(plys => plys.PSAL == _route.PSAL).FirstOrDefault(),
+                            ARTL = ARTL.Where(_psal => _psal.artl == PLYS.Where(plys => plys.PSAL == _route.PSAL).FirstOrDefault().ARTL).FirstOrDefault(),
+                            SETG = new Madden.TeamPlaybook.SETG
+                            {
+                                x___ = 0,
+                                y___ = 0,
+                                fx__ = 0,
+                                fy__ = 0
+                            },
+                            SETP = new Madden.TeamPlaybook.SETP
+                            {
+                                artx = 90,
+                                arty = 80
+                            },
+                            Icon = new EllipseGeometry(new Point(0, 0), 4, 4).GetFlattenedPathGeometry(),
+                        };
+                        PlayVM type = new PlayVM
+                        {
+                            PBPL = new Madden.TeamPlaybook.PBPL { name = "PSAL: " + _route.PSAL.ToString() },
+                            PLYL = new PLYL { vpos = 0 },
+                            Players = new ObservableCollection<PlayerVM>
+                            {
+                                player
+                            },
+                            SubFormation = position
+                        };
+                        player.Play = type;
+                        player.ConvertARTL(player.ARTL);
+                        player.GetARTLcolor();
+                        player.ConvertPSAL(player.PSAL);
+                        player.GetRouteCap();
+                        types.Add(type);
+                    }
+                    if (position.Plays.Count() > 0)
+                    {
+                        positions.Add(position);
+                    }
+                }
+                if (route.SubFormations.Count() > 0)
+                {
+                    routes.Add(route);
+                }
             }
-                
-            return routeTypes.OrderBy(s => s.PBST.name).ToList();
+
+            return routes;
         }
 
         public void BuildPlaybook()

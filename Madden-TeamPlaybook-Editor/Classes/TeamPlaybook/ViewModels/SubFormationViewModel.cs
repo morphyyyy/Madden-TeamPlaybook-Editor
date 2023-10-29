@@ -1498,10 +1498,6 @@ namespace MaddenTeamPlaybookEditor.ViewModels
 
         #region IsExpanded
 
-        /// <summary>
-        /// Gets/sets whether the TreeViewItem 
-        /// associated with this object is expanded.
-        /// </summary>
         public bool IsExpanded
         {
             get { return _isExpanded; }
@@ -1511,10 +1507,7 @@ namespace MaddenTeamPlaybookEditor.ViewModels
                 {
                     _isExpanded = value;
                     this.OnPropertyChanged("IsExpanded");
-                    if (Formation != null)
-                    {
-                        foreach (SubFormationVM subFormation in Formation.SubFormations.Where(set => set.PBST != this.PBST)) subFormation.IsVisible = !value;
-                    }
+                    foreach (SubFormationVM subFormation in Formation.SubFormations.Where(set => set.PBST != this.PBST)) subFormation.IsVisible = !value;
                     foreach (PlayVM play in Plays) play.IsVisible = value;
                 }
             }

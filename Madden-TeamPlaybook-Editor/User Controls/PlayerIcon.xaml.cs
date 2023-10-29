@@ -11,9 +11,6 @@ using System.Windows.Media.Animation;
 
 namespace MaddenTeamPlaybookEditor.User_Controls
 {
-    /// <summary>
-    /// Interaction logic for PlayerIcon.xaml
-    /// </summary>
     public partial class PlayerIcon : UserControl
     {
         [DllImport("User32.dll")]
@@ -208,7 +205,6 @@ namespace MaddenTeamPlaybookEditor.User_Controls
 
         public static DependencyProperty ScaleProperty =
             DependencyProperty.Register("Scale", typeof(double), typeof(PlayerIcon));
-
         public double Scale
         {
             get { return (double)GetValue(ScaleProperty); }
