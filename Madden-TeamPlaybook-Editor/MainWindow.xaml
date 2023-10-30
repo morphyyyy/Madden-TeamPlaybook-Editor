@@ -270,6 +270,7 @@
                 BorderBrush="{x:Null}"
                 Foreground="{x:Null}"
                 DockPanel.Dock="Top"
+                TreeViewItem.Selected="tvwPSALs_Selected"
                 AllowDrop="True"
                 ItemsSource="{Binding}"
                 MaxWidth="600"

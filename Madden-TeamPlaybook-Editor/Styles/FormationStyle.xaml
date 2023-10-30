@@ -93,7 +93,7 @@
                     </Grid>
                     <ControlTemplate.Triggers>
 
-                        <MultiTrigger>
+                        <MultiTrigger>  <!-- IsSelected=true and IsExpanded=false -->
 
                             <MultiTrigger.Conditions>
                                 <Condition Property="IsSelected" Value="true"/>
@@ -124,7 +124,7 @@
 
                         </MultiTrigger>
 
-                        <MultiTrigger>
+                        <MultiTrigger>  <!-- IsSelected=true and IsExpanded=true -->
 
                             <MultiTrigger.Conditions>
                                 <Condition Property="IsSelected" Value="true"/>
@@ -155,7 +155,7 @@
 
                         </MultiTrigger>
 
-                        <MultiTrigger>
+                        <MultiTrigger>  <!-- IsMouseOver=true and IsSelected=false -->
 
                             <MultiTrigger.Conditions>
                                 <Condition Property="IsMouseOver" Value="true"/>
@@ -186,7 +186,7 @@
 
                         </MultiTrigger>
 
-                        <MultiTrigger>
+                        <MultiTrigger>  <!-- IsMouseOver=true and IsSelected=true -->
 
                             <MultiTrigger.Conditions>
                                 <Condition Property="IsMouseOver" Value="true"/>

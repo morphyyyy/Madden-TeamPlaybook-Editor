@@ -145,13 +145,30 @@ namespace MaddenTeamPlaybookEditor
 
         private void tvwPlaybook_Selected(object sender, RoutedEventArgs e)
         {
-            //TreeViewItem tvi = e.OriginalSource as TreeViewItem;
+            TreeViewItem tvi = e.OriginalSource as TreeViewItem;
 
-            //if (tvi == null || e.Handled) return;
+            if (tvi == null || e.Handled) return;
 
-            //tvi.IsExpanded = !tvi.IsExpanded;
-            //tvi.IsSelected = false;
-            //e.Handled = true;
+            tvi.IsExpanded = !tvi.IsExpanded;
+            if (tvi.IsSelected)
+            {
+                tvi.IsSelected = false;
+                e.Handled = true;
+            }
+        }
+
+        private void tvwPSALs_Selected(object sender, RoutedEventArgs e)
+        {
+            TreeViewItem tvi = e.OriginalSource as TreeViewItem;
+
+            if (tvi == null || e.Handled) return;
+
+            tvi.IsExpanded = !tvi.IsExpanded;
+            if (tvi.IsSelected)
+            {
+                tvi.IsSelected = false;
+                e.Handled = true;
+            }
         }
 
         #endregion
