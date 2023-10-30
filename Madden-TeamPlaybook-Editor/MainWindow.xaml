@@ -113,9 +113,12 @@
                 Foreground="{x:Null}"
                 DockPanel.Dock="Top"
                 SelectedItemChanged="tvwPlaybook_SelectedItemChanged"
+                TreeViewItem.Selected="tvwPlaybook_Selected"
                 AllowDrop="True"
                 ItemsSource="{Binding Formations}"
-                MaxWidth="600">
+                MaxWidth="600"
+                ScrollViewer.VerticalScrollBarVisibility="Hidden"
+                ScrollViewer.HorizontalScrollBarVisibility="Hidden">
 
                 <TreeView.CommandBindings>
                     <CommandBinding Command="ApplicationCommands.Copy" Executed="CopyToClipboard" />
@@ -144,7 +147,7 @@
                                 </Style>
                             </HierarchicalDataTemplate.ItemContainerStyle>
 
-                            <UserControls:Formation x:Name="uclFormation" formation="{Binding}"/>
+                                <UserControls:Formation x:Name="uclFormation" formation="{Binding}"/>
                         
                         </HierarchicalDataTemplate>
 
@@ -269,7 +272,9 @@
                 DockPanel.Dock="Top"
                 AllowDrop="True"
                 ItemsSource="{Binding}"
-                MaxWidth="600">
+                MaxWidth="600"
+                ScrollViewer.VerticalScrollBarVisibility="Hidden"
+                ScrollViewer.HorizontalScrollBarVisibility="Hidden">
 
                     <TreeView.Resources>
 

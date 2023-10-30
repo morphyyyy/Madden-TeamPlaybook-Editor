@@ -3,6 +3,7 @@ using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
 
 namespace MaddenTeamPlaybookEditor.User_Controls
 {
@@ -14,17 +15,10 @@ namespace MaddenTeamPlaybookEditor.User_Controls
         }
 
         public static DependencyProperty FormationProperty = DependencyProperty.Register("formation", typeof(FormationVM), typeof(Formation));
-
         public FormationVM formation
         {
-            get
-            {
-                return GetValue(FormationProperty) as FormationVM;
-            }
-            set
-            {
-                SetValue(FormationProperty, value);
-            }
+            get { return GetValue(FormationProperty) as FormationVM; }
+            set { SetValue(FormationProperty, value); }
         }
     }
 }

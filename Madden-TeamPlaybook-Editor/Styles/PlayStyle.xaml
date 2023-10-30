@@ -86,7 +86,7 @@
                                 ContentSource="Header" />
                         </Border>
                         <Grid.RenderTransform>
-                            <ScaleTransform CenterX="0.5" CenterY="0.5"/>
+                            <ScaleTransform CenterX="91" CenterY="91"/>
                         </Grid.RenderTransform>
                     </Grid>
                     <ControlTemplate.Triggers>
@@ -110,7 +110,7 @@
                                         <DoubleAnimation
                                             Storyboard.TargetName="BdrPlaySelected" 
                                             Storyboard.TargetProperty="Opacity"
-                                            From="1.0" To="0.0" Duration="0:0:0.5" />
+                                            From="1.0" To="0.0" Duration="0:0:0.2" />
                                     </Storyboard>
                                 </BeginStoryboard>
                             </Trigger.ExitActions>
@@ -129,11 +129,11 @@
                                         <DoubleAnimation
                                             Storyboard.TargetName="PlayGrid"
                                             Storyboard.TargetProperty="(RenderTransform).(ScaleTransform.ScaleX)"
-                                            From="1" To="1.05" Duration="0:0:0.2"/>
+                                            From="1" To="1.04" Duration="0:0:0.2"/>
                                         <DoubleAnimation
                                             Storyboard.TargetName="PlayGrid"
                                             Storyboard.TargetProperty="(RenderTransform).(ScaleTransform.ScaleY)"
-                                            From="1" To="1.05" Duration="0:0:0.2"/>
+                                            From="1" To="1.04" Duration="0:0:0.2"/>
                                     </Storyboard>
                                 </BeginStoryboard>
                             </Trigger.EnterActions>
@@ -148,11 +148,11 @@
                                         <DoubleAnimation
                                             Storyboard.TargetName="PlayGrid"
                                             Storyboard.TargetProperty="(RenderTransform).(ScaleTransform.ScaleX)"
-                                            From="1.05" To="1" Duration="0:0:0.2"/>
+                                            From="1.04" To="1" Duration="0:0:0.2"/>
                                         <DoubleAnimation
                                             Storyboard.TargetName="PlayGrid"
                                             Storyboard.TargetProperty="(RenderTransform).(ScaleTransform.ScaleY)"
-                                            From="1.05" To="1" Duration="0:0:0.2"/>
+                                            From="1.04" To="1" Duration="0:0:0.2"/>
                                     </Storyboard>
                                 </BeginStoryboard>
                             </Trigger.ExitActions>

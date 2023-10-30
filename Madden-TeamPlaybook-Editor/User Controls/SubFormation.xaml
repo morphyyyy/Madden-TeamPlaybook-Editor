@@ -167,7 +167,7 @@
             DockPanel.Dock="Top"
             Text="{Binding PBST.name}" 
             FontFamily="DK Crayon Crumble" 
-            FontSize="18"
+            FontSize="22"
             TextWrapping="Wrap" 
             TextAlignment="Center" 
             Background="Transparent" 
@@ -304,11 +304,11 @@
                 <ItemsControl.ItemContainerStyle>
                     <Style>
                         <Setter 
-                        Property="Canvas.Left" 
-                        Value="{Binding fmtx}"/>
+                            Property="Canvas.Left" 
+                            Value="{Binding fmtx}"/>
                         <Setter 
-                        Property="Canvas.Top" 
-                        Value="{Binding fmty}"/>
+                            Property="Canvas.Top" 
+                            Value="{Binding fmty}"/>
                     </Style>
                 </ItemsControl.ItemContainerStyle>
                 <ItemsControl.LayoutTransform>

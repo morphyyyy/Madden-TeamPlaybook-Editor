@@ -170,11 +170,11 @@
                 <ItemsControl.ItemContainerStyle>
                     <Style>
                         <Setter 
-                        Property="Canvas.Left" 
-                        Value="{Binding SETP.artx}"/>
+                            Property="Canvas.Left" 
+                            Value="{Binding SETP.artx}"/>
                         <Setter 
-                        Property="Canvas.Top" 
-                        Value="{Binding SETP.arty}"/>
+                            Property="Canvas.Top" 
+                            Value="{Binding SETP.arty}"/>
                     </Style>
                 </ItemsControl.ItemContainerStyle>
             </ItemsControl>

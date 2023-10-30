@@ -1,7 +1,9 @@
 ﻿using MaddenTeamPlaybookEditor.ViewModels;
+using System;
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace MaddenTeamPlaybookEditor.User_Controls
 {

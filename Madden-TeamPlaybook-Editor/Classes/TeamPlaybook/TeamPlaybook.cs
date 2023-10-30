@@ -716,6 +716,7 @@ namespace MaddenTeamPlaybookEditor.ViewModels
                         {
                             PBPL = new Madden.TeamPlaybook.PBPL { name = "PSAL: " + _route.PSAL.ToString() },
                             PLYL = new PLYL { vpos = 0 },
+                            PLYS = new List<Madden.TeamPlaybook.PLYS>(),
                             Players = new ObservableCollection<PlayerVM>
                             {
                                 player

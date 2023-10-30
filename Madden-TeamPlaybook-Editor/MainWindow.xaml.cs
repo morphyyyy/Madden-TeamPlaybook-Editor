@@ -93,7 +93,7 @@ namespace MaddenTeamPlaybookEditor
 
         #endregion
 
-        #region SelectTreeViewItem
+        #region TreeViewItem
 
         private void tvwPlaybook_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
@@ -141,6 +141,17 @@ namespace MaddenTeamPlaybookEditor
                 foreach (PlayerVM player in uclPlayModal.play.PlayerPlayartView) uclPlayModal.cvsField.Children.Add(new PlayerIcon(player));
                 uclPlayModal.UpdateLayout();
             }
+        }
+
+        private void tvwPlaybook_Selected(object sender, RoutedEventArgs e)
+        {
+            //TreeViewItem tvi = e.OriginalSource as TreeViewItem;
+
+            //if (tvi == null || e.Handled) return;
+
+            //tvi.IsExpanded = !tvi.IsExpanded;
+            //tvi.IsSelected = false;
+            //e.Handled = true;
         }
 
         #endregion
