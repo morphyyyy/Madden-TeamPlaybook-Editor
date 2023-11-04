@@ -210,7 +210,7 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-
+        
         <Setter Property="ItemsPanel">
             <Setter.Value>
                 <ItemsPanelTemplate>

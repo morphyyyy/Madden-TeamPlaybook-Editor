@@ -124,6 +124,37 @@
 
                         </MultiTrigger>
 
+                        <MultiTrigger>  <!-- IsSelected=false and IsExpanded=true -->
+
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsSelected" Value="false"/>
+                                <Condition Property="IsExpanded" Value="true"/>
+                            </MultiTrigger.Conditions>
+
+                            <MultiTrigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="BdrFormationSelected" 
+                                            Storyboard.TargetProperty="Opacity"
+                                            From="0.0" To="1.0" Duration="0:0:0.2" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </MultiTrigger.EnterActions>
+
+                            <MultiTrigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="BdrFormationSelected" 
+                                            Storyboard.TargetProperty="Opacity"
+                                            From="1.0" To="0.0" Duration="0:0:0.2" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </MultiTrigger.ExitActions>
+
+                        </MultiTrigger>
+ 
                         <MultiTrigger>  <!-- IsSelected=true and IsExpanded=true -->
 
                             <MultiTrigger.Conditions>
@@ -154,7 +185,7 @@
                             </MultiTrigger.ExitActions>
 
                         </MultiTrigger>
-
+                        
                         <MultiTrigger>  <!-- IsMouseOver=true and IsSelected=false -->
 
                             <MultiTrigger.Conditions>

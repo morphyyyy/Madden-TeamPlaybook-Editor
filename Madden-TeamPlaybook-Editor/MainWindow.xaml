@@ -69,9 +69,7 @@
             </MenuItem>
         </Menu>
 
-        <!--<UserControls:TestUserControl TestProperty="Test Text" x:Name="MyNewUserControl" />-->
-
-        <Expander ExpandDirection="Right" IsExpanded="False">
+        <Expander Foreground="LightGray" Header="Situations" ExpandDirection="Down" IsExpanded="False">
 
             <DockPanel Width="Auto" Height="Auto" HorizontalAlignment="Stretch" DockPanel.Dock="Left">
 
@@ -103,7 +101,7 @@
 
         </Expander>
 
-        <Expander ExpandDirection="Right" IsExpanded="True">
+        <Expander Foreground="LightGray" Header="Playbook" ExpandDirection="Down" IsExpanded="True">
 
             <DockPanel Width="Auto" Height="Auto" HorizontalAlignment="Stretch" DockPanel.Dock="Left">
 
@@ -114,6 +112,7 @@
                 DockPanel.Dock="Top"
                 SelectedItemChanged="tvwPlaybook_SelectedItemChanged"
                 TreeViewItem.Selected="tvwPlaybook_Selected"
+                MouseDoubleClick="tvwPlaybook_DoubleClick"
                 AllowDrop="True"
                 ItemsSource="{Binding Formations}"
                 MaxWidth="600"
@@ -261,7 +260,7 @@
         
         </Expander>
 
-        <Expander ExpandDirection="Right" IsExpanded="True">
+        <Expander Foreground="LightGray" Header="PSALs" ExpandDirection="Down" IsExpanded="True">
 
             <DockPanel Width="Auto" Height="Auto" HorizontalAlignment="Stretch" DockPanel.Dock="Left">
 
@@ -358,24 +357,12 @@
 
         </Expander>
 
-        <!--<UserControls:SubFormationModal 
-            x:Name="uclSubFormationModal" 
-            DockPanel.Dock="Left"
-            VerticalAlignment="Top"
-            subFormation="{Binding tvwPlaybook.SelectedItem}"
-            DataContext="{Binding tvwPlaybook.SelectedItem}">
-        </UserControls:SubFormationModal>-->
+        <Expander x:Name="xpdSubFormationModal" Visibility="Visible" Foreground="LightGray" Header="Sub Formation" ExpandDirection="Down" IsExpanded="True">
+            <UserControls:SubFormationModal x:Name="uclSubFormationModal"/>
+        </Expander>
 
-        <Expander ExpandDirection="Right" IsExpanded="True">
-
-            <UserControls:PlayModal 
-                x:Name="uclPlayModal" 
-                DockPanel.Dock="Left"
-                VerticalAlignment="Top"
-                play="{Binding tvwPlaybook.SelectedItem}"
-                DataContext="{Binding tvwPlaybook.SelectedItem}">
-            </UserControls:PlayModal>
-
+        <Expander x:Name="xpdPlayModal" Visibility="Collapsed" Foreground="LightGray" Header="Play" ExpandDirection="Down" IsExpanded="True">
+            <UserControls:PlayModal x:Name="uclPlayModal"/>
         </Expander>
 
         <!--<TabControl x:Name="tabPlaybook" ItemsSource="{Binding Formations}" Background="Transparent" BorderBrush="Transparent"  VerticalAlignment="Top" HorizontalAlignment="Left">
@@ -422,7 +409,7 @@
             </TabControl.ItemContainerStyle>
         </TabControl>-->
 
-        <Expander ExpandDirection="Right">
+        <Expander Foreground="LightGray" Header="Tables" ExpandDirection="Down">
         
             <TabControl 
                 x:Name="tclTables" 

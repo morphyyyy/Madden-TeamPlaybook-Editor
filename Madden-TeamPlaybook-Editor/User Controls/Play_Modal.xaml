@@ -36,18 +36,17 @@
 
         <Image x:Name="imgField" Height="800" Width="533" Stretch="UniformToFill" Visibility="Visible" Source="/Resources/full_field.jpg" />
 
-        <ItemsControl 
+        <!--<ItemsControl 
             IsEnabled="true"
             x:Name="iclPSALs"
             DockPanel.Dock="Top"
-            ItemsSource="{Binding PlayerPlayartView}"
-            >
+            ItemsSource="{Binding PlayerPlayartView}">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
                     <Canvas 
-                    x:Name="cvsPlayers"
-                    Width="533" 
-                    Height="600"/>
+                        x:Name="cvsPlayers"
+                        Width="533" 
+                        Height="600"/>
                 </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
             <ItemsControl.ItemTemplate>
@@ -56,8 +55,8 @@
                         x:Name="clnPSAL"
                         Player="{Binding}"
                         PSALView="True"
-                        Scale="1.666">
-                    </UserControls:Playart>
+                        Scale="2"
+                        AbsolutePositioning="True"/>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
             <ItemsControl.ItemContainerStyle>
@@ -70,18 +69,15 @@
                     Value="{Binding XY.Y, Mode=TwoWay}"/>
                 </Style>
             </ItemsControl.ItemContainerStyle>
-            <ItemsControl.RenderTransform>
-                <TranslateTransform 
-                    X="266.5"
-                    Y="450"/>
-            </ItemsControl.RenderTransform>
-        </ItemsControl>
+        </ItemsControl>-->
 
         <ItemsControl 
-        IsEnabled="True"
-        x:Name="iclIcons"
-        DockPanel.Dock="Top"
-        ItemsSource="{Binding PlayerPlayartView}">
+            IsEnabled="True"
+            x:Name="iclIcons"
+            DockPanel.Dock="Top"
+            ItemsSource="{Binding PlayerPlayartView}"
+            Canvas.Left="266.5"
+            Canvas.Top="600">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
                     <Canvas 
@@ -98,10 +94,7 @@
                         Player="{Binding}"
                         Scale="2"
                         ShowPosition="True"
-                        Animate="False"
-                        AbsolutePositioning="False"
-                        >
-                    </UserControls:PlayerIcon>
+                        PSALView="True"/>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
             <ItemsControl.ItemContainerStyle>
@@ -112,15 +105,23 @@
                     <Setter 
                     Property="Canvas.Top" 
                     Value="{Binding XY.Y, Mode=TwoWay}"/>
+                    <!--<Style.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Effect">
+                                <Setter.Value>
+                                    <DropShadowEffect ShadowDepth="0" Color="MediumPurple" Opacity="1" BlurRadius="20"/>
+                                </Setter.Value>
+                            </Setter>
+                            <Setter Property="RenderTransform">
+                                <Setter.Value>
+                                    <ScaleTransform ScaleX="2" ScaleY="2"/>
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+                    </Style.Triggers>-->
                 </Style>
             </ItemsControl.ItemContainerStyle>
-            <ItemsControl.RenderTransform>
-                <TranslateTransform 
-                    X="266.5"
-                    Y="450"/>
-            </ItemsControl.RenderTransform>
         </ItemsControl>
-        
     </Canvas>
     
 </UserControl>

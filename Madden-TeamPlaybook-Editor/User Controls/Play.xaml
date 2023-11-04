@@ -105,11 +105,11 @@
             Height="120"
             >
 
-            <ItemsControl 
+            <!--<ItemsControl 
             IsEnabled="False"
             x:Name="iclPlayarts"
             DockPanel.Dock="Top"
-            ItemsSource="{Binding Players}">
+            ItemsSource="{Binding PlayerPlayartView}">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
                         <Canvas 
@@ -140,13 +140,13 @@
                         Value="{Binding SETP.arty}"/>
                     </Style>
                 </ItemsControl.ItemContainerStyle>
-            </ItemsControl>
+            </ItemsControl>-->
 
             <ItemsControl 
-            IsEnabled="False"
-            x:Name="iclIcons"
-            DockPanel.Dock="Top"
-            ItemsSource="{Binding Players}">
+                IsEnabled="False"
+                x:Name="iclIcons"
+                DockPanel.Dock="Top"
+                ItemsSource="{Binding PlayerPlayartView}">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
                         <Canvas 
@@ -162,9 +162,7 @@
                             x:Name="clnIcon"
                             Player="{Binding}"
                             Scale="1"
-                            ShowPosition="False"
-                            AbsolutePositioning="False">
-                        </UserControls:PlayerIcon>
+                            ShowPosition="True"/>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
                 <ItemsControl.ItemContainerStyle>

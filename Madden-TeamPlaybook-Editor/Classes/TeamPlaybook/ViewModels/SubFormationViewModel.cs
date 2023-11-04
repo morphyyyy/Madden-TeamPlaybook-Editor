@@ -122,6 +122,8 @@ namespace MaddenTeamPlaybookEditor.ViewModels
 
         public FormationVM Formation { get; set; }
         public ObservableCollection<PlayVM> Plays { get; set; }
+        [field: NonSerializedAttribute()]
+        public ICollectionView PlayerPlayartView { get; set; }
 
         public string Position1name { get; set; }
         public string Position2name { get; set; }

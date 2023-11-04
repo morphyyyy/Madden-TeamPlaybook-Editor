@@ -32,158 +32,48 @@
         </Style>
     </UserControl.Resources>
 
-    <Canvas x:Name="cvsField" Height="900" Width="533">
+    <Canvas x:Name="cvsField" Height="800" Width="533">
 
-        <Image x:Name="imgField" Height="900" Width="533" Stretch="UniformToFill" Visibility="Visible" Source="/Resources/full_field.jpg" />
-
-        <StackPanel Orientation="Horizontal">
-            <TextBlock Text="Packages: "/>
-            <TabControl ItemsSource="{Binding Packages}" SelectedIndex="0">
-                <TabControl.ItemTemplate>
-                    <DataTemplate>
-                        <TextBlock Text="{Binding SPKF.name}"/>
-                    </DataTemplate>
-                </TabControl.ItemTemplate>
-                <TabControl.ContentTemplate>
-                    <DataTemplate>
-                        <UserControls:SPKGTable SPKG="{Binding SPKG, Mode=TwoWay}"/>
-                    </DataTemplate>
-                </TabControl.ContentTemplate>
-            </TabControl>
-        </StackPanel>
-        <StackPanel Orientation="Horizontal">
-            <TextBlock Text="Current Package: "/>
-            <UserControls:SETPTable SETP="{Binding CurrentPackage, Mode=TwoWay}"/>
-        </StackPanel>
-        <StackPanel Orientation="Horizontal">
-            <TextBlock Text="Alignments: "/>
-            <TabControl ItemsSource="{Binding Alignments}" SelectedIndex="0">
-                <TabControl.ItemTemplate>
-                    <DataTemplate>
-                        <TextBlock Text="{Binding SGFM.name}"/>
-                    </DataTemplate>
-                </TabControl.ItemTemplate>
-                <TabControl.ContentTemplate>
-                    <DataTemplate>
-                        <UserControls:SETGTable SETG="{Binding SETG, Mode=TwoWay}"/>
-                    </DataTemplate>
-                </TabControl.ContentTemplate>
-            </TabControl>
-        </StackPanel>
-        <StackPanel Orientation="Horizontal">
-            <TextBlock Text="Current Alignment: "/>
-            <TabControl ItemsSource="{Binding CurrentAlignment}" SelectedIndex="0">
-                <TabControl.ItemTemplate>
-                    <DataTemplate>
-                        <TextBlock Text="{Binding SGFM.name}"/>
-                    </DataTemplate>
-                </TabControl.ItemTemplate>
-                <TabControl.ContentTemplate>
-                    <DataTemplate>
-                        <UserControls:SETGTable SETG="{Binding SETG, Mode=TwoWay}"/>
-                    </DataTemplate>
-                </TabControl.ContentTemplate>
-            </TabControl>
-        </StackPanel>
-
-        <!--<ItemsControl 
-            IsEnabled="true"
-            x:Name="iclPSALs"
-            DockPanel.Dock="Top"
-            ItemsSource="{Binding PlayerPlayartView}"
-            >
-            <ItemsControl.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <Canvas 
-                    x:Name="cvsPlayers"
-                    Width="533" 
-                    Height="600"/>
-                </ItemsPanelTemplate>
-            </ItemsControl.ItemsPanel>
-            <ItemsControl.ItemTemplate>
-                <DataTemplate>
-                    <UserControls:Playart
-                        x:Name="clnPSAL"
-                        Player="{Binding}"
-                        PSALView="True"
-                        Scale="1.666">
-                    </UserControls:Playart>
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
-            <ItemsControl.ItemContainerStyle>
-                <Style>
-                    <Setter 
-                    Property="Canvas.Left" 
-                    Value="{Binding XY.X, Mode=TwoWay}"/>
-                    <Setter 
-                    Property="Canvas.Top" 
-                    Value="{Binding XY.Y, Mode=TwoWay}"/>
-                </Style>
-            </ItemsControl.ItemContainerStyle>
-            <ItemsControl.RenderTransform>
-                <TranslateTransform 
-                    X="266.5"
-                    Y="450"/>
-            </ItemsControl.RenderTransform>
-        </ItemsControl>
+        <Image x:Name="imgField" Height="800" Width="533" Stretch="UniformToFill" Visibility="Visible" Source="/Resources/full_field.jpg" />
 
         <ItemsControl 
-        IsEnabled="True"
-        x:Name="iclIcons"
-        DockPanel.Dock="Top"
-        ItemsSource="{Binding PlayerPlayartView}">
+            IsEnabled="True"
+            x:Name="iclIcons"
+            DockPanel.Dock="Top"
+            ItemsSource="{Binding CurrentAlignment.SETG}">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
                     <Canvas 
                         x:Name="cvsPlayers"
                         Width="533" 
-                        Height="600">
-                    </Canvas>
+                        Height="600"/>
                 </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <UserControls:PlayerIcon
+                    <Ellipse
                         x:Name="clnIcon"
-                        Player="{Binding}"
-                        Scale="2"
-                        ShowPosition="True"
-                        Animate="False"
-                        AbsolutePositioning="False"
-                        >
-                    </UserControls:PlayerIcon>
+                        Width="20"
+                        Height="20"
+                        Fill="Ivory"/>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
             <ItemsControl.ItemContainerStyle>
                 <Style>
                     <Setter 
                     Property="Canvas.Left" 
-                    Value="{Binding XY.X, Mode=TwoWay}"/>
+                    Value="{Binding x___, ConverterParameter=(x*11.4286)+266.5, Converter={StaticResource math}}"/>
                     <Setter 
-                    Property="Canvas.Top" 
-                    Value="{Binding XY.Y, Mode=TwoWay}"/>
-                    --><!--<Style.Triggers>
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Effect">
-                                <Setter.Value>
-                                    <DropShadowEffect ShadowDepth="0" Color="MediumPurple" Opacity="1" BlurRadius="20"/>
-                                </Setter.Value>
-                            </Setter>
-                            <Setter Property="RenderTransform">
-                                <Setter.Value>
-                                    <ScaleTransform ScaleX="2" ScaleY="2"/>
-                                </Setter.Value>
-                            </Setter>
-                        </Trigger>
-                    </Style.Triggers>--><!--
+                    Property="Canvas.Top"
+                    Value="{Binding y___, ConverterParameter=(x*-10)+600, Converter={StaticResource math}}"/>
                 </Style>
             </ItemsControl.ItemContainerStyle>
             <ItemsControl.RenderTransform>
                 <TranslateTransform 
-                    X="266.5"
-                    Y="450"/>
+                    X="-10"
+                    Y="-10"/>
             </ItemsControl.RenderTransform>
-        </ItemsControl>-->
+        </ItemsControl>
         
     </Canvas>
     
