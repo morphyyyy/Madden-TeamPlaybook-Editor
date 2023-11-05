@@ -4,7 +4,9 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows;
+using System.Windows.Data;
 using Madden.TeamPlaybook;
+using MaddenTeamPlaybookEditor.User_Controls;
 
 namespace MaddenTeamPlaybookEditor.ViewModels
 {
@@ -122,6 +124,7 @@ namespace MaddenTeamPlaybookEditor.ViewModels
 
         public FormationVM Formation { get; set; }
         public ObservableCollection<PlayVM> Plays { get; set; }
+        public ObservableCollection<PlayerVM> Players { get; set; }
         [field: NonSerializedAttribute()]
         public ICollectionView PlayerPlayartView { get; set; }
 
@@ -157,6 +160,7 @@ namespace MaddenTeamPlaybookEditor.ViewModels
             GetPackages();
             GetAlignments();
             GetAlignment();
+            GetPlayers();
             GetSubCount();
             GetPlays();
         }
@@ -1500,6 +1504,48 @@ namespace MaddenTeamPlaybookEditor.ViewModels
                 }
             }
             Alignments.OrderBy(alignment => alignment.SGFM.SGF_);
+        }
+
+        public void GetPlayers()
+        {
+            Players = new ObservableCollection<PlayerVM>();
+            if (CurrentAlignment != null)
+            {
+                foreach (SETG alignment in CurrentAlignment.SETG)
+                {
+                    int poso = CurrentPackage.Where(_poso => _poso.setp == alignment.SETP).FirstOrDefault().poso;
+                    Players.Add(new PlayerVM
+                    (
+                        new PLYS
+                        {
+                            poso = poso
+                        },
+                        new PlayVM
+                        {
+                            SubFormation = this,
+                            PLYS = new List<PLYS>
+                            {
+                                new PLYS
+                                {
+                                    poso = poso
+                                }
+                            },
+                            SRFT = new List<SRFT>(),
+                            PLYL = new PLYL
+                            {
+                                vpos = 0
+                            }
+                        }
+                    ));
+                }
+            }
+            GetPlayerPlayartViewList();
+        }
+
+        public void GetPlayerPlayartViewList()
+        {
+            PlayerPlayartView = CollectionViewSource.GetDefaultView(Players);
+            PlayerPlayartView.SortDescriptions.Add(new SortDescription("artlColor.Order", ListSortDirection.Ascending));
         }
 
         #endregion

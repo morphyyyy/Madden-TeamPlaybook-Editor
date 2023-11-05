@@ -34,7 +34,20 @@ namespace MaddenTeamPlaybookEditor.ViewModels
         public SRFT SRFT { get; set; }
         public List<PSAL> PSAL { get; set; }
         public ARTL ARTL { get; set; }
-        public Point XY { get; set; }
+        private Point _XY;
+        public Point XY
+        {
+            get { return _XY; }
+            set
+            {
+                if (_XY == value)
+                    return;
+                _XY = value;
+                this.SETG.x___ = (float)(_XY.X * .0875);
+                this.SETG.y___ = (float)(_XY.Y * -.1);
+                OnPropertyChanged("XY");
+            }
+        }
         public Progression progression { get; set; }
         public DCHT DCHT { get; set; }
         public PLAY Player { get; set; }
@@ -151,11 +164,7 @@ namespace MaddenTeamPlaybookEditor.ViewModels
                 //this.SETP.fmty = (int)(this.SETP.fmty * yRatio);
                 //this.SETP.artx = (int)(this.SETP.artx * xRatio);
                 //this.SETP.arty = (int)(this.SETP.arty * yRatio);
-                this.SETG.x___ = (float)(point.X * .0875);
-                this.SETG.y___ = (float)(point.Y * -.1);
-                this.Play.SubFormation.CurrentAlignment.SETG.Where(set => set == this.SETG).LastOrDefault().x___ = this.SETG.x___;
-                this.Play.SubFormation.CurrentAlignment.SETG.Where(set => set == this.SETG).LastOrDefault().y___ = this.SETG.y___;
-                XY = new Point { X = SETG.x___ * 11.4286, Y = SETG.y___ * -10 };
+                this.XY = point;
             }
         }
 
@@ -1657,7 +1666,6 @@ namespace MaddenTeamPlaybookEditor.ViewModels
             if (this.PropertyChanged != null)
             {
                 this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-                GetPSAL();
             }
         }
 
