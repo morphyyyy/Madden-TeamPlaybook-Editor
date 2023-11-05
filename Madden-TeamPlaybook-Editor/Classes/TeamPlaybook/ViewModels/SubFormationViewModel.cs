@@ -1545,7 +1545,7 @@ namespace MaddenTeamPlaybookEditor.ViewModels
         public void GetPlayerPlayartViewList()
         {
             PlayerPlayartView = CollectionViewSource.GetDefaultView(Players);
-            PlayerPlayartView.SortDescriptions.Add(new SortDescription("artlColor.Order", ListSortDirection.Ascending));
+            PlayerPlayartView.SortDescriptions.Add(new SortDescription("PLYS.poso", ListSortDirection.Descending));
         }
 
         #endregion
