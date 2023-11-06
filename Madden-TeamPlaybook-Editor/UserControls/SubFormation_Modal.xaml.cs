@@ -1,6 +1,8 @@
 ﻿using MaddenTeamPlaybookEditor.ViewModels;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using static MaddenTeamPlaybookEditor.ViewModels.SubFormationVM;
 
 namespace MaddenTeamPlaybookEditor.User_Controls
 {
@@ -22,6 +24,16 @@ namespace MaddenTeamPlaybookEditor.User_Controls
             set
             {
                 SetValue(SubFormationProperty, value);
+            }
+        }
+
+        private void tabAlignments_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (((Alignment)((TabControl)sender).SelectedItem) != null)
+            {
+                this.subFormation.CurrentAlignment = this.subFormation.Alignments.Where(alignment => alignment == ((Alignment)((TabControl)sender).SelectedItem)).FirstOrDefault();
+                this.subFormation.GetPlayers();
+                this.InvalidateVisual();
             }
         }
     }

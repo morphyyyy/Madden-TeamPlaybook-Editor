@@ -124,9 +124,31 @@ namespace MaddenTeamPlaybookEditor.ViewModels
 
         public FormationVM Formation { get; set; }
         public ObservableCollection<PlayVM> Plays { get; set; }
-        public ObservableCollection<PlayerVM> Players { get; set; }
+        private ObservableCollection<PlayerVM> _Players { get; set; }
+        public ObservableCollection<PlayerVM> Players 
+        {
+            get { return _Players; }
+            set
+            {
+                if (_Players == value)
+                    return;
+                _Players = value;
+                OnPropertyChanged("Players");
+            }
+        }
         [field: NonSerializedAttribute()]
-        public ICollectionView PlayerPlayartView { get; set; }
+        private ICollectionView _PlayerPlayartView { get; set; }
+        public ICollectionView PlayerPlayartView
+        {
+            get { return _PlayerPlayartView; }
+            set
+            {
+                if (_PlayerPlayartView == value)
+                    return;
+                _PlayerPlayartView = value;
+                OnPropertyChanged("PlayerPlayartView");
+            }
+        }
 
         public string Position1name { get; set; }
         public string Position2name { get; set; }
@@ -1472,11 +1494,12 @@ namespace MaddenTeamPlaybookEditor.ViewModels
         public void GetAlignment(Alignment alignment)
         {
             CurrentAlignment = Alignments.Where(poso => poso.SGFM.name == "Norm").FirstOrDefault();
-            for (int i = alignment.SETG.Count; i == 0; i--)
+            if (alignment.SGFM.name == "Norm") return;
+            CurrentAlignment.SGFM = alignment.SGFM;
+            for (int i = alignment.SETG.Count - 1; i >= 0; i--)
             {
                 int index = CurrentAlignment.SETG.FindIndex(player => player.SETP == alignment.SETG[i].SETP);
-                CurrentAlignment.SETG.RemoveAt(index);
-                CurrentAlignment.SETG.Insert(index, alignment.SETG[i]);
+                CurrentAlignment.SETG[index] = alignment.SETG[i];
             }
         }
 
@@ -1484,26 +1507,35 @@ namespace MaddenTeamPlaybookEditor.ViewModels
         {
             Alignments.Clear();
             List<SGFM> sets = Formation.Playbook.SGFM.Where(alignment => alignment.SETL == PBST.SETL).ToList();
-
             foreach (SGFM set in sets)
             {
-                List<SETG> SETG = new List<SETG>();
-                foreach (SETG alignment in Formation.Playbook.SETG.Where(alignment => alignment.SGF_ == set.SGF_))
-                {
-                    SETG.Add(alignment);
-                }
+                List<SETG> SETG = Formation.Playbook.SETG.Where(alignment => alignment.SGF_ == set.SGF_).ToList();
                 SETG.OrderBy(alignment => alignment.setg);
                 Alignments.Add(new Alignment(set, SETG));
-                if (set.name == "Norm")
+            }
+            Alignments = Alignments.OrderBy(alignment => alignment.SGFM.SGF_).ToList();
+            foreach (Alignment alignment in Alignments)
+            {
+                if (alignment.SGFM.name == "Norm")
                 {
-                    if (SETG.Count < 11)
+                    if (alignment.SETG.Count < 11)
                     {
                         MessageBox.Show("SETG Missing for " + PBST.name);
                     }
-                    GetAlignment(Alignments[Alignments.Count - 1]);
+                    CurrentAlignment = alignment;
+                }
+                else
+                {
+                    foreach (SETG setg in Alignments.Where(_alignment => _alignment.SGFM.name == "Norm").FirstOrDefault().SETG)
+                    {
+                        if (!alignment.SETG.Exists(poso => poso.SETP == setg.SETP))
+                        {
+                            alignment.SETG.Add(setg);
+                        }
+                    }
+                    alignment.SETG = alignment.SETG.OrderBy(_alignment => _alignment.SETP).ToList();
                 }
             }
-            Alignments.OrderBy(alignment => alignment.SGFM.SGF_);
         }
 
         public void GetPlayers()
