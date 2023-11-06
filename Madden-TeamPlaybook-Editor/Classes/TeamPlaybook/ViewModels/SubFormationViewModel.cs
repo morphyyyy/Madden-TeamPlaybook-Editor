@@ -1532,9 +1532,9 @@ namespace MaddenTeamPlaybookEditor.ViewModels
             Players = new ObservableCollection<PlayerVM>();
             if (CurrentAlignment != null)
             {
-                foreach (SETG alignment in CurrentAlignment.SETG)
+                for (int i = 0; i <= 10; i++)
                 {
-                    int poso = CurrentPackage.Where(_poso => _poso.setp == alignment.SETP).FirstOrDefault().poso;
+                    int poso = CurrentPackage.Where(_poso => _poso.setp == CurrentAlignment.SETG[i].SETP).FirstOrDefault().poso;
                     Players.Add(new PlayerVM
                     (
                         new PLYS

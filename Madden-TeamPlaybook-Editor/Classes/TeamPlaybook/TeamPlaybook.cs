@@ -929,13 +929,13 @@ namespace MaddenTeamPlaybookEditor.ViewModels
             }
         }
 
-        public static int NextAvailableID(List<int> IDs, bool insert = false, int buffer = 0)
+        public static int NextAvailableID(List<int> IDs, bool insert = false, int buffer = 0, int start = 1)
         {
             if (IDs == null || IDs.Count == 0) return 1;
             int ID = IDs.Max() + 1;
             if (insert)
             {
-                for (int i = 1; i <= ID; i++)
+                for (int i = start; i <= ID; i++)
                 {
                     if (!IDs.Contains(i))
                     {

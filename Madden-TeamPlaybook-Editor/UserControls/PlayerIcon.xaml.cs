@@ -23,8 +23,6 @@ namespace MaddenTeamPlaybookEditor.User_Controls
         public PlayerIcon()
         {
             InitializeComponent();
-            this.ContextMenu.DataContext = this.Player;
-            this.ToolTip = this.Player;
             this.MouseLeftButtonDown += new MouseButtonEventHandler(UserControl_MouseLeftButtonDown);
             this.MouseLeftButtonUp += new MouseButtonEventHandler(UserControl_MouseLeftButtonUp);
             this.MouseMove += new MouseEventHandler(UserControl_MouseMove);
@@ -34,8 +32,6 @@ namespace MaddenTeamPlaybookEditor.User_Controls
         {
             InitializeComponent();
             Player = player;
-            this.ContextMenu.DataContext = this.Player;
-            this.ToolTip = this.Player;
             this.MouseLeftButtonDown += new MouseButtonEventHandler(UserControl_MouseLeftButtonDown);
             this.MouseLeftButtonUp += new MouseButtonEventHandler(UserControl_MouseLeftButtonUp);
             this.MouseMove += new MouseEventHandler(UserControl_MouseMove);

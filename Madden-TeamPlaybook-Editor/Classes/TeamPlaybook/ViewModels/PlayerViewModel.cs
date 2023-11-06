@@ -9,6 +9,7 @@ using Madden.Team;
 using System.Windows;
 using System.Windows.Media;
 using System.Globalization;
+using MaddenTeamPlaybookEditor.User_Controls;
 
 namespace MaddenTeamPlaybookEditor.ViewModels
 {
@@ -43,8 +44,33 @@ namespace MaddenTeamPlaybookEditor.ViewModels
                 if (_XY == value)
                     return;
                 _XY = value;
-                this.SETG.x___ = (float)(_XY.X * .0875);
-                this.SETG.y___ = (float)(_XY.Y * -.1);
+                if (this.Play.SubFormation.CurrentAlignment != null)
+                {
+                    if (this.SETG.SGF_ != this.Play.SubFormation.CurrentAlignment.SGFM.SGF_)
+                    {
+                        this.Play.SubFormation.CurrentAlignment.SETG[this.Play.SubFormation.CurrentAlignment.SETG.FindIndex(setp => setp.SETP == this.SETG.SETP)] = new SETG
+                        {
+                            rec = this.Play.SubFormation.Formation.Playbook.SETG.Max(x => x.rec) + 1,
+                            setg = TeamPlaybook.NextAvailableID(this.Play.SubFormation.Formation.Playbook.SETG.Select(setg => setg.setg).ToList(), false, 0, this.SETG.setg),
+                            SETP = this.SETG.SETP,
+                            SGF_ = this.SETG.SGF_,
+                            SF__ = this.SETG.SF__,
+                            x___ = (float)(_XY.X * .0875),
+                            y___ = (float)(_XY.Y * -.1),
+                            fx__ = this.SETG.fx__,
+                            fy__ = this.SETG.fy__,
+                            anm_ = this.SETG.anm_,
+                            dir_ = this.SETG.dir_,
+                            fanm = this.SETG.fanm,
+                            fdir = this.SETG.fdir
+                        };
+                    }
+                    else
+                    {
+                        this.SETG.x___ = (float)(_XY.X * .0875);
+                        this.SETG.y___ = (float)(_XY.Y * -.1);
+                    }
+                }
                 //OnPropertyChanged("XY");
             }
         }

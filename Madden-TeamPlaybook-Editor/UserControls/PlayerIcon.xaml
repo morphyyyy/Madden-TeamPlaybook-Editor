@@ -106,8 +106,8 @@
     </UserControl.Resources>
     
     <UserControl.ContextMenu>
-        <ContextMenu StaysOpen="True" >
-            <!--<StackPanel Orientation="Horizontal">
+        <ContextMenu StaysOpen="True" DataContext="{Binding PlacementTarget.DataContext, RelativeSource={RelativeSource Self}}">
+            <StackPanel Orientation="Horizontal">
                 <TextBlock  
                     Background="Transparent" 
                     Foreground="LightGreen"
@@ -153,48 +153,6 @@
                     Text="{Binding LastName}"
                     />
             </StackPanel>
-            --><!--<StackPanel Orientation="Horizontal">
-                <TextBlock  
-                    Background="Transparent" 
-                    Foreground="LightGreen"
-                    Text="x___:"
-                    />
-                <TextBlock  
-                    Background="Transparent" 
-                    Foreground="LightGreen"
-                    Text="{Binding SETG.x___}"
-                    />
-                <TextBlock  
-                    Background="Transparent" 
-                    Foreground="LightGreen"
-                    Text=" y___:"
-                    />
-                <TextBlock  
-                    Background="Transparent" 
-                    Foreground="LightGreen"
-                    Text="{Binding SETG.y___}"
-                    />
-            </StackPanel>
-            <TextBlock  
-                Background="Transparent" 
-                Foreground="LightGreen"
-                Text="{Binding PLYS}"
-                />
-            <TextBlock  
-                Background="Transparent" 
-                Foreground="LightGreen"
-                Text="{Binding SETP}"
-                />
-            <TextBlock  
-                Background="Transparent" 
-                Foreground="LightGreen"
-                Text="{Binding SETG}"
-                />
-            <TextBlock  
-                Background="Transparent" 
-                Foreground="LightGreen"
-                Text="{Binding SRFT}"
-                />--><!--
             <StackPanel Orientation="Horizontal">
                 <TextBlock  
                     Background="Transparent" 
@@ -393,7 +351,7 @@
                     <TextBox Grid.Column="12" Grid.Row="1" Text="{Binding SRFT.ASSW, Mode=TwoWay}"/>
                 </Grid>
             </StackPanel>
-            <DataGrid ItemsSource="{Binding PSAL, Mode=TwoWay}"/>-->
+            <DataGrid ItemsSource="{Binding PSAL, Mode=TwoWay}"/>
         </ContextMenu>
     </UserControl.ContextMenu>
 
