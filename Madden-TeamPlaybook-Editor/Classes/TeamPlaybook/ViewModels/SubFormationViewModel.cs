@@ -124,18 +124,7 @@ namespace MaddenTeamPlaybookEditor.ViewModels
 
         public FormationVM Formation { get; set; }
         public ObservableCollection<PlayVM> Plays { get; set; }
-        private ObservableCollection<PlayerVM> _Players { get; set; }
-        public ObservableCollection<PlayerVM> Players 
-        {
-            get { return _Players; }
-            set
-            {
-                if (_Players == value)
-                    return;
-                _Players = value;
-                OnPropertyChanged("Players");
-            }
-        }
+        public ObservableCollection<PlayerVM> Players { get; set; }
         [field: NonSerializedAttribute()]
         private ICollectionView _PlayerPlayartView { get; set; }
         public ICollectionView PlayerPlayartView

@@ -58,7 +58,8 @@
                         Player="{Binding}"
                         Scale="2"
                         ShowPosition="True"
-                        AbsolutePositioning="True"/>
+                        AbsolutePositioning="True"
+                        Draggable="True"/>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
             <ItemsControl.ItemContainerStyle>

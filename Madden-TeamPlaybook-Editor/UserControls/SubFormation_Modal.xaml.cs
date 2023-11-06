@@ -33,7 +33,6 @@ namespace MaddenTeamPlaybookEditor.User_Controls
             {
                 this.subFormation.CurrentAlignment = this.subFormation.Alignments.Where(alignment => alignment == ((Alignment)((TabControl)sender).SelectedItem)).FirstOrDefault();
                 this.subFormation.GetPlayers();
-                this.InvalidateVisual();
             }
         }
     }
