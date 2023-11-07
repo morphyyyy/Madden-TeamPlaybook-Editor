@@ -695,9 +695,7 @@ namespace MaddenTeamPlaybookEditor.ViewModels
                     {
                         PlayerVM player = new PlayerVM()
                         {
-                            PSAL = PSAL.Where(_psal => _psal.psal == _route.PSAL).OrderBy(s => s.step).ToList(),
                             PLYS = PLYS.Where(plys => plys.PSAL == _route.PSAL).FirstOrDefault(),
-                            ARTL = ARTL.Where(_psal => _psal.artl == PLYS.Where(plys => plys.PSAL == _route.PSAL).FirstOrDefault().ARTL).FirstOrDefault(),
                             SETG = new Madden.TeamPlaybook.SETG
                             {
                                 x___ = 0,
@@ -710,7 +708,10 @@ namespace MaddenTeamPlaybookEditor.ViewModels
                                 artx = 90,
                                 arty = 80
                             },
-                            Icon = new EllipseGeometry(new Point(0, 0), 4, 4).GetFlattenedPathGeometry(),
+                            ARTL = ARTL.Where(_psal => _psal.artl == PLYS.Where(plys => plys.PSAL == _route.PSAL).FirstOrDefault().ARTL).FirstOrDefault(),
+                            artlColor = ARTLColor.Undefined,
+                            PSAL = PSAL.Where(_psal => _psal.psal == _route.PSAL).OrderBy(s => s.step).ToList(),
+                            Icon = new EllipseGeometry(new Point(0, 0), 4, 4).GetFlattenedPathGeometry()
                         };
                         PlayVM type = new PlayVM
                         {

@@ -1,4 +1,5 @@
 ﻿using MaddenTeamPlaybookEditor.ViewModels;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -23,6 +24,11 @@ namespace MaddenTeamPlaybookEditor.User_Controls
             {
                 SetValue(PlayProperty, value);
             }
+        }
+
+        private void iclIcons_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            tabPlayer.DataContext = play.Players.Where(player => player.IsSelected).FirstOrDefault();
         }
     }
 }

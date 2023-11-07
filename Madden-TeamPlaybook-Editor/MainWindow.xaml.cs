@@ -79,7 +79,7 @@ namespace MaddenTeamPlaybookEditor
             tvwPlaybook.DataContext = Playbook;
             lvwSituations.DataContext = Playbook;
             tclTables.DataContext = Playbook;
-            tvwPSALs.DataContext = Playbook.GetPSALlist();
+            //tvwPSALs.DataContext = Playbook.GetPSALlist();
             //tabPlaybook.DataContext = Playbook;
         }
 

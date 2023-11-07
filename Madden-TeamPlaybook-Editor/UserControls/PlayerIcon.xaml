@@ -105,7 +105,7 @@
         </Style>
     </UserControl.Resources>
     
-    <UserControl.ContextMenu>
+    <!--<UserControl.ContextMenu>
         <ContextMenu StaysOpen="True" DataContext="{Binding PlacementTarget.DataContext, RelativeSource={RelativeSource Self}}">
             <StackPanel Orientation="Horizontal">
                 <TextBlock  
@@ -353,11 +353,11 @@
             </StackPanel>
             <DataGrid ItemsSource="{Binding PSAL, Mode=TwoWay}"/>
         </ContextMenu>
-    </UserControl.ContextMenu>
+    </UserControl.ContextMenu>-->
 
-    <UserControl.ToolTip>
+    <!--<UserControl.ToolTip>
         <ToolTip>
-            <!--<StackPanel>
+            <StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <TextBlock  
                         Background="Transparent" 
@@ -397,7 +397,7 @@
                         Text="{Binding SETG.y___}"
                         />
                 </StackPanel>
-                --><!--<TextBlock  
+                <TextBlock  
                         Background="Transparent" 
                         Foreground="LightGreen"
                         Text="{Binding PLYS}"
@@ -406,20 +406,20 @@
                         Background="Transparent" 
                         Foreground="LightGreen"
                         Text="{Binding SETP}"
-                        />-->
-                <!--<TextBlock  
+                        />
+                <TextBlock  
                         Background="Transparent" 
                         Foreground="LightGreen"
                         Text="{Binding SETG}"
-                        />-->
-                <!--<TextBlock  
+                        />
+                <TextBlock  
                         Background="Transparent" 
                         Foreground="LightGreen"
                         Text="{Binding SRFT}"
-                        />--><!--
+                        />
                 <DataGrid ItemsSource="{Binding PSAL, Mode=TwoWay}"/>
-            </StackPanel>-->
+            </StackPanel>
         </ToolTip>
-    </UserControl.ToolTip>
+    </UserControl.ToolTip>-->
 
 </UserControl>

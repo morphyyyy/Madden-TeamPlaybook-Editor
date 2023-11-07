@@ -77,8 +77,19 @@ namespace MaddenTeamPlaybookEditor.ViewModels
         public List<PLYS> PLYS { get; set; }
 
         public ObservableCollection<PlayerVM> Players { get; set; }
-        [field: NonSerializedAttribute()] 
-        public ICollectionView PlayerPlayartView { get; set; }
+        [field: NonSerializedAttribute()]
+        private ICollectionView _PlayerPlayartView { get; set; }
+        public ICollectionView PlayerPlayartView
+        {
+            get { return _PlayerPlayartView; }
+            set
+            {
+                if (_PlayerPlayartView == value)
+                    return;
+                _PlayerPlayartView = value;
+                OnPropertyChanged("PlayerPlayartView");
+            }
+        }
 
         private bool _isShortAudible { get; set; }
         private bool _isRunAudible { get; set; }

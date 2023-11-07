@@ -31,9 +31,34 @@ namespace MaddenTeamPlaybookEditor.ViewModels
 
         public PLYS PLYS { get; set; }
         public SETP SETP { get; set; }
-        public SETG SETG { get; set; }
+        private SETG _SETG { get; set; }
+        public SETG SETG
+        {
+            get { return _SETG; }
+            set
+            {
+                if (_SETG == value)
+                    return;
+                _SETG = value;
+            }
+        }
         public SRFT SRFT { get; set; }
-        public List<PSAL> PSAL { get; set; }
+        private List<PSAL> _PSAL { get; set; }
+        public List<PSAL> PSAL
+        {
+            get { return _PSAL; }
+            set
+            {
+                if (_PSAL == value)
+                    return;
+                _PSAL = value;
+                if (_PSAL != null)
+                {
+                    ConvertPSAL(_PSAL);
+                    GetRouteCap();
+                }
+            }
+        }
         public ARTL ARTL { get; set; }
         private Point _XY;
         public Point XY
@@ -95,6 +120,8 @@ namespace MaddenTeamPlaybookEditor.ViewModels
         public List<Path> PSALpath { get; set; }
         [field: NonSerializedAttribute()]
         public PathGeometry RouteCap { get; set; }
+
+        private bool _isSelected { get; set; }
 
         public PlayerVM()
         {
@@ -1681,6 +1708,23 @@ namespace MaddenTeamPlaybookEditor.ViewModels
 
             return points;
         }
+
+        #region IsSelected
+
+        public bool IsSelected
+        {
+            get { return _isSelected; }
+            set
+            {
+                if (value != _isSelected)
+                {
+                    _isSelected = value;
+                    this.OnPropertyChanged("IsSelected");
+                }
+            }
+        }
+
+        #endregion // IsSelected
 
         #region INotifyPropertyChanged Members
 

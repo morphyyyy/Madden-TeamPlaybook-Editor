@@ -110,6 +110,8 @@ namespace MaddenTeamPlaybookEditor.User_Controls
 
         private void UserControl_MouseLeftButtonDown(Object sender, MouseButtonEventArgs e)
         {
+            foreach (PlayerVM player in Player.Play.Players) player.IsSelected = false;
+            Player.IsSelected = true;
             if (Draggable)
             {
                 ContextMenu.IsOpen = false;
