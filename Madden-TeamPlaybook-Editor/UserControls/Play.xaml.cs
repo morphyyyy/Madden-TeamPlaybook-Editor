@@ -10,14 +10,14 @@ namespace MaddenTeamPlaybookEditor.User_Controls
         public Play()
         {
             InitializeComponent();
-            if (showAudibles)
-            {
-                pnlAudibles.Visibility = Visibility.Visible;
-            }
-            else
-            {
-                pnlAudibles.Visibility = Visibility.Collapsed;
-            }
+            //if (showAudibles)
+            //{
+            //    pnlAudibles.Visibility = Visibility.Visible;
+            //}
+            //else
+            //{
+            //    pnlAudibles.Visibility = Visibility.Collapsed;
+            //}
         }
 
         public static DependencyProperty PlayProperty = DependencyProperty.Register("play", typeof(PlayVM), typeof(Play));

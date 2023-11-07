@@ -12,14 +12,14 @@ namespace MaddenTeamPlaybookEditor.User_Controls
         public SubFormation()
         {
             InitializeComponent();
-            if (showPackage)
-            {
-                pnlSubFormation.Visibility = Visibility.Visible;
-            }
-            else
-            {
-                pnlSubFormation.Visibility = Visibility.Collapsed;
-            }
+            //if (showPackage)
+            //{
+            //    pnlSubFormation.Visibility = Visibility.Visible;
+            //}
+            //else
+            //{
+            //    pnlSubFormation.Visibility = Visibility.Collapsed;
+            //}
         }
 
         public static DependencyProperty SubFormationProperty = DependencyProperty.Register("subFormation", typeof(SubFormationVM), typeof(SubFormation));

@@ -135,20 +135,21 @@
         </ItemsControl>
         
         <DockPanel 
-            VerticalAlignment="Stretch" 
-            HorizontalAlignment="Stretch" 
             Margin="0,0,0,0" 
             x:Name="ReferenceInfo" 
             Canvas.Left="0" 
             Canvas.Top="0" 
             Height="800" 
-            Width="533">
+            Width="533"
+            LastChildFill="False">
+
             <TabControl 
-                x:Name="tabPlayer"
+                x:Name="tabPlayControls"
                 Background="Transparent" 
                 BorderBrush="Transparent" 
-                VerticalAlignment="Top"
-                HorizontalAlignment="Center">
+                DockPanel.Dock="Top"
+                VerticalAlignment="Bottom"
+                HorizontalAlignment="Stretch">
                 <TabControl.Resources>
                     <Style TargetType="TabItem">
                         <Setter Property="Template">
@@ -156,10 +157,10 @@
                                 <ControlTemplate TargetType="TabItem">
                                     <Label Name="Panel">
                                         <ContentPresenter x:Name="ContentSite"
-                                        VerticalAlignment="Center"
-                                        HorizontalAlignment="Center"
-                                        ContentSource="Header"
-                                        Margin="35,2"/>
+                                            VerticalAlignment="Top"
+                                            HorizontalAlignment="Center"
+                                            ContentSource="Header"
+                                            Margin="102.15,2"/>
                                     </Label>
                                     <ControlTemplate.Triggers>
                                         <Trigger Property="IsSelected" Value="True">
@@ -176,192 +177,436 @@
                         </Setter>
                     </Style>
                 </TabControl.Resources>
-                <TabItem Header="PLYS">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition />
-                            <ColumnDefinition />
-                            <ColumnDefinition />
-                            <ColumnDefinition />
-                            <ColumnDefinition />
-                            <ColumnDefinition />
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition />
-                            <RowDefinition />
-                        </Grid.RowDefinitions>
-                        <TextBlock Grid.Column="0" Grid.Row="0" Text="rec"/>
-                        <TextBox Grid.Column="0" Grid.Row="1" Text="{Binding PLYS.rec, Mode=TwoWay}"/>
-                        <TextBlock Grid.Column="1" Grid.Row="0" Text="PSAL"/>
-                        <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding PLYS.PSAL, Mode=TwoWay}"/>
-                        <TextBlock Grid.Column="2" Grid.Row="0" Text="ARTL"/>
-                        <TextBox Grid.Column="2" Grid.Row="1" Text="{Binding PLYS.ARTL, Mode=TwoWay}"/>
-                        <TextBlock Grid.Column="3" Grid.Row="0" Text="PLYL"/>
-                        <TextBox Grid.Column="3" Grid.Row="1" Text="{Binding PLYS.PLYL, Mode=TwoWay}"/>
-                        <TextBlock Grid.Column="4" Grid.Row="0" Text="PLRR"/>
-                        <TextBox Grid.Column="4" Grid.Row="1" Text="{Binding PLYS.PLRR, Mode=TwoWay}"/>
-                        <TextBlock Grid.Column="5" Grid.Row="0" Text="poso"/>
-                        <TextBox Grid.Column="5" Grid.Row="1" Text="{Binding PLYS.poso, Mode=TwoWay}"/>
-                    </Grid>
-                </TabItem>
-                <TabItem Header="SETP">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition />
-                            <ColumnDefinition />
-                            <ColumnDefinition />
-                            <ColumnDefinition />
-                            <ColumnDefinition />
-                            <ColumnDefinition />
-                            <ColumnDefinition />
-                            <ColumnDefinition />
-                            <ColumnDefinition />
-                            <ColumnDefinition />
-                            <ColumnDefinition />
-                            <ColumnDefinition />
-                            <ColumnDefinition />
-                            <ColumnDefinition />
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition />
-                            <RowDefinition />
-                        </Grid.RowDefinitions>
-                        <TextBlock Grid.Column="0" Grid.Row="0" Text="rec"/>
-                        <TextBox Grid.Column="0" Grid.Row="1" Text="{Binding SETP.rec, Mode=TwoWay}"/>
-                        <TextBlock Grid.Column="1" Grid.Row="0" Text="SETL"/>
-                        <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding SETP.SETL, Mode=TwoWay}"/>
-                        <TextBlock Grid.Column="2" Grid.Row="0" Text="setp"/>
-                        <TextBox Grid.Column="2" Grid.Row="1" Text="{Binding SETP.setp, Mode=TwoWay}"/>
-                        <TextBlock Grid.Column="3" Grid.Row="0" Text="SGT_"/>
-                        <TextBox Grid.Column="3" Grid.Row="1" Text="{Binding SETP.SGT_, Mode=TwoWay}"/>
-                        <TextBlock Grid.Column="4" Grid.Row="0" Text="arti"/>
-                        <TextBox Grid.Column="4" Grid.Row="1" Text="{Binding SETP.arti, Mode=TwoWay}"/>
-                        <TextBlock Grid.Column="5" Grid.Row="0" Text="tabo"/>
-                        <TextBox Grid.Column="5" Grid.Row="1" Text="{Binding SETP.tabo, Mode=TwoWay}"/>
-                        <TextBlock Grid.Column="6" Grid.Row="0" Text="poso"/>
-                        <TextBox Grid.Column="6" Grid.Row="1" Text="{Binding SETP.poso, Mode=TwoWay}"/>
-                        <TextBlock Grid.Column="7" Grid.Row="0" Text="flas"/>
-                        <TextBox Grid.Column="7" Grid.Row="1" Text="{Binding SETP.flas, Mode=TwoWay}"/>
-                        <TextBlock Grid.Column="8" Grid.Row="0" Text="DPos"/>
-                        <TextBox Grid.Column="8" Grid.Row="1" Text="{Binding SETP.DPos, Mode=TwoWay}"/>
-                        <TextBlock Grid.Column="9" Grid.Row="0" Text="EPos"/>
-                        <TextBox Grid.Column="9" Grid.Row="1" Text="{Binding SETP.EPos, Mode=TwoWay}"/>
-                        <TextBlock Grid.Column="10" Grid.Row="0" Text="fmtx"/>
-                        <TextBox Grid.Column="10" Grid.Row="1" Text="{Binding SETP.fmtx, Mode=TwoWay}"/>
-                        <TextBlock Grid.Column="11" Grid.Row="0" Text="artx"/>
-                        <TextBox Grid.Column="11" Grid.Row="1" Text="{Binding SETP.artx, Mode=TwoWay}"/>
-                        <TextBlock Grid.Column="12" Grid.Row="0" Text="fmty"/>
-                        <TextBox Grid.Column="12" Grid.Row="1" Text="{Binding SETP.fmty, Mode=TwoWay}"/>
-                        <TextBlock Grid.Column="13" Grid.Row="0" Text="arty"/>
-                        <TextBox Grid.Column="13" Grid.Row="1" Text="{Binding SETP.arty, Mode=TwoWay}"/>
-                    </Grid>
-                </TabItem>
-                <TabItem Header="SETG">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition />
-                            <ColumnDefinition />
-                            <ColumnDefinition />
-                            <ColumnDefinition />
-                            <ColumnDefinition />
-                            <ColumnDefinition />
-                            <ColumnDefinition />
-                            <ColumnDefinition />
-                            <ColumnDefinition />
-                            <ColumnDefinition />
-                            <ColumnDefinition />
-                            <ColumnDefinition />
-                            <ColumnDefinition />
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition />
-                            <RowDefinition />
-                        </Grid.RowDefinitions>
-                        <TextBlock Grid.Column="0" Grid.Row="0" Text="rec"/>
-                        <TextBox Grid.Column="0" Grid.Row="1" Text="{Binding SETG.rec, Mode=TwoWay}"/>
-                        <TextBlock Grid.Column="1" Grid.Row="0" Text="setg"/>
-                        <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding SETG.setg, Mode=TwoWay}"/>
-                        <TextBlock Grid.Column="2" Grid.Row="0" Text="SETP"/>
-                        <TextBox Grid.Column="2" Grid.Row="1" Text="{Binding SETG.SETP, Mode=TwoWay}"/>
-                        <TextBlock Grid.Column="3" Grid.Row="0" Text="SGF_"/>
-                        <TextBox Grid.Column="3" Grid.Row="1" Text="{Binding SETG.SGF_, Mode=TwoWay}"/>
-                        <TextBlock Grid.Column="4" Grid.Row="0" Text="SF__"/>
-                        <TextBox Grid.Column="4" Grid.Row="1" Text="{Binding SETG.SF__, Mode=TwoWay}"/>
-                        <TextBlock Grid.Column="5" Grid.Row="0" Text="x___"/>
-                        <TextBox Grid.Column="5" Grid.Row="1" Text="{Binding SETG.x___, Mode=TwoWay}"/>
-                        <TextBlock Grid.Column="6" Grid.Row="0" Text="y___"/>
-                        <TextBox Grid.Column="6" Grid.Row="1" Text="{Binding SETG.y___, Mode=TwoWay}"/>
-                        <TextBlock Grid.Column="7" Grid.Row="0" Text="fx__"/>
-                        <TextBox Grid.Column="7" Grid.Row="1" Text="{Binding SETG.fx__, Mode=TwoWay}"/>
-                        <TextBlock Grid.Column="8" Grid.Row="0" Text="fy__"/>
-                        <TextBox Grid.Column="8" Grid.Row="1" Text="{Binding SETG.fy__, Mode=TwoWay}"/>
-                        <TextBlock Grid.Column="9" Grid.Row="0" Text="anm_"/>
-                        <TextBox Grid.Column="9" Grid.Row="1" Text="{Binding SETG.anm_, Mode=TwoWay}"/>
-                        <TextBlock Grid.Column="10" Grid.Row="0" Text="dir_"/>
-                        <TextBox Grid.Column="10" Grid.Row="1" Text="{Binding SETG.dir_, Mode=TwoWay}"/>
-                        <TextBlock Grid.Column="11" Grid.Row="0" Text="fanm"/>
-                        <TextBox Grid.Column="11" Grid.Row="1" Text="{Binding SETG.fanm, Mode=TwoWay}"/>
-                        <TextBlock Grid.Column="12" Grid.Row="0" Text="fdir"/>
-                        <TextBox Grid.Column="12" Grid.Row="1" Text="{Binding SETG.fdir, Mode=TwoWay}"/>
-                    </Grid>
-                </TabItem>
-                <TabItem Header="SRFT">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition />
-                            <ColumnDefinition />
-                            <ColumnDefinition />
-                            <ColumnDefinition />
-                            <ColumnDefinition />
-                            <ColumnDefinition />
-                            <ColumnDefinition />
-                            <ColumnDefinition />
-                            <ColumnDefinition />
-                            <ColumnDefinition />
-                            <ColumnDefinition />
-                            <ColumnDefinition />
-                            <ColumnDefinition />
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition />
-                            <RowDefinition />
-                        </Grid.RowDefinitions>
-                        <TextBlock Grid.Column="0" Grid.Row="0" Text="rec"/>
-                        <TextBox Grid.Column="0" Grid.Row="1" Text="{Binding SRFT.rec, Mode=TwoWay}"/>
-                        <TextBlock Grid.Column="1" Grid.Row="0" Text="SIDE"/>
-                        <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding SRFT.SIDE, Mode=TwoWay}"/>
-                        <TextBlock Grid.Column="2" Grid.Row="0" Text="YOFF"/>
-                        <TextBox Grid.Column="2" Grid.Row="1" Text="{Binding SRFT.YOFF, Mode=TwoWay}"/>
-                        <TextBlock Grid.Column="3" Grid.Row="0" Text="TECH"/>
-                        <TextBox Grid.Column="3" Grid.Row="1" Text="{Binding SRFT.TECH, Mode=TwoWay}"/>
-                        <TextBlock Grid.Column="4" Grid.Row="0" Text="PLYL"/>
-                        <TextBox Grid.Column="4" Grid.Row="1" Text="{Binding SRFT.PLYL, Mode=TwoWay}"/>
-                        <TextBlock Grid.Column="5" Grid.Row="0" Text="STAN"/>
-                        <TextBox Grid.Column="5" Grid.Row="1" Text="{Binding SRFT.STAN, Mode=TwoWay}"/>
-                        <TextBlock Grid.Column="6" Grid.Row="0" Text="PLYR"/>
-                        <TextBox Grid.Column="6" Grid.Row="1" Text="{Binding SRFT.PLYR, Mode=TwoWay}"/>
-                        <TextBlock Grid.Column="7" Grid.Row="0" Text="PRIS"/>
-                        <TextBox Grid.Column="7" Grid.Row="1" Text="{Binding SRFT.PRIS, Mode=TwoWay}"/>
-                        <TextBlock Grid.Column="8" Grid.Row="0" Text="GAPS"/>
-                        <TextBox Grid.Column="8" Grid.Row="1" Text="{Binding SRFT.GAPS, Mode=TwoWay}"/>
-                        <TextBlock Grid.Column="9" Grid.Row="0" Text="ASSS"/>
-                        <TextBox Grid.Column="9" Grid.Row="1" Text="{Binding SRFT.ASSS, Mode=TwoWay}"/>
-                        <TextBlock Grid.Column="10" Grid.Row="0" Text="PRIW"/>
-                        <TextBox Grid.Column="10" Grid.Row="1" Text="{Binding SRFT.PRIW, Mode=TwoWay}"/>
-                        <TextBlock Grid.Column="11" Grid.Row="0" Text="GAPW"/>
-                        <TextBox Grid.Column="11" Grid.Row="1" Text="{Binding SRFT.GAPW, Mode=TwoWay}"/>
-                        <TextBlock Grid.Column="12" Grid.Row="0" Text="ASSW"/>
-                        <TextBox Grid.Column="12" Grid.Row="1" Text="{Binding SRFT.ASSW, Mode=TwoWay}"/>
-                    </Grid>
-                </TabItem>
-                <TabItem Header="PSAL">
-                    <DataGrid 
-                        ItemsSource="{Binding PSAL, Mode=TwoWay}"
+
+                <TabItem Header="Edit Play">
+                    <TabControl 
+                        x:Name="tabPlay"
+                        Background="Transparent" 
+                        BorderBrush="Transparent" 
                         DockPanel.Dock="Bottom"
                         VerticalAlignment="Bottom"
-                        HorizontalAlignment="Center"/>
+                        HorizontalAlignment="Stretch">
+                        <TabControl.Resources>
+                            <Style TargetType="TabItem">
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="TabItem">
+                                            <Label Name="Panel">
+                                                <ContentPresenter x:Name="ContentSite"
+                                                VerticalAlignment="Center"
+                                                HorizontalAlignment="Center"
+                                                ContentSource="Header"
+                                                Margin="9,2"/>
+                                            </Label>
+                                            <ControlTemplate.Triggers>
+                                                <Trigger Property="IsSelected" Value="True">
+                                                    <Setter TargetName="Panel" Property="Background" Value="Transparent" />
+                                                    <Setter TargetName="Panel" Property="Foreground" Value="LightGreen" />
+                                                </Trigger>
+                                                <Trigger Property="IsSelected" Value="False">
+                                                    <Setter TargetName="Panel" Property="Background" Value="Transparent" />
+                                                    <Setter TargetName="Panel" Property="Foreground" Value="Black" />
+                                                </Trigger>
+                                            </ControlTemplate.Triggers>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </TabControl.Resources>
+                        <TabItem Header="PBPL">
+                            <Grid HorizontalAlignment="Center">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                </Grid.RowDefinitions>
+                                <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="0" Grid.Row="0" Text="rec"/>
+                                <TextBox Grid.Column="0" Grid.Row="1" Text="{Binding PBPL.rec, Mode=TwoWay}"/>
+                                <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="1" Grid.Row="0" Text="PKGE"/>
+                                <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding PBPL.PKGE, Mode=TwoWay}"/>
+                                <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="2" Grid.Row="0" Text="COMF"/>
+                                <TextBox Grid.Column="2" Grid.Row="1" Text="{Binding PBPL.COMF, Mode=TwoWay}"/>
+                                <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="3" Grid.Row="0" Text="pbpl"/>
+                                <TextBox Grid.Column="3" Grid.Row="1" Text="{Binding PBPL.pbpl, Mode=TwoWay}"/>
+                                <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="4" Grid.Row="0" Text="PLYL"/>
+                                <TextBox Grid.Column="4" Grid.Row="1" Text="{Binding PBPL.PLYL, Mode=TwoWay}"/>
+                                <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="5" Grid.Row="0" Text="PBST"/>
+                                <TextBox Grid.Column="5" Grid.Row="1" Text="{Binding PBPL.PBST, Mode=TwoWay}"/>
+                                <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="6" Grid.Row="0" Text="ord_"/>
+                                <TextBox Grid.Column="6" Grid.Row="1" Text="{Binding PBPL.ord_, Mode=TwoWay}"/>
+                                <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="7" Grid.Row="0" Text="name"/>
+                                <TextBox Grid.Column="7" Grid.Row="1" Text="{Binding PBPL.name, Mode=TwoWay}"/>
+                                <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="8" Grid.Row="0" Text="Flag"/>
+                                <TextBox Grid.Column="8" Grid.Row="1" Text="{Binding PBPL.Flag, Mode=TwoWay}"/>
+                            </Grid>
+                        </TabItem>
+                        <TabItem Header="PLYL">
+                            <Grid HorizontalAlignment="Center">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                </Grid.RowDefinitions>
+                                <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="0" Grid.Row="0" Text="rec"/>
+                                <TextBox Grid.Column="0" Grid.Row="1" Text="{Binding PLYL.rec, Mode=TwoWay}"/>
+                                <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="1" Grid.Row="0" Text="SETL"/>
+                                <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding PLYL.SETL, Mode=TwoWay}"/>
+                                <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="2" Grid.Row="0" Text="plyl"/>
+                                <TextBox Grid.Column="2" Grid.Row="1" Text="{Binding PLYL.plyl, Mode=TwoWay}"/>
+                                <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="3" Grid.Row="0" Text="SRMM"/>
+                                <TextBox Grid.Column="3" Grid.Row="1" Text="{Binding PLYL.SRMM, Mode=TwoWay}"/>
+                                <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="4" Grid.Row="0" Text="SITT"/>
+                                <TextBox Grid.Column="4" Grid.Row="1" Text="{Binding PLYL.SITT, Mode=TwoWay}"/>
+                                <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="5" Grid.Row="0" Text="PLYT"/>
+                                <TextBox Grid.Column="5" Grid.Row="1" Text="{Binding PLYL.PLYT, Mode=TwoWay}"/>
+                                <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="6" Grid.Row="0" Text="PLF_"/>
+                                <TextBox Grid.Column="6" Grid.Row="1" Text="{Binding PLYL.PLF_, Mode=TwoWay}"/>
+                                <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="7" Grid.Row="0" Text="name"/>
+                                <TextBox Grid.Column="7" Grid.Row="1" Text="{Binding PLYL.name, Mode=TwoWay}"/>
+                                <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="8" Grid.Row="0" Text="risk"/>
+                                <TextBox Grid.Column="8" Grid.Row="1" Text="{Binding PLYL.risk, Mode=TwoWay}"/>
+                                <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="9" Grid.Row="0" Text="motn"/>
+                                <TextBox Grid.Column="9" Grid.Row="1" Text="{Binding PLYL.motn, Mode=TwoWay}"/>
+                                <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="10" Grid.Row="0" Text="phlp"/>
+                                <TextBox Grid.Column="10" Grid.Row="1" Text="{Binding PLYL.phlp, Mode=TwoWay}"/>
+                                <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="11" Grid.Row="0" Text="vpos"/>
+                                <TextBox Grid.Column="11" Grid.Row="1" Text="{Binding PLYL.vpos, Mode=TwoWay}"/>
+                            </Grid>
+                        </TabItem>
+                        <TabItem Header="PLPD">
+                            <DockPanel>
+                                <Grid 
+                                    DockPanel.Dock="Top"
+                                    HorizontalAlignment="Center">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                    </Grid.RowDefinitions>
+                                    <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="0" Grid.Row="0" Text="rec"/>
+                                    <TextBox Grid.Column="0" Grid.Row="1" Text="{Binding PLPD.rec, Mode=TwoWay}"/>
+                                    <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="1" Grid.Row="0" Text="PLYL"/>
+                                    <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding PLPD.PLYL, Mode=TwoWay}"/>
+                                </Grid>
+                                <DataGrid 
+                                    DockPanel.Dock="Top"
+                                    ItemsSource="{Binding PLPD.progressions, Mode=TwoWay}"
+                                    HorizontalAlignment="Center"/>
+                            </DockPanel>
+                        </TabItem>
+                        <TabItem Header="PLRD">
+                            <Grid 
+                                Grid.Column="0" Grid.Row="0"
+                                DockPanel.Dock="Left"
+                                HorizontalAlignment="Center">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                </Grid.RowDefinitions>
+                                <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="0" Grid.Row="0" Text="rec"/>
+                                <TextBox Grid.Column="0" Grid.Row="1" Text="{Binding PLRD.rec, Mode=TwoWay}"/>
+                                <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="1" Grid.Row="0" Text="PLYL"/>
+                                <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding PLRD.PLYL, Mode=TwoWay}"/>
+                                <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="2" Grid.Row="0" Text="hole"/>
+                                <TextBox Grid.Column="2" Grid.Row="1" Text="{Binding PLRD.hole, Mode=TwoWay}"/>
+                            </Grid>
+                        </TabItem>
+                        <TabItem Header="Situations">
+                            <DataGrid 
+                                ItemsSource="{Binding Situations, Mode=TwoWay}"
+                                DockPanel.Dock="Bottom"
+                                VerticalAlignment="Bottom"
+                                HorizontalAlignment="Center"/>
+                        </TabItem>
+                        <TabItem Header="PBCC">
+                            <DataGrid 
+                                ItemsSource="{Binding PBCC, Mode=TwoWay}"
+                                DockPanel.Dock="Bottom"
+                                VerticalAlignment="Bottom"
+                                HorizontalAlignment="Center"/>
+                        </TabItem>
+                        <TabItem Header="PLCM">
+                            <DataGrid 
+                                ItemsSource="{Binding PLCM, Mode=TwoWay}"
+                                DockPanel.Dock="Bottom"
+                                VerticalAlignment="Bottom"
+                                HorizontalAlignment="Center"/>
+                        </TabItem>
+                        <TabItem Header="PPCT">
+                            <DataGrid 
+                                ItemsSource="{Binding PPCT, Mode=TwoWay}"
+                                DockPanel.Dock="Bottom"
+                                VerticalAlignment="Bottom"
+                                HorizontalAlignment="Center"/>
+                        </TabItem>
+                        <TabItem Header="SRFT">
+                            <DataGrid 
+                                ItemsSource="{Binding SRFT, Mode=TwoWay}"
+                                DockPanel.Dock="Bottom"
+                                VerticalAlignment="Bottom"
+                                HorizontalAlignment="Center"/>
+                        </TabItem>
+                    </TabControl>
                 </TabItem>
+                
+                <TabItem Header="Edit Player">
+                    <TabControl 
+                        x:Name="tabPlayer"
+                        Background="Transparent" 
+                        BorderBrush="Transparent" 
+                        DockPanel.Dock="Top"
+                        VerticalAlignment="Bottom"
+                        HorizontalAlignment="Stretch">
+                        <TabControl.Resources>
+                            <Style TargetType="TabItem">
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="TabItem">
+                                            <Label Name="Panel">
+                                                <ContentPresenter x:Name="ContentSite"
+                                                VerticalAlignment="Top"
+                                                HorizontalAlignment="Center"
+                                                ContentSource="Header"
+                                                Margin="34,2"/>
+                                            </Label>
+                                            <ControlTemplate.Triggers>
+                                                <Trigger Property="IsSelected" Value="True">
+                                                    <Setter TargetName="Panel" Property="Background" Value="Transparent" />
+                                                    <Setter TargetName="Panel" Property="Foreground" Value="LightGreen" />
+                                                </Trigger>
+                                                <Trigger Property="IsSelected" Value="False">
+                                                    <Setter TargetName="Panel" Property="Background" Value="Transparent" />
+                                                    <Setter TargetName="Panel" Property="Foreground" Value="Black" />
+                                                </Trigger>
+                                            </ControlTemplate.Triggers>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </TabControl.Resources>
+                        <TabItem Header="PLYS">
+                            <Grid HorizontalAlignment="Center">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                </Grid.RowDefinitions>
+                                <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="0" Grid.Row="0" Text="rec"/>
+                                <TextBox Grid.Column="0" Grid.Row="1" Text="{Binding PLYS.rec, Mode=TwoWay}"/>
+                                <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="1" Grid.Row="0" Text="PSAL"/>
+                                <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding PLYS.PSAL, Mode=TwoWay}"/>
+                                <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="2" Grid.Row="0" Text="ARTL"/>
+                                <TextBox Grid.Column="2" Grid.Row="1" Text="{Binding PLYS.ARTL, Mode=TwoWay}"/>
+                                <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="3" Grid.Row="0" Text="PLYL"/>
+                                <TextBox Grid.Column="3" Grid.Row="1" Text="{Binding PLYS.PLYL, Mode=TwoWay}"/>
+                                <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="4" Grid.Row="0" Text="PLRR"/>
+                                <TextBox Grid.Column="4" Grid.Row="1" Text="{Binding PLYS.PLRR, Mode=TwoWay}"/>
+                                <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="5" Grid.Row="0" Text="poso"/>
+                                <TextBox Grid.Column="5" Grid.Row="1" Text="{Binding PLYS.poso, Mode=TwoWay}"/>
+                            </Grid>
+                        </TabItem>
+                        <TabItem Header="SETP">
+                            <Grid HorizontalAlignment="Center">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                </Grid.RowDefinitions>
+                                <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="0" Grid.Row="0" Text="rec"/>
+                                <TextBox Grid.Column="0" Grid.Row="1" Text="{Binding SETP.rec, Mode=TwoWay}"/>
+                                <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="1" Grid.Row="0" Text="SETL"/>
+                                <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding SETP.SETL, Mode=TwoWay}"/>
+                                <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="2" Grid.Row="0" Text="setp"/>
+                                <TextBox Grid.Column="2" Grid.Row="1" Text="{Binding SETP.setp, Mode=TwoWay}"/>
+                                <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="3" Grid.Row="0" Text="SGT_"/>
+                                <TextBox Grid.Column="3" Grid.Row="1" Text="{Binding SETP.SGT_, Mode=TwoWay}"/>
+                                <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="4" Grid.Row="0" Text="arti"/>
+                                <TextBox Grid.Column="4" Grid.Row="1" Text="{Binding SETP.arti, Mode=TwoWay}"/>
+                                <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="5" Grid.Row="0" Text="tabo"/>
+                                <TextBox Grid.Column="5" Grid.Row="1" Text="{Binding SETP.tabo, Mode=TwoWay}"/>
+                                <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="6" Grid.Row="0" Text="poso"/>
+                                <TextBox Grid.Column="6" Grid.Row="1" Text="{Binding SETP.poso, Mode=TwoWay}"/>
+                                <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="7" Grid.Row="0" Text="flas"/>
+                                <TextBox Grid.Column="7" Grid.Row="1" Text="{Binding SETP.flas, Mode=TwoWay}"/>
+                                <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="8" Grid.Row="0" Text="DPos"/>
+                                <TextBox Grid.Column="8" Grid.Row="1" Text="{Binding SETP.DPos, Mode=TwoWay}"/>
+                                <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="9" Grid.Row="0" Text="EPos"/>
+                                <TextBox Grid.Column="9" Grid.Row="1" Text="{Binding SETP.EPos, Mode=TwoWay}"/>
+                                <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="10" Grid.Row="0" Text="fmtx"/>
+                                <TextBox Grid.Column="10" Grid.Row="1" Text="{Binding SETP.fmtx, Mode=TwoWay}"/>
+                                <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="11" Grid.Row="0" Text="artx"/>
+                                <TextBox Grid.Column="11" Grid.Row="1" Text="{Binding SETP.artx, Mode=TwoWay}"/>
+                                <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="12" Grid.Row="0" Text="fmty"/>
+                                <TextBox Grid.Column="12" Grid.Row="1" Text="{Binding SETP.fmty, Mode=TwoWay}"/>
+                                <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="13" Grid.Row="0" Text="arty"/>
+                                <TextBox Grid.Column="13" Grid.Row="1" Text="{Binding SETP.arty, Mode=TwoWay}"/>
+                            </Grid>
+                        </TabItem>
+                        <TabItem Header="SETG">
+                            <Grid HorizontalAlignment="Center">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                </Grid.RowDefinitions>
+                                <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="0" Grid.Row="0" Text="rec"/>
+                                <TextBox Grid.Column="0" Grid.Row="1" Text="{Binding SETG.rec, Mode=TwoWay}"/>
+                                <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="1" Grid.Row="0" Text="setg"/>
+                                <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding SETG.setg, Mode=TwoWay}"/>
+                                <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="2" Grid.Row="0" Text="SETP"/>
+                                <TextBox Grid.Column="2" Grid.Row="1" Text="{Binding SETG.SETP, Mode=TwoWay}"/>
+                                <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="3" Grid.Row="0" Text="SGF_"/>
+                                <TextBox Grid.Column="3" Grid.Row="1" Text="{Binding SETG.SGF_, Mode=TwoWay}"/>
+                                <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="4" Grid.Row="0" Text="SF__"/>
+                                <TextBox Grid.Column="4" Grid.Row="1" Text="{Binding SETG.SF__, Mode=TwoWay}"/>
+                                <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="5" Grid.Row="0" Text="x___"/>
+                                <TextBox Grid.Column="5" Grid.Row="1" Text="{Binding SETG.x___, Mode=TwoWay}"/>
+                                <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="6" Grid.Row="0" Text="y___"/>
+                                <TextBox Grid.Column="6" Grid.Row="1" Text="{Binding SETG.y___, Mode=TwoWay}"/>
+                                <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="7" Grid.Row="0" Text="fx__"/>
+                                <TextBox Grid.Column="7" Grid.Row="1" Text="{Binding SETG.fx__, Mode=TwoWay}"/>
+                                <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="8" Grid.Row="0" Text="fy__"/>
+                                <TextBox Grid.Column="8" Grid.Row="1" Text="{Binding SETG.fy__, Mode=TwoWay}"/>
+                                <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="9" Grid.Row="0" Text="anm_"/>
+                                <TextBox Grid.Column="9" Grid.Row="1" Text="{Binding SETG.anm_, Mode=TwoWay}"/>
+                                <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="10" Grid.Row="0" Text="dir_"/>
+                                <TextBox Grid.Column="10" Grid.Row="1" Text="{Binding SETG.dir_, Mode=TwoWay}"/>
+                                <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="11" Grid.Row="0" Text="fanm"/>
+                                <TextBox Grid.Column="11" Grid.Row="1" Text="{Binding SETG.fanm, Mode=TwoWay}"/>
+                                <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="12" Grid.Row="0" Text="fdir"/>
+                                <TextBox Grid.Column="12" Grid.Row="1" Text="{Binding SETG.fdir, Mode=TwoWay}"/>
+                            </Grid>
+                        </TabItem>
+                        <TabItem Header="SRFT">
+                            <Grid HorizontalAlignment="Center">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                </Grid.RowDefinitions>
+                                <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="0" Grid.Row="0" Text="rec"/>
+                                <TextBox Grid.Column="0" Grid.Row="1" Text="{Binding SRFT.rec, Mode=TwoWay}"/>
+                                <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="1" Grid.Row="0" Text="SIDE"/>
+                                <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding SRFT.SIDE, Mode=TwoWay}"/>
+                                <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="2" Grid.Row="0" Text="YOFF"/>
+                                <TextBox Grid.Column="2" Grid.Row="1" Text="{Binding SRFT.YOFF, Mode=TwoWay}"/>
+                                <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="3" Grid.Row="0" Text="TECH"/>
+                                <TextBox Grid.Column="3" Grid.Row="1" Text="{Binding SRFT.TECH, Mode=TwoWay}"/>
+                                <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="4" Grid.Row="0" Text="PLYL"/>
+                                <TextBox Grid.Column="4" Grid.Row="1" Text="{Binding SRFT.PLYL, Mode=TwoWay}"/>
+                                <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="5" Grid.Row="0" Text="STAN"/>
+                                <TextBox Grid.Column="5" Grid.Row="1" Text="{Binding SRFT.STAN, Mode=TwoWay}"/>
+                                <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="6" Grid.Row="0" Text="PLYR"/>
+                                <TextBox Grid.Column="6" Grid.Row="1" Text="{Binding SRFT.PLYR, Mode=TwoWay}"/>
+                                <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="7" Grid.Row="0" Text="PRIS"/>
+                                <TextBox Grid.Column="7" Grid.Row="1" Text="{Binding SRFT.PRIS, Mode=TwoWay}"/>
+                                <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="8" Grid.Row="0" Text="GAPS"/>
+                                <TextBox Grid.Column="8" Grid.Row="1" Text="{Binding SRFT.GAPS, Mode=TwoWay}"/>
+                                <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="9" Grid.Row="0" Text="ASSS"/>
+                                <TextBox Grid.Column="9" Grid.Row="1" Text="{Binding SRFT.ASSS, Mode=TwoWay}"/>
+                                <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="10" Grid.Row="0" Text="PRIW"/>
+                                <TextBox Grid.Column="10" Grid.Row="1" Text="{Binding SRFT.PRIW, Mode=TwoWay}"/>
+                                <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="11" Grid.Row="0" Text="GAPW"/>
+                                <TextBox Grid.Column="11" Grid.Row="1" Text="{Binding SRFT.GAPW, Mode=TwoWay}"/>
+                                <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="12" Grid.Row="0" Text="ASSW"/>
+                                <TextBox Grid.Column="12" Grid.Row="1" Text="{Binding SRFT.ASSW, Mode=TwoWay}"/>
+                            </Grid>
+                        </TabItem>
+                        <TabItem Header="PSAL">
+                            <DataGrid 
+                                ItemsSource="{Binding PSAL, Mode=TwoWay}"
+                                DockPanel.Dock="Bottom"
+                                VerticalAlignment="Bottom"
+                                HorizontalAlignment="Center"/>
+                        </TabItem>
+                    </TabControl>
+                </TabItem>
+                
             </TabControl>
+        
         </DockPanel>
 
     </Canvas>
