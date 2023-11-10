@@ -17,6 +17,7 @@
             Height="850"
             MouseDown="PSAL_Canvas_MouseDown" 
             MouseMove="PSAL_Canvas_MouseMove"
+            MouseUp="PSAL_Canvas_MouseUp"
             >
             <Canvas.Background>
                 <ImageBrush ImageSource="/Resources/full_field.jpg" Stretch="UniformToFill" AlignmentY="Top" Opacity=".5"/>

@@ -15,7 +15,8 @@ namespace MaddenTeamPlaybookEditor.User_Controls
 {
     public partial class PSAL_Editor : UserControl
     {
-        public bool editing = false;
+        public bool creatingPSAL = false;
+        public int editingPSAL = -1;
         Path PSALpath = new Path();
         PathGeometry RouteGeo = new PathGeometry();
         PathFigure RouteFigure = new PathFigure();
@@ -40,7 +41,7 @@ namespace MaddenTeamPlaybookEditor.User_Controls
 
         protected override void OnRender(DrawingContext dc)
         {
-            Point pos1, tangent1;
+            System.Windows.Point pos1, tangent1;
             double angleInRadians;
             double angleInDegrees;
             TransformGroup tg;
@@ -53,14 +54,6 @@ namespace MaddenTeamPlaybookEditor.User_Controls
             if (RoutePoints.Count > 0)
             {
                 tg = new TransformGroup();
-                //for (int n = 0; n < RoutePoints.Count() - 1; n++)
-                //{
-                //    tg.Children.Add(new TranslateTransform(RoutePoints[n].X, RoutePoints[n].Y));
-                //    dc.PushTransform(tg);
-                //    dc.DrawGeometry(RouteBrush, routePen, new EllipseGeometry(new Rect(new Size(20, 20))));
-                //    dc.Pop();
-                //}
-
                 dc.DrawGeometry(null, routePen, Route);
 
                 Route.GetPointAtFractionLength(1, out pos1, out tangent1);
@@ -72,22 +65,30 @@ namespace MaddenTeamPlaybookEditor.User_Controls
                 dc.PushTransform(tg);
                 dc.DrawGeometry(RouteBrush, endCapPen, ARTL.Arrow);
                 dc.Pop();
-            }
 
+                for (int n = 0; n < RoutePoints.Count() - 1; n++)
+                {
+                    tg = new TransformGroup();
+                    tg.Children.Add(new TranslateTransform(RoutePoints[n].X - 5, RoutePoints[n].Y - 5));
+                    dc.PushTransform(tg);
+                    dc.DrawGeometry(RouteBrush, routePen, new EllipseGeometry(new Rect(new Size(10, 10))));
+                    dc.Pop();
+                }
+            }
         }
 
         private void PSAL_Canvas_MouseDown(object sender, MouseButtonEventArgs e)
         {
             if (e.RightButton == MouseButtonState.Pressed)
             {
-                if (editing)
+                if (creatingPSAL)
                 {
                     if (RoutePoints.Count > 0)
                     {
                         RoutePoints.RemoveAt(RoutePoints.Count - 1);
                     }
                     this.InvalidateVisual();
-                    editing = false;
+                    creatingPSAL = false;
 
                     //for (int step = 0; step < RoutePoints.Count; step++)
                     //{
@@ -112,11 +113,11 @@ namespace MaddenTeamPlaybookEditor.User_Controls
                 if (RoutePoints.Count == 0)
                 {
                     RouteFigure.StartPoint = e.GetPosition(this);
-                    editing = true;
+                    creatingPSAL = true;
                 }
                 else
                 {
-                    if (editing)
+                    if (creatingPSAL)
                     {
                         RoutePoints.Add(e.GetPosition(this));
                         this.InvalidateVisual();
@@ -138,6 +139,18 @@ namespace MaddenTeamPlaybookEditor.User_Controls
                     }
                     else
                     {
+                        Point currentMouse = e.GetPosition(this);
+                        for (int n = 0; n < RoutePoints.Count(); n++)
+                        {
+                            if (RoutePoints[n].X - 10 <= currentMouse.X &&
+                                RoutePoints[n].X + 10 >= currentMouse.X &&
+                                RoutePoints[n].Y - 10 <= currentMouse.Y &&
+                                RoutePoints[n].Y + 10 >= currentMouse.Y)
+                            {
+                                editingPSAL = n;
+                                return;
+                            }
+                        }
                         RoutePoints.Clear();
                         PSAL.Clear();
                         this.InvalidateVisual();
@@ -149,7 +162,7 @@ namespace MaddenTeamPlaybookEditor.User_Controls
 
         private void PSAL_Canvas_MouseMove(object sender, MouseEventArgs e)
         {
-            if (editing)
+            if (creatingPSAL)
             {
                 if (RoutePoints.Count > 0)
                 {
@@ -157,7 +170,16 @@ namespace MaddenTeamPlaybookEditor.User_Controls
                 }
                 RoutePoints.Add(e.GetPosition(this));
             }
+            else if (editingPSAL > -1)
+            {
+                RoutePoints[editingPSAL] = e.GetPosition(this);
+            }
             this.InvalidateVisual();
+        }
+
+        private void PSAL_Canvas_MouseUp(object sender, MouseEventArgs e)
+        {
+            editingPSAL = -1;
         }
     }
 }
