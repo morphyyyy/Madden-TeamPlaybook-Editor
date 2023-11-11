@@ -36,7 +36,7 @@
 
         <Image x:Name="imgField" Height="800" Width="533" Stretch="UniformToFill" Visibility="Visible" Source="/Resources/full_field.jpg" />
 
-        <!--<ItemsControl 
+        <ItemsControl 
             IsEnabled="true"
             x:Name="iclPSALs"
             DockPanel.Dock="Top"
@@ -45,10 +45,7 @@
             Canvas.Top="600">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <Canvas 
-                        x:Name="cvsPlayers"
-                        Width="533" 
-                        Height="600"/>
+                    <Canvas x:Name="cvsPlayers"/>
                 </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
             <ItemsControl.ItemTemplate>
@@ -71,7 +68,7 @@
                     Value="{Binding XY.Y, Mode=TwoWay}"/>
                 </Style>
             </ItemsControl.ItemContainerStyle>
-        </ItemsControl>-->
+        </ItemsControl>
 
         <ItemsControl 
             IsEnabled="True"
@@ -83,27 +80,18 @@
             MouseDown="iclIcons_MouseDown">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <Canvas 
-                        x:Name="cvsPlayers"
-                        Width="533" 
-                        Height="600">
-                    </Canvas>
+                    <Canvas x:Name="cvsPlayers"/>
                 </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
                     <Canvas>
-                        <UserControls:Playart
-                            x:Name="clnPSAL"
-                            Player="{Binding}"
-                            PSALView="True"
-                            Scale="2"
-                            AbsolutePositioning="True"/>
                         <UserControls:PlayerIcon
                             x:Name="clnIcon"
                             Player="{Binding}"
                             Scale="2"
                             ShowPosition="True"
+                            Draggable="True"
                             AbsolutePositioning="True"/>
                     </Canvas>
                 </DataTemplate>
@@ -112,10 +100,10 @@
                 <Style>
                     <Setter 
                     Property="Canvas.Left" 
-                    Value="{Binding XY.X, Mode=TwoWay}"/>
+                    Value="{Binding XY.X}"/>
                     <Setter 
                     Property="Canvas.Top" 
-                    Value="{Binding XY.Y, Mode=TwoWay}"/>
+                    Value="{Binding XY.Y}"/>
                     <!--<Style.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter Property="Effect">

@@ -45,10 +45,7 @@
             Canvas.Top="600">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <Canvas 
-                        x:Name="cvsPlayers"
-                        Width="533" 
-                        Height="600"/>
+                    <Canvas x:Name="cvsPlayers"/>
                 </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
             <ItemsControl.ItemTemplate>
@@ -66,10 +63,10 @@
                 <Style>
                     <Setter 
                         Property="Canvas.Left" 
-                        Value="{Binding XY.X, Mode=TwoWay}"/>
+                        Value="{Binding XY.X}"/>
                     <Setter 
                         Property="Canvas.Top" 
-                        Value="{Binding XY.Y, Mode=TwoWay}"/>
+                        Value="{Binding XY.Y}"/>
                 </Style>
             </ItemsControl.ItemContainerStyle>
         </ItemsControl>

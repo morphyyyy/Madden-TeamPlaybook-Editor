@@ -110,11 +110,13 @@ namespace MaddenTeamPlaybookEditor.User_Controls
 
         private void UserControl_MouseLeftButtonDown(Object sender, MouseButtonEventArgs e)
         {
-            foreach (PlayerVM player in Player.Play.Players) player.IsSelected = false;
-            Player.IsSelected = true;
+            if (Player.Play.Players!= null)
+            {
+                foreach (PlayerVM player in Player.Play.Players) player.IsSelected = false;
+                Player.IsSelected = true;
+            }
             if (Draggable)
             {
-                ContextMenu.IsOpen = false;
                 isDragging = true;
                 var draggableControl = sender as UserControl;
                 DependencyObject parent = VisualTreeHelper.GetParent(sender as DependencyObject);
@@ -146,17 +148,19 @@ namespace MaddenTeamPlaybookEditor.User_Controls
             if (Draggable)
             {
                 isDragging = false;
-                var draggable = sender as UserControl;
-                var transform = draggable.RenderTransform as TranslateTransform;
+                var draggableControl = sender as UserControl;
+                var transform = draggableControl.RenderTransform as TranslateTransform;
                 var currentPosition = e.GetPosition((UIElement)Parent);
                 if (transform != null)
                 {
                     prevX = transform.X;
                     prevY = transform.Y;
+                    transform = new TranslateTransform();
+                    draggableControl.RenderTransform = transform;
                 }
                 Player.UpdateXY(new Point(Player.XY.X + prevX, Player.XY.Y + prevY));
                 //Player.Play.UpdatePlayers();
-                draggable.ReleaseMouseCapture();
+                draggableControl.ReleaseMouseCapture();
                 if (playerPlayart != null)
                 {
                     playerPlayart.InvalidateVisual();
@@ -180,7 +184,10 @@ namespace MaddenTeamPlaybookEditor.User_Controls
                     }
                     transform.X = currentPosition.X - mousePosition.X;
                     transform.Y = currentPosition.Y - mousePosition.Y;
-                    //Player.UpdateXY(new Point(Player.XY.X + transform.X, Player.XY.Y + transform.Y));
+                    if (Player.Play.PlayerPlayartView != null)
+                    {
+                        Player.UpdateXY(new Point(Player.XY.X + transform.X, Player.XY.Y + transform.Y));
+                    }
                     if (playerPlayart != null)
                     {
                         playerPlayart.InvalidateVisual();

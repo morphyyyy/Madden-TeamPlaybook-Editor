@@ -96,7 +96,7 @@ namespace MaddenTeamPlaybookEditor.ViewModels
                         this.SETG.y___ = (float)(_XY.Y * -.1);
                     }
                 }
-                //OnPropertyChanged("XY");
+                OnPropertyChanged("XY");
             }
         }
         public Progression progression { get; set; }
