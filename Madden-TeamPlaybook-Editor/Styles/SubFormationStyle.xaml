@@ -152,7 +152,7 @@
                                     </Storyboard>
                                 </BeginStoryboard>
                             </MultiTrigger.ExitActions>
-                            
+
                         </MultiTrigger>
 
                         <MultiTrigger>  <!-- IsMouseOver=true and IsSelected=false -->
@@ -214,7 +214,7 @@
         <Setter Property="ItemsPanel">
             <Setter.Value>
                 <ItemsPanelTemplate>
-                    <UniformGrid FlowDirection="LeftToRight" IsItemsHost="True" Margin="0,0" MaxWidth="592" Columns="3"/>
+                    <UniformGrid FlowDirection="LeftToRight" IsItemsHost="True" Margin="0,0" Width="592" Columns="3"/>
                 </ItemsPanelTemplate>
             </Setter.Value>
         </Setter>

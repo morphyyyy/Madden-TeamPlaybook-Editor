@@ -55,13 +55,40 @@ namespace MaddenTeamPlaybookEditor.User_Controls
             Pen endCapPen = new Pen(RouteBrush, 0);
             Pen optionRoutePen = new Pen(optionRouteBrush, Scale * 4);
             Pen optionEndCapPen = new Pen(optionRouteBrush, 0);
-            PathGeometry basePath = Route == null || Route.Count == 0 ? new PathGeometry() : Route[0].Data.GetFlattenedPathGeometry();
-            PathGeometry option1Path = Route == null || Route.Count == 0 ? new PathGeometry() : Route.Count > 1 ? Route[1].Data.GetFlattenedPathGeometry() : new PathGeometry();
-            PathGeometry option2Path = Route == null || Route.Count == 0 ? new PathGeometry() : Route.Count == 3 ? Route[2].Data.GetFlattenedPathGeometry() : new PathGeometry();
+            PathGeometry basePath = Route == null || Route.Count == 0 ? new PathGeometry() : Route[0].Data.Clone() as PathGeometry;
+            PathGeometry option1Path = Route == null || Route.Count == 0 ? new PathGeometry() : Route.Count > 1 ? Route[1].Data.Clone() as PathGeometry : new PathGeometry();
+            PathGeometry option2Path = Route == null || Route.Count == 0 ? new PathGeometry() : Route.Count == 3 ? Route[2].Data.Clone() as PathGeometry : new PathGeometry();
             Point pos = !AbsolutePositioning ? new Point(Player.XY.X + TeamPlaybook.LOS.X, Player.XY.Y + TeamPlaybook.LOS.Y) : new Point(0, 0);
 
             tg.Children.Add(new TranslateTransform(pos.X, pos.Y));
             dc.PushTransform(tg);
+
+            if (PSALView)
+            {
+                for (int i = 0; i < ((PolyLineSegment)basePath.Figures[0].Segments[0]).Points.Count; i++)
+                {
+                    Point p2 = ((PolyLineSegment)basePath.Figures[0].Segments[0]).Points[i];
+                    if (p2.X + Player.XY.X + TeamPlaybook.LOS.X < 0 || p2.X + Player.XY.X + TeamPlaybook.LOS.X > 533)
+                    {
+                        double xIntercept = 0;
+                        if (p2.X + Player.XY.X + TeamPlaybook.LOS.X < 0)
+                        {
+                            xIntercept = -(Player.XY.X + TeamPlaybook.LOS.X - 25);
+                        }
+                        else if (p2.X + Player.XY.X + TeamPlaybook.LOS.X > 533)
+                        {
+                            xIntercept = 508 - (Player.XY.X + TeamPlaybook.LOS.X);
+                        }
+                        Point p1 = i > 0 ? ((PolyLineSegment)basePath.Figures[0].Segments[0]).Points[i - 1] : basePath.Figures[0].StartPoint;
+                        double m = (p2.Y - p1.Y) / (p2.X - p1.X);
+                        double b = p1.Y - (m * p1.X);
+                        ((PolyLineSegment)basePath.Figures[0].Segments[0]).Points[i] = new Point(
+                            xIntercept,
+                            (m * xIntercept) + b
+                        );
+                    }
+                }
+            }
 
             dc.DrawGeometry(null, routePen, basePath);
 

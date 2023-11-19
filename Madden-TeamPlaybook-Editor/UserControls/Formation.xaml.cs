@@ -1,5 +1,6 @@
 ﻿using MaddenTeamPlaybookEditor.ViewModels;
 using System;
+using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -15,7 +16,7 @@ namespace MaddenTeamPlaybookEditor.User_Controls
         }
 
         public static DependencyProperty FormationProperty = DependencyProperty.Register("formation", typeof(FormationVM), typeof(Formation));
-        public FormationVM formation
+        [Bindable(true)] public FormationVM formation
         {
             get { return GetValue(FormationProperty) as FormationVM; }
             set { SetValue(FormationProperty, value); }

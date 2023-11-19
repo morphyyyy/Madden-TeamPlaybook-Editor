@@ -25,6 +25,14 @@ namespace Madden.TeamPlaybook
 
         public List<PlayArt> ARTList { get; set; }
 
+        public static PathGeometry Block
+        {
+            get
+            {
+                return new RectangleGeometry(new Rect(new Point(0, -4.5), new Size(3, 9))).GetFlattenedPathGeometry();
+            }
+        }
+
         public static PathGeometry Arrow
         {
             get
@@ -54,7 +62,6 @@ namespace Madden.TeamPlaybook
             get
             {
                 return new EllipseGeometry(new Rect(new System.Windows.Point(-16, -6.8555), new System.Windows.Size(32, 13.711f))).GetFlattenedPathGeometry();
-
             }
         }
 

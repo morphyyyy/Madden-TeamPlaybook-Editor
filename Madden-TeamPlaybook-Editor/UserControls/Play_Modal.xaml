@@ -30,11 +30,42 @@
                 </Setter.Value>
             </Setter>
         </Style>
+        <Style TargetType="{x:Type DataGrid}">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="BorderBrush" Value="LightGreen" />
+            <Setter Property="RowBackground" Value="Transparent" />
+            <Setter Property="Foreground" Value="LightGreen"/>
+            <Setter Property="GridLinesVisibility" Value="All"/>
+            <Setter Property="HorizontalGridLinesBrush" Value="LightGreen"/>
+            <Setter Property="VerticalGridLinesBrush" Value="LightGreen"/>
+            <Setter Property="CanUserAddRows" Value="True"/>
+            <Setter Property="CanUserDeleteRows" Value="True"/>
+        </Style>
+        <Style TargetType="{x:Type TextBlock}">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="Foreground" Value="LightGreen"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+        </Style>
+        <Style TargetType="{x:Type TextBox}">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="BorderBrush" Value="LightGreen" />
+            <Setter Property="Foreground" Value="LightGreen"/>
+        </Style>
+        <Style TargetType="{x:Type DataGridColumnHeader}">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="FontWeight" Value="Bold" />
+            <Setter Property="MinWidth" Value="30" />
+            <Setter Property="IsEnabled" Value="False"/>
+        </Style>
+        <Style TargetType="{x:Type DataGridRowHeader}">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="IsEnabled" Value="False"/>
+        </Style>
     </UserControl.Resources>
 
-    <Canvas x:Name="cvsField" Height="800" Width="533">
+    <Canvas x:Name="cvsField" Height="950" Width="533">
 
-        <Image x:Name="imgField" Height="800" Width="533" Stretch="UniformToFill" Visibility="Visible" Source="/Resources/full_field.jpg" />
+        <Image x:Name="imgField" Height="950" Width="533" Stretch="UniformToFill" Visibility="Visible" Source="/Resources/full_field.jpg" />
 
         <ItemsControl 
             IsEnabled="true"
@@ -219,7 +250,7 @@
                                     <RowDefinition />
                                 </Grid.RowDefinitions>
                                 <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="0" Grid.Row="0" Text="rec"/>
-                                <TextBox Grid.Column="0" Grid.Row="1" Text="{Binding PBPL.rec, Mode=TwoWay}"/>
+                                <TextBox IsEnabled="False" Grid.Column="0" Grid.Row="1" Text="{Binding PBPL.rec, Mode=TwoWay}"/>
                                 <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="1" Grid.Row="0" Text="PKGE"/>
                                 <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding PBPL.PKGE, Mode=TwoWay}"/>
                                 <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="2" Grid.Row="0" Text="COMF"/>
@@ -231,7 +262,7 @@
                                 <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="5" Grid.Row="0" Text="PBST"/>
                                 <TextBox Grid.Column="5" Grid.Row="1" Text="{Binding PBPL.PBST, Mode=TwoWay}"/>
                                 <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="6" Grid.Row="0" Text="ord_"/>
-                                <TextBox Grid.Column="6" Grid.Row="1" Text="{Binding PBPL.ord_, Mode=TwoWay}"/>
+                                <TextBox IsEnabled="False"  Grid.Column="6" Grid.Row="1" Text="{Binding PBPL.ord_, Mode=TwoWay}"/>
                                 <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="7" Grid.Row="0" Text="name"/>
                                 <TextBox Grid.Column="7" Grid.Row="1" Text="{Binding PBPL.name, Mode=TwoWay}"/>
                                 <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="8" Grid.Row="0" Text="Flag"/>
@@ -261,7 +292,7 @@
                                     <RowDefinition />
                                 </Grid.RowDefinitions>
                                 <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="0" Grid.Row="0" Text="rec"/>
-                                <TextBox Grid.Column="0" Grid.Row="1" Text="{Binding PLYL.rec, Mode=TwoWay}"/>
+                                <TextBox IsEnabled="False" Grid.Column="0" Grid.Row="1" Text="{Binding PLYL.rec, Mode=TwoWay}"/>
                                 <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="1" Grid.Row="0" Text="SETL"/>
                                 <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding PLYL.SETL, Mode=TwoWay}"/>
                                 <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="2" Grid.Row="0" Text="plyl"/>
@@ -300,7 +331,7 @@
                                         <RowDefinition />
                                     </Grid.RowDefinitions>
                                     <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="0" Grid.Row="0" Text="rec"/>
-                                    <TextBox Grid.Column="0" Grid.Row="1" Text="{Binding PLPD.rec, Mode=TwoWay}"/>
+                                    <TextBox IsEnabled="False" Grid.Column="0" Grid.Row="1" Text="{Binding PLPD.rec, Mode=TwoWay}"/>
                                     <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="1" Grid.Row="0" Text="PLYL"/>
                                     <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding PLPD.PLYL, Mode=TwoWay}"/>
                                 </Grid>
@@ -325,7 +356,7 @@
                                     <RowDefinition />
                                 </Grid.RowDefinitions>
                                 <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="0" Grid.Row="0" Text="rec"/>
-                                <TextBox Grid.Column="0" Grid.Row="1" Text="{Binding PLRD.rec, Mode=TwoWay}"/>
+                                <TextBox IsEnabled="False" Grid.Column="0" Grid.Row="1" Text="{Binding PLRD.rec, Mode=TwoWay}"/>
                                 <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="1" Grid.Row="0" Text="PLYL"/>
                                 <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding PLRD.PLYL, Mode=TwoWay}"/>
                                 <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="2" Grid.Row="0" Text="hole"/>
@@ -420,7 +451,7 @@
                                     <RowDefinition />
                                 </Grid.RowDefinitions>
                                 <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="0" Grid.Row="0" Text="rec"/>
-                                <TextBox Grid.Column="0" Grid.Row="1" Text="{Binding PLYS.rec, Mode=TwoWay}"/>
+                                <TextBox IsEnabled="False" Grid.Column="0" Grid.Row="1" Text="{Binding PLYS.rec, Mode=TwoWay}"/>
                                 <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="1" Grid.Row="0" Text="PSAL"/>
                                 <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding PLYS.PSAL, Mode=TwoWay}"/>
                                 <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="2" Grid.Row="0" Text="ARTL"/>
@@ -456,7 +487,7 @@
                                     <RowDefinition />
                                 </Grid.RowDefinitions>
                                 <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="0" Grid.Row="0" Text="rec"/>
-                                <TextBox Grid.Column="0" Grid.Row="1" Text="{Binding SETP.rec, Mode=TwoWay}"/>
+                                <TextBox IsEnabled="False" Grid.Column="0" Grid.Row="1" Text="{Binding SETP.rec, Mode=TwoWay}"/>
                                 <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="1" Grid.Row="0" Text="SETL"/>
                                 <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding SETP.SETL, Mode=TwoWay}"/>
                                 <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="2" Grid.Row="0" Text="setp"/>
@@ -507,7 +538,7 @@
                                     <RowDefinition />
                                 </Grid.RowDefinitions>
                                 <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="0" Grid.Row="0" Text="rec"/>
-                                <TextBox Grid.Column="0" Grid.Row="1" Text="{Binding SETG.rec, Mode=TwoWay}"/>
+                                <TextBox IsEnabled="False" Grid.Column="0" Grid.Row="1" Text="{Binding SETG.rec, Mode=TwoWay}"/>
                                 <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="1" Grid.Row="0" Text="setg"/>
                                 <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding SETG.setg, Mode=TwoWay}"/>
                                 <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="2" Grid.Row="0" Text="SETP"/>
@@ -556,7 +587,7 @@
                                     <RowDefinition />
                                 </Grid.RowDefinitions>
                                 <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="0" Grid.Row="0" Text="rec"/>
-                                <TextBox Grid.Column="0" Grid.Row="1" Text="{Binding SRFT.rec, Mode=TwoWay}"/>
+                                <TextBox IsEnabled="False" Grid.Column="0" Grid.Row="1" Text="{Binding SRFT.rec, Mode=TwoWay}"/>
                                 <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="1" Grid.Row="0" Text="SIDE"/>
                                 <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding SRFT.SIDE, Mode=TwoWay}"/>
                                 <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="2" Grid.Row="0" Text="YOFF"/>
@@ -588,7 +619,8 @@
                                 ItemsSource="{Binding PSAL, Mode=TwoWay}"
                                 DockPanel.Dock="Bottom"
                                 VerticalAlignment="Bottom"
-                                HorizontalAlignment="Center"/>
+                                HorizontalAlignment="Center"
+                                CurrentCellChanged="dgdPSALupdated"/>
                         </TabItem>
                     </TabControl>
                 </TabItem>

@@ -190,6 +190,9 @@
       <DependentUpon>SubFormation.xaml</DependentUpon>
     </Compile>
     <Compile Include="Classes\TeamPlaybook\ViewModels\SituationViewModel.cs" />
+    <Compile Include="UserControls\Tables\PBPLindex.xaml.cs">
+      <DependentUpon>PBPLindex.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\TestUserControl.xaml.cs">
       <DependentUpon>TestUserControl.xaml</DependentUpon>
     </Compile>
@@ -364,6 +367,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UserControls\Tables\PBCC.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\Tables\PBPLindex.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

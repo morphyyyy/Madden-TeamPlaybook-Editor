@@ -31,11 +31,40 @@
                 </Setter.Value>
             </Setter>
         </Style>
+        <Style TargetType="{x:Type DataGrid}">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="BorderBrush" Value="Transparent" />
+            <Setter Property="RowBackground" Value="Transparent" />
+            <Setter Property="Foreground" Value="LightGreen"/>
+            <Setter Property="GridLinesVisibility" Value="None"/>
+            <Setter Property="CanUserAddRows" Value="True"/>
+            <Setter Property="CanUserDeleteRows" Value="True"/>
+        </Style>
+        <Style TargetType="{x:Type TextBlock}">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="Foreground" Value="LightGreen"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+        </Style>
+        <Style TargetType="{x:Type TextBox}">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="BorderBrush" Value="LightGreen" />
+            <Setter Property="Foreground" Value="LightGreen"/>
+        </Style>
+        <Style TargetType="{x:Type DataGridColumnHeader}">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="FontWeight" Value="Bold" />
+            <Setter Property="MinWidth" Value="30" />
+            <Setter Property="IsEnabled" Value="False"/>
+        </Style>
+        <Style TargetType="{x:Type DataGridRowHeader}">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="IsEnabled" Value="False"/>
+        </Style>
     </UserControl.Resources>
 
-    <Canvas x:Name="cvsField" Height="800" Width="533">
+    <Canvas x:Name="cvsField" Height="950" Width="533">
 
-        <Image x:Name="imgField" Height="800" Width="533" Stretch="UniformToFill" Visibility="Visible" Source="/Resources/full_field.jpg" />
+        <Image x:Name="imgField" Height="950" Width="533" Stretch="UniformToFill" Visibility="Visible" Source="/Resources/full_field.jpg" />
 
         <ItemsControl 
             IsEnabled="True"
@@ -71,8 +100,124 @@
             </ItemsControl.ItemContainerStyle>
         </ItemsControl>
 
-        <DockPanel VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="0,0,0,0" x:Name="ReferenceInfo" Canvas.Left="0" Canvas.Top="0" Width="{Binding ActualWidth, ElementName=cvsField}" Height="{Binding ActualHeight, ElementName=cvsField}">
+        <DockPanel 
+            Margin="0,0,0,0" 
+            Canvas.Left="0" 
+            Canvas.Top="0" 
+            Height="800" 
+            Width="533"
+            LastChildFill="False">
+
             <TabControl 
+                x:Name="tabPlayer"
+                Background="Transparent" 
+                BorderBrush="Transparent" 
+                DockPanel.Dock="Top"
+                HorizontalAlignment="Stretch">
+                <TabControl.Resources>
+                    <Style TargetType="TabItem">
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="TabItem">
+                                    <Label Name="Panel">
+                                        <ContentPresenter x:Name="ContentSite"
+                                                VerticalAlignment="Top"
+                                                HorizontalAlignment="Center"
+                                                ContentSource="Header"
+                                                Margin="34,2"/>
+                                    </Label>
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="IsSelected" Value="True">
+                                            <Setter TargetName="Panel" Property="Background" Value="Transparent" />
+                                            <Setter TargetName="Panel" Property="Foreground" Value="LightGreen" />
+                                        </Trigger>
+                                        <Trigger Property="IsSelected" Value="False">
+                                            <Setter TargetName="Panel" Property="Background" Value="Transparent" />
+                                            <Setter TargetName="Panel" Property="Foreground" Value="Black" />
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </TabControl.Resources>
+                <TabItem Header="PBST">
+                    <Grid HorizontalAlignment="Center">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                        <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="0" Grid.Row="0" Text="rec"/>
+                        <TextBox IsEnabled="False" Grid.Column="0" Grid.Row="1" Text="{Binding PBST.rec, Mode=TwoWay}"/>
+                        <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="1" Grid.Row="0" Text="SETL"/>
+                        <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding PBST.SETL, Mode=TwoWay}"/>
+                        <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="2" Grid.Row="0" Text="PBFM"/>
+                        <TextBox Grid.Column="2" Grid.Row="1" Text="{Binding PBST.PBFM, Mode=TwoWay}"/>
+                        <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="3" Grid.Row="0" Text="pbst"/>
+                        <TextBox Grid.Column="3" Grid.Row="1" Text="{Binding PBST.pbst, Mode=TwoWay}"/>
+                        <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="4" Grid.Row="0" Text="SPF_"/>
+                        <TextBox Grid.Column="4" Grid.Row="1" Text="{Binding PBST.SPF_, Mode=TwoWay}"/>
+                        <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="5" Grid.Row="0" Text="ord_"/>
+                        <TextBox IsEnabled="False" Grid.Column="5" Grid.Row="1" Text="{Binding PBST.ord_, Mode=TwoWay}"/>
+                        <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="6" Grid.Row="0" Text="name"/>
+                        <TextBox Grid.Column="6" Grid.Row="1" Text="{Binding PBST.name, Mode=TwoWay}"/>
+                    </Grid>
+                </TabItem>
+                <TabItem Header="SETL">
+                    <Grid HorizontalAlignment="Center">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                        <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="0" Grid.Row="0" Text="rec"/>
+                        <TextBox IsEnabled="False" Grid.Column="0" Grid.Row="1" Text="{Binding SETL.rec, Mode=TwoWay}"/>
+                        <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="1" Grid.Row="0" Text="setl"/>
+                        <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding SETL.setl, Mode=TwoWay}"/>
+                        <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="2" Grid.Row="0" Text="FORM"/>
+                        <TextBox Grid.Column="2" Grid.Row="1" Text="{Binding SETL.FORM, Mode=TwoWay}"/>
+                        <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="3" Grid.Row="0" Text="MOTN"/>
+                        <TextBox Grid.Column="3" Grid.Row="1" Text="{Binding SETL.MOTN, Mode=TwoWay}"/>
+                        <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="4" Grid.Row="0" Text="CLAS"/>
+                        <TextBox Grid.Column="4" Grid.Row="1" Text="{Binding SETL.CLAS, Mode=TwoWay}"/>
+                        <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="5" Grid.Row="0" Text="SETT"/>
+                        <TextBox Grid.Column="5" Grid.Row="1" Text="{Binding SETL.SETT, Mode=TwoWay}"/>
+                        <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="6" Grid.Row="0" Text="SITT"/>
+                        <TextBox Grid.Column="6" Grid.Row="1" Text="{Binding SETL.SITT, Mode=TwoWay}"/>
+                        <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="7" Grid.Row="0" Text="SLF_"/>
+                        <TextBox Grid.Column="7" Grid.Row="1" Text="{Binding SETL.SLF_, Mode=TwoWay}"/>
+                        <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="8" Grid.Row="0" Text="name"/>
+                        <TextBox Grid.Column="8" Grid.Row="1" Text="{Binding SETL.name, Mode=TwoWay}"/>
+                        <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="9" Grid.Row="0" Text="poso"/>
+                        <TextBox Grid.Column="9" Grid.Row="1" Text="{Binding SETL.poso, Mode=TwoWay}"/>
+                    </Grid>
+                </TabItem>
+            </TabControl>
+
+        </DockPanel>
+
+        <DockPanel VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="0,0,0,0" x:Name="ReferenceInfo" Canvas.Left="0" Canvas.Top="0" Width="{Binding ActualWidth, ElementName=cvsField}" Height="{Binding ActualHeight, ElementName=cvsField}">
+            <TabControl
                 x:Name="tabAlignments" 
                 ItemsSource="{Binding Alignments}" 
                 Background="Transparent" 
@@ -94,6 +239,7 @@
                 </TabControl.ItemContainerStyle>
             </TabControl>
         </DockPanel>
+    
     </Canvas>
     
 </UserControl>

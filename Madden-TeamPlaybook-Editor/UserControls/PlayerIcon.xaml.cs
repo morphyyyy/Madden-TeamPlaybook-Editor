@@ -161,10 +161,6 @@ namespace MaddenTeamPlaybookEditor.User_Controls
                 Player.UpdateXY(new Point(Player.XY.X + prevX, Player.XY.Y + prevY));
                 //Player.Play.UpdatePlayers();
                 draggableControl.ReleaseMouseCapture();
-                if (playerPlayart != null)
-                {
-                    playerPlayart.InvalidateVisual();
-                }
             }
         }
 
@@ -188,12 +184,6 @@ namespace MaddenTeamPlaybookEditor.User_Controls
                     {
                         Player.UpdateXY(new Point(Player.XY.X + transform.X, Player.XY.Y + transform.Y));
                     }
-                    if (playerPlayart != null)
-                    {
-                        playerPlayart.InvalidateVisual();
-                    }
-                    Console.WriteLine(currentPosition);
-                    Console.WriteLine("SETP.fmtx:{0}\tSETP.fmty:{1}\tSETP.artx:{2}\tSETP.arty:{3}\t", Player.SETP.fmtx, Player.SETP.fmty, Player.SETP.artx, Player.SETP.arty);
                 }
             }
         }
@@ -201,50 +191,43 @@ namespace MaddenTeamPlaybookEditor.User_Controls
         protected Boolean isDragging;
         private Point mousePosition;
         private Double prevX, prevY;
-        private Playart playerPlayart;
 
-        public static DependencyProperty ScaleProperty =
-            DependencyProperty.Register("Scale", typeof(double), typeof(PlayerIcon));
+        public static DependencyProperty ScaleProperty = DependencyProperty.Register("Scale", typeof(double), typeof(PlayerIcon));
         public double Scale
         {
             get { return (double)GetValue(ScaleProperty); }
             set { SetValue(ScaleProperty, value); }
         }
 
-        public static DependencyProperty PlayerProperty =
-            DependencyProperty.Register("Player", typeof(PlayerVM), typeof(PlayerIcon));
+        public static DependencyProperty PlayerProperty = DependencyProperty.Register("Player", typeof(PlayerVM), typeof(PlayerIcon));
         public PlayerVM Player
         {
             get { return (PlayerVM)GetValue(PlayerProperty); }
             set { SetValue(PlayerProperty, value); }
         }
 
-        public static DependencyProperty ShowPositionProperty =
-            DependencyProperty.Register("ShowPosition", typeof(bool), typeof(PlayerIcon));
+        public static DependencyProperty ShowPositionProperty = DependencyProperty.Register("ShowPosition", typeof(bool), typeof(PlayerIcon));
         public bool ShowPosition
         {
             get { return (bool)GetValue(ShowPositionProperty); }
             set { SetValue(ShowPositionProperty, value); }
         }
 
-        public static DependencyProperty AnimateProperty =
-            DependencyProperty.Register("Animate", typeof(bool), typeof(PlayerIcon));
+        public static DependencyProperty AnimateProperty = DependencyProperty.Register("Animate", typeof(bool), typeof(PlayerIcon));
         public bool Animate
         {
             get { return (bool)GetValue(AnimateProperty); }
             set { SetValue(AnimateProperty, value); }
         }
 
-        public static DependencyProperty DraggableProperty =
-            DependencyProperty.Register("Draggable", typeof(bool), typeof(PlayerIcon));
+        public static DependencyProperty DraggableProperty = DependencyProperty.Register("Draggable", typeof(bool), typeof(PlayerIcon));
         public bool Draggable
         {
             get { return (bool)GetValue(DraggableProperty); }
             set { SetValue(DraggableProperty, value); }
         }
 
-        public static DependencyProperty AbsolutePositioningProperty =
-            DependencyProperty.Register("AbsolutePositioning", typeof(bool), typeof(PlayerIcon));
+        public static DependencyProperty AbsolutePositioningProperty = DependencyProperty.Register("AbsolutePositioning", typeof(bool), typeof(PlayerIcon));
         public bool AbsolutePositioning
         {
             get { return (bool)GetValue(AbsolutePositioningProperty); }

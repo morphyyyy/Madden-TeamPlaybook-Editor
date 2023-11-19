@@ -6,6 +6,14 @@
 
         <Style.Resources>
 
+            <ItemsPanelTemplate x:Key="iptThreeColumns">
+                <UniformGrid FlowDirection="LeftToRight" IsItemsHost="True" Margin="0,0" MaxWidth="592" Columns="3"/>
+            </ItemsPanelTemplate>
+
+            <ItemsPanelTemplate x:Key="iptOneColumn">
+                <UniformGrid FlowDirection="LeftToRight" IsItemsHost="True" Margin="0,0" MaxWidth="592" Columns="1"/>
+            </ItemsPanelTemplate>
+
             <ImageBrush 
                 x:Key="FormationSelected"
                 ImageSource="../Resources/field_blank_resized.jpg"
@@ -92,6 +100,14 @@
                         </ItemsPresenter>
                     </Grid>
                     <ControlTemplate.Triggers>
+
+                        <!--<Trigger Property="subFormationIsExpanded" Value="true">
+                            <Setter Property="ItemsPanel" Value="{DynamicResource iptThreeColumns}"/>
+                        </Trigger>
+
+                        <Trigger Property="subFormationIsExpanded" Value="false">
+                            <Setter Property="ItemsPanel" Value="{DynamicResource iptOneColumn}"/>
+                        </Trigger>-->
 
                         <MultiTrigger>  <!-- IsSelected=true and IsExpanded=false -->
 

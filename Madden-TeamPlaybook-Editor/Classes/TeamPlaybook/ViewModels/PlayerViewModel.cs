@@ -226,6 +226,12 @@ namespace MaddenTeamPlaybookEditor.ViewModels
 
         }
 
+        public void UpdatePSAL()
+        {
+            ConvertPSAL(PSAL);
+            foreach (Path path in PSALpath) ((PathGeometry)path.Data).Freeze();
+        }
+
         public void UpdatePSAL(PSAL psal, Point point)
         {
             switch (psal.code)
@@ -309,7 +315,7 @@ namespace MaddenTeamPlaybookEditor.ViewModels
         {
             if (artlColor.Equals(ARTLColor.Block))
             {
-                RouteCap = new RectangleGeometry(new Rect(new Point(0, -6), new Size(3, 12))).GetFlattenedPathGeometry();
+                RouteCap = ARTL.Block;
             }
             else
             {
@@ -1441,7 +1447,7 @@ namespace MaddenTeamPlaybookEditor.ViewModels
                 }
             }
 
-            foreach (Path path in PSALpath) ((PathGeometry)path.Data).Freeze();
+            //foreach (Path path in PSALpath) ((PathGeometry)path.Data).Freeze();
 
             this.PSALpath = PSALpath;
         }
