@@ -92,22 +92,6 @@ namespace MaddenTeamPlaybookEditor.User_Controls
             dc.Pop();
         }
 
-        public Playart GetPlayart()
-        {
-            Playart playart = new Playart();
-            foreach (UIElement child in ((Canvas)this.Parent).Children)
-            {
-                if (child is Playart)
-                {
-                    if (((Playart)child).Player == Player)
-                    {
-                        playart = child as Playart;
-                    }
-                }
-            }
-            return playart;
-        }
-
         private void UserControl_MouseLeftButtonDown(Object sender, MouseButtonEventArgs e)
         {
             if (Player.Play.Players!= null)
@@ -123,23 +107,7 @@ namespace MaddenTeamPlaybookEditor.User_Controls
                 Console.WriteLine(Canvas.GetLeft(sender as UIElement) + "," + Canvas.GetTop(sender as UIElement));
                 mousePosition = e.GetPosition((UIElement)Parent);
                 draggableControl.CaptureMouse();
-                //playerPlayart = GetPlayart();
-
-                //Convert PSALPath back to DistDir to check PSALEditor
-
-                //PathGeometry pathGeo = Player.PSALpath[0].Data as PathGeometry;
-                //PolyLineSegment polyLineSeg = pathGeo.Figures[0].Segments[0] as PolyLineSegment;
-                //for (int i = 0; i < polyLineSeg.Points.Count; i++)
-                //{
-                //    if (i > 0)
-                //    {
-                //        Console.WriteLine(PlayerVM.XYtoMoveDistDir(new Point(polyLineSeg.Points[i].X - polyLineSeg.Points[i-1].X, -polyLineSeg.Points[i].Y - -polyLineSeg.Points[i - 1].Y)));
-                //    }
-                //    else
-                //    {
-                //        Console.WriteLine(PlayerVM.XYtoMoveDistDir(new Point(polyLineSeg.Points[i].X, -polyLineSeg.Points[i].Y)));
-                //    }
-                //}
+                PlayerIcons = UIHelper.FindChild<ItemsControl>(UIHelper.FindVisualParent<PlayModal>(this), "iclPSALs");
             }
         }
 
@@ -184,6 +152,7 @@ namespace MaddenTeamPlaybookEditor.User_Controls
                     {
                         Player.UpdateXY(new Point(Player.XY.X + transform.X, Player.XY.Y + transform.Y));
                     }
+                    PlayerIcons.Items.Refresh();
                 }
             }
         }
@@ -191,6 +160,92 @@ namespace MaddenTeamPlaybookEditor.User_Controls
         protected Boolean isDragging;
         private Point mousePosition;
         private Double prevX, prevY;
+        private ItemsControl PlayerIcons;
+
+        public static class UIHelper
+        {
+            public static T FindVisualParent<T>(DependencyObject control)
+            where T : DependencyObject
+            {
+                // get parent item
+                DependencyObject parentObject = VisualTreeHelper.GetParent(control);
+
+                // we’ve reached the end of the tree
+                if (parentObject == null) return null;
+
+                // check if the parent matches the type we’re looking for
+                T parent = parentObject as T;
+                if (parent != null)
+                {
+                    return parent;
+                }
+                else
+                {
+                    // use recursion to proceed with next level
+                    return FindVisualParent<T>(parentObject);
+                }
+            }
+
+            public static T FindChild<T>(DependencyObject parent, string childName)
+            where T : DependencyObject
+            {
+                // Confirm parent and childName are valid. 
+                if (parent == null) return null;
+                T foundChild = null;
+                int childrenCount = VisualTreeHelper.GetChildrenCount(parent);
+                for (int i = 0; i < childrenCount; i++)
+                {
+                    var child = VisualTreeHelper.GetChild(parent, i);
+                    // If the child is not of the request child type child
+                    T childType = child as T;
+                    if (childType == null)
+                    {
+                        // recursively drill down the tree
+                        foundChild = FindChild<T>(child, childName);
+                        // If the child is found, break so we do not overwrite the found child. 
+                        if (foundChild != null) break;
+                    }
+                    else if (!string.IsNullOrEmpty(childName))
+                    {
+                        var frameworkElement = child as FrameworkElement;
+                        // If the child's name is set for search
+                        if (frameworkElement != null && frameworkElement.Name == childName)
+                        {
+                            // if the child's name is of the request name
+                            foundChild = (T)child;
+                            break;
+                        }
+                        foundChild = FindChild<T>(child, childName);
+                    }
+                    else
+                    {
+                        // child element found.
+                        foundChild = (T)child;
+                        break;
+                    }
+                }
+                return foundChild;
+            }
+        }
+
+        public List<PSAL> PathtoPSAL()
+        {
+            PathGeometry pathGeo = Player.PSALpath[0].Data as PathGeometry;
+            PolyLineSegment polyLineSeg = pathGeo.Figures[0].Segments[0] as PolyLineSegment;
+            List<PSAL> _psal = new List<PSAL>();
+            for (int i = 0; i < polyLineSeg.Points.Count; i++)
+            {
+                if (i > 0)
+                {
+                    _psal.Add(PlayerVM.XYtoMoveDistDir(new Point(polyLineSeg.Points[i].X - polyLineSeg.Points[i - 1].X, -polyLineSeg.Points[i].Y - -polyLineSeg.Points[i - 1].Y)));
+                }
+                else
+                {
+                    _psal.Add(PlayerVM.XYtoMoveDistDir(new Point(polyLineSeg.Points[i].X, -polyLineSeg.Points[i].Y)));
+                }
+            }
+            return _psal;
+        }
 
         public static DependencyProperty ScaleProperty = DependencyProperty.Register("Scale", typeof(double), typeof(PlayerIcon));
         public double Scale

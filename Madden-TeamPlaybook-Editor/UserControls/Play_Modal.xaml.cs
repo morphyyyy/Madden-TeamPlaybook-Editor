@@ -38,7 +38,7 @@ namespace MaddenTeamPlaybookEditor.User_Controls
             Console.WriteLine(player.PSALpath);
             player.UpdatePlayer();
             Console.WriteLine(player.PSALpath);
-            iclPSALs.InvalidateVisual();
+            iclPSALs.Items.Refresh();
         }
     }
 }

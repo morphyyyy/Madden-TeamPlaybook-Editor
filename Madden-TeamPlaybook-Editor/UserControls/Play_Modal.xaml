@@ -76,7 +76,7 @@
             Canvas.Top="600">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <Canvas x:Name="cvsPlayers"/>
+                    <Canvas x:Name="cvsPlayerRoutes"/>
                 </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
             <ItemsControl.ItemTemplate>
@@ -111,7 +111,7 @@
             MouseDown="iclIcons_MouseDown">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <Canvas x:Name="cvsPlayers"/>
+                    <Canvas x:Name="cvsPlayerIcons"/>
                 </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
             <ItemsControl.ItemTemplate>
@@ -122,7 +122,6 @@
                             Player="{Binding}"
                             Scale="2"
                             ShowPosition="True"
-                            Draggable="True"
                             AbsolutePositioning="True"/>
                     </Canvas>
                 </DataTemplate>

@@ -68,14 +68,14 @@ namespace MaddenTeamPlaybookEditor.User_Controls
                 for (int i = 0; i < ((PolyLineSegment)basePath.Figures[0].Segments[0]).Points.Count; i++)
                 {
                     Point p2 = ((PolyLineSegment)basePath.Figures[0].Segments[0]).Points[i];
-                    if (p2.X + Player.XY.X + TeamPlaybook.LOS.X < 0 || p2.X + Player.XY.X + TeamPlaybook.LOS.X > 533)
+                    if (p2.X + Player.XY.X + TeamPlaybook.LOS.X < 25 || p2.X + Player.XY.X + TeamPlaybook.LOS.X > 508)
                     {
                         double xIntercept = 0;
-                        if (p2.X + Player.XY.X + TeamPlaybook.LOS.X < 0)
+                        if (p2.X + Player.XY.X + TeamPlaybook.LOS.X < 25)
                         {
                             xIntercept = -(Player.XY.X + TeamPlaybook.LOS.X - 25);
                         }
-                        else if (p2.X + Player.XY.X + TeamPlaybook.LOS.X > 533)
+                        else if (p2.X + Player.XY.X + TeamPlaybook.LOS.X > 508)
                         {
                             xIntercept = 508 - (Player.XY.X + TeamPlaybook.LOS.X);
                         }
