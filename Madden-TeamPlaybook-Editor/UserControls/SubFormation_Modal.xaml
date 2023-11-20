@@ -79,13 +79,15 @@
             </ItemsControl.ItemsPanel>
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <UserControls:PlayerIcon
-                        x:Name="clnIcon"
-                        Player="{Binding}"
-                        Scale="2"
-                        ShowPosition="True"
-                        AbsolutePositioning="True"
-                        Draggable="True"/>
+                    <Canvas>
+                        <UserControls:PlayerIcon
+                            x:Name="clnIcon"
+                            Player="{Binding}"
+                            Scale="2"
+                            ShowPosition="True"
+                            AbsolutePositioning="True"
+                            Draggable="True"/>
+                    </Canvas>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
             <ItemsControl.ItemContainerStyle>
@@ -96,6 +98,52 @@
                     <Setter 
                         Property="Canvas.Top" 
                         Value="{Binding XY.Y}"/>
+                    <Style.Triggers>
+
+                        <Trigger Property="UserControls:PlayerIcon.IsMouseOver" Value="True">
+                            <Setter Property="UserControls:PlayerIcon.Effect">
+                                <Setter.Value>
+                                    <DropShadowEffect ShadowDepth="0" Color="White" Opacity="1" BlurRadius="20"/>
+                                </Setter.Value>
+                            </Setter>
+                            <Setter Property="UserControls:PlayerIcon.RenderTransform">
+                                <Setter.Value>
+                                    <ScaleTransform ScaleX="2" ScaleY="2"/>
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+
+                        <!--<Trigger Property="Canvas.IsMouseOver" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            Storyboard.TargetProperty="(Canvas).(RenderTransform).(ScaleTransform.ScaleX)"
+                                            From="1" To="2" Duration="0:0:0.2"/>
+                                        <DoubleAnimation
+                                            Storyboard.TargetProperty="(Canvas).(RenderTransform).(ScaleTransform.ScaleY)"
+                                            From="1" To="2" Duration="0:0:0.2"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                        </Trigger>
+                        
+                        <Trigger Property="Canvas.IsMouseOver" Value="False">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            Storyboard.TargetProperty="(Canvas).(RenderTransform).(ScaleTransform.ScaleX)"
+                                            From="2" To="1" Duration="0:0:0.2"/>
+                                        <DoubleAnimation
+                                            Storyboard.TargetProperty="(Canvas).(RenderTransform).(ScaleTransform.ScaleY)"
+                                            From="2" To="1" Duration="0:0:0.2"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                        </Trigger>-->
+
+                    </Style.Triggers>
                 </Style>
             </ItemsControl.ItemContainerStyle>
         </ItemsControl>

@@ -126,7 +126,7 @@ namespace MaddenTeamPlaybookEditor.User_Controls
                     transform = new TranslateTransform();
                     draggableControl.RenderTransform = transform;
                 }
-                Player.UpdateXY(new Point(Player.XY.X + prevX, Player.XY.Y + prevY));
+                Player.UpdateXY(new Point(Player.XY.X + (prevX * 2), Player.XY.Y + (prevY * 2)));
                 //Player.Play.UpdatePlayers();
                 draggableControl.ReleaseMouseCapture();
             }
@@ -152,7 +152,7 @@ namespace MaddenTeamPlaybookEditor.User_Controls
                     {
                         Player.UpdateXY(new Point(Player.XY.X + transform.X, Player.XY.Y + transform.Y));
                     }
-                    PlayerIcons.Items.Refresh();
+                    if (PlayerIcons != null) PlayerIcons.Items.Refresh();
                 }
             }
         }

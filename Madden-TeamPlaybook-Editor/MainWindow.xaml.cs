@@ -16,6 +16,7 @@ using System.Windows.Documents;
 using System.Runtime.InteropServices;
 using System.Linq;
 using System.Windows.Data;
+using Madden.TeamPlaybook;
 
 namespace MaddenTeamPlaybookEditor
 {
@@ -543,6 +544,12 @@ namespace MaddenTeamPlaybookEditor
                 uclPlayModal.DataContext = (PlayVM)((TreeView)sender).SelectedItem;
                 xpdSubFormationModal.Visibility = Visibility.Collapsed;
                 xpdPlayModal.Visibility = Visibility.Visible;
+                lvwSituations.SelectedItems.Clear();
+                foreach (Madden.TeamPlaybook.PBAI situation in uclPlayModal.play.Situations)
+                {
+                    lvwSituations.SelectedItems.Add(TeamPlaybook.Situations.Where(p => p.Key == situation.AIGR).FirstOrDefault());
+                    Console.WriteLine(situation);
+                }
             }
         }
 
