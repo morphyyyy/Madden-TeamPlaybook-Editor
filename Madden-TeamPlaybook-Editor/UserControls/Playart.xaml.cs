@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Effects;
 using System.Windows.Shapes;
@@ -15,6 +16,9 @@ namespace MaddenTeamPlaybookEditor.User_Controls
         public Playart()
         {
             InitializeComponent();
+            this.MouseLeftButtonDown += new MouseButtonEventHandler(UserControl_MouseDown);
+            this.MouseLeftButtonUp += new MouseButtonEventHandler(UserControl_MouseUp);
+            this.MouseMove += new MouseEventHandler(UserControl_MouseMove);
             this.ContextMenu.DataContext = this.Player;
             bool ShowProgression = false;
         }
@@ -22,6 +26,9 @@ namespace MaddenTeamPlaybookEditor.User_Controls
         public Playart(PlayerVM player, bool PSALView)
         {
             InitializeComponent();
+            this.MouseLeftButtonDown += new MouseButtonEventHandler(UserControl_MouseDown);
+            this.MouseLeftButtonUp += new MouseButtonEventHandler(UserControl_MouseUp);
+            this.MouseMove += new MouseEventHandler(UserControl_MouseMove);
             Player = player;
             bool ShowProgression = false;
             this.ContextMenu.DataContext = this.Player;
@@ -200,6 +207,23 @@ namespace MaddenTeamPlaybookEditor.User_Controls
             //    transform.BeginAnimation(MatrixTransform.MatrixProperty, pointAnimation);
             //    dc.DrawGeometry(routeRunningBrush, routeRunningPen, routeRunningHighlight);
             //}
+        }
+
+        private void UserControl_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (Player.Play.Players != null)
+            {
+                foreach (PlayerVM player in Player.Play.Players) player.IsSelected = false;
+                Player.IsSelected = true;
+            }
+        }
+
+        private void UserControl_MouseMove(object sender, MouseEventArgs e)
+        {
+        }
+
+        private void UserControl_MouseUp(object sender, MouseEventArgs e)
+        {
         }
 
         protected override Size MeasureOverride(Size availableSize)

@@ -30,6 +30,18 @@ namespace MaddenTeamPlaybookEditor.User_Controls
         private void iclIcons_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             tabPlayer.DataContext = play.Players.Where(player => player.IsSelected).FirstOrDefault();
+            tabPlayControls.SelectedIndex = 1;
+        }
+
+        private void iclPSALs_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            tabPlayer.DataContext = play.Players.Where(player => player.IsSelected).FirstOrDefault();
+            tabPlayControls.SelectedIndex = 1;
+        }
+
+        private void bdrField_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            tabPlayControls.SelectedIndex = 0;
         }
 
         private void dgdPSALupdated(object sender, EventArgs e)

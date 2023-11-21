@@ -17,6 +17,10 @@ namespace MaddenTeamPlaybookEditor.User_Controls
 {
     public partial class PlayerIcon : UserControl
     {
+        protected Boolean isDragging;
+        private Point mousePosition;
+        private Double prevX, prevY;
+        private ItemsControl PlayerIcons;
         [DllImport("User32.dll")]
         private static extern bool SetCursorPos(int X, int Y);
 
@@ -156,11 +160,6 @@ namespace MaddenTeamPlaybookEditor.User_Controls
                 }
             }
         }
-
-        protected Boolean isDragging;
-        private Point mousePosition;
-        private Double prevX, prevY;
-        private ItemsControl PlayerIcons;
 
         public static class UIHelper
         {

@@ -69,158 +69,6 @@
             </MenuItem>
         </Menu>
 
-        <Expander Foreground="LightGray" Header="Tables" ExpandDirection="Down">
-        
-            <TabControl 
-                x:Name="tclTables" 
-                Background="{x:Null}" 
-                BorderBrush="{x:Null}" 
-                Foreground="{x:Null}" 
-                DockPanel.Dock="Top"
-                >
-
-                <TabItem Header="PBFM">
-                    <UserControls:PBFMTable
-                            x:Name="uclPBFMTable"
-                            PBFM="{Binding PBFM, Mode=TwoWay}"/>
-                </TabItem>
-
-                <TabItem Header="FORM">
-                    <UserControls:FORMTable 
-                            x:Name="uclFORMTable" 
-                            FORM="{Binding FORM, Mode=TwoWay}"/>
-                </TabItem>
-
-                <TabItem Header="PBST">
-                    <UserControls:PBSTTable 
-                            x:Name="uclPBSTTable" 
-                            PBST="{Binding PBST, Mode=TwoWay}"/>
-                </TabItem>
-
-                <TabItem Header="SETL">
-                    <UserControls:SETLTable 
-                            x:Name="uclSETLTable" 
-                            SETL="{Binding SETL, Mode=TwoWay}"/>
-                </TabItem>
-
-                <TabItem Header="SETP">
-                    <UserControls:SETPTable 
-                            x:Name="uclSETPTable" 
-                            SETP="{Binding SETP, Mode=TwoWay}"/>
-                </TabItem>
-
-                <TabItem Header="SPKF">
-                    <UserControls:SPKFTable 
-                            x:Name="uclSPKFTable" 
-                            SPKF="{Binding SPKF, Mode=TwoWay}"/>
-                </TabItem>
-
-                <TabItem Header="SPKG">
-                    <UserControls:SPKGTable 
-                            x:Name="uclSPKGTable" 
-                            SPKG="{Binding SPKG, Mode=TwoWay}"/>
-                </TabItem>
-
-                <TabItem Header="SGFM">
-                    <UserControls:SGFMTable 
-                            x:Name="uclSGFMTable" 
-                            SGFM="{Binding SGFM, Mode=TwoWay}"/>
-                </TabItem>
-
-                <TabItem Header="SETG">
-                    <UserControls:SETGTable 
-                        x:Name="uclSETGTable" 
-                        SETG="{Binding SETG, Mode=TwoWay}"/>
-                </TabItem>
-
-                <TabItem Header="PBPL">
-                    <UserControls:PBPLTable 
-                            x:Name="uclPBPLTable" 
-                            PBPL="{Binding PBPL, Mode=TwoWay}"/>
-                </TabItem>
-
-                <TabItem Header="PLYL">
-                    <UserControls:PLYLTable 
-                            x:Name="uclPLYLTable" 
-                            PLYL="{Binding PLYL, Mode=TwoWay}"/>
-                </TabItem>
-
-                <TabItem Header="PLPD">
-                    <UserControls:PLPDTable 
-                            x:Name="uclPLPDTable" 
-                            PLPD="{Binding PLPD, Mode=TwoWay}"/>
-                </TabItem>
-
-                <TabItem Header="PLRD">
-                    <UserControls:PLRDTable 
-                            x:Name="uclPLRDTable" 
-                            PLRD="{Binding PLRD, Mode=TwoWay}"/>
-                </TabItem>
-
-                <TabItem Header="PLYS">
-                    <UserControls:PLYSTable 
-                            x:Name="uclPLYSTable" 
-                            PLYS="{Binding PLYS, Mode=TwoWay}"/>
-                </TabItem>
-
-                <TabItem Header="PSAL">
-                    <UserControls:PSALTable 
-                            x:Name="uclPSALTable" 
-                            PSAL="{Binding PSAL, Mode=TwoWay}"/>
-                </TabItem>
-
-                <TabItem Header="ARTL">
-                    <UserControls:ARTLTable 
-                            x:Name="uclARTLTable" 
-                            ARTL="{Binding ARTL, Mode=TwoWay}"/>
-                </TabItem>
-
-                <TabItem Header="PBAI">
-                    <UserControls:PBAITable 
-                            x:Name="uclPBAITable" 
-                            PBAI="{Binding PBAI, Mode=TwoWay}"/>
-                </TabItem>
-
-                <TabItem Header="PBAU">
-                    <UserControls:PBAUTable 
-                            x:Name="uclPBAUTable" 
-                            PBAU="{Binding PBAU, Mode=TwoWay}"/>
-                </TabItem>
-
-                <TabItem Header="PBCC">
-                    <UserControls:PBCCTable 
-                            x:Name="uclPBCCTable" 
-                            PBCC="{Binding PBCC, Mode=TwoWay}"/>
-                </TabItem>
-
-                <TabItem Header="PLCM">
-                    <UserControls:PLCMTable 
-                            x:Name="uclPLCMTable" 
-                            PLCM="{Binding PLCM, Mode=TwoWay}"/>
-                </TabItem>
-
-                <TabItem Header="PPCT">
-                    <UserControls:PPCTTable 
-                            x:Name="uclPPCTTable" 
-                            PPCT="{Binding PPCT, Mode=TwoWay}"/>
-                </TabItem>
-
-                <TabItem Header="SDEF">
-                    <UserControls:SDEFTable 
-                            x:Name="uclSDEFTable" 
-                            SDEF="{Binding SDEF, Mode=TwoWay}"/>
-                </TabItem>
-
-                <TabItem Header="SRFT">
-                    <UserControls:SRFTTable 
-                            x:Name="uclSRFTTable" 
-                            SRFT="{Binding SRFT, Mode=TwoWay}"/>
-                </TabItem>
-
-            </TabControl>
-
-        </Expander>
-
         <Expander Foreground="LightGray" Header="Playbook" ExpandDirection="Down" IsExpanded="True">
 
             <DockPanel Width="Auto" Height="Auto" HorizontalAlignment="Stretch" DockPanel.Dock="Left">
@@ -380,7 +228,242 @@
         
         </Expander>
 
-        <Expander Foreground="LightGray" Header="PSALs" ExpandDirection="Down" IsExpanded="True">
+        <Expander x:Name="xpdSubFormationModal" Visibility="Visible" Foreground="LightGray" Header="Sub Formation" ExpandDirection="Down" IsExpanded="True">
+            <UserControls:SubFormationModal x:Name="uclSubFormationModal" VerticalAlignment="Top"/>
+        </Expander>
+
+        <Expander x:Name="xpdPlayModal" Visibility="Collapsed" Foreground="LightGray" Header="Play" ExpandDirection="Down" IsExpanded="True">
+            <UserControls:PlayModal x:Name="uclPlayModal" VerticalAlignment="Top"/>
+        </Expander>
+        
+        <Expander Foreground="LightGray" Header="Tables" ExpandDirection="Down">
+        
+            <TabControl 
+                x:Name="tclTables" 
+                Background="{x:Null}" 
+                BorderBrush="{x:Null}" 
+                Foreground="{x:Null}" 
+                DockPanel.Dock="Top"
+                >
+
+                <TabItem Header="PBFM">
+                    <UserControls:PBFMTable
+                            x:Name="uclPBFMTable"
+                            PBFM="{Binding PBFM, Mode=TwoWay}"/>
+                </TabItem>
+
+                <TabItem Header="FORM">
+                    <UserControls:FORMTable 
+                            x:Name="uclFORMTable" 
+                            FORM="{Binding FORM, Mode=TwoWay}"/>
+                </TabItem>
+
+                <TabItem Header="PBST">
+                    <UserControls:PBSTTable 
+                            x:Name="uclPBSTTable" 
+                            PBST="{Binding PBST, Mode=TwoWay}"/>
+                </TabItem>
+
+                <TabItem Header="SETL">
+                    <UserControls:SETLTable 
+                            x:Name="uclSETLTable" 
+                            SETL="{Binding SETL, Mode=TwoWay}"/>
+                </TabItem>
+
+                <TabItem Header="SETP">
+                    <UserControls:SETPTable 
+                            x:Name="uclSETPTable" 
+                            SETP="{Binding SETP, Mode=TwoWay}"/>
+                </TabItem>
+
+                <TabItem Header="SPKF">
+                    <UserControls:SPKFTable 
+                            x:Name="uclSPKFTable" 
+                            SPKF="{Binding SPKF, Mode=TwoWay}"/>
+                </TabItem>
+
+                <TabItem Header="SPKG">
+                    <UserControls:SPKGTable 
+                            x:Name="uclSPKGTable" 
+                            SPKG="{Binding SPKG, Mode=TwoWay}"/>
+                </TabItem>
+
+                <TabItem Header="SGFM">
+                    <UserControls:SGFMTable 
+                            x:Name="uclSGFMTable" 
+                            SGFM="{Binding SGFM, Mode=TwoWay}"/>
+                </TabItem>
+
+                <TabItem Header="SETG">
+                    <UserControls:SETGTable 
+                        x:Name="uclSETGTable" 
+                        SETG="{Binding SETG, Mode=TwoWay}"/>
+                </TabItem>
+
+                <TabItem Header="PBPL">
+                    <UserControls:PBPLTable 
+                            x:Name="uclPBPLTable" 
+                            PBPL="{Binding PBPL, Mode=TwoWay}"/>
+                </TabItem>
+
+                <TabItem Header="PLYL">
+                    <UserControls:PLYLTable 
+                            x:Name="uclPLYLTable" 
+                            PLYL="{Binding PLYL, Mode=TwoWay}"/>
+                </TabItem>
+
+                <TabItem Header="PLPD">
+                    <UserControls:PLPDTable 
+                            x:Name="uclPLPDTable" 
+                            PLPD="{Binding PLPD, Mode=TwoWay}"/>
+                </TabItem>
+
+                <TabItem Header="PLRD">
+                    <UserControls:PLRDTable 
+                            x:Name="uclPLRDTable" 
+                            PLRD="{Binding PLRD, Mode=TwoWay}"/>
+                </TabItem>
+
+                <TabItem Header="PLYS">
+                    <UserControls:PLYSTable 
+                            x:Name="uclPLYSTable" 
+                            PLYS="{Binding PLYS, Mode=TwoWay}"/>
+                </TabItem>
+
+                <TabItem Header="PSAL">
+                    <UserControls:PSALTable 
+                            x:Name="uclPSALTable" 
+                            PSAL="{Binding PSAL, Mode=TwoWay}"/>
+                </TabItem>
+
+                <TabItem Header="ARTL">
+                    <UserControls:ARTLTable 
+                            x:Name="uclARTLTable" 
+                            ARTL="{Binding ARTL, Mode=TwoWay}"/>
+                </TabItem>
+
+                <TabItem Header="PBAI">
+                    <UserControls:PBAITable 
+                            x:Name="uclPBAITable" 
+                            PBAI="{Binding PBAI, Mode=TwoWay}"/>
+                </TabItem>
+
+                <TabItem Header="PBAU">
+                    <UserControls:PBAUTable 
+                            x:Name="uclPBAUTable" 
+                            PBAU="{Binding PBAU, Mode=TwoWay}"/>
+                </TabItem>
+
+                <TabItem Header="PBCC">
+                    <UserControls:PBCCTable 
+                            x:Name="uclPBCCTable" 
+                            PBCC="{Binding PBCC, Mode=TwoWay}"/>
+                </TabItem>
+
+                <TabItem Header="PLCM">
+                    <UserControls:PLCMTable 
+                            x:Name="uclPLCMTable" 
+                            PLCM="{Binding PLCM, Mode=TwoWay}"/>
+                </TabItem>
+
+                <TabItem Header="PPCT">
+                    <UserControls:PPCTTable 
+                            x:Name="uclPPCTTable" 
+                            PPCT="{Binding PPCT, Mode=TwoWay}"/>
+                </TabItem>
+
+                <TabItem Header="SDEF">
+                    <UserControls:SDEFTable 
+                            x:Name="uclSDEFTable" 
+                            SDEF="{Binding SDEF, Mode=TwoWay}"/>
+                </TabItem>
+
+                <TabItem Header="SRFT">
+                    <UserControls:SRFTTable 
+                            x:Name="uclSRFTTable" 
+                            SRFT="{Binding SRFT, Mode=TwoWay}"/>
+                </TabItem>
+
+            </TabControl>
+
+        </Expander>
+
+        <!--<TabControl x:Name="tabPlaybook" ItemsSource="{Binding Formations}" Background="Transparent" BorderBrush="Transparent"  VerticalAlignment="Top" HorizontalAlignment="Left">
+            <TabControl.ItemTemplate>
+                <DataTemplate DataType="{x:Type TeamPlaybookViewModels:FormationVM}">
+                    <UserControls:Formation x:Name="tabFormation" formation="{Binding}"/>
+                </DataTemplate>
+            </TabControl.ItemTemplate>
+            <TabControl.ContentTemplate>
+                <DataTemplate>
+                    <TabControl ItemsSource="{Binding SubFormations}" Background="Transparent" BorderBrush="Transparent" VerticalAlignment="Top" HorizontalAlignment="Left">
+                        <TabControl.ItemTemplate>
+                            <DataTemplate DataType="{x:Type TeamPlaybookViewModels:SubFormationVM}">
+                                <UserControls:SubFormation x:Name="tabSubFormation" subFormation="{Binding}" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+                            </DataTemplate>
+                        </TabControl.ItemTemplate>
+                        <TabControl.ContentTemplate>
+                            <DataTemplate>
+                                <TabControl ItemsSource="{Binding Plays}" Background="Transparent" BorderBrush="Transparent" VerticalAlignment="Top" HorizontalAlignment="Left">
+                                    <TabControl.ItemTemplate>
+                                        <DataTemplate DataType="{x:Type TeamPlaybookViewModels:PlayVM}">
+                                            <UserControls:Play x:Name="tabSubFormation" play="{Binding}" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+                                        </DataTemplate>
+                                    </TabControl.ItemTemplate>
+                                    <TabControl.ContentTemplate>
+                                        <DataTemplate>
+
+                                        </DataTemplate>
+                                    </TabControl.ContentTemplate>
+                                    <TabControl.ItemContainerStyle>
+                                        <Style TargetType="{x:Type TabItem}" BasedOn="{StaticResource SubFormationTabItem}"> </Style>
+                                    </TabControl.ItemContainerStyle>
+                                </TabControl>
+                            </DataTemplate>
+                        </TabControl.ContentTemplate>
+                        <TabControl.ItemContainerStyle>
+                            <Style TargetType="{x:Type TabItem}" BasedOn="{StaticResource PlayTabItem}"> </Style>
+                        </TabControl.ItemContainerStyle>
+                    </TabControl>
+                </DataTemplate>
+            </TabControl.ContentTemplate>
+            <TabControl.ItemContainerStyle>
+                <Style TargetType="{x:Type TabItem}" BasedOn="{StaticResource FormationTabItem}"> </Style>
+            </TabControl.ItemContainerStyle>
+        </TabControl>-->
+        
+        <!--<Expander Foreground="LightGray" Header="Situations" ExpandDirection="Down" IsExpanded="False">
+
+            <DockPanel DockPanel.Dock="Left">
+
+                <ListView 
+                    x:Name="lvwSituations" 
+                    ItemsSource="{Binding Situations}" 
+                    ScrollViewer.CanContentScroll="False"
+                    Background="Transparent"
+                    BorderBrush="Transparent">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <Label Content="{Binding Path=Value}" Foreground="LightGray"/>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                    <ListView.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <classes:UniformGridOrientations Orientation="Vertical" VerticalOrientation="Top" FlowDirection="LeftToRight" IsItemsHost="True" Margin="0,0" Rows="18" Height="{Binding}"/>
+                        </ItemsPanelTemplate>
+                    </ListView.ItemsPanel>
+                    <ListView.ItemContainerStyle>
+                        <Style TargetType="{x:Type ListViewItem}" BasedOn="{StaticResource SituationListViewItem}">
+                            <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay}" />
+                        </Style>
+                    </ListView.ItemContainerStyle>
+                </ListView>
+
+            </DockPanel>
+
+        </Expander>-->
+        
+        <!--<Expander Foreground="LightGray" Header="PSALs" ExpandDirection="Down" IsExpanded="True">
 
             <DockPanel Width="Auto" Height="Auto" HorizontalAlignment="Stretch" DockPanel.Dock="Left">
 
@@ -475,90 +558,7 @@
 
             </DockPanel>
 
-        </Expander>
-
-        <Expander x:Name="xpdSubFormationModal" Visibility="Visible" Foreground="LightGray" Header="Sub Formation" ExpandDirection="Down" IsExpanded="True">
-            <UserControls:SubFormationModal x:Name="uclSubFormationModal" VerticalAlignment="Top"/>
-        </Expander>
-
-        <Expander x:Name="xpdPlayModal" Visibility="Collapsed" Foreground="LightGray" Header="Play" ExpandDirection="Down" IsExpanded="True">
-            <UserControls:PlayModal x:Name="uclPlayModal" VerticalAlignment="Top"/>
-        </Expander>
-
-        <!--<TabControl x:Name="tabPlaybook" ItemsSource="{Binding Formations}" Background="Transparent" BorderBrush="Transparent"  VerticalAlignment="Top" HorizontalAlignment="Left">
-            <TabControl.ItemTemplate>
-                <DataTemplate DataType="{x:Type TeamPlaybookViewModels:FormationVM}">
-                    <UserControls:Formation x:Name="tabFormation" formation="{Binding}"/>
-                </DataTemplate>
-            </TabControl.ItemTemplate>
-            <TabControl.ContentTemplate>
-                <DataTemplate>
-                    <TabControl ItemsSource="{Binding SubFormations}" Background="Transparent" BorderBrush="Transparent" VerticalAlignment="Top" HorizontalAlignment="Left">
-                        <TabControl.ItemTemplate>
-                            <DataTemplate DataType="{x:Type TeamPlaybookViewModels:SubFormationVM}">
-                                <UserControls:SubFormation x:Name="tabSubFormation" subFormation="{Binding}" VerticalAlignment="Top" HorizontalAlignment="Left"/>
-                            </DataTemplate>
-                        </TabControl.ItemTemplate>
-                        <TabControl.ContentTemplate>
-                            <DataTemplate>
-                                <TabControl ItemsSource="{Binding Plays}" Background="Transparent" BorderBrush="Transparent" VerticalAlignment="Top" HorizontalAlignment="Left">
-                                    <TabControl.ItemTemplate>
-                                        <DataTemplate DataType="{x:Type TeamPlaybookViewModels:PlayVM}">
-                                            <UserControls:Play x:Name="tabSubFormation" play="{Binding}" VerticalAlignment="Top" HorizontalAlignment="Left"/>
-                                        </DataTemplate>
-                                    </TabControl.ItemTemplate>
-                                    <TabControl.ContentTemplate>
-                                        <DataTemplate>
-
-                                        </DataTemplate>
-                                    </TabControl.ContentTemplate>
-                                    <TabControl.ItemContainerStyle>
-                                        <Style TargetType="{x:Type TabItem}" BasedOn="{StaticResource SubFormationTabItem}"> </Style>
-                                    </TabControl.ItemContainerStyle>
-                                </TabControl>
-                            </DataTemplate>
-                        </TabControl.ContentTemplate>
-                        <TabControl.ItemContainerStyle>
-                            <Style TargetType="{x:Type TabItem}" BasedOn="{StaticResource PlayTabItem}"> </Style>
-                        </TabControl.ItemContainerStyle>
-                    </TabControl>
-                </DataTemplate>
-            </TabControl.ContentTemplate>
-            <TabControl.ItemContainerStyle>
-                <Style TargetType="{x:Type TabItem}" BasedOn="{StaticResource FormationTabItem}"> </Style>
-            </TabControl.ItemContainerStyle>
-        </TabControl>-->
-        
-        <Expander Foreground="LightGray" Header="Situations" ExpandDirection="Down" IsExpanded="False">
-
-            <DockPanel DockPanel.Dock="Left">
-
-                <ListView 
-                    x:Name="lvwSituations" 
-                    ItemsSource="{Binding Situations}" 
-                    ScrollViewer.CanContentScroll="False"
-                    Background="Transparent"
-                    BorderBrush="Transparent">
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <Label Content="{Binding Path=Value}" Foreground="LightGray"/>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                    <ListView.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <classes:UniformGridOrientations Orientation="Vertical" VerticalOrientation="Top" FlowDirection="LeftToRight" IsItemsHost="True" Margin="0,0" Rows="18" Height="{Binding}"/>
-                        </ItemsPanelTemplate>
-                    </ListView.ItemsPanel>
-                    <ListView.ItemContainerStyle>
-                        <Style TargetType="{x:Type ListViewItem}" BasedOn="{StaticResource SituationListViewItem}">
-                            <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay}" />
-                        </Style>
-                    </ListView.ItemContainerStyle>
-                </ListView>
-
-            </DockPanel>
-
-        </Expander>
+        </Expander>-->
         
     </DockPanel>
 

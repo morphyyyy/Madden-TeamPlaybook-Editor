@@ -79,7 +79,7 @@ namespace MaddenTeamPlaybookEditor
         {
             wdwPlaybookEditor.Title = "Madden Team Playbook Editor - " + Path.GetFileName(Playbook.filePath);
             tvwPlaybook.DataContext = Playbook;
-            lvwSituations.DataContext = Playbook;
+            //lvwSituations.DataContext = Playbook;
             tclTables.DataContext = Playbook;
             //tvwPSALs.DataContext = Playbook.GetPSALlist();
             //tabPlaybook.DataContext = Playbook;
@@ -89,7 +89,7 @@ namespace MaddenTeamPlaybookEditor
         {
             wdwPlaybookEditor.Title = "Madden Team Playbook Editor - " + Path.GetFileName(Playbook.filePath);
             tvwPlaybook.DataContext = Playbook;
-            lvwSituations.DataContext = Playbook;
+            //lvwSituations.DataContext = Playbook;
             tclTables.DataContext = Playbook;
         }
 
@@ -544,12 +544,12 @@ namespace MaddenTeamPlaybookEditor
                 uclPlayModal.DataContext = (PlayVM)((TreeView)sender).SelectedItem;
                 xpdSubFormationModal.Visibility = Visibility.Collapsed;
                 xpdPlayModal.Visibility = Visibility.Visible;
-                lvwSituations.SelectedItems.Clear();
-                foreach (Madden.TeamPlaybook.PBAI situation in uclPlayModal.play.Situations)
-                {
-                    lvwSituations.SelectedItems.Add(TeamPlaybook.Situations.Where(p => p.Key == situation.AIGR).FirstOrDefault());
-                    Console.WriteLine(situation);
-                }
+                //lvwSituations.SelectedItems.Clear();
+                //foreach (Madden.TeamPlaybook.PBAI situation in uclPlayModal.play.Situations)
+                //{
+                //    lvwSituations.SelectedItems.Add(TeamPlaybook.Situations.Where(p => p.Key == situation.AIGR).FirstOrDefault());
+                //    Console.WriteLine(situation);
+                //}
             }
         }
 
