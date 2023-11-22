@@ -626,12 +626,13 @@ namespace MaddenTeamPlaybookEditor.ViewModels
 
         public void GetTables()
         {
+            PBFM = Madden.TeamPlaybook.PBFM.GetPBFM();    //PBFM
+            GetType();
             ARTL = Madden.TeamPlaybook.ARTL.GetARTL();    //ARTO ARTD
             FORM = Madden.TeamPlaybook.FORM.GetFORM();    //CPFM
-            PBAI = Madden.TeamPlaybook.PBAI.GetPBAI();    //PBAI
             PBAU = Madden.TeamPlaybook.PBAU.GetPBAU();    //PBAU
             PBCC = Madden.TeamPlaybook.PBCC.GetPBCC();    
-            PBFM = Madden.TeamPlaybook.PBFM.GetPBFM();    //PBFM
+            PBAI = Madden.TeamPlaybook.PBAI.GetPBAI();    //PBAI
             PBPL = Madden.TeamPlaybook.PBPL.GetPBPL();    //PBPL
             PBST = Madden.TeamPlaybook.PBST.GetPBST();    
             PLCM = Madden.TeamPlaybook.PLCM.GetPLCM();
