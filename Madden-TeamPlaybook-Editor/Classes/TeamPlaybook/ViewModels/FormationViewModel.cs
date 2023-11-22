@@ -7,6 +7,7 @@ using System.Linq;
 using System.Windows;
 using Madden.TeamPlaybook;
 using MaddenCustomPlaybookEditor.ViewModels;
+using MaddenTeamPlaybookEditor.User_Controls;
 
 namespace MaddenTeamPlaybookEditor.ViewModels
 {
@@ -28,7 +29,7 @@ namespace MaddenTeamPlaybookEditor.ViewModels
         public ObservableCollection<SubFormationVM> SubFormations { get; set; }
 
         private bool _isExpanded { get; set; }
-        private bool _isVisible { get; set; }
+        private bool _isVisible { get; set; } = true;
         private bool _isSelected { get; set; }
 
         public FormationVM()

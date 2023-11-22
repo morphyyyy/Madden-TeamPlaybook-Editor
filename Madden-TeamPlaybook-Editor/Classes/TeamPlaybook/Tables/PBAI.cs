@@ -17,6 +17,39 @@ namespace Madden.TeamPlaybook
         public int Flag { get; set; }
         public int vpos { get; set; }
         public int prct { get; set; }
+        public string Type { get; set; }
+        public string Name
+        {
+            get
+            {
+                if (Type == "Offense")
+                {
+                    return SituationOff[AIGR];
+                }
+                else if (Type == "Defense")
+                {
+                    return SituationDef[AIGR];
+                }
+
+                return SituationOff[AIGR];
+            }
+        }
+
+        public static Dictionary<int, string> SituationOff
+        {
+            get
+            {
+                return MaddenTeamPlaybookEditor.ViewModels.TeamPlaybook.SituationOff;
+            }
+        }
+
+        public static Dictionary<int, string> SituationDef
+        {
+            get
+            {
+                return MaddenTeamPlaybookEditor.ViewModels.TeamPlaybook.SituationDef;
+            }
+        }
 
         public override string ToString()
         {

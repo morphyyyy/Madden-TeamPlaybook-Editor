@@ -6,6 +6,14 @@
 
         <Style.Resources>
 
+            <ItemsPanelTemplate x:Key="iptThreeColumns">
+                <UniformGrid FlowDirection="LeftToRight" IsItemsHost="True" Margin="0,0" MaxWidth="592" Columns="3"/>
+            </ItemsPanelTemplate>
+
+            <ItemsPanelTemplate x:Key="iptOneColumn">
+                <UniformGrid FlowDirection="LeftToRight" IsItemsHost="True" Margin="0,0" MaxWidth="592" Columns="1"/>
+            </ItemsPanelTemplate>
+
             <ImageBrush 
                 x:Key="FormationSelected"
                 ImageSource="../Resources/field_blank_resized.jpg"
@@ -52,12 +60,8 @@
                             Name="BdrFormationDeSelected"
                             Grid.Column="1"
                             Background="{StaticResource FormationDeSelected}"
-                            CornerRadius="8"    
+                            CornerRadius="3"    
                             Padding="5">
-                            <ContentPresenter x:Name="cprFormationDeSelected"
-                                HorizontalAlignment="Center"
-                                VerticalAlignment="Center"
-                                ContentSource="Header" />
                         </Border>
                         <Border 
                             Name="BdrFormationHighlighted"
@@ -66,10 +70,6 @@
                             Opacity="0"
                             CornerRadius="8"    
                             Padding="5">
-                            <ContentPresenter x:Name="cprFormationHighlighted"
-                                HorizontalAlignment="Center"
-                                VerticalAlignment="Center"
-                                ContentSource="Header" />
                         </Border>
                         <Border 
                             Name="BdrFormationSelected"
@@ -78,11 +78,14 @@
                             Opacity="0"
                             CornerRadius="8"    
                             Padding="5">
-                            <ContentPresenter x:Name="cprFormationSelected"
-                                HorizontalAlignment="Center"
-                                VerticalAlignment="Center"
-                                ContentSource="Header" />
                         </Border>
+                        <ContentPresenter 
+                            x:Name="cprFormation"
+                            Grid.Column="1"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            ContentSource="Header"
+                            Margin="5"/>
                         <ItemsPresenter x:Name="ItemsHost"
                                     Grid.Row="1"
                                     Grid.Column="1">
@@ -93,7 +96,15 @@
                     </Grid>
                     <ControlTemplate.Triggers>
 
-                        <Trigger Property="IsSelected" Value="true">
+                        <!--<Trigger Property="subFormationIsExpanded" Value="true">
+                            <Setter Property="ItemsPanel" Value="{DynamicResource iptThreeColumns}"/>
+                        </Trigger>
+
+                        <Trigger Property="subFormationIsExpanded" Value="false">
+                            <Setter Property="ItemsPanel" Value="{DynamicResource iptOneColumn}"/>
+                        </Trigger>-->
+
+                        <Trigger Property="IsSelected" Value="True">
 
                             <Trigger.EnterActions>
                                 <BeginStoryboard>
@@ -112,14 +123,40 @@
                                         <DoubleAnimation
                                             Storyboard.TargetName="BdrFormationSelected" 
                                             Storyboard.TargetProperty="Opacity"
-                                            From="1.0" To="0.0" Duration="0:0:0.5" />
+                                            From="1.0" To="0.0" Duration="0:0:0.2" />
                                     </Storyboard>
                                 </BeginStoryboard>
                             </Trigger.ExitActions>
 
                         </Trigger>
 
-                        <Trigger Property="IsExpanded" Value="true">
+                        <Trigger Property="IsSelected" Value="False">
+
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="BdrFormationSelected" 
+                                            Storyboard.TargetProperty="Opacity"
+                                            From="1.0" To="0.0" Duration="0:0:0.2" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="BdrFormationSelected" 
+                                            Storyboard.TargetProperty="Opacity"
+                                            From="0.0" To="1.0" Duration="0:0:0.2" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+
+                        </Trigger>
+
+                        <Trigger Property="IsExpanded" Value="True">
 
                             <Trigger.EnterActions>
                                 <BeginStoryboard>
@@ -138,14 +175,40 @@
                                         <DoubleAnimation
                                             Storyboard.TargetName="BdrFormationSelected" 
                                             Storyboard.TargetProperty="Opacity"
-                                            From="1.0" To="0.0" Duration="0:0:0.5" />
+                                            From="1.0" To="0.0" Duration="0:0:0.2" />
                                     </Storyboard>
                                 </BeginStoryboard>
                             </Trigger.ExitActions>
 
                         </Trigger>
 
-                        <Trigger Property="IsMouseOver" Value="true">
+                        <Trigger Property="IsExpanded" Value="False">
+
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="BdrFormationSelected" 
+                                            Storyboard.TargetProperty="Opacity"
+                                            From="1.0" To="0.0" Duration="0:0:0.2" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="BdrFormationSelected" 
+                                            Storyboard.TargetProperty="Opacity"
+                                            From="0.0" To="1.0" Duration="0:0:0.2" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+
+                        </Trigger>
+
+                        <Trigger Property="IsMouseOver" Value="True">
 
                             <Trigger.EnterActions>
                                 <BeginStoryboard>
@@ -164,7 +227,33 @@
                                         <DoubleAnimation
                                             Storyboard.TargetName="BdrFormationHighlighted" 
                                             Storyboard.TargetProperty="Opacity"
-                                            From="1.0" To="0.0" Duration="0:0:0.5" />
+                                            From="1.0" To="0.0" Duration="0:0:0.2" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+
+                        </Trigger>
+
+                        <Trigger Property="IsMouseOver" Value="False">
+
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="BdrFormationHighlighted" 
+                                            Storyboard.TargetProperty="Opacity"
+                                            From="1.0" To="0.0" Duration="0:0:0.2" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="BdrFormationHighlighted" 
+                                            Storyboard.TargetProperty="Opacity"
+                                            From="0.0" To="1.0" Duration="0:0:0.2" />
                                     </Storyboard>
                                 </BeginStoryboard>
                             </Trigger.ExitActions>
@@ -179,7 +268,7 @@
         <Setter Property="ItemsPanel">
             <Setter.Value>
                 <ItemsPanelTemplate>
-                    <UniformGrid FlowDirection="LeftToRight" IsItemsHost="True" Margin="0,0"/>
+                    <UniformGrid FlowDirection="LeftToRight" IsItemsHost="True" Margin="0,0" MaxWidth="592" Columns="1"/>
                 </ItemsPanelTemplate>
             </Setter.Value>
         </Setter>

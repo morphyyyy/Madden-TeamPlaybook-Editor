@@ -236,15 +236,15 @@ namespace MaddenCustomPlaybookEditor.ViewModels
 
             if (ARTL == null)
             {
-                MessageBox.Show(
-                    Play.SubFormation.Formation.FORM.name + " " +
-                    Play.SubFormation.SETL.name + " - " +
-                    Play.PBPL.name + "\n\n" +
-                    DPos + EPos +
-                    "\nPSAL: " + PLYS.PSAL +
-                    "\nARTL: " + PLYS.ARTL,
-                    "Missing ARTL"
-                );
+                //MessageBox.Show(
+                //    Play.SubFormation.Formation.FORM.name + " " +
+                //    Play.SubFormation.SETL.name + " - " +
+                //    Play.PBPL.name + "\n\n" +
+                //    DPos + EPos +
+                //    "\nPSAL: " + PLYS.PSAL +
+                //    "\nARTL: " + PLYS.ARTL,
+                //    "Missing ARTL"
+                //);
 
                 ARTL = new Madden.TeamPlaybook.ARTL
                 {

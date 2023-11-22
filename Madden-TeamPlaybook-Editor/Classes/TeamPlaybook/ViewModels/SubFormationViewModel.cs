@@ -4,7 +4,9 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows;
+using System.Windows.Data;
 using Madden.TeamPlaybook;
+using MaddenTeamPlaybookEditor.User_Controls;
 
 namespace MaddenTeamPlaybookEditor.ViewModels
 {
@@ -29,7 +31,10 @@ namespace MaddenTeamPlaybookEditor.ViewModels
             {
                 string subs = SPKF.name + "\n";
                 foreach (SPKG sub in SPKG) subs += "    " + sub.ToString() + "\n";
-                subs.Substring(subs.Length - 2, 2);
+                if (subs.Length >= 2)
+                {
+                    subs.Substring(subs.Length - 2, 2);
+                }
                 return
                     subs;
             }
@@ -67,7 +72,10 @@ namespace MaddenTeamPlaybookEditor.ViewModels
             {
                 string alignments = SGFM.name + "\n";
                 foreach (SETG alignment in SETG) alignments += "    " + alignment.ToString() + "\n";
-                alignments.Substring(alignments.Length - 2, 2);
+                if (alignments.Length >= 2)
+                {
+                    alignments.Substring(alignments.Length - 2, 2);
+                }
                 return
                     alignments;
             }
@@ -116,6 +124,20 @@ namespace MaddenTeamPlaybookEditor.ViewModels
 
         public FormationVM Formation { get; set; }
         public ObservableCollection<PlayVM> Plays { get; set; }
+        public ObservableCollection<PlayerVM> Players { get; set; }
+        [field: NonSerializedAttribute()]
+        private ICollectionView _PlayerPlayartView { get; set; }
+        public ICollectionView PlayerPlayartView
+        {
+            get { return _PlayerPlayartView; }
+            set
+            {
+                if (_PlayerPlayartView == value)
+                    return;
+                _PlayerPlayartView = value;
+                OnPropertyChanged("PlayerPlayartView");
+            }
+        }
 
         public string Position1name { get; set; }
         public string Position2name { get; set; }
@@ -149,6 +171,7 @@ namespace MaddenTeamPlaybookEditor.ViewModels
             GetPackages();
             GetAlignments();
             GetAlignment();
+            GetPlayers();
             GetSubCount();
             GetPlays();
         }
@@ -1460,11 +1483,12 @@ namespace MaddenTeamPlaybookEditor.ViewModels
         public void GetAlignment(Alignment alignment)
         {
             CurrentAlignment = Alignments.Where(poso => poso.SGFM.name == "Norm").FirstOrDefault();
-            for (int i = alignment.SETG.Count; i == 0; i--)
+            if (alignment.SGFM.name == "Norm") return;
+            CurrentAlignment.SGFM = alignment.SGFM;
+            for (int i = alignment.SETG.Count - 1; i >= 0; i--)
             {
                 int index = CurrentAlignment.SETG.FindIndex(player => player.SETP == alignment.SETG[i].SETP);
-                CurrentAlignment.SETG.RemoveAt(index);
-                CurrentAlignment.SETG.Insert(index, alignment.SETG[i]);
+                CurrentAlignment.SETG[index] = alignment.SETG[i];
             }
         }
 
@@ -1472,36 +1496,83 @@ namespace MaddenTeamPlaybookEditor.ViewModels
         {
             Alignments.Clear();
             List<SGFM> sets = Formation.Playbook.SGFM.Where(alignment => alignment.SETL == PBST.SETL).ToList();
-
             foreach (SGFM set in sets)
             {
-                List<SETG> SETG = new List<SETG>();
-                foreach (SETG alignment in Formation.Playbook.SETG.Where(alignment => alignment.SGF_ == set.SGF_))
-                {
-                    SETG.Add(alignment);
-                }
+                List<SETG> SETG = Formation.Playbook.SETG.Where(alignment => alignment.SGF_ == set.SGF_).ToList();
                 SETG.OrderBy(alignment => alignment.setg);
                 Alignments.Add(new Alignment(set, SETG));
-                if (set.name == "Norm")
+            }
+            Alignments = Alignments.OrderBy(alignment => alignment.SGFM.SGF_).ToList();
+            foreach (Alignment alignment in Alignments)
+            {
+                if (alignment.SGFM.name == "Norm")
                 {
-                    if (SETG.Count < 11)
+                    if (alignment.SETG.Count < 11)
                     {
                         MessageBox.Show("SETG Missing for " + PBST.name);
                     }
-                    GetAlignment(Alignments[Alignments.Count - 1]);
+                    CurrentAlignment = alignment;
+                }
+                else
+                {
+                    foreach (SETG setg in Alignments.Where(_alignment => _alignment.SGFM.name == "Norm").FirstOrDefault().SETG)
+                    {
+                        if (!alignment.SETG.Exists(poso => poso.SETP == setg.SETP))
+                        {
+                            alignment.SETG.Add(setg);
+                        }
+                    }
+                    alignment.SETG = alignment.SETG.OrderBy(_alignment => _alignment.SETP).ToList();
                 }
             }
-            Alignments.OrderBy(alignment => alignment.SGFM.SGF_);
+        }
+
+        public void GetPlayers()
+        {
+            Players = new ObservableCollection<PlayerVM>();
+            if (CurrentAlignment != null)
+            {
+                for (int i = 0; i <= 10; i++)
+                {
+                    int poso = CurrentPackage.Where(_poso => _poso.setp == CurrentAlignment.SETG[i].SETP).FirstOrDefault().poso;
+                    Players.Add(new PlayerVM
+                    (
+                        new PLYS
+                        {
+                            poso = poso
+                        },
+                        new PlayVM
+                        {
+                            SubFormation = this,
+                            PLYS = new List<PLYS>
+                            {
+                                new PLYS
+                                {
+                                    poso = poso
+                                }
+                            },
+                            SRFT = new List<SRFT>(),
+                            PLYL = new PLYL
+                            {
+                                vpos = 0
+                            }
+                        }
+                    ));
+                }
+            }
+            GetPlayerPlayartViewList();
+        }
+
+        public void GetPlayerPlayartViewList()
+        {
+            PlayerPlayartView = CollectionViewSource.GetDefaultView(Players);
+            PlayerPlayartView.SortDescriptions.Add(new SortDescription("PLYS.poso", ListSortDirection.Descending));
         }
 
         #endregion
 
         #region IsExpanded
 
-        /// <summary>
-        /// Gets/sets whether the TreeViewItem 
-        /// associated with this object is expanded.
-        /// </summary>
         public bool IsExpanded
         {
             get { return _isExpanded; }
@@ -1510,9 +1581,9 @@ namespace MaddenTeamPlaybookEditor.ViewModels
                 if (value != _isExpanded)
                 {
                     _isExpanded = value;
-                    this.OnPropertyChanged("IsExpanded");
                     foreach (SubFormationVM subFormation in Formation.SubFormations.Where(set => set.PBST != this.PBST)) subFormation.IsVisible = !value;
                     foreach (PlayVM play in Plays) play.IsVisible = value;
+                    this.OnPropertyChanged("IsExpanded");
                 }
             }
         }

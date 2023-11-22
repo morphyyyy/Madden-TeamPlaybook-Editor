@@ -1,0 +1,94 @@
+﻿<UserControl 
+    x:Class="MaddenTeamPlaybookEditor.User_Controls.Situation"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+    xmlns:TeamPlaybookViewModels="clr-namespace:MaddenTeamPlaybookEditor.ViewModels"
+    mc:Ignorable="d" 
+    x:Name="uclSituation">
+
+    <UserControl.Style>
+        <Style TargetType="UserControl">
+            <Setter Property="FontFamily" Value="Tahoma" />
+            <Setter Property="FontSize" Value="13" />
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="HorizontalContentAlignment" Value="Center" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+            <Setter Property="Foreground" Value="White" />
+        </Style>
+    </UserControl.Style>
+    <UserControl.Resources>
+        <Style TargetType="{x:Type TextBlock}">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="Foreground" Value="LightGreen"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+        </Style>
+        <Style TargetType="{x:Type TextBox}">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="BorderBrush" Value="Transparent" />
+            <Setter Property="Foreground" Value="LightGreen"/>
+        </Style>
+        <Style TargetType="{x:Type ComboBox}">
+            <Setter Property="BorderThickness" Value="0"/>
+        </Style>
+        <Style TargetType="{x:Type ComboBoxItem}">
+            <Setter Property="BorderThickness" Value="0"/>
+        </Style>
+        <ImageBrush 
+                x:Key="FieldBrush"
+                ImageSource="../Resources/full_field.jpg"
+                RenderOptions.BitmapScalingMode="Fant"
+                Stretch="UniformToFill"
+                AlignmentY="Top"
+                />
+    </UserControl.Resources>
+
+    <DockPanel>
+
+        <!--<ComboBox 
+            x:Name="cbxAIGR"
+            ItemsSource="{Binding SituationOff}"
+            SelectedValue="{Binding AIGR, Mode=TwoWay}" 
+            SelectedValuePath="Key" 
+            DisplayMemberPath="Value"
+            Margin="5,1"/>-->
+
+        <!--<TextBox Text="{Binding prct, UpdateSourceTrigger=PropertyChanged}"/>-->
+        
+        <Canvas 
+            Height="19"
+            Width="100"
+            MouseDown="pbrSituation_MouseDown"
+            MouseMove="pbrSituation_MouseMove"
+            MouseUp="pbrSituation_MouseUp"
+            MouseLeave="pbrSituation_MouseLeave"
+            >
+            <ProgressBar 
+                x:Name="pbrSituation" 
+                Height="19" 
+                Width="100"
+                Value="{Binding prct}" 
+                BorderBrush="Transparent">
+                <ProgressBar.Background>
+                    <ImageBrush
+                        ImageSource="../Resources/Situation_Background.png"
+                        RenderOptions.BitmapScalingMode="HighQuality"
+                        Stretch="None"
+                        AlignmentX="Left"/>
+                </ProgressBar.Background>
+                <ProgressBar.Foreground>
+                    <ImageBrush
+                        ImageSource="../Resources/Situation_Foreground.png"
+                        RenderOptions.BitmapScalingMode="HighQuality"
+                        Stretch="None"
+                        AlignmentX="Left"/>
+                </ProgressBar.Foreground>
+            </ProgressBar>
+        </Canvas>
+        
+        <TextBlock Text="{Binding Name}" Margin="5,1.7"/>
+        
+    </DockPanel>
+    
+</UserControl>

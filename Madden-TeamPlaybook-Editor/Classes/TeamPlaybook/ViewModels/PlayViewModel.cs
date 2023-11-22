@@ -6,6 +6,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Data;
 using Madden.TeamPlaybook;
+using MaddenTeamPlaybookEditor.User_Controls;
 
 namespace MaddenTeamPlaybookEditor.ViewModels
 {
@@ -75,8 +76,19 @@ namespace MaddenTeamPlaybookEditor.ViewModels
         public List<SRFT> SRFT { get; set; }
         public List<PLYS> PLYS { get; set; }
 
-        public ObservableCollection<PlayerVM> Players { get; set; }
-        [field: NonSerializedAttribute()] 
+        private ObservableCollection<PlayerVM> _Players { get; set; }
+        public ObservableCollection<PlayerVM> Players
+        {
+            get { return _Players; }
+            set
+            {
+                if (_Players == value)
+                    return;
+                _Players = value;
+                OnPropertyChanged("Players");
+            }
+        }
+        [field: NonSerializedAttribute()]
         public ICollectionView PlayerPlayartView { get; set; }
 
         private bool _isShortAudible { get; set; }
@@ -176,6 +188,14 @@ namespace MaddenTeamPlaybookEditor.ViewModels
                 Players.Add(new PlayerVM(player, this));
             }
             GetPlayerPlayartViewList();
+        }
+
+        public void UpdatePlayers()
+        {
+            foreach (PlayerVM player in Players)
+            {
+                player.UpdatePlayer();
+            }
         }
 
         public void GetPlayerPlayartViewList()

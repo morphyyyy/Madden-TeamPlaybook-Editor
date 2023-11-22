@@ -15,6 +15,8 @@ using MaddenTeamPlaybookEditor.Classes;
 using System.Windows.Documents;
 using System.Runtime.InteropServices;
 using System.Linq;
+using System.Windows.Data;
+using Madden.TeamPlaybook;
 
 namespace MaddenTeamPlaybookEditor
 {
@@ -77,8 +79,16 @@ namespace MaddenTeamPlaybookEditor
         {
             wdwPlaybookEditor.Title = "Madden Team Playbook Editor - " + Path.GetFileName(Playbook.filePath);
             tvwPlaybook.DataContext = Playbook;
-            lvwSituations.DataContext = Playbook;
+            if (Playbook.Type == "Offense")
+            {
+                lvwSituations.DataContext = TeamPlaybook.SituationOff.Select(p => new Madden.TeamPlaybook.PBAI { AIGR = p.Key }).ToList();
+            }
+            else if (Playbook.Type == "Defense")
+            {
+                lvwSituations.DataContext = TeamPlaybook.SituationDef.Select(p => new Madden.TeamPlaybook.PBAI { AIGR = p.Key }).ToList();
+            }
             tclTables.DataContext = Playbook;
+            //tvwPSALs.DataContext = Playbook.GetPSALlist();
             //tabPlaybook.DataContext = Playbook;
         }
 
@@ -86,58 +96,8 @@ namespace MaddenTeamPlaybookEditor
         {
             wdwPlaybookEditor.Title = "Madden Team Playbook Editor - " + Path.GetFileName(Playbook.filePath);
             tvwPlaybook.DataContext = Playbook;
-            lvwSituations.DataContext = Playbook;
+            //lvwSituations.DataContext = Playbook;
             tclTables.DataContext = Playbook;
-        }
-
-        #endregion
-
-        #region SelectTreeViewItem
-
-        private void tvwPlaybook_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
-        {
-            if (((TreeView)sender).SelectedItem is MaddenTeamPlaybookEditor.ViewModels.FormationVM)
-            {
-                uclPlayModal.cvsField.Children.RemoveRange(1, uclPlayModal.cvsField.Children.Count - 1);
-            }
-
-            if (((TreeView)sender).SelectedItem is MaddenTeamPlaybookEditor.ViewModels.SubFormationVM)
-            {
-                uclPlayModal.subFormation = (SubFormationVM)((TreeView)sender).SelectedItem;
-                uclPlayModal.DataContext = (SubFormationVM)((TreeView)sender).SelectedItem;
-                uclPlayModal.cvsField.Children.RemoveRange(1, uclPlayModal.cvsField.Children.Count - 1);
-                foreach (Madden.TeamPlaybook.SETG setg in uclPlayModal.subFormation.CurrentAlignment.SETG)
-                {
-                    Madden.TeamPlaybook.PLYS plys = new Madden.TeamPlaybook.PLYS { poso = uclPlayModal.subFormation.CurrentPackage.Where(poso => poso.setp == setg.SETP).FirstOrDefault().poso };
-                    uclPlayModal.cvsField.Children.Add(
-                        new PlayerIcon(
-                            new PlayerVM(
-                                plys,
-                                new PlayVM{ 
-                                    SubFormation = uclPlayModal.subFormation, 
-                                    PLYS = new List<Madden.TeamPlaybook.PLYS> { plys },
-                                    SRFT = new List<Madden.TeamPlaybook.SRFT>(),
-                                    PBPL = new Madden.TeamPlaybook.PBPL(),
-                                    PLYL = new Madden.TeamPlaybook.PLYL()
-                                }
-                            )
-                        )
-                    );
-                }
-                uclPlayModal.UpdateLayout();
-            }
-
-            if (((TreeView)sender).SelectedItem is MaddenTeamPlaybookEditor.ViewModels.PlayVM)
-            {
-                uclPlayModal.play = (PlayVM)((TreeView)sender).SelectedItem;
-                uclPlayModal.DataContext = (PlayVM)((TreeView)sender).SelectedItem;
-                //uclPlayModal.iclPSALs.ItemsSource = ((PlayVM)((TreeView)sender).SelectedItem).PlayerPlayartView;
-                //uclPlayModal.iclIcons.ItemsSource = ((PlayVM)((TreeView)sender).SelectedItem).PlayerPlayartView;
-                uclPlayModal.cvsField.Children.RemoveRange(1, uclPlayModal.cvsField.Children.Count - 1);
-                foreach (PlayerVM player in uclPlayModal.play.PlayerPlayartView) uclPlayModal.cvsField.Children.Add(new Playart(player, true));
-                foreach (PlayerVM player in uclPlayModal.play.PlayerPlayartView) uclPlayModal.cvsField.Children.Add(new PlayerIcon(player));
-                uclPlayModal.UpdateLayout();
-            }
         }
 
         #endregion
@@ -564,6 +524,72 @@ namespace MaddenTeamPlaybookEditor
             };
 
             window.ShowDialog();
+        }
+
+        #endregion
+
+        #region TreeViewItem
+
+        private void tvwPlaybook_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
+        {
+            if (((TreeView)sender).SelectedItem is MaddenTeamPlaybookEditor.ViewModels.FormationVM)
+            {
+
+            }
+
+            if (((TreeView)sender).SelectedItem is MaddenTeamPlaybookEditor.ViewModels.SubFormationVM)
+            {
+                uclSubFormationModal.subFormation = (SubFormationVM)((TreeView)sender).SelectedItem;
+                uclSubFormationModal.DataContext = (SubFormationVM)((TreeView)sender).SelectedItem;
+                xpdPlayModal.Visibility = Visibility.Collapsed;
+                xpdSubFormationModal.Visibility = Visibility.Visible;
+            }
+
+            if (((TreeView)sender).SelectedItem is MaddenTeamPlaybookEditor.ViewModels.PlayVM)
+            {
+                uclPlayModal.play = (PlayVM)((TreeView)sender).SelectedItem;
+                uclPlayModal.DataContext = (PlayVM)((TreeView)sender).SelectedItem;
+                xpdSubFormationModal.Visibility = Visibility.Collapsed;
+                xpdPlayModal.Visibility = Visibility.Visible;
+                //lvwSituations.SelectedItems.Clear();
+                //foreach (Madden.TeamPlaybook.PBAI situation in uclPlayModal.play.Situations)
+                //{
+                //    lvwSituations.SelectedItems.Add(TeamPlaybook.Situations.Where(p => p.Key == situation.AIGR).FirstOrDefault());
+                //    Console.WriteLine(situation);
+                //}
+            }
+        }
+
+        private void tvwPlaybook_DoubleClick(object sender, MouseButtonEventArgs e)
+        {
+
+        }
+
+        private void tvwPlaybook_Selected(object sender, RoutedEventArgs e)
+        {
+            //TreeViewItem tvi = e.OriginalSource as TreeViewItem;
+
+            //if (tvi == null || e.Handled) return;
+
+            //if (tvi.DataContext is PlayVM)
+            //{
+            //    tvi.IsExpanded = !tvi.IsExpanded;
+            //    e.Handled = true;
+            //}
+        }
+
+        private void tvwPSALs_Selected(object sender, RoutedEventArgs e)
+        {
+            //TreeViewItem tvi = e.OriginalSource as TreeViewItem;
+
+            //if (tvi == null || e.Handled) return;
+
+            //tvi.IsExpanded = !tvi.IsExpanded;
+            //if (tvi.IsSelected)
+            //{
+            //    tvi.IsSelected = false;
+            //    e.Handled = true;
+            //}
         }
 
         #endregion

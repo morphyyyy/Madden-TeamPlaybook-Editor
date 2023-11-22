@@ -148,11 +148,11 @@ namespace Madden.TeamPlaybook
                 "icy: " + "[" + string.Join(", ", icy) + "]\t";
         }
 
-        public int com;
-        public int con;
-        public int per;
-        public int rcv;
-        public int icx;
-        public int icy;
+        public int com { get; set; }
+        public int con { get; set; }
+        public int per { get; set; }
+        public int rcv { get; set; }
+        public int icx { get; set; }
+        public int icy { get; set; }
     }
 }
