@@ -336,7 +336,7 @@ namespace MaddenTeamPlaybookEditor.ViewModels
 
         public static readonly Dictionary<int, string> SituationOff = new Dictionary<int, string>
         {
-            {0,"1st Down"},
+            {0,"1st Play"},
             {35,"1st Down"},
             {20,"2nd & Short"},
             {17,"2nd & Med"},
