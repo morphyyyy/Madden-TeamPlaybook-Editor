@@ -551,6 +551,19 @@ namespace MaddenTeamPlaybookEditor
                 uclPlayModal.DataContext = (PlayVM)((TreeView)sender).SelectedItem;
                 xpdSubFormationModal.Visibility = Visibility.Collapsed;
                 xpdPlayModal.Visibility = Visibility.Visible;
+                for (int i = 0; i < lvwSituations.Items.Count; i++)
+                {
+                    Madden.TeamPlaybook.PBAI _pbai = uclPlayModal.play.Situations.Where(p => p.AIGR == ((Madden.TeamPlaybook.PBAI)lvwSituations.Items[i]).AIGR).FirstOrDefault();
+                    if (_pbai != null)
+                    {
+                        ((Madden.TeamPlaybook.PBAI)lvwSituations.Items[i]).prct = _pbai.prct;
+                    }
+                    else
+                    {
+                        ((Madden.TeamPlaybook.PBAI)lvwSituations.Items[i]).prct = 0;
+                    }
+                }
+                lvwSituations.Items.Refresh();
                 //lvwSituations.SelectedItems.Clear();
                 //foreach (Madden.TeamPlaybook.PBAI situation in uclPlayModal.play.Situations)
                 //{
@@ -817,6 +830,48 @@ namespace MaddenTeamPlaybookEditor
             Win32Point w32Mouse = new Win32Point();
             GetCursorPos(ref w32Mouse);
             return new Point(w32Mouse.X, w32Mouse.Y);
+        }
+
+        private void lvwSituations_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            List<PlayVM> _plays = new List<PlayVM>();
+            foreach (FormationVM _formation in ((TeamPlaybook)tvwPlaybook.DataContext).Formations)
+            {
+                foreach (SubFormationVM _subFormation in _formation.SubFormations)
+                {
+                    _plays.AddRange(_subFormation.Plays.Where(p => p.IsExpanded || p.IsSelected));
+                }
+            }
+            for (int i = 0; i < lvwSituations.Items.Count; i++)
+            {
+                foreach (PlayVM _play in _plays)
+                {
+                    Madden.TeamPlaybook.PBAI _pbai = _play.Situations.Where(p => p.AIGR == ((Madden.TeamPlaybook.PBAI)lvwSituations.Items[i]).AIGR).FirstOrDefault();
+                    if (_pbai != null)
+                    {
+                        _pbai.prct = ((Madden.TeamPlaybook.PBAI)lvwSituations.Items[i]).prct;
+                    }
+                    else if (((Madden.TeamPlaybook.PBAI)lvwSituations.Items[i]).prct > 0)
+                    {
+                        Madden.TeamPlaybook.PBAI newPBAI = new Madden.TeamPlaybook.PBAI 
+                        {  
+                            AIGR = ((Madden.TeamPlaybook.PBAI)lvwSituations.Items[i]).AIGR,
+                            Flag = _play.PBPL.Flag,
+                            PBPL = _play.PBPL.pbpl,
+                            PLF_ = _play.PLYL.PLF_,
+                            PLYT = _play.PLYL.PLYT,
+                            prct = ((Madden.TeamPlaybook.PBAI)lvwSituations.Items[i]).prct,
+                            rec = TeamPlaybook.NextAvailableID((from pbai in ((TeamPlaybook)tvwPlaybook.DataContext).PBAI select pbai.rec).ToList()),
+                            SETL = _play.SubFormation.SETL.setl,
+                            vpos = _play.PLYL.vpos
+                        };
+                        _play.Situations.Add(newPBAI);
+                        ((TeamPlaybook)tvwPlaybook.DataContext).PBAI.Add(newPBAI);
+                        ((TeamPlaybook)tvwPlaybook.DataContext).PBAI = Madden.TeamPlaybook.PBAI.Sort(((TeamPlaybook)tvwPlaybook.DataContext).PBAI);
+                        uclPBAITable.dgdPBAI.Items.Refresh();
+                    }
+                }
+            }
         }
 
         #endregion

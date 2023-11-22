@@ -40,7 +40,7 @@ namespace MaddenTeamPlaybookEditor.User_Controls
         {
             if (isDragging)
             {
-                pbrSituation.Value = e.GetPosition((UIElement)pbrSituation).X;
+                //pbrSituation.Value = e.GetPosition((UIElement)pbrSituation).X;
             }
         }
 
