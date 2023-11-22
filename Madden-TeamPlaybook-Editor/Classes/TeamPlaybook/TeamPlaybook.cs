@@ -336,6 +336,7 @@ namespace MaddenTeamPlaybookEditor.ViewModels
 
         public static readonly Dictionary<int, string> SituationOff = new Dictionary<int, string>
         {
+            {0,"1st Down"},
             {35,"1st Down"},
             {20,"2nd & Short"},
             {17,"2nd & Med"},
@@ -343,34 +344,43 @@ namespace MaddenTeamPlaybookEditor.ViewModels
             {1,"3rd & Short"},
             {7,"3rd & Med"},
             {8,"3rd & Long"},
+            {40,"3rd & Extra Long"},
             {31,"4th & Short"},
             {32,"4th & Medium"},
             {33,"4th & Long"},
-            {37,"Play Action"},
-            {4,"Redzone"},
+            {41,"4rd & Extra Long"},
+            {25,"Red Zone Fringe"},
+            {26,"Red Zone 16 to 20"},
+            {27,"Red Zone 11 to 15"},
+            {28,"Red Zone 6 to 10"},
+            {39,"Red Zone 3 to 5"},
+            {4,"Red Zone"},
             {5,"Inside Five"},
             {3,"Goal Line"},
             {22,"Goal Line Pass"},
-            {34,"Go for 2"},
-            {24,"4 Minute Offense"},
-            {10,"2 Minute Offense"},
+            {24,"4 min Offense"},
+            {10,"2 min Offense"},
+            {37,"Play Action"},
+            {23,"Signiature Plays"},
+            {42,"Sudden Change"},
+            {43,"Last Play"},
             {21,"Hail Mary"},
-            {23,"All Go" },
+            {44,"Max"},
             {2,"Stop Clock"},
-            {29,"Stop Clock"},
-            {30,"Stop Clock"},
-            {13,"Chew Clock"},
-            {14,"QB Kneel"},
-            {0,"Field Goal"},
-            {38,"Field Goal"},
+            {29,"Stop Clock User"},
+            {30,"Stop Clock Fake User"},
+            {13,"Waste Time"},
+            {14,"Kneel"},
+            {38,"Extra Point"},
+            {34,"Go for 2"},
             {12,"Fake FG"},
             {9,"Punt"},
-            {19,"Punt Tight"},
+            {19,"Punt Max Protect"},
             {11,"Fake Punt"},
             {15,"Kickoff"},
-            {36,"Kickoff"},
-            {16,"Onside"},
-            {18,"Safety Kickoff"}
+            {36,"Squib"},
+            {16,"Kickoff Onside"},
+            {18,"Kickoff Safety"}
         };
 
         public static readonly Dictionary<int, string> SituationDef = new Dictionary<int, string>
@@ -626,13 +636,12 @@ namespace MaddenTeamPlaybookEditor.ViewModels
 
         public void GetTables()
         {
-            PBFM = Madden.TeamPlaybook.PBFM.GetPBFM();    //PBFM
-            GetType();
             ARTL = Madden.TeamPlaybook.ARTL.GetARTL();    //ARTO ARTD
             FORM = Madden.TeamPlaybook.FORM.GetFORM();    //CPFM
+            PBAI = Madden.TeamPlaybook.PBAI.GetPBAI();    //PBAI
             PBAU = Madden.TeamPlaybook.PBAU.GetPBAU();    //PBAU
             PBCC = Madden.TeamPlaybook.PBCC.GetPBCC();    
-            PBAI = Madden.TeamPlaybook.PBAI.GetPBAI();    //PBAI
+            PBFM = Madden.TeamPlaybook.PBFM.GetPBFM();    //PBFM
             PBPL = Madden.TeamPlaybook.PBPL.GetPBPL();    //PBPL
             PBST = Madden.TeamPlaybook.PBST.GetPBST();    
             PLCM = Madden.TeamPlaybook.PLCM.GetPLCM();
