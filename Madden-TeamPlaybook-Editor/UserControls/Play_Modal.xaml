@@ -468,32 +468,6 @@
                                 <TextBox Grid.Column="2" Grid.Row="1" Text="{Binding PLRD.hole, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                             </Grid>
                         </TabItem>
-                        <!--<TabItem Header="Situations">
-                            <ListView 
-                                x:Name="lvwSituations" 
-                                ItemsSource="{Binding Situations}" 
-                                ScrollViewer.CanContentScroll="False"
-                                Background="Transparent"
-                                BorderBrush="Transparent"
-                                HorizontalAlignment="Center"
-                                FocusVisualStyle="{x:Null}">
-                                <ListView.ItemTemplate>
-                                    <DataTemplate>
-                                        <UserControls:Situation situation="{Binding}"/>
-                                    </DataTemplate>
-                                </ListView.ItemTemplate>
-                                <ListView.ItemsPanel>
-                                    <ItemsPanelTemplate>
-                                        <classes:UniformGridOrientations Orientation="Vertical" VerticalOrientation="Top" FlowDirection="LeftToRight" IsItemsHost="True" Margin="0,0" Columns="1" Height="{Binding}"/>
-                                    </ItemsPanelTemplate>
-                                </ListView.ItemsPanel>
-                                <ListView.ItemContainerStyle>
-                                    <Style TargetType="{x:Type ListViewItem}" BasedOn="{StaticResource SituationListViewItem}">
-                                        <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay}" />
-                                    </Style>
-                                </ListView.ItemContainerStyle>
-                            </ListView>
-                        </TabItem>-->
                         <TabItem Header="PBCC">
                             <DataGrid 
                                 ItemsSource="{Binding PBCC, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
