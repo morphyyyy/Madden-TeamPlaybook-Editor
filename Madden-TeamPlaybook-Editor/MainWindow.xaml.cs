@@ -834,44 +834,40 @@ namespace MaddenTeamPlaybookEditor
 
         private void lvwSituations_MouseUp(object sender, MouseButtonEventArgs e)
         {
-            List<PlayVM> _plays = new List<PlayVM>();
             foreach (FormationVM _formation in ((TeamPlaybook)tvwPlaybook.DataContext).Formations)
             {
                 foreach (SubFormationVM _subFormation in _formation.SubFormations)
                 {
-                    _plays.AddRange(_subFormation.Plays.Where(p => p.IsExpanded || p.IsSelected));
-                }
-            }
-            for (int i = 0; i < lvwSituations.Items.Count; i++)
-            {
-                foreach (PlayVM _play in _plays)
-                {
-                    Madden.TeamPlaybook.PBAI _pbai = _play.Situations.Where(p => p.AIGR == ((Madden.TeamPlaybook.PBAI)lvwSituations.Items[i]).AIGR).FirstOrDefault();
-                    if (_pbai != null)
+                    List<PlayVM> _plays = _subFormation.Plays.Where(p => p.IsExpanded || p.IsSelected).ToList();
+                    for (int i = 0; i < _plays.Count; i++)
                     {
-                        _pbai.prct = ((Madden.TeamPlaybook.PBAI)lvwSituations.Items[i]).prct;
-                    }
-                    else if (((Madden.TeamPlaybook.PBAI)lvwSituations.Items[i]).prct > 0)
-                    {
-                        Madden.TeamPlaybook.PBAI newPBAI = new Madden.TeamPlaybook.PBAI 
-                        {  
-                            AIGR = ((Madden.TeamPlaybook.PBAI)lvwSituations.Items[i]).AIGR,
-                            Flag = _play.PBPL.Flag,
-                            PBPL = _play.PBPL.pbpl,
-                            PLF_ = _play.PLYL.PLF_,
-                            PLYT = _play.PLYL.PLYT,
-                            prct = ((Madden.TeamPlaybook.PBAI)lvwSituations.Items[i]).prct,
-                            rec = TeamPlaybook.NextAvailableID((from pbai in ((TeamPlaybook)tvwPlaybook.DataContext).PBAI select pbai.rec).ToList()),
-                            SETL = _play.SubFormation.SETL.setl,
-                            vpos = _play.PLYL.vpos
-                        };
-                        _play.Situations.Add(newPBAI);
-                        ((TeamPlaybook)tvwPlaybook.DataContext).PBAI.Add(newPBAI);
-                        ((TeamPlaybook)tvwPlaybook.DataContext).PBAI = Madden.TeamPlaybook.PBAI.Sort(((TeamPlaybook)tvwPlaybook.DataContext).PBAI);
-                        uclPBAITable.dgdPBAI.Items.Refresh();
+                        Madden.TeamPlaybook.PBAI _pbai = _plays[i].Situations.Where(p => p.AIGR == ((Madden.TeamPlaybook.PBAI)lvwSituations.SelectedItem).AIGR).FirstOrDefault();
+                        if (_pbai != null)
+                        {
+                            _pbai.prct = ((Madden.TeamPlaybook.PBAI)lvwSituations.SelectedItem).prct;
+                        }
+                        else if (((Madden.TeamPlaybook.PBAI)lvwSituations.SelectedItem).prct > 0)
+                        {
+                            Madden.TeamPlaybook.PBAI newPBAI = new Madden.TeamPlaybook.PBAI 
+                            {  
+                                AIGR = ((Madden.TeamPlaybook.PBAI)lvwSituations.SelectedItem).AIGR,
+                                Flag = _plays[i].PBPL.Flag,
+                                PBPL = _plays[i].PBPL.pbpl,
+                                PLF_ = _plays[i].PLYL.PLF_,
+                                PLYT = _plays[i].PLYL.PLYT,
+                                prct = ((Madden.TeamPlaybook.PBAI)lvwSituations.SelectedItem).prct,
+                                rec = TeamPlaybook.NextAvailableID((from pbai in ((TeamPlaybook)tvwPlaybook.DataContext).PBAI select pbai.rec).ToList()),
+                                SETL = _plays[i].SubFormation.SETL.setl,
+                                vpos = _plays[i].PLYL.vpos
+                            };
+                            ((TeamPlaybook)tvwPlaybook.DataContext).PBAI.Add(newPBAI);
+                            _plays[i].Situations.Add(newPBAI);
+                        }
                     }
                 }
             }
+            ((TeamPlaybook)tvwPlaybook.DataContext).PBAI = Madden.TeamPlaybook.PBAI.Sort(((TeamPlaybook)tvwPlaybook.DataContext).PBAI);
+            uclPBAITable.dgdPBAI.Items.Refresh();
         }
 
         #endregion
