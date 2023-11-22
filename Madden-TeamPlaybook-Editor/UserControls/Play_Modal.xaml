@@ -3,9 +3,9 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:UserControls="clr-namespace:MaddenTeamPlaybookEditor.User_Controls"
+    xmlns:classes="clr-namespace:MaddenTeamPlaybookEditor.Classes"
     x:Name="uclPlayModal"
-    AllowDrop="True"
-    >
+    AllowDrop="True">
     
     <UserControl.Resources>
         <ItemsPanelTemplate x:Key="MenuItemPanelTemplate">
@@ -355,23 +355,23 @@
                                     <RowDefinition />
                                 </Grid.RowDefinitions>
                                 <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="0" Grid.Row="0" Text="rec"/>
-                                <TextBox IsEnabled="False" Grid.Column="0" Grid.Row="1" Text="{Binding PBPL.rec, Mode=TwoWay}"/>
+                                <TextBox IsEnabled="False" Grid.Column="0" Grid.Row="1" Text="{Binding PBPL.rec, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                                 <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="1" Grid.Row="0" Text="PKGE"/>
-                                <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding PBPL.PKGE, Mode=TwoWay}"/>
+                                <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding PBPL.PKGE, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                                 <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="2" Grid.Row="0" Text="COMF"/>
-                                <TextBox Grid.Column="2" Grid.Row="1" Text="{Binding PBPL.COMF, Mode=TwoWay}"/>
+                                <TextBox Grid.Column="2" Grid.Row="1" Text="{Binding PBPL.COMF, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                                 <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="3" Grid.Row="0" Text="pbpl"/>
-                                <TextBox Grid.Column="3" Grid.Row="1" Text="{Binding PBPL.pbpl, Mode=TwoWay}"/>
+                                <TextBox Grid.Column="3" Grid.Row="1" Text="{Binding PBPL.pbpl, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                                 <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="4" Grid.Row="0" Text="PLYL"/>
-                                <TextBox Grid.Column="4" Grid.Row="1" Text="{Binding PBPL.PLYL, Mode=TwoWay}"/>
+                                <TextBox Grid.Column="4" Grid.Row="1" Text="{Binding PBPL.PLYL, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                                 <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="5" Grid.Row="0" Text="PBST"/>
-                                <TextBox Grid.Column="5" Grid.Row="1" Text="{Binding PBPL.PBST, Mode=TwoWay}"/>
+                                <TextBox Grid.Column="5" Grid.Row="1" Text="{Binding PBPL.PBST, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                                 <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="6" Grid.Row="0" Text="ord_"/>
-                                <TextBox IsEnabled="False"  Grid.Column="6" Grid.Row="1" Text="{Binding PBPL.ord_, Mode=TwoWay}"/>
+                                <TextBox IsEnabled="False"  Grid.Column="6" Grid.Row="1" Text="{Binding PBPL.ord_, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                                 <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="7" Grid.Row="0" Text="name"/>
-                                <TextBox Grid.Column="7" Grid.Row="1" Text="{Binding PBPL.name, Mode=TwoWay}"/>
+                                <TextBox Grid.Column="7" Grid.Row="1" Text="{Binding PBPL.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                                 <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="8" Grid.Row="0" Text="Flag"/>
-                                <TextBox Grid.Column="8" Grid.Row="1" Text="{Binding PBPL.Flag, Mode=TwoWay}"/>
+                                <TextBox Grid.Column="8" Grid.Row="1" Text="{Binding PBPL.Flag, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                             </Grid>
                         </TabItem>
                         <TabItem Header="PLYL">
@@ -397,29 +397,29 @@
                                     <RowDefinition />
                                 </Grid.RowDefinitions>
                                 <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="0" Grid.Row="0" Text="rec"/>
-                                <TextBox IsEnabled="False" Grid.Column="0" Grid.Row="1" Text="{Binding PLYL.rec, Mode=TwoWay}"/>
+                                <TextBox IsEnabled="False" Grid.Column="0" Grid.Row="1" Text="{Binding PLYL.rec, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                                 <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="1" Grid.Row="0" Text="SETL"/>
-                                <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding PLYL.SETL, Mode=TwoWay}"/>
+                                <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding PLYL.SETL, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                                 <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="2" Grid.Row="0" Text="plyl"/>
-                                <TextBox Grid.Column="2" Grid.Row="1" Text="{Binding PLYL.plyl, Mode=TwoWay}"/>
+                                <TextBox Grid.Column="2" Grid.Row="1" Text="{Binding PLYL.plyl, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                                 <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="3" Grid.Row="0" Text="SRMM"/>
-                                <TextBox Grid.Column="3" Grid.Row="1" Text="{Binding PLYL.SRMM, Mode=TwoWay}"/>
+                                <TextBox Grid.Column="3" Grid.Row="1" Text="{Binding PLYL.SRMM, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                                 <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="4" Grid.Row="0" Text="SITT"/>
-                                <TextBox Grid.Column="4" Grid.Row="1" Text="{Binding PLYL.SITT, Mode=TwoWay}"/>
+                                <TextBox Grid.Column="4" Grid.Row="1" Text="{Binding PLYL.SITT, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                                 <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="5" Grid.Row="0" Text="PLYT"/>
-                                <TextBox Grid.Column="5" Grid.Row="1" Text="{Binding PLYL.PLYT, Mode=TwoWay}"/>
+                                <TextBox Grid.Column="5" Grid.Row="1" Text="{Binding PLYL.PLYT, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                                 <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="6" Grid.Row="0" Text="PLF_"/>
-                                <TextBox Grid.Column="6" Grid.Row="1" Text="{Binding PLYL.PLF_, Mode=TwoWay}"/>
+                                <TextBox Grid.Column="6" Grid.Row="1" Text="{Binding PLYL.PLF_, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                                 <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="7" Grid.Row="0" Text="name"/>
-                                <TextBox Grid.Column="7" Grid.Row="1" Text="{Binding PLYL.name, Mode=TwoWay}"/>
+                                <TextBox Grid.Column="7" Grid.Row="1" Text="{Binding PLYL.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                                 <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="8" Grid.Row="0" Text="risk"/>
-                                <TextBox Grid.Column="8" Grid.Row="1" Text="{Binding PLYL.risk, Mode=TwoWay}"/>
+                                <TextBox Grid.Column="8" Grid.Row="1" Text="{Binding PLYL.risk, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                                 <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="9" Grid.Row="0" Text="motn"/>
-                                <TextBox Grid.Column="9" Grid.Row="1" Text="{Binding PLYL.motn, Mode=TwoWay}"/>
+                                <TextBox Grid.Column="9" Grid.Row="1" Text="{Binding PLYL.motn, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                                 <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="10" Grid.Row="0" Text="phlp"/>
-                                <TextBox Grid.Column="10" Grid.Row="1" Text="{Binding PLYL.phlp, Mode=TwoWay}"/>
+                                <TextBox Grid.Column="10" Grid.Row="1" Text="{Binding PLYL.phlp, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                                 <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="11" Grid.Row="0" Text="vpos"/>
-                                <TextBox Grid.Column="11" Grid.Row="1" Text="{Binding PLYL.vpos, Mode=TwoWay}"/>
+                                <TextBox Grid.Column="11" Grid.Row="1" Text="{Binding PLYL.vpos, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                             </Grid>
                         </TabItem>
                         <TabItem Header="PLPD">
@@ -436,13 +436,13 @@
                                         <RowDefinition />
                                     </Grid.RowDefinitions>
                                     <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="0" Grid.Row="0" Text="rec"/>
-                                    <TextBox IsEnabled="False" Grid.Column="0" Grid.Row="1" Text="{Binding PLPD.rec, Mode=TwoWay}"/>
+                                    <TextBox IsEnabled="False" Grid.Column="0" Grid.Row="1" Text="{Binding PLPD.rec, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                                     <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="1" Grid.Row="0" Text="PLYL"/>
-                                    <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding PLPD.PLYL, Mode=TwoWay}"/>
+                                    <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding PLPD.PLYL, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                                 </Grid>
                                 <DataGrid 
                                     DockPanel.Dock="Top"
-                                    ItemsSource="{Binding PLPD.progressions, Mode=TwoWay}"
+                                    ItemsSource="{Binding PLPD.progressions, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                     HorizontalAlignment="Center"/>
                             </DockPanel>
                         </TabItem>
@@ -461,11 +461,11 @@
                                     <RowDefinition />
                                 </Grid.RowDefinitions>
                                 <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="0" Grid.Row="0" Text="rec"/>
-                                <TextBox IsEnabled="False" Grid.Column="0" Grid.Row="1" Text="{Binding PLRD.rec, Mode=TwoWay}"/>
+                                <TextBox IsEnabled="False" Grid.Column="0" Grid.Row="1" Text="{Binding PLRD.rec, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                                 <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="1" Grid.Row="0" Text="PLYL"/>
-                                <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding PLRD.PLYL, Mode=TwoWay}"/>
+                                <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding PLRD.PLYL, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                                 <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="2" Grid.Row="0" Text="hole"/>
-                                <TextBox Grid.Column="2" Grid.Row="1" Text="{Binding PLRD.hole, Mode=TwoWay}"/>
+                                <TextBox Grid.Column="2" Grid.Row="1" Text="{Binding PLRD.hole, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                             </Grid>
                         </TabItem>
                         <TabItem Header="Situations">
@@ -475,7 +475,6 @@
                                 ScrollViewer.CanContentScroll="False"
                                 Background="Transparent"
                                 BorderBrush="Transparent"
-                                HorizontalContentAlignment="Right"
                                 HorizontalAlignment="Center"
                                 FocusVisualStyle="{x:Null}">
                                 <ListView.ItemTemplate>
@@ -483,32 +482,42 @@
                                         <UserControls:Situation situation="{Binding}"/>
                                     </DataTemplate>
                                 </ListView.ItemTemplate>
+                                <ListView.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <classes:UniformGridOrientations Orientation="Vertical" VerticalOrientation="Top" FlowDirection="LeftToRight" IsItemsHost="True" Margin="0,0" Columns="1" Height="{Binding}"/>
+                                    </ItemsPanelTemplate>
+                                </ListView.ItemsPanel>
+                                <ListView.ItemContainerStyle>
+                                    <Style TargetType="{x:Type ListViewItem}" BasedOn="{StaticResource SituationListViewItem}">
+                                        <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay}" />
+                                    </Style>
+                                </ListView.ItemContainerStyle>
                             </ListView>
                         </TabItem>
                         <TabItem Header="PBCC">
                             <DataGrid 
-                                ItemsSource="{Binding PBCC, Mode=TwoWay}"
+                                ItemsSource="{Binding PBCC, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                 DockPanel.Dock="Bottom"
                                 VerticalAlignment="Bottom"
                                 HorizontalAlignment="Center"/>
                         </TabItem>
                         <TabItem Header="PLCM">
                             <DataGrid 
-                                ItemsSource="{Binding PLCM, Mode=TwoWay}"
+                                ItemsSource="{Binding PLCM, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                 DockPanel.Dock="Bottom"
                                 VerticalAlignment="Bottom"
                                 HorizontalAlignment="Center"/>
                         </TabItem>
                         <TabItem Header="PPCT">
                             <DataGrid 
-                                ItemsSource="{Binding PPCT, Mode=TwoWay}"
+                                ItemsSource="{Binding PPCT, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                 DockPanel.Dock="Bottom"
                                 VerticalAlignment="Bottom"
                                 HorizontalAlignment="Center"/>
                         </TabItem>
                         <TabItem Header="SRFT">
                             <DataGrid 
-                                ItemsSource="{Binding SRFT, Mode=TwoWay}"
+                                ItemsSource="{Binding SRFT, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                 DockPanel.Dock="Bottom"
                                 VerticalAlignment="Bottom"
                                 HorizontalAlignment="Center"/>
@@ -566,17 +575,17 @@
                                     <RowDefinition />
                                 </Grid.RowDefinitions>
                                 <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="0" Grid.Row="0" Text="rec"/>
-                                <TextBox IsEnabled="False" Grid.Column="0" Grid.Row="1" Text="{Binding PLYS.rec, Mode=TwoWay}"/>
+                                <TextBox IsEnabled="False" Grid.Column="0" Grid.Row="1" Text="{Binding PLYS.rec, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextChanged="txtPlayerUpdated"/>
                                 <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="1" Grid.Row="0" Text="PSAL"/>
-                                <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding PLYS.PSAL, Mode=TwoWay}"/>
+                                <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding PLYS.PSAL, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextChanged="txtPlayerUpdated"/>
                                 <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="2" Grid.Row="0" Text="ARTL"/>
-                                <TextBox Grid.Column="2" Grid.Row="1" Text="{Binding PLYS.ARTL, Mode=TwoWay}"/>
+                                <TextBox Grid.Column="2" Grid.Row="1" Text="{Binding PLYS.ARTL, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextChanged="txtPlayerUpdated"/>
                                 <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="3" Grid.Row="0" Text="PLYL"/>
-                                <TextBox Grid.Column="3" Grid.Row="1" Text="{Binding PLYS.PLYL, Mode=TwoWay}"/>
+                                <TextBox Grid.Column="3" Grid.Row="1" Text="{Binding PLYS.PLYL, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextChanged="txtPlayerUpdated"/>
                                 <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="4" Grid.Row="0" Text="PLRR"/>
-                                <TextBox Grid.Column="4" Grid.Row="1" Text="{Binding PLYS.PLRR, Mode=TwoWay}"/>
+                                <TextBox Grid.Column="4" Grid.Row="1" Text="{Binding PLYS.PLRR, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextChanged="txtPlayerUpdated"/>
                                 <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="5" Grid.Row="0" Text="poso"/>
-                                <TextBox Grid.Column="5" Grid.Row="1" Text="{Binding PLYS.poso, Mode=TwoWay}"/>
+                                <TextBox Grid.Column="5" Grid.Row="1" Text="{Binding PLYS.poso, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextChanged="txtPlayerUpdated"/>
                             </Grid>
                         </TabItem>
                         <TabItem Header="SETP">
@@ -602,33 +611,33 @@
                                     <RowDefinition />
                                 </Grid.RowDefinitions>
                                 <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="0" Grid.Row="0" Text="rec"/>
-                                <TextBox IsEnabled="False" Grid.Column="0" Grid.Row="1" Text="{Binding SETP.rec, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                <TextBox IsEnabled="False" Grid.Column="0" Grid.Row="1" Text="{Binding SETP.rec, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextChanged="txtPlayerUpdated"/>
                                 <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="1" Grid.Row="0" Text="SETL"/>
-                                <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding SETP.SETL, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding SETP.SETL, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextChanged="txtPlayerUpdated"/>
                                 <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="2" Grid.Row="0" Text="setp"/>
-                                <TextBox Grid.Column="2" Grid.Row="1" Text="{Binding SETP.setp, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                <TextBox Grid.Column="2" Grid.Row="1" Text="{Binding SETP.setp, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextChanged="txtPlayerUpdated"/>
                                 <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="3" Grid.Row="0" Text="SGT_"/>
-                                <TextBox Grid.Column="3" Grid.Row="1" Text="{Binding SETP.SGT_, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                <TextBox Grid.Column="3" Grid.Row="1" Text="{Binding SETP.SGT_, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextChanged="txtPlayerUpdated"/>
                                 <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="4" Grid.Row="0" Text="arti"/>
-                                <TextBox Grid.Column="4" Grid.Row="1" Text="{Binding SETP.arti, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                <TextBox Grid.Column="4" Grid.Row="1" Text="{Binding SETP.arti, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextChanged="txtPlayerUpdated"/>
                                 <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="5" Grid.Row="0" Text="tabo"/>
-                                <TextBox Grid.Column="5" Grid.Row="1" Text="{Binding SETP.tabo, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                <TextBox Grid.Column="5" Grid.Row="1" Text="{Binding SETP.tabo, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextChanged="txtPlayerUpdated"/>
                                 <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="6" Grid.Row="0" Text="poso"/>
-                                <TextBox Grid.Column="6" Grid.Row="1" Text="{Binding SETP.poso, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                <TextBox Grid.Column="6" Grid.Row="1" Text="{Binding SETP.poso, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextChanged="txtPlayerUpdated"/>
                                 <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="7" Grid.Row="0" Text="flas"/>
-                                <TextBox Grid.Column="7" Grid.Row="1" Text="{Binding SETP.flas, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                <TextBox Grid.Column="7" Grid.Row="1" Text="{Binding SETP.flas, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextChanged="txtPlayerUpdated"/>
                                 <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="8" Grid.Row="0" Text="DPos"/>
-                                <TextBox Grid.Column="8" Grid.Row="1" Text="{Binding SETP.DPos, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                <TextBox Grid.Column="8" Grid.Row="1" Text="{Binding SETP.DPos, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextChanged="txtPlayerUpdated"/>
                                 <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="9" Grid.Row="0" Text="EPos"/>
-                                <TextBox Grid.Column="9" Grid.Row="1" Text="{Binding SETP.EPos, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                <TextBox Grid.Column="9" Grid.Row="1" Text="{Binding SETP.EPos, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextChanged="txtPlayerUpdated"/>
                                 <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="10" Grid.Row="0" Text="fmtx"/>
-                                <TextBox Grid.Column="10" Grid.Row="1" Text="{Binding SETP.fmtx, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                <TextBox Grid.Column="10" Grid.Row="1" Text="{Binding SETP.fmtx, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextChanged="txtPlayerUpdated"/>
                                 <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="11" Grid.Row="0" Text="artx"/>
-                                <TextBox Grid.Column="11" Grid.Row="1" Text="{Binding SETP.artx, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                <TextBox Grid.Column="11" Grid.Row="1" Text="{Binding SETP.artx, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextChanged="txtPlayerUpdated"/>
                                 <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="12" Grid.Row="0" Text="fmty"/>
-                                <TextBox Grid.Column="12" Grid.Row="1" Text="{Binding SETP.fmty, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                <TextBox Grid.Column="12" Grid.Row="1" Text="{Binding SETP.fmty, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextChanged="txtPlayerUpdated"/>
                                 <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="13" Grid.Row="0" Text="arty"/>
-                                <TextBox Grid.Column="13" Grid.Row="1" Text="{Binding SETP.arty, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                <TextBox Grid.Column="13" Grid.Row="1" Text="{Binding SETP.arty, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextChanged="txtPlayerUpdated"/>
                             </Grid>
                         </TabItem>
                         <TabItem Header="SETG">
@@ -653,31 +662,31 @@
                                     <RowDefinition />
                                 </Grid.RowDefinitions>
                                 <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="0" Grid.Row="0" Text="rec"/>
-                                <TextBox IsEnabled="False" Grid.Column="0" Grid.Row="1" Text="{Binding SETG.rec, Mode=TwoWay}"/>
+                                <TextBox IsEnabled="False" Grid.Column="0" Grid.Row="1" Text="{Binding SETG.rec, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextChanged="txtPlayerUpdated"/>
                                 <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="1" Grid.Row="0" Text="setg"/>
-                                <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding SETG.setg, Mode=TwoWay}"/>
+                                <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding SETG.setg, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextChanged="txtPlayerUpdated"/>
                                 <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="2" Grid.Row="0" Text="SETP"/>
-                                <TextBox Grid.Column="2" Grid.Row="1" Text="{Binding SETG.SETP, Mode=TwoWay}"/>
+                                <TextBox Grid.Column="2" Grid.Row="1" Text="{Binding SETG.SETP, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextChanged="txtPlayerUpdated"/>
                                 <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="3" Grid.Row="0" Text="SGF_"/>
-                                <TextBox Grid.Column="3" Grid.Row="1" Text="{Binding SETG.SGF_, Mode=TwoWay}"/>
+                                <TextBox Grid.Column="3" Grid.Row="1" Text="{Binding SETG.SGF_, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextChanged="txtPlayerUpdated"/>
                                 <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="4" Grid.Row="0" Text="SF__"/>
-                                <TextBox Grid.Column="4" Grid.Row="1" Text="{Binding SETG.SF__, Mode=TwoWay}"/>
+                                <TextBox Grid.Column="4" Grid.Row="1" Text="{Binding SETG.SF__, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextChanged="txtPlayerUpdated"/>
                                 <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="5" Grid.Row="0" Text="x___"/>
-                                <TextBox Grid.Column="5" Grid.Row="1" Text="{Binding SETG.x___, Mode=TwoWay}"/>
+                                <TextBox Grid.Column="5" Grid.Row="1" Text="{Binding SETG.x___, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextChanged="txtPlayerUpdated"/>
                                 <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="6" Grid.Row="0" Text="y___"/>
-                                <TextBox Grid.Column="6" Grid.Row="1" Text="{Binding SETG.y___, Mode=TwoWay}"/>
+                                <TextBox Grid.Column="6" Grid.Row="1" Text="{Binding SETG.y___, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextChanged="txtPlayerUpdated"/>
                                 <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="7" Grid.Row="0" Text="fx__"/>
-                                <TextBox Grid.Column="7" Grid.Row="1" Text="{Binding SETG.fx__, Mode=TwoWay}"/>
+                                <TextBox Grid.Column="7" Grid.Row="1" Text="{Binding SETG.fx__, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextChanged="txtPlayerUpdated"/>
                                 <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="8" Grid.Row="0" Text="fy__"/>
-                                <TextBox Grid.Column="8" Grid.Row="1" Text="{Binding SETG.fy__, Mode=TwoWay}"/>
+                                <TextBox Grid.Column="8" Grid.Row="1" Text="{Binding SETG.fy__, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextChanged="txtPlayerUpdated"/>
                                 <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="9" Grid.Row="0" Text="anm_"/>
-                                <TextBox Grid.Column="9" Grid.Row="1" Text="{Binding SETG.anm_, Mode=TwoWay}"/>
+                                <TextBox Grid.Column="9" Grid.Row="1" Text="{Binding SETG.anm_, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextChanged="txtPlayerUpdated"/>
                                 <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="10" Grid.Row="0" Text="dir_"/>
-                                <TextBox Grid.Column="10" Grid.Row="1" Text="{Binding SETG.dir_, Mode=TwoWay}"/>
+                                <TextBox Grid.Column="10" Grid.Row="1" Text="{Binding SETG.dir_, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextChanged="txtPlayerUpdated"/>
                                 <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="11" Grid.Row="0" Text="fanm"/>
-                                <TextBox Grid.Column="11" Grid.Row="1" Text="{Binding SETG.fanm, Mode=TwoWay}"/>
+                                <TextBox Grid.Column="11" Grid.Row="1" Text="{Binding SETG.fanm, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextChanged="txtPlayerUpdated"/>
                                 <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="12" Grid.Row="0" Text="fdir"/>
-                                <TextBox Grid.Column="12" Grid.Row="1" Text="{Binding SETG.fdir, Mode=TwoWay}"/>
+                                <TextBox Grid.Column="12" Grid.Row="1" Text="{Binding SETG.fdir, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextChanged="txtPlayerUpdated"/>
                             </Grid>
                         </TabItem>
                         <TabItem Header="SRFT">
@@ -702,36 +711,36 @@
                                     <RowDefinition />
                                 </Grid.RowDefinitions>
                                 <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="0" Grid.Row="0" Text="rec"/>
-                                <TextBox IsEnabled="False" Grid.Column="0" Grid.Row="1" Text="{Binding SRFT.rec, Mode=TwoWay}"/>
+                                <TextBox IsEnabled="False" Grid.Column="0" Grid.Row="1" Text="{Binding SRFT.rec, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextChanged="txtPlayerUpdated"/>
                                 <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="1" Grid.Row="0" Text="SIDE"/>
-                                <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding SRFT.SIDE, Mode=TwoWay}"/>
+                                <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding SRFT.SIDE, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextChanged="txtPlayerUpdated"/>
                                 <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="2" Grid.Row="0" Text="YOFF"/>
-                                <TextBox Grid.Column="2" Grid.Row="1" Text="{Binding SRFT.YOFF, Mode=TwoWay}"/>
+                                <TextBox Grid.Column="2" Grid.Row="1" Text="{Binding SRFT.YOFF, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextChanged="txtPlayerUpdated"/>
                                 <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="3" Grid.Row="0" Text="TECH"/>
-                                <TextBox Grid.Column="3" Grid.Row="1" Text="{Binding SRFT.TECH, Mode=TwoWay}"/>
+                                <TextBox Grid.Column="3" Grid.Row="1" Text="{Binding SRFT.TECH, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextChanged="txtPlayerUpdated"/>
                                 <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="4" Grid.Row="0" Text="PLYL"/>
-                                <TextBox Grid.Column="4" Grid.Row="1" Text="{Binding SRFT.PLYL, Mode=TwoWay}"/>
+                                <TextBox Grid.Column="4" Grid.Row="1" Text="{Binding SRFT.PLYL, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextChanged="txtPlayerUpdated"/>
                                 <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="5" Grid.Row="0" Text="STAN"/>
-                                <TextBox Grid.Column="5" Grid.Row="1" Text="{Binding SRFT.STAN, Mode=TwoWay}"/>
+                                <TextBox Grid.Column="5" Grid.Row="1" Text="{Binding SRFT.STAN, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextChanged="txtPlayerUpdated"/>
                                 <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="6" Grid.Row="0" Text="PLYR"/>
-                                <TextBox Grid.Column="6" Grid.Row="1" Text="{Binding SRFT.PLYR, Mode=TwoWay}"/>
+                                <TextBox Grid.Column="6" Grid.Row="1" Text="{Binding SRFT.PLYR, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextChanged="txtPlayerUpdated"/>
                                 <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="7" Grid.Row="0" Text="PRIS"/>
-                                <TextBox Grid.Column="7" Grid.Row="1" Text="{Binding SRFT.PRIS, Mode=TwoWay}"/>
+                                <TextBox Grid.Column="7" Grid.Row="1" Text="{Binding SRFT.PRIS, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextChanged="txtPlayerUpdated"/>
                                 <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="8" Grid.Row="0" Text="GAPS"/>
-                                <TextBox Grid.Column="8" Grid.Row="1" Text="{Binding SRFT.GAPS, Mode=TwoWay}"/>
+                                <TextBox Grid.Column="8" Grid.Row="1" Text="{Binding SRFT.GAPS, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextChanged="txtPlayerUpdated"/>
                                 <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="9" Grid.Row="0" Text="ASSS"/>
-                                <TextBox Grid.Column="9" Grid.Row="1" Text="{Binding SRFT.ASSS, Mode=TwoWay}"/>
+                                <TextBox Grid.Column="9" Grid.Row="1" Text="{Binding SRFT.ASSS, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextChanged="txtPlayerUpdated"/>
                                 <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="10" Grid.Row="0" Text="PRIW"/>
-                                <TextBox Grid.Column="10" Grid.Row="1" Text="{Binding SRFT.PRIW, Mode=TwoWay}"/>
+                                <TextBox Grid.Column="10" Grid.Row="1" Text="{Binding SRFT.PRIW, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextChanged="txtPlayerUpdated"/>
                                 <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="11" Grid.Row="0" Text="GAPW"/>
-                                <TextBox Grid.Column="11" Grid.Row="1" Text="{Binding SRFT.GAPW, Mode=TwoWay}"/>
+                                <TextBox Grid.Column="11" Grid.Row="1" Text="{Binding SRFT.GAPW, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextChanged="txtPlayerUpdated"/>
                                 <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="12" Grid.Row="0" Text="ASSW"/>
-                                <TextBox Grid.Column="12" Grid.Row="1" Text="{Binding SRFT.ASSW, Mode=TwoWay}"/>
+                                <TextBox Grid.Column="12" Grid.Row="1" Text="{Binding SRFT.ASSW, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextChanged="txtPlayerUpdated"/>
                             </Grid>
                         </TabItem>
                         <TabItem Header="PSAL">
                             <DataGrid 
-                                ItemsSource="{Binding PSAL, Mode=TwoWay}"
+                                ItemsSource="{Binding PSAL, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                 DockPanel.Dock="Bottom"
                                 VerticalAlignment="Bottom"
                                 HorizontalAlignment="Center"

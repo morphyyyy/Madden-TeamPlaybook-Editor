@@ -106,7 +106,6 @@
             >
 
             <ItemsControl 
-                IsEnabled="False"
                 x:Name="iclPlayarts"
                 DockPanel.Dock="Top"
                 ItemsSource="{Binding PlayerPlayartView, Mode=TwoWay}">
@@ -143,7 +142,6 @@
             </ItemsControl>
 
             <ItemsControl 
-                IsEnabled="False"
                 x:Name="iclIcons"
                 DockPanel.Dock="Top"
                 ItemsSource="{Binding PlayerPlayartView, Mode=TwoWay}">

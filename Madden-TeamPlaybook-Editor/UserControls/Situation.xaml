@@ -46,22 +46,19 @@
 
     <DockPanel>
 
-        <ComboBox 
+        <!--<ComboBox 
             x:Name="cbxAIGR"
             ItemsSource="{Binding SituationOff}"
             SelectedValue="{Binding AIGR, Mode=TwoWay}" 
             SelectedValuePath="Key" 
             DisplayMemberPath="Value"
-            Margin="5,1"/>
+            Margin="5,1"/>-->
 
-        <TextBox Text="{Binding prct, UpdateSourceTrigger=PropertyChanged}"/>
-
-        <TextBlock Text="%" Margin="0,1"/>
+        <!--<TextBox Text="{Binding prct, UpdateSourceTrigger=PropertyChanged}"/>-->
         
         <Canvas 
-            Height="17"
+            Height="19"
             Width="100"
-            Margin="5,0"
             MouseDown="pbrSituation_MouseDown"
             MouseMove="pbrSituation_MouseMove"
             MouseUp="pbrSituation_MouseUp"
@@ -69,18 +66,28 @@
             >
             <ProgressBar 
                 x:Name="pbrSituation" 
-                Height="17" 
-                Width="100" 
-                Foreground="LightGreen" 
-                Background="#1b1b1b" 
+                Height="19" 
+                Width="100"
                 Value="{Binding prct}" 
-                BorderBrush="DimGray" 
-                />
-            <Image 
-                Source="../Resources/field_blank_lines_progressBar.png"
-                RenderOptions.BitmapScalingMode="HighQuality"
-                Stretch="Fill"/>
+                BorderBrush="Transparent">
+                <ProgressBar.Background>
+                    <ImageBrush
+                        ImageSource="../Resources/Situation_Background.png"
+                        RenderOptions.BitmapScalingMode="HighQuality"
+                        Stretch="None"
+                        AlignmentX="Left"/>
+                </ProgressBar.Background>
+                <ProgressBar.Foreground>
+                    <ImageBrush
+                        ImageSource="../Resources/Situation_Foreground.png"
+                        RenderOptions.BitmapScalingMode="HighQuality"
+                        Stretch="None"
+                        AlignmentX="Left"/>
+                </ProgressBar.Foreground>
+            </ProgressBar>
         </Canvas>
+        
+        <TextBlock Text="{Binding Name}" Margin="5,1.7"/>
         
     </DockPanel>
     

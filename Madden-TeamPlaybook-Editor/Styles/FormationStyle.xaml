@@ -62,10 +62,6 @@
                             Background="{StaticResource FormationDeSelected}"
                             CornerRadius="3"    
                             Padding="5">
-                            <ContentPresenter x:Name="cprFormationDeSelected"
-                                HorizontalAlignment="Center"
-                                VerticalAlignment="Center"
-                                ContentSource="Header" />
                         </Border>
                         <Border 
                             Name="BdrFormationHighlighted"
@@ -74,10 +70,6 @@
                             Opacity="0"
                             CornerRadius="8"    
                             Padding="5">
-                            <ContentPresenter x:Name="cprFormationHighlighted"
-                                HorizontalAlignment="Center"
-                                VerticalAlignment="Center"
-                                ContentSource="Header" />
                         </Border>
                         <Border 
                             Name="BdrFormationSelected"
@@ -86,11 +78,14 @@
                             Opacity="0"
                             CornerRadius="8"    
                             Padding="5">
-                            <ContentPresenter x:Name="cprFormationSelected"
-                                HorizontalAlignment="Center"
-                                VerticalAlignment="Center"
-                                ContentSource="Header" />
                         </Border>
+                        <ContentPresenter 
+                            x:Name="cprFormation"
+                            Grid.Column="1"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            ContentSource="Header"
+                            Margin="5"/>
                         <ItemsPresenter x:Name="ItemsHost"
                                     Grid.Row="1"
                                     Grid.Column="1">
@@ -109,14 +104,9 @@
                             <Setter Property="ItemsPanel" Value="{DynamicResource iptOneColumn}"/>
                         </Trigger>-->
 
-                        <MultiTrigger>  <!-- IsSelected=true and IsExpanded=false -->
+                        <Trigger Property="IsSelected" Value="True">
 
-                            <MultiTrigger.Conditions>
-                                <Condition Property="IsSelected" Value="true"/>
-                                <Condition Property="IsExpanded" Value="false"/>
-                            </MultiTrigger.Conditions>
-
-                            <MultiTrigger.EnterActions>
+                            <Trigger.EnterActions>
                                 <BeginStoryboard>
                                     <Storyboard>
                                         <DoubleAnimation
@@ -125,9 +115,9 @@
                                             From="0.0" To="1.0" Duration="0:0:0.2" />
                                     </Storyboard>
                                 </BeginStoryboard>
-                            </MultiTrigger.EnterActions>
+                            </Trigger.EnterActions>
 
-                            <MultiTrigger.ExitActions>
+                            <Trigger.ExitActions>
                                 <BeginStoryboard>
                                     <Storyboard>
                                         <DoubleAnimation
@@ -136,18 +126,24 @@
                                             From="1.0" To="0.0" Duration="0:0:0.2" />
                                     </Storyboard>
                                 </BeginStoryboard>
-                            </MultiTrigger.ExitActions>
+                            </Trigger.ExitActions>
 
-                        </MultiTrigger>
+                        </Trigger>
 
-                        <MultiTrigger>  <!-- IsSelected=false and IsExpanded=true -->
+                        <Trigger Property="IsSelected" Value="False">
 
-                            <MultiTrigger.Conditions>
-                                <Condition Property="IsSelected" Value="false"/>
-                                <Condition Property="IsExpanded" Value="true"/>
-                            </MultiTrigger.Conditions>
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="BdrFormationSelected" 
+                                            Storyboard.TargetProperty="Opacity"
+                                            From="1.0" To="0.0" Duration="0:0:0.2" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
 
-                            <MultiTrigger.EnterActions>
+                            <Trigger.ExitActions>
                                 <BeginStoryboard>
                                     <Storyboard>
                                         <DoubleAnimation
@@ -156,29 +152,13 @@
                                             From="0.0" To="1.0" Duration="0:0:0.2" />
                                     </Storyboard>
                                 </BeginStoryboard>
-                            </MultiTrigger.EnterActions>
+                            </Trigger.ExitActions>
 
-                            <MultiTrigger.ExitActions>
-                                <BeginStoryboard>
-                                    <Storyboard>
-                                        <DoubleAnimation
-                                            Storyboard.TargetName="BdrFormationSelected" 
-                                            Storyboard.TargetProperty="Opacity"
-                                            From="1.0" To="0.0" Duration="0:0:0.2" />
-                                    </Storyboard>
-                                </BeginStoryboard>
-                            </MultiTrigger.ExitActions>
+                        </Trigger>
 
-                        </MultiTrigger>
- 
-                        <MultiTrigger>  <!-- IsSelected=true and IsExpanded=true -->
+                        <Trigger Property="IsExpanded" Value="True">
 
-                            <MultiTrigger.Conditions>
-                                <Condition Property="IsSelected" Value="true"/>
-                                <Condition Property="IsExpanded" Value="true"/>
-                            </MultiTrigger.Conditions>
-
-                            <MultiTrigger.EnterActions>
+                            <Trigger.EnterActions>
                                 <BeginStoryboard>
                                     <Storyboard>
                                         <DoubleAnimation
@@ -187,9 +167,9 @@
                                             From="0.0" To="1.0" Duration="0:0:0.2" />
                                     </Storyboard>
                                 </BeginStoryboard>
-                            </MultiTrigger.EnterActions>
+                            </Trigger.EnterActions>
 
-                            <MultiTrigger.ExitActions>
+                            <Trigger.ExitActions>
                                 <BeginStoryboard>
                                     <Storyboard>
                                         <DoubleAnimation
@@ -198,18 +178,39 @@
                                             From="1.0" To="0.0" Duration="0:0:0.2" />
                                     </Storyboard>
                                 </BeginStoryboard>
-                            </MultiTrigger.ExitActions>
+                            </Trigger.ExitActions>
 
-                        </MultiTrigger>
-                        
-                        <MultiTrigger>  <!-- IsMouseOver=true and IsSelected=false -->
+                        </Trigger>
 
-                            <MultiTrigger.Conditions>
-                                <Condition Property="IsMouseOver" Value="true"/>
-                                <Condition Property="IsSelected" Value="false"/>
-                            </MultiTrigger.Conditions>
+                        <Trigger Property="IsExpanded" Value="False">
 
-                            <MultiTrigger.EnterActions>
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="BdrFormationSelected" 
+                                            Storyboard.TargetProperty="Opacity"
+                                            From="1.0" To="0.0" Duration="0:0:0.2" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="BdrFormationSelected" 
+                                            Storyboard.TargetProperty="Opacity"
+                                            From="0.0" To="1.0" Duration="0:0:0.2" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+
+                        </Trigger>
+
+                        <Trigger Property="IsMouseOver" Value="True">
+
+                            <Trigger.EnterActions>
                                 <BeginStoryboard>
                                     <Storyboard>
                                         <DoubleAnimation
@@ -218,9 +219,9 @@
                                             From="0.0" To="1.0" Duration="0:0:0.2" />
                                     </Storyboard>
                                 </BeginStoryboard>
-                            </MultiTrigger.EnterActions>
+                            </Trigger.EnterActions>
 
-                            <MultiTrigger.ExitActions>
+                            <Trigger.ExitActions>
                                 <BeginStoryboard>
                                     <Storyboard>
                                         <DoubleAnimation
@@ -229,18 +230,13 @@
                                             From="1.0" To="0.0" Duration="0:0:0.2" />
                                     </Storyboard>
                                 </BeginStoryboard>
-                            </MultiTrigger.ExitActions>
+                            </Trigger.ExitActions>
 
-                        </MultiTrigger>
+                        </Trigger>
 
-                        <MultiTrigger>  <!-- IsMouseOver=true and IsSelected=true -->
+                        <Trigger Property="IsMouseOver" Value="False">
 
-                            <MultiTrigger.Conditions>
-                                <Condition Property="IsMouseOver" Value="true"/>
-                                <Condition Property="IsSelected" Value="true"/>
-                            </MultiTrigger.Conditions>
-
-                            <MultiTrigger.ExitActions>
+                            <Trigger.EnterActions>
                                 <BeginStoryboard>
                                     <Storyboard>
                                         <DoubleAnimation
@@ -249,9 +245,20 @@
                                             From="1.0" To="0.0" Duration="0:0:0.2" />
                                     </Storyboard>
                                 </BeginStoryboard>
-                            </MultiTrigger.ExitActions>
+                            </Trigger.EnterActions>
 
-                        </MultiTrigger>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="BdrFormationHighlighted" 
+                                            Storyboard.TargetProperty="Opacity"
+                                            From="0.0" To="1.0" Duration="0:0:0.2" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+
+                        </Trigger>
 
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

@@ -47,6 +47,7 @@
                             <RowDefinition Height="Auto" MinHeight="50" />
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
                         </Grid.RowDefinitions>
                         <Border 
                             Name="BdrPlayDeSelected"
@@ -54,10 +55,6 @@
                             Background="{StaticResource PlayDeSelected}"
                             CornerRadius="8"    
                             Padding="5">
-                            <ContentPresenter x:Name="cprPlayDeSelected"
-                                HorizontalAlignment="Center"
-                                VerticalAlignment="Center"
-                                ContentSource="Header" />
                         </Border>
                         <Border 
                             Name="BdrPlayHighlighted"
@@ -66,10 +63,6 @@
                             Opacity="0"
                             CornerRadius="8"    
                             Padding="5">
-                            <ContentPresenter x:Name="cprPlayHighlighted"
-                                HorizontalAlignment="Center"
-                                VerticalAlignment="Center"
-                                ContentSource="Header" />
                         </Border>
                         <Border 
                             Name="BdrPlaySelected"
@@ -78,98 +71,23 @@
                             Opacity="0"
                             CornerRadius="8"    
                             Padding="5">
-                            <ContentPresenter x:Name="cprPlaySelected"
-                                HorizontalAlignment="Center"
-                                VerticalAlignment="Center"
-                                ContentSource="Header" />
                         </Border>
+                        <ContentPresenter 
+                            x:Name="cprPlay"
+                            Grid.Column="1"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            ContentSource="Header"
+                            Margin="5"/>
                         <Grid.RenderTransform>
                             <ScaleTransform CenterX="91" CenterY="91"/>
                         </Grid.RenderTransform>
                     </Grid>
                     <ControlTemplate.Triggers>
 
-                        <MultiTrigger>  <!-- IsSelected=true and IsExpanded=false -->
+                        <Trigger Property="IsMouseOver" Value="False">
 
-                            <MultiTrigger.Conditions>
-                                <Condition Property="IsSelected" Value="true"/>
-                                <Condition Property="IsExpanded" Value="false"/>
-                            </MultiTrigger.Conditions>
-
-                            <MultiTrigger.EnterActions>
-                                <BeginStoryboard>
-                                    <Storyboard>
-                                        <DoubleAnimation
-                                            Storyboard.TargetName="BdrPlaySelected" 
-                                            Storyboard.TargetProperty="Opacity"
-                                            From="0.0" To="1.0" Duration="0:0:0.2" />
-                                    </Storyboard>
-                                </BeginStoryboard>
-                            </MultiTrigger.EnterActions>
-
-                            <MultiTrigger.ExitActions>
-                                <BeginStoryboard>
-                                    <Storyboard>
-                                        <DoubleAnimation
-                                            Storyboard.TargetName="BdrPlaySelected" 
-                                            Storyboard.TargetProperty="Opacity"
-                                            From="1.0" To="0.0" Duration="0:0:0.2" />
-                                    </Storyboard>
-                                </BeginStoryboard>
-                            </MultiTrigger.ExitActions>
-
-                        </MultiTrigger>
-
-                        <MultiTrigger>  <!-- IsSelected=true and IsExpanded=true -->
-
-                            <MultiTrigger.Conditions>
-                                <Condition Property="IsSelected" Value="true"/>
-                                <Condition Property="IsExpanded" Value="true"/>
-                            </MultiTrigger.Conditions>
-
-                            <MultiTrigger.EnterActions>
-                                <BeginStoryboard>
-                                    <Storyboard>
-                                        <DoubleAnimation
-                                            Storyboard.TargetName="BdrPlaySelected" 
-                                            Storyboard.TargetProperty="Opacity"
-                                            From="0.0" To="1.0" Duration="0:0:0.2" />
-                                    </Storyboard>
-                                </BeginStoryboard>
-                            </MultiTrigger.EnterActions>
-
-                            <MultiTrigger.ExitActions>
-                                <BeginStoryboard>
-                                    <Storyboard>
-                                        <DoubleAnimation
-                                            Storyboard.TargetName="BdrPlaySelected" 
-                                            Storyboard.TargetProperty="Opacity"
-                                            From="1.0" To="0.0" Duration="0:0:0.2" />
-                                    </Storyboard>
-                                </BeginStoryboard>
-                            </MultiTrigger.ExitActions>
-
-                        </MultiTrigger>
-
-                        <MultiTrigger>  <!-- IsMouseOver=true and IsSelected=false -->
-
-                            <MultiTrigger.Conditions>
-                                <Condition Property="IsMouseOver" Value="true"/>
-                                <Condition Property="IsSelected" Value="false"/>
-                            </MultiTrigger.Conditions>
-
-                            <MultiTrigger.EnterActions>
-                                <BeginStoryboard>
-                                    <Storyboard>
-                                        <DoubleAnimation
-                                            Storyboard.TargetName="BdrPlayHighlighted" 
-                                            Storyboard.TargetProperty="Opacity"
-                                            From="0.0" To="1.0" Duration="0:0:0.2" />
-                                    </Storyboard>
-                                </BeginStoryboard>
-                            </MultiTrigger.EnterActions>
-
-                            <MultiTrigger.ExitActions>
+                            <Trigger.EnterActions>
                                 <BeginStoryboard>
                                     <Storyboard>
                                         <DoubleAnimation
@@ -178,18 +96,87 @@
                                             From="1.0" To="0.0" Duration="0:0:0.2" />
                                     </Storyboard>
                                 </BeginStoryboard>
-                            </MultiTrigger.ExitActions>
+                            </Trigger.EnterActions>
 
-                        </MultiTrigger>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="BdrPlayHighlighted" 
+                                            Storyboard.TargetProperty="Opacity"
+                                            From="0.0" To="1.0" Duration="0:0:0.2" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
 
-                        <MultiTrigger>  <!-- IsMouseOver=true and IsSelected=true -->
+                        </Trigger>
 
-                            <MultiTrigger.Conditions>
-                                <Condition Property="IsMouseOver" Value="true"/>
-                                <Condition Property="IsSelected" Value="true"/>
-                            </MultiTrigger.Conditions>
+                        <Trigger Property="IsExpanded" Value="False">
+                            
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="BdrPlaySelected" 
+                                            Storyboard.TargetProperty="Opacity"
+                                            From="1.0" To="0.0" Duration="0:0:0.2" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
 
-                            <MultiTrigger.ExitActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="BdrPlaySelected" 
+                                            Storyboard.TargetProperty="Opacity"
+                                            From="0.0" To="1.0" Duration="0:0:0.2" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                            
+                        </Trigger>
+
+                        <Trigger Property="IsSelected" Value="False">
+                            
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="BdrPlaySelected" 
+                                            Storyboard.TargetProperty="Opacity"
+                                            From="1.0" To="0.0" Duration="0:0:0.2" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="BdrPlaySelected" 
+                                            Storyboard.TargetProperty="Opacity"
+                                            From="0.0" To="1.0" Duration="0:0:0.2" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                            
+                        </Trigger>
+
+                        <Trigger Property="IsMouseOver" Value="True">
+
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="BdrPlayHighlighted" 
+                                            Storyboard.TargetProperty="Opacity"
+                                            From="0.0" To="1.0" Duration="0:0:0.2" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+
+                            <Trigger.ExitActions>
                                 <BeginStoryboard>
                                     <Storyboard>
                                         <DoubleAnimation
@@ -198,10 +185,62 @@
                                             From="1.0" To="0.0" Duration="0:0:0.2" />
                                     </Storyboard>
                                 </BeginStoryboard>
-                            </MultiTrigger.ExitActions>
+                            </Trigger.ExitActions>
 
-                        </MultiTrigger>
+                        </Trigger>
+                        
+                        <Trigger Property="IsSelected" Value="True">
+                            
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="BdrPlaySelected" 
+                                            Storyboard.TargetProperty="Opacity"
+                                            From="0.0" To="1.0" Duration="0:0:0.2" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
 
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="BdrPlaySelected" 
+                                            Storyboard.TargetProperty="Opacity"
+                                            From="1.0" To="0.0" Duration="0:0:0.2" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                            
+                        </Trigger>
+                        
+                        <Trigger Property="IsExpanded" Value="True">
+                            
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="BdrPlaySelected" 
+                                            Storyboard.TargetProperty="Opacity"
+                                            From="0.0" To="1.0" Duration="0:0:0.2" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="BdrPlaySelected" 
+                                            Storyboard.TargetProperty="Opacity"
+                                            From="1.0" To="0.0" Duration="0:0:0.2" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                            
+                        </Trigger>
+                        
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>

@@ -17,11 +17,21 @@ namespace Madden.TeamPlaybook
         public int Flag { get; set; }
         public int vpos { get; set; }
         public int prct { get; set; }
+        public string Type { get; set; }
         public string Name
         {
             get
             {
-                return MaddenTeamPlaybookEditor.ViewModels.TeamPlaybook.SituationOff[AIGR];
+                if (Type == "Offense")
+                {
+                    return SituationOff[AIGR];
+                }
+                else if (Type == "Defense")
+                {
+                    return SituationDef[AIGR];
+                }
+
+                return SituationOff[AIGR];
             }
         }
 

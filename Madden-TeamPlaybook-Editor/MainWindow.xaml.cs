@@ -79,7 +79,14 @@ namespace MaddenTeamPlaybookEditor
         {
             wdwPlaybookEditor.Title = "Madden Team Playbook Editor - " + Path.GetFileName(Playbook.filePath);
             tvwPlaybook.DataContext = Playbook;
-            //lvwSituations.DataContext = Playbook;
+            if (Playbook.Type == "Offense")
+            {
+                lvwSituations.DataContext = TeamPlaybook.SituationOff.Select(p => new Madden.TeamPlaybook.PBAI { AIGR = p.Key }).ToList();
+            }
+            else if (Playbook.Type == "Defense")
+            {
+                lvwSituations.DataContext = TeamPlaybook.SituationDef.Select(p => new Madden.TeamPlaybook.PBAI { AIGR = p.Key }).ToList();
+            }
             tclTables.DataContext = Playbook;
             //tvwPSALs.DataContext = Playbook.GetPSALlist();
             //tabPlaybook.DataContext = Playbook;
@@ -564,10 +571,9 @@ namespace MaddenTeamPlaybookEditor
 
             //if (tvi == null || e.Handled) return;
 
-            //tvi.IsExpanded = !tvi.IsExpanded;
-            //if (tvi.IsSelected)
+            //if (tvi.DataContext is PlayVM)
             //{
-            //    tvi.IsSelected = false;
+            //    tvi.IsExpanded = !tvi.IsExpanded;
             //    e.Handled = true;
             //}
         }

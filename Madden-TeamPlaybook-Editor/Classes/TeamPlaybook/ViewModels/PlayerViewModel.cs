@@ -29,7 +29,22 @@ namespace MaddenTeamPlaybookEditor.ViewModels
 
         public PlayVM Play { get; set; }
 
-        public PLYS PLYS { get; set; }
+        private PLYS _PLYS { get; set; }
+        public PLYS PLYS
+        {
+            get { return _PLYS; }
+            set
+            {
+                if (_PLYS == value)
+                    return;
+                _PLYS = value;
+                if (_PSAL != null)
+                {
+                    ConvertPSAL(_PSAL);
+                    GetRouteCap();
+                }
+            }
+        }
         public SETP SETP { get; set; }
         private SETG _SETG { get; set; }
         public SETG SETG
@@ -317,7 +332,7 @@ namespace MaddenTeamPlaybookEditor.ViewModels
             {
                 RouteCap = ARTL.Block;
             }
-            else
+            else if (ARTL != null)
             {
                 //Get Zone Size
                 int EndOfList = ARTL.ARTList.FindIndex(playart => playart.ct != 0);
@@ -1457,15 +1472,15 @@ namespace MaddenTeamPlaybookEditor.ViewModels
             List<Path> _ARTLpath = new List<Path>();
             if (ARTL == null)
             {
-                MessageBox.Show(
-                    Play.SubFormation.Formation.PBFM.name + " " +
-                    Play.SubFormation.PBST.name + " - " +
-                    Play.PBPL.name + "\n\n" +
-                    DPos + EPos +
-                    "\nPSAL: " + PLYS.PSAL +
-                    "\nARTL: " + PLYS.ARTL,
-                    "Missing ARTL"
-                );
+                //MessageBox.Show(
+                //    Play.SubFormation.Formation.PBFM.name + " " +
+                //    Play.SubFormation.PBST.name + " - " +
+                //    Play.PBPL.name + "\n\n" +
+                //    DPos + EPos +
+                //    "\nPSAL: " + PLYS.PSAL +
+                //    "\nARTL: " + PLYS.ARTL,
+                //    "Missing ARTL"
+                //);
 
                 ARTL = new ARTL
                 {
@@ -1725,6 +1740,10 @@ namespace MaddenTeamPlaybookEditor.ViewModels
                 if (value != _isSelected)
                 {
                     _isSelected = value;
+                    foreach (PlayVM play in Play.SubFormation.Plays)
+                    {
+                        play.Players.Where(poso => poso.PLYS.poso == PLYS.poso).FirstOrDefault().IsSelected = value;
+                    }
                     this.OnPropertyChanged("IsSelected");
                 }
             }

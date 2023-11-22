@@ -8,6 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("resources/field_blank_lines_progressbar.png")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("resources/situation_background.png")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("resources/situation_foreground.png")]
 
 
