@@ -19,7 +19,7 @@
         </Style>
     </UserControl.Style>
     <UserControl.Resources>
-        <Style TargetType="{x:Type TextBlock}">
+        <!--<Style TargetType="{x:Type TextBlock}">
             <Setter Property="Background" Value="Transparent" />
             <Setter Property="Foreground" Value="LightGreen"/>
             <Setter Property="FontWeight" Value="Bold"/>
@@ -34,14 +34,7 @@
         </Style>
         <Style TargetType="{x:Type ComboBoxItem}">
             <Setter Property="BorderThickness" Value="0"/>
-        </Style>
-        <ImageBrush 
-                x:Key="FieldBrush"
-                ImageSource="../Resources/full_field.jpg"
-                RenderOptions.BitmapScalingMode="Fant"
-                Stretch="UniformToFill"
-                AlignmentY="Top"
-                />
+        </Style>-->
     </UserControl.Resources>
 
     <DockPanel>

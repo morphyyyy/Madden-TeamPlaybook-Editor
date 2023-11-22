@@ -320,7 +320,7 @@
                                                 VerticalAlignment="Center"
                                                 HorizontalAlignment="Center"
                                                 ContentSource="Header"
-                                                Margin="9,2"/>
+                                                Margin="14.1,2"/>
                                             </Label>
                                             <ControlTemplate.Triggers>
                                                 <Trigger Property="IsSelected" Value="True">
@@ -468,7 +468,7 @@
                                 <TextBox Grid.Column="2" Grid.Row="1" Text="{Binding PLRD.hole, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                             </Grid>
                         </TabItem>
-                        <TabItem Header="Situations">
+                        <!--<TabItem Header="Situations">
                             <ListView 
                                 x:Name="lvwSituations" 
                                 ItemsSource="{Binding Situations}" 
@@ -493,7 +493,7 @@
                                     </Style>
                                 </ListView.ItemContainerStyle>
                             </ListView>
-                        </TabItem>
+                        </TabItem>-->
                         <TabItem Header="PBCC">
                             <DataGrid 
                                 ItemsSource="{Binding PBCC, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"

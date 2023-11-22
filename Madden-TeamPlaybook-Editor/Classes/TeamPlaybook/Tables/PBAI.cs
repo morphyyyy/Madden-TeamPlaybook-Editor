@@ -148,7 +148,12 @@ namespace Madden.TeamPlaybook
 
         public static List<PBAI> Sort(List<PBAI> PBAI)
         {
-            return PBAI.OrderByDescending(s => s.prct).ThenBy(s => s.PBPL).Cast<PBAI>().ToList();
+            List<PBAI> _PBAI = PBAI.OrderByDescending(s => s.prct).ThenBy(s => s.PBPL).Cast<PBAI>().ToList();
+            for (int i = 0; i < _PBAI.Count(); i++)
+            {
+                _PBAI[i].rec = i;
+            }
+            return _PBAI;
         }
     }
 }

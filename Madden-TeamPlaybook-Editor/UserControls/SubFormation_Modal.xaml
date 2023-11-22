@@ -191,6 +191,7 @@
                 Background="Transparent" 
                 BorderBrush="Transparent" 
                 DockPanel.Dock="Top"
+                VerticalAlignment="Top"
                 HorizontalAlignment="Stretch">
                 <TabControl.Resources>
                     <Style TargetType="TabItem">
@@ -202,7 +203,7 @@
                                                 VerticalAlignment="Top"
                                                 HorizontalAlignment="Center"
                                                 ContentSource="Header"
-                                                Margin="34,2"/>
+                                                Margin="114.5,2"/>
                                     </Label>
                                     <ControlTemplate.Triggers>
                                         <Trigger Property="IsSelected" Value="True">

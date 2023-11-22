@@ -289,7 +289,8 @@
                     ItemsSource="{Binding}" 
                     ScrollViewer.CanContentScroll="False"
                     Background="Transparent"
-                    BorderBrush="Transparent">
+                    BorderBrush="Transparent"
+                    MouseUp="lvwSituations_MouseUp">
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <UserControls:Situation situation="{Binding}"/>
