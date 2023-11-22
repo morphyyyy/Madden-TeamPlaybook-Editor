@@ -81,11 +81,11 @@ namespace MaddenTeamPlaybookEditor
             tvwPlaybook.DataContext = Playbook;
             if (Playbook.Type == "Offense")
             {
-                lvwSituations.DataContext = TeamPlaybook.SituationOff.Select(p => new Madden.TeamPlaybook.PBAI { AIGR = p.Key }).ToList();
+                lvwSituations.DataContext = TeamPlaybook.SituationOff.Select(p => new Madden.TeamPlaybook.PBAI { AIGR = p.Key, Name = p.Value }).ToList();
             }
             else if (Playbook.Type == "Defense")
             {
-                lvwSituations.DataContext = TeamPlaybook.SituationDef.Select(p => new Madden.TeamPlaybook.PBAI { AIGR = p.Key }).ToList();
+                lvwSituations.DataContext = TeamPlaybook.SituationDef.Select(p => new Madden.TeamPlaybook.PBAI { AIGR = p.Key, Name = p.Value }).ToList();
             }
             tclTables.DataContext = Playbook;
             //tvwPSALs.DataContext = Playbook.GetPSALlist();
