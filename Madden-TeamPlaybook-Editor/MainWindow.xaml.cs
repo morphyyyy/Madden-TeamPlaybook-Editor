@@ -1001,7 +1001,8 @@ namespace MaddenTeamPlaybookEditor
                 TeamPlaybook.PBAI.RemoveAll(p => _pbai.Contains(p));
                 List<int> _form = TeamPlaybook.FORM.Where(p => TeamPlaybook.KeyFormations.Contains(p.name)).Select(p => p.form).ToList();
                 List<int> _setl = TeamPlaybook.SETL.Where(p => _form.Contains(p.FORM)).Select(p => p.setl).ToList();
-                foreach (Madden.TeamPlaybook.PLYL play in TeamPlaybook.PLYL)
+                List<Madden.TeamPlaybook.PLYL> _plyl = TeamPlaybook.PLYL.Where(p => !_setl.Contains(p.SETL)).ToList();
+                foreach (Madden.TeamPlaybook.PLYL play in _plyl)
                 {
                     foreach (int airg in TeamPlaybook.KeySituations1.Where(p => p != 4).ToList())
                     {
@@ -1025,7 +1026,7 @@ namespace MaddenTeamPlaybookEditor
                 _pbai = TeamPlaybook.PBAI.Where(p => TeamPlaybook.KeySituations2.Contains(p.AIGR)).ToList();
                 _pbai = _pbai.Where(p => TeamPlaybook.KeyPlayTypes.Contains(p.PLYT)).ToList();
                 TeamPlaybook.PBAI.RemoveAll(p => _pbai.Contains(p));
-                List<Madden.TeamPlaybook.PLYL> _plyl = TeamPlaybook.PLYL.Where(p => TeamPlaybook.KeyPlays.Contains(p.plyl) && !_setl.Contains(p.SETL)).ToList();
+                _plyl = TeamPlaybook.PLYL.Where(p => TeamPlaybook.KeyPlays.Contains(p.plyl) && !_setl.Contains(p.SETL)).ToList();
                 foreach (Madden.TeamPlaybook.PLYL play in _plyl)
                 {
                     foreach (int airg in TeamPlaybook.KeySituations2)
