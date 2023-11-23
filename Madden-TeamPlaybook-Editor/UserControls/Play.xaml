@@ -107,11 +107,10 @@
 
             <ItemsControl 
                 x:Name="iclPlayarts"
-                DockPanel.Dock="Top"
                 ItemsSource="{Binding PlayerPlayartView, Mode=TwoWay}">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
-                        <Canvas 
+                        <Canvas
                         x:Name="cvsPlayers"
                         Width="180" 
                         Height="120"
@@ -143,7 +142,6 @@
 
             <ItemsControl 
                 x:Name="iclIcons"
-                DockPanel.Dock="Top"
                 ItemsSource="{Binding PlayerPlayartView, Mode=TwoWay}">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>

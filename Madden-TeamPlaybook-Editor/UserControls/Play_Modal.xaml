@@ -101,7 +101,7 @@
             IsEnabled="true"
             x:Name="iclPSALs"
             DockPanel.Dock="Top"
-            ItemsSource="{Binding PlayerPlayartView, Mode=TwoWay}"
+            ItemsSource="{Binding PlayerPlayartView, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
             Canvas.Left="266.5"
             Canvas.Top="600"
             MouseDown="iclPSALs_MouseDown">
@@ -179,7 +179,7 @@
             IsEnabled="True"
             x:Name="iclIcons"
             DockPanel.Dock="Top"
-            ItemsSource="{Binding PlayerPlayartView, Mode=TwoWay}"
+            ItemsSource="{Binding PlayerPlayartView, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
             Canvas.Left="266.5"
             Canvas.Top="600"
             MouseDown="iclIcons_MouseDown">
@@ -517,7 +517,7 @@
                                                 VerticalAlignment="Top"
                                                 HorizontalAlignment="Center"
                                                 ContentSource="Header"
-                                                Margin="34,2"/>
+                                                Margin="69.1, 2"/>
                                             </Label>
                                             <ControlTemplate.Triggers>
                                                 <Trigger Property="IsSelected" Value="True">
@@ -534,7 +534,7 @@
                                 </Setter>
                             </Style>
                         </TabControl.Resources>
-                        <TabItem Header="PLYS">
+                        <!--<TabItem Header="PLYS">
                             <Grid HorizontalAlignment="Center">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto"/>
@@ -561,7 +561,7 @@
                                 <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="5" Grid.Row="0" Text="poso"/>
                                 <TextBox Grid.Column="5" Grid.Row="1" Text="{Binding PLYS.poso, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextChanged="txtPlayerUpdated"/>
                             </Grid>
-                        </TabItem>
+                        </TabItem>-->
                         <TabItem Header="SETP">
                             <Grid HorizontalAlignment="Center">
                                 <Grid.ColumnDefinitions>
@@ -712,14 +712,14 @@
                                 <TextBox Grid.Column="12" Grid.Row="1" Text="{Binding SRFT.ASSW, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextChanged="txtPlayerUpdated"/>
                             </Grid>
                         </TabItem>
-                        <TabItem Header="PSAL">
+                        <!--<TabItem Header="PSAL">
                             <DataGrid 
                                 ItemsSource="{Binding PSAL, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                 DockPanel.Dock="Bottom"
                                 VerticalAlignment="Bottom"
                                 HorizontalAlignment="Center"
                                 CurrentCellChanged="dgdPSALupdated"/>
-                        </TabItem>
+                        </TabItem>-->
                     </TabControl>
                 </TabItem>
                 

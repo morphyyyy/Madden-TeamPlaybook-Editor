@@ -12,6 +12,7 @@ using System.Reflection;
 using System.Windows.Media;
 using Madden.CustomPlaybook;
 using MaddenCustomPlaybookEditor;
+using MaddenTeamPlaybookEditor.User_Controls;
 
 namespace MaddenTeamPlaybookEditor.ViewModels
 {
@@ -90,74 +91,105 @@ namespace MaddenTeamPlaybookEditor.ViewModels
 
         public static readonly Dictionary<int, string> PlayType = new Dictionary<int, string>
         {
-            {4, "Play Action"},
+            {-1, "Any"},
+            {1, "Flea Flicker"},
+            {2, "Option Pass"},
+            {3, "Pass"},
+            {4, "Play Action Pass"},
             {5, "WR/HB Slip Screen"},
             {6, "Jailbreak Screen"},
             {7, "Rollout Smash"},
+            {9, "Pass (Unused)"},
+            {10, "Pass (Unused)"},
             {11, "QB Power"},
-            {13," Counter"},
+            {12, "Run"},
+            {13, "Counter"},
             {14, "Draw"},
-            {15, "Toss"},
+            {15, "Pitch"},
             {16, "Reverse"},
-            {17, "Power Option"},
+            {17, "Speed Option"},
+            {18, "Play Action Run"},
             {19, "QB Sneak"},
+            {20, "Statue"},
             {21, "Field Goal"},
             {22, "Punt"},
-            {23," Kickoff"},
-            {24, "Punt"},
+            {23, "Kickoff"},
+            {24, "Safety Punt"},
             {25, "Onside Kick"},
+            {31, "Blitz"},
+            {32, "Block"},
+            {33, "Man"},
+            {34, "Man Zone"},
+            {35, "Return"},
+            {36, "Zone"},
             {37, "QB Kneel"},
             {38, "Spike Ball"},
-            {41, "Cover 2/Tampa 2"},
-            {42, "Cover 2 Flat"},
-            {43, "Cover 3 Match"},
+            {41, "QB PA Run"},
+            {42, "Cover 2"},
+            {43, "Cover 3"},
             {44, "Cover 4 Palms"},
             {45, "Cover 4 Quarters"},
-            {46, "Goalline"},
-            {47, "Engage Eight"},
-            {48, "Blitz"},
-            {100, "Bubble Screen/Fake Screen Go"},
-            {101, "Quick Pass"},
-            {102, "Deep Pass"},
-            {103, "Pass"},
+            {46, "Man Blitz"},
+            {47, "Zone Blitz"},
+            {48, "Combo Blitz"},
+            {49, "FG Safe Man"},
+            {50, "FG Safe Zone"},
+            {51, "FG Block"},
+            {100, "1 Step Drop"},
+            {101, "3 Step Drop"},
+            {102, "5 Step Drop"},
+            {103, "Shotgun"},
             {104, "Hail Mary"},
             {105, "Fake FG"},
             {106, "Fake Punt"},
             {107, "Fake Spike"},
-            {151, "Dive"},
-            {152, "Buck Sweep"},
-            {153, "FB Dive"},
-            {154, "Fake FG"},
-            {157, "Trick Play"},
-            {159, "Pass"},
+            {151, "Inside Run"},
+            {152, "Outside Run"},
+            {153, "FB Run"},
+            {154, "Fake FG Run"},
+            {155, "Fake Punt Run"},
+            {157, "Trick Pass"},
+            {158, "Double Pass"},
+            {159, "7 Step Drop"},
             {161, "Zone Fake Jet"},
-            {163, "Triple Option"},
-            {165, "Shovel Option"},
-            {169, "Read Option"},
-            {174, "Cover 0 Blitz"},
-            {175, "Cover 1 Blitz"},
-            {176, "Cover 2 Blitz"},
-            {177, "Cover 3 Blitz"},
-            {178, "Cover 1"},
-            {179, "Cover 1"},
-            {180, "Cover 1"},
-            {182, "Cover 2 Man"},
-            {183, "Quarters Deep"},
-            {185, "Cover 2 /Tampa 2"},
+            {162, "Mid Read Option"},
+            {163, "Triple Zone Read Option"},
+            {164, "Veer Option"},
+            {165, "Triple Veer Option"},
+            {166, "Triple Mid Read Option"},
+            {167, "Gun Mid Read Option"},
+            {169, "Zone Read Option"},
+            {170, "Zone Read WR Triple Option"},
+            {171, "Zone Option"},
+            {172, "Inverted Veer Option"},
+            {174, "Man 0 Blitz"},
+            {175, "Man 1 Blitz"},
+            {176, "Zone 2 Blitz"},
+            {177, "Zone 3 Blitz"},
+            {178, "Man 1"},
+            {179, "Man 1 Press"},
+            {180, "Man 1 Robber"},
+            {181, "Man Double"},
+            {182, "Man 2 Deep"},
+            {183, "Man 3 Deep"},
+            {184, "Zone Goalline"},
+            {185, "Cover 2 Sink"},
             {186, "Cover 2 Invert"},
-            {187, "Cover 2 Hard Flat"},
-            {188, "Cover 3 Sky/Flat"},
-            {189, "Cover 3 Buzz Press"},
-            {191,  "Cover 3 Sky"},
-            {192, "Cover 6/9"},
+            {187, "Cover 2 Drop"},
+            {188, "Cover 3 Sky"},
+            {189, "Cover 3 Buzz"},
+            {190, "Cover 3 Cloud"},
+            {191, "Cover 3 Drop"},
+            {192, "Cover 6"},
             {194, "Cover 4 Drop"},
-            {195, "Inside Zone/HB Blast"},
-            {196, "Outside Zone/Off Tackle"},
-            {197, "Power O/HB Base"},
-            {198, "Iso"},
+            {195, "Inside Zone"},
+            {196, "Outside Zone"},
+            {197, "HB Power"},
+            {198, "HB Iso"},
             {199, "Prevent"},
-            {200, "Buck Sweep"},
+            {200, "Sweep"},
             {201, "Trap"},
+            {202, "Wham"},
             {203, "End Around"},
             {204, "RPO Read"},
             {205, "RPO Peek"},
@@ -165,6 +197,78 @@ namespace MaddenTeamPlaybookEditor.ViewModels
             {208, "Jet Pass"},
             {209, "Jet Sweep"}
        };
+
+        public static readonly List<int> KeyPlays = new List<int>
+        {
+            78, 2675, 2750, 2850, 2883, 3202, 3591, 3753, 3868, 3936, 4078, 4108, 4259, 4263, 4617, 4958, 5381, 5407, 5413, 5981, 6356, 6402, 6403, 6523, 6525, 6528, 6927, 7113,
+            7509, 7595, 7596, 7597, 7610, 7618, 7620, 7654, 7656, 7658, 7660, 7669, 7698, 7717, 7721, 7722, 7727, 7852, 7853, 7943, 7981, 7989, 8092, 8096, 8192, 8207, 8330, 8354,
+            8431, 8476, 8477, 8612, 8658, 8729, 8737, 8745, 8785, 8841, 8842, 8859, 8869, 8890, 8914, 8915, 8916, 8936, 8982, 8986, 9027, 9040, 9046, 9147, 9156, 9159, 9174, 9270,
+            9272, 9482, 9495, 9499, 9802, 9804, 9806, 9812, 9816, 9842, 9844, 9845, 9846, 10148, 10264, 10283, 10342, 10344, 10346, 10347, 10447, 10458, 10459, 10493, 10706, 10720,
+            10807, 11088, 11090, 11091, 11096, 11100, 11101, 11102, 11104, 11105, 11106, 11107, 11110, 11122, 11266, 11280, 11398, 11535, 11686, 11689, 11770, 11841, 11918, 11921,
+            11926, 11933, 11937, 11939, 11948, 12128, 12139, 12222, 12245, 12250, 12304, 12312, 12313, 12354, 12727, 13030, 13104, 13165, 13171, 13176, 13184, 13285, 13309, 13325,
+            13350, 13399, 13400, 13514, 13515, 13517, 13520, 13565, 13566, 13568, 13570, 13580, 13581, 13583, 13595, 13693, 13704, 13745, 13880, 13913, 13926, 13934, 14075, 14091,
+            14188, 14211, 14236, 14252, 14294, 14300, 14332, 14872, 14898, 14938, 14988, 15227, 15240, 15293, 15303, 15319, 15320, 15328, 15529, 15582, 15643, 15652, 15718, 15737,
+            15741, 15763, 15767, 15768, 15769, 15779, 15897, 15909, 15916, 15925, 16092, 16103, 16164, 16298, 16322, 16330, 16337, 16344, 16347, 16386, 16393, 16407, 16426, 16453,
+            16477, 16478, 17308, 17497, 17499, 17740, 17741, 17746, 17783, 17786, 17806, 17840, 17937, 18419, 18760, 18787, 19428, 19440, 19476, 19755, 19758, 19760, 19761, 19847,
+            19905, 19906, 19916, 19984, 19986, 19990, 19996, 20000, 20058, 20099, 20108, 20159, 20163, 20167, 20477, 20585, 20588, 20803, 20809, 20865, 20892, 20897, 20900, 20913,
+            21060, 21079, 21092, 21098, 21103, 21127, 21141, 21178, 21181, 21185, 21190, 21201, 21255, 21379, 21386, 21466, 21686, 21701, 21711, 21725, 21730, 22072, 22402, 22415,
+            22607, 22626, 22634, 22636, 22686, 22690, 22691, 22703, 22704, 22705, 22706, 22709, 22717, 22811, 22843, 22854, 22856, 22864, 22874, 22885, 22913, 22919, 23027, 23028,
+            23033, 23045, 23073, 23074, 23189, 23191, 23193, 23307, 23537, 23541, 23544, 23565, 23624, 23640, 23658, 23665, 23735, 23749, 23754, 23773, 23774, 23788, 23789, 24007,
+            24045, 24055, 24139, 24140, 24141, 24142, 24143, 24145, 24146, 24152, 24159, 24162, 24174, 24175, 24179, 24191, 24199, 24200, 24204, 24211, 24212, 24213, 24214, 24215,
+            24224, 24225, 24244, 24266, 24268, 24269, 24271, 24272, 24274, 24288, 24328, 24334, 24341, 24343, 24346, 24384, 24387, 24392, 24393, 24395, 24396, 24397, 24438, 24562,
+            24671, 24673, 24674, 24677, 24678, 24679, 24680, 24681, 24683, 24684, 24687, 24695, 24699, 24728, 24792, 24798, 24800, 24850, 24862, 24906, 25106, 25136, 25155, 25162,
+            25163, 25164, 25165, 25204, 25293, 25364, 25419, 25518, 25553, 25718, 25806, 25818, 25838, 25880, 25915, 25918, 25930, 25938, 25940, 25944, 25962, 25963, 25991, 26003,
+            26007, 26026, 26041, 26082, 26086, 26087, 26090, 26091, 26122, 26124, 26152, 26210, 26301, 26303, 26324, 26338, 26360, 26370, 26824, 26825, 26826, 26828, 26917, 26955,
+            26967, 27057, 27074, 27211, 27237, 27252, 27253, 27286, 27305, 27320, 27352, 27372, 27401, 27414, 27415, 27416, 27424, 27431, 27441, 27449, 27450, 27451, 27455, 27462,
+            27500, 27504, 27509, 27511, 27527, 27534, 27542, 27578, 27583, 27588, 27590, 27595, 27599, 27606, 27607, 27608, 27609, 27612, 27613, 27615, 27617, 27619, 27620, 27624,
+            27626, 27633, 27635, 27662, 27665, 27666, 27687, 27709, 27717, 27719, 27720, 27730, 27741, 27742, 27772, 27779, 27782, 27788, 27791, 27793, 27794, 27799, 27800, 27803,
+            27804, 27817, 27820, 27828, 27831, 27833, 27841, 27842, 27844, 27846, 27849, 27850, 27880, 27882, 27914, 27939, 27977, 27978, 27979, 27982, 27983, 27992, 28094, 28095,
+            28096, 28170, 28172, 28176, 28178, 28181, 28183, 28184, 28185, 28187, 28188, 28189, 28191, 28195, 28200, 28201, 28202, 28204, 28213, 28222, 28232, 28234, 28237, 28240,
+            28244, 28255, 28269, 28272, 28273, 28291, 28305, 28308, 28417, 28487, 28631, 28709, 28712, 28722, 28751, 28769, 28777, 28798, 28808, 28828, 28836, 28850, 28858, 28862,
+            28869, 28870, 28871, 28873, 28891, 28892, 28898, 28899, 28903, 28905, 28912, 28913, 28918, 28919, 28933, 28936, 28943, 28944, 28953, 28957, 28958, 28962, 28963, 28969,
+            28983, 28986, 28988, 28999, 29001, 29002, 29011, 29019, 29036, 29037, 29042, 29046, 29054, 29058, 29072, 29080, 29085, 29090, 29096, 29124, 29125, 29128, 29131, 29132,
+            29133, 29135, 29136, 29137, 29138, 29140, 29142, 29143, 29146, 29156, 29163, 29174, 29197, 29202, 29217, 29221, 29222, 29237, 29238, 29256, 29263, 29264, 29275, 29303,
+            29304, 29305, 29306, 29307, 29312, 29313, 29315, 29318, 29333, 29334, 29338, 29339, 29345, 29351, 29352, 29361, 29364, 29367, 29379, 29384, 29391, 29403, 29416, 29419,
+            29420, 29421, 29424, 29431, 29433, 29438, 29466, 29481, 29482, 29485, 29487, 29494, 29515, 29520, 29523, 29525, 29527, 29528, 29529, 29550, 29557, 29558, 29561, 29563,
+            29565, 29566, 29567, 29572, 29587, 29589, 29596, 29597, 29599, 29604, 29605, 29607, 29615, 29616, 29620, 29625, 29629, 29630, 29660, 29661, 29664, 29669, 29680, 29690,
+            29691, 29692, 29696, 29699, 29701, 29704, 29706, 29728, 29733, 29734, 29737, 29738, 29742, 29744, 29745, 29747, 29752, 29753, 29754, 29755, 29757, 29780, 29799, 29801,
+            29804, 29806, 29812, 29818, 29841
+        };
+
+        public static readonly List<int> KeyPlayTypes = new List<int>
+        {
+            4, 101, 102, 103, 159
+        };
+
+        public static readonly List<int> KeySituations1 = new List<int>
+        {
+            35, 17, 20, 6, 4
+        };
+
+        public static readonly List<int> KeySituations2 = new List<int>
+        {
+            1, 3, 6, 20, 22, 39
+        };
+
+        public static readonly List<int> IgnoreSituations = new List<int>
+        {
+            40, 8, 7, 41, 33, 32, 24, 10, 22
+        };
+
+        public static readonly List<int> IgnoreFormation = new List<int>
+        {
+            1186, 844, 813, 1382, 1149, 1416, 1143, 380, 1147, 576, 1014, 1148, 388, 1282, 1432, 364, 1427,
+            44, 363, 1407, 1289, 1299, 1391, 428, 430, 473, 474, 476, 525, 537, 542, 544, 908, 909, 910, 911,
+            913, 949, 978, 996, 997, 1118, 1152, 1179, 1185, 1283, 1287, 1333, 1334, 1335, 1336, 1337, 1338,
+            1399, 1420, 1421, 1422, 30, 50, 51, 55, 68, 90, 140, 182, 189, 256, 310, 323, 335, 340, 485, 492,
+            595, 672, 734, 825, 1018, 1121, 1171, 1172, 1176, 1181, 1182, 1210, 1319, 1320, 1350, 1383, 1393,
+            1398, 1414, 1430, 1431
+        };
+
+        public static readonly List<string> KeyFormations = new List<string>
+        {
+            "Goal Line Offense", "Hail Mary", "Kickoff", "Onside", "Safety Kickoff", "Special", "Direct Snaps", "Wildcat"
+        };
 
         public static readonly Dictionary<int, List<string>> RouteType = new Dictionary<int, List<string>>
         {
@@ -389,21 +493,33 @@ namespace MaddenTeamPlaybookEditor.ViewModels
             {18,"Run"},
             {2,"Pass"},
             {20,"Nickle"},
-            {6,"Nickle (Run)"},
-            {13,"Nickle (Pass)"},
-            {21,"Dime (Bunch & Empty)"},
-            {27,"Dime (Pass)"},
+            {6,"Nickle Run"},
+            {13,"Nickle Pass"},
+            {21,"Dime"},
+            {27,"Dime Pass"},
             {12,"Trips"},
-            {1,"Trips (Run)"},
-            {11,"Trips (Pass)"},
-            {22,"Goal Line"},
-            {5,"Goal Line (Run)"},
-            {7,"Goal Line (Pass)"},
-            {24,"Wildcat"},
+            {1,"Trips Run"},
+            {11,"Trips Pass"},
+            {10,"Bunch"},
+            {19,"Empty"},
             {25,"Overload"},
-            {29,"Clock, Time"},
-            {19,"?"},
-            {10,"?"}
+            {24,"Wildcat"},
+            {29,"Conserve Time"},
+            {28,"Prevent"},
+            {26,"Hail Mary"},
+            {22,"Goal Line"},
+            {5,"Goal Line Run"},
+            {7,"Goal Line Pass"},
+            {3,"Kickoff Return"},
+            {4,"Kickoff Return Onsides"},
+            {8,"Kickoff Return Safety"},
+            {14,"Punt Return"},
+            {15,"Punt Return Safe"},
+            {9,"Punt Block"},
+            {17,"FG Safe"},
+            {16,"FG Block"},
+            {23,"FG Return"},
+            {30,"Max"}
         };
 
         public string filePath { get; set; }
@@ -703,7 +819,7 @@ namespace MaddenTeamPlaybookEditor.ViewModels
                     };
                     foreach (var _route in PLYS.Select(x => new { x.PSAL, x.PLRR }).Where(x => x.PLRR == _type.Key).Distinct().OrderBy(x => x.PSAL))
                     {
-                        PlayerVM player = new PlayerVM()
+                        PlayerVM player = new PlayerVM
                         {
                             PLYS = PLYS.Where(plys => plys.PSAL == _route.PSAL).FirstOrDefault(),
                             SETG = new Madden.TeamPlaybook.SETG
@@ -721,7 +837,9 @@ namespace MaddenTeamPlaybookEditor.ViewModels
                             ARTL = ARTL.Where(_psal => _psal.artl == PLYS.Where(plys => plys.PSAL == _route.PSAL).FirstOrDefault().ARTL).FirstOrDefault(),
                             artlColor = ARTLColor.Undefined,
                             PSAL = PSAL.Where(_psal => _psal.psal == _route.PSAL).OrderBy(s => s.step).ToList(),
-                            Icon = new EllipseGeometry(new Point(0, 0), 4, 4).GetFlattenedPathGeometry()
+                            Icon = new EllipseGeometry(new Point(0, 0), 4, 4).GetFlattenedPathGeometry(),
+                            EPos = "",
+                            DPos = "1"
                         };
                         PlayVM type = new PlayVM
                         {
@@ -739,6 +857,7 @@ namespace MaddenTeamPlaybookEditor.ViewModels
                         player.GetARTLcolor();
                         player.ConvertPSAL(player.PSAL);
                         player.GetRouteCap();
+                        type.GetPlayerPlayartViewList();
                         types.Add(type);
                     }
                     if (position.Plays.Count() > 0)

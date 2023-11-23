@@ -12,12 +12,12 @@
     x:Name="wdwPlaybookEditor"
     x:Class="MaddenTeamPlaybookEditor.MainWindow"
     Title="Madden Team Playbook Editor" 
-    WindowStartupLocation="CenterScreen" 
-    SizeToContent="WidthAndHeight"
+    WindowStartupLocation="CenterScreen"
     Icon="/Resources/Playbook_Editor.ico" 
     UseLayoutRounding="True" 
     WindowStyle="ThreeDBorderWindow" 
     ScrollViewer.HorizontalScrollBarVisibility="Visible"
+    WindowState="Maximized"
     >
 
     <Window.Background>
@@ -58,8 +58,10 @@
                     <MenuItem Header="Remove All Formations" Click="deleteAllFormations"/>
                     <MenuItem Header="Remove All Sub-Formations" Click="deleteAllSubFormations"/>
                     <MenuItem Header="Remove All Plays" Click="deleteAllPlays"/>
-                    <MenuItem Header="Remove All PBAI" Click="deletePBAI"/>
                 </MenuItem>
+                <!--<MenuItem Header="Delete">
+                    <MenuItem Header="Remove All PBAI" Click="deletePBAI"/>
+                </MenuItem>-->
                 <MenuItem Header="PSAL Editor" Click="PSAL_Editor"/>
             </MenuItem>
             <MenuItem Header="Help">
@@ -280,9 +282,28 @@
             </TabControl.ItemContainerStyle>
         </TabControl>-->
         
-        <Expander Foreground="LightGray" Header="Situations" ExpandDirection="Down" IsExpanded="True">
+        <Expander Foreground="LightGray" Header="Sabo's Gameplan Editor" ExpandDirection="Down" IsExpanded="True">
 
             <DockPanel>
+
+                <Button x:Name="btnRevampGameplan" Content="Revamp Gameplan" DockPanel.Dock="Top" Margin="5" Click="btnRevampGameplan_Click" />
+
+                <Grid DockPanel.Dock="Top">
+                    <ComboBox 
+                        x:Name="cbxPLYT"
+                        ItemsSource="{Binding}"
+                        SelectedValuePath="Key" 
+                        DisplayMemberPath="Value"
+                        Margin="5,1"
+                        BorderBrush="Transparent"
+                        BorderThickness="0"
+                        SelectionChanged="cbxPLYT_SelectionChanged"
+                        ScrollViewer.CanContentScroll="False"
+                        ScrollViewer.VerticalScrollBarVisibility="Hidden"
+                        ScrollViewer.HorizontalScrollBarVisibility="Hidden"
+                        IsEditable="True"
+                        Text="Select Plays by Type"/>
+                </Grid>
 
                 <ListView 
                     x:Name="lvwSituations" 
@@ -290,7 +311,8 @@
                     ScrollViewer.CanContentScroll="False"
                     Background="Transparent"
                     BorderBrush="Transparent"
-                    MouseUp="lvwSituations_MouseUp">
+                    MouseUp="lvwSituations_MouseUp"
+                    DockPanel.Dock="Top">
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <UserControls:Situation situation="{Binding}"/>
@@ -302,9 +324,7 @@
                         </ItemsPanelTemplate>
                     </ListView.ItemsPanel>
                     <ListView.ItemContainerStyle>
-                        <Style TargetType="{x:Type ListViewItem}" BasedOn="{StaticResource SituationListViewItem}">
-                            <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay}" />
-                        </Style>
+                        <Style TargetType="{x:Type ListViewItem}" BasedOn="{StaticResource SituationListViewItem}"/>
                     </ListView.ItemContainerStyle>
                 </ListView>
 
@@ -312,7 +332,7 @@
 
         </Expander>
         
-        <!--<Expander Foreground="LightGray" Header="PSALs" ExpandDirection="Down" IsExpanded="True">
+        <Expander Foreground="LightGray" Header="PSALs" ExpandDirection="Down" IsExpanded="True">
 
             <DockPanel Width="Auto" Height="Auto" HorizontalAlignment="Stretch" DockPanel.Dock="Left">
 
@@ -370,13 +390,13 @@
                                     </Style>
                                 </HierarchicalDataTemplate.ItemContainerStyle>
 
-                                <UserControls:SubFormation x:Name="uclSubFormation" subFormation="{Binding}" showPackage="False"/>
+                                <UserControls:SubFormation x:Name="uclSubFormation" subFormation="{Binding}"/>
 
                             </HierarchicalDataTemplate>
 
                             <HierarchicalDataTemplate DataType="{x:Type TeamPlaybookViewModels:PlayVM}">
 
-                                <UserControls:Play x:Name="uclPlay" play="{Binding}" showAudibles="False"/>
+                                <UserControls:Play x:Name="uclPlay" play="{Binding}"/>
 
                             </HierarchicalDataTemplate>
 
@@ -407,7 +427,7 @@
 
             </DockPanel>
 
-        </Expander>-->
+        </Expander>
  
         <Expander Foreground="LightGray" Header="Tables" ExpandDirection="Down">
 
