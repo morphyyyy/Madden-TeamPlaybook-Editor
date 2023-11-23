@@ -39,16 +39,6 @@
 
     <DockPanel>
 
-        <!--<ComboBox 
-            x:Name="cbxAIGR"
-            ItemsSource="{Binding SituationOff}"
-            SelectedValue="{Binding AIGR, Mode=TwoWay}" 
-            SelectedValuePath="Key" 
-            DisplayMemberPath="Value"
-            Margin="5,1"/>-->
-
-        <!--<TextBox Text="{Binding prct, UpdateSourceTrigger=PropertyChanged}"/>-->
-        
         <Canvas 
             Height="19"
             Width="100"

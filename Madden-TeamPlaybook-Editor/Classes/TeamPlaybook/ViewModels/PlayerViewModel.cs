@@ -84,31 +84,34 @@ namespace MaddenTeamPlaybookEditor.ViewModels
                 if (_XY == value)
                     return;
                 _XY = value;
-                if (this.Play.SubFormation.CurrentAlignment != null)
+                if (this.Play != null)
                 {
-                    if (this.SETG.SGF_ != this.Play.SubFormation.CurrentAlignment.SGFM.SGF_)
+                    if (this.Play.SubFormation.CurrentAlignment != null)
                     {
-                        this.Play.SubFormation.CurrentAlignment.SETG[this.Play.SubFormation.CurrentAlignment.SETG.FindIndex(setp => setp.SETP == this.SETG.SETP)] = new SETG
+                        if (this.SETG.SGF_ != this.Play.SubFormation.CurrentAlignment.SGFM.SGF_)
                         {
-                            rec = this.Play.SubFormation.Formation.Playbook.SETG.Max(x => x.rec) + 1,
-                            setg = TeamPlaybook.NextAvailableID(this.Play.SubFormation.Formation.Playbook.SETG.Select(setg => setg.setg).ToList(), false, 0, this.SETG.setg),
-                            SETP = this.SETG.SETP,
-                            SGF_ = this.SETG.SGF_,
-                            SF__ = this.SETG.SF__,
-                            x___ = (float)(_XY.X * .0875),
-                            y___ = (float)(_XY.Y * -.1),
-                            fx__ = this.SETG.fx__,
-                            fy__ = this.SETG.fy__,
-                            anm_ = this.SETG.anm_,
-                            dir_ = this.SETG.dir_,
-                            fanm = this.SETG.fanm,
-                            fdir = this.SETG.fdir
-                        };
-                    }
-                    else
-                    {
-                        this.SETG.x___ = (float)(_XY.X * .0875);
-                        this.SETG.y___ = (float)(_XY.Y * -.1);
+                            this.Play.SubFormation.CurrentAlignment.SETG[this.Play.SubFormation.CurrentAlignment.SETG.FindIndex(setp => setp.SETP == this.SETG.SETP)] = new SETG
+                            {
+                                rec = this.Play.SubFormation.Formation.Playbook.SETG.Max(x => x.rec) + 1,
+                                setg = TeamPlaybook.NextAvailableID(this.Play.SubFormation.Formation.Playbook.SETG.Select(setg => setg.setg).ToList(), false, 0, this.SETG.setg),
+                                SETP = this.SETG.SETP,
+                                SGF_ = this.SETG.SGF_,
+                                SF__ = this.SETG.SF__,
+                                x___ = (float)(_XY.X * .0875),
+                                y___ = (float)(_XY.Y * -.1),
+                                fx__ = this.SETG.fx__,
+                                fy__ = this.SETG.fy__,
+                                anm_ = this.SETG.anm_,
+                                dir_ = this.SETG.dir_,
+                                fanm = this.SETG.fanm,
+                                fdir = this.SETG.fdir
+                            };
+                        }
+                        else
+                        {
+                            this.SETG.x___ = (float)(_XY.X * .0875);
+                            this.SETG.y___ = (float)(_XY.Y * -.1);
+                        }
                     }
                 }
                 OnPropertyChanged("XY");
@@ -563,11 +566,6 @@ namespace MaddenTeamPlaybookEditor.ViewModels
                         //convert to offest
                         if (RoutePoints.Count > 0) Offset = RoutePoints[RoutePoints.Count - 1];
                         RoutePoints.Add(MoveDistDirToXY(PSAL[i].val1, PSAL[i].val2, Offset, flipPSAL));
-
-                        //if (RoutePoints[RoutePoints.Count - 1].X < 50 || RoutePoints[RoutePoints.Count - 1].X > 483)
-                        //{
-                        //    RoutePoints[RoutePoints.Count - 1] = MoveDistDirToXY(60, PSAL[i].val2, Offset, flipPSAL);
-                        //}
 
                         if (artlColor.Equals(ARTLColor.Undefined)) artlColor = ARTLColor.BaseRoute;
                         break;
@@ -1377,7 +1375,7 @@ namespace MaddenTeamPlaybookEditor.ViewModels
                                 new Point
                                 {
                                     X = ((PSAL[i].val1 / 5.6667) - SETG.fx__) * 10 * -2,
-                                    Y = (Math.Abs(PSAL[i].val2 / 5.6667) + SETG.y___) * 10
+                                    Y = (Math.Abs(PSAL[i].val2 / 5.6667) + SETG.fy__) * 10
                                 });
                         }
                         else
@@ -1386,7 +1384,7 @@ namespace MaddenTeamPlaybookEditor.ViewModels
                                 new Point
                                 {
                                     X = ((PSAL[i].val1 / 5.6667) - SETG.x___) * 10,
-                                    Y = (Math.Abs(PSAL[i].val2 / 5.6667) + SETG.fy__) * 10
+                                    Y = (Math.Abs(PSAL[i].val2 / 5.6667) + SETG.y___) * 10
                                 });
                         }
                         artlColor = ARTLColor.MotionRoute;
@@ -1432,8 +1430,27 @@ namespace MaddenTeamPlaybookEditor.ViewModels
 
                         //val1 to X = 9/51 = 1.7647
                         //val2 to Y = .8/3 = 2.6667
-                        XY = new Point(PSAL[i].val1 * 1.7647, PSAL[i].val2 * -2.6667);
+                        //XY = new Point(PSAL[i].val1 * 1.7647, PSAL[i].val2 * -2.6667);
                         //if (flipPSAL) RoutePoints[RoutePoints.Count - 1].Offset(RoutePoints[RoutePoints.Count - 1].X * -2, RoutePoints[RoutePoints.Count - 1].Y);
+
+                        if (flipPSAL)
+                        {
+                            RoutePoints.Add(
+                                new Point
+                                {
+                                    X = (PSAL[i].val1 * -1.7647) - XY.X,
+                                    Y = (PSAL[i].val2 * -2.6667) - XY.Y
+                                });
+                        }
+                        else
+                        {
+                            RoutePoints.Add(
+                                new Point
+                                {
+                                    X = (PSAL[i].val1 * 1.7647) - XY.X,
+                                    Y = (PSAL[i].val2 * -2.6667) - XY.Y
+                                });
+                        }
 
                         break;
 

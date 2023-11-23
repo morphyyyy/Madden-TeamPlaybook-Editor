@@ -17,6 +17,8 @@ using System.Runtime.InteropServices;
 using System.Linq;
 using System.Windows.Data;
 using Madden.TeamPlaybook;
+using Madden.CustomPlaybook;
+using Madden.Team;
 
 namespace MaddenTeamPlaybookEditor
 {
@@ -53,7 +55,7 @@ namespace MaddenTeamPlaybookEditor
         {
             InitializeComponent();
 
-            filePath = "E:\\Software\\FIFA Editor Tool v1.1.2\\Madden 23\\Playbooks\\Offense\\Madden_Saints.DB";
+            filePath = "E:\\Software\\MMC_Editor\\Madden 24\\All_Legacy_Files\\common\\database\\playbooks\\madden_saints.db.DB";
             if (File.Exists(filePath))
             {
                 OpenTDB(filePath);
@@ -79,6 +81,7 @@ namespace MaddenTeamPlaybookEditor
         {
             wdwPlaybookEditor.Title = "Madden Team Playbook Editor - " + Path.GetFileName(Playbook.filePath);
             tvwPlaybook.DataContext = Playbook;
+            cbxPLYT.DataContext = TeamPlaybook.PlayType.OrderBy(s => s.Value);
             if (Playbook.Type == "Offense")
             {
                 lvwSituations.DataContext = TeamPlaybook.SituationOff.Select(p => new Madden.TeamPlaybook.PBAI { AIGR = p.Key, Name = p.Value }).ToList();
@@ -88,7 +91,7 @@ namespace MaddenTeamPlaybookEditor
                 lvwSituations.DataContext = TeamPlaybook.SituationDef.Select(p => new Madden.TeamPlaybook.PBAI { AIGR = p.Key, Name = p.Value }).ToList();
             }
             tclTables.DataContext = Playbook;
-            //tvwPSALs.DataContext = Playbook.GetPSALlist();
+            tvwPSALs.DataContext = Playbook.GetPSALlist();
             //tabPlaybook.DataContext = Playbook;
         }
 
@@ -593,6 +596,23 @@ namespace MaddenTeamPlaybookEditor
 
         private void tvwPSALs_Selected(object sender, RoutedEventArgs e)
         {
+            PlayerVM _player = uclPlayModal.play != null ? uclPlayModal.play.Players.Where(p => p.IsSelected).FirstOrDefault() : null;
+            if (tvwPSALs.SelectedItem is PlayVM && _player != null)
+            {
+                _player.PLYS.PSAL = ((PlayVM)tvwPSALs.SelectedItem).Players[0].PLYS.PSAL;
+                _player.PLYS.ARTL = ((PlayVM)tvwPSALs.SelectedItem).Players[0].PLYS.ARTL;
+                _player.PLYS.PLRR = ((PlayVM)tvwPSALs.SelectedItem).Players[0].PLYS.PLRR;
+                _player.UpdatePlayer();
+                _player.Play.UpdatePlay();
+                UserControl _play = UIHelper.FindChild<UserControl>(tvwPlaybook, "uclPlay", uclPlayModal.play);
+                ItemsControl playart = UIHelper.FindChild<ItemsControl>(_play, "iclPlayarts");
+                if (playart != null)
+                {
+                    playart.Items.Refresh();
+                }
+                uclPlayModal.iclPSALs.Items.Refresh();
+                uclPlayModal.tabPlayer.Items.Refresh();
+            }
             //TreeViewItem tvi = e.OriginalSource as TreeViewItem;
 
             //if (tvi == null || e.Handled) return;
@@ -605,9 +625,83 @@ namespace MaddenTeamPlaybookEditor
             //}
         }
 
+        public static class UIHelper
+        {
+            public static T FindVisualParent<T>(DependencyObject control)
+            where T : DependencyObject
+            {
+                // get parent item
+                DependencyObject parentObject = VisualTreeHelper.GetParent(control);
+
+                // we’ve reached the end of the tree
+                if (parentObject == null) return null;
+
+                // check if the parent matches the type we’re looking for
+                T parent = parentObject as T;
+                if (parent != null)
+                {
+                    return parent;
+                }
+                else
+                {
+                    // use recursion to proceed with next level
+                    return FindVisualParent<T>(parentObject);
+                }
+            }
+
+            public static T FindChild<T>(DependencyObject parent, string childName, PlayVM _play = null)
+            where T : DependencyObject
+            {
+                // Confirm parent and childName are valid. 
+                if (parent == null) return null;
+                T foundChild = null;
+                int childrenCount = VisualTreeHelper.GetChildrenCount(parent);
+                for (int i = 0; i < childrenCount; i++)
+                {
+                    var child = VisualTreeHelper.GetChild(parent, i);
+                    // If the child is not of the request child type child
+                    T childType = child as T;
+                    if (childType == null)
+                    {
+                        // recursively drill down the tree
+                        foundChild = FindChild<T>(child, childName, _play);
+                        // If the child is found, break so we do not overwrite the found child. 
+                        if (foundChild != null) break;
+                    }
+                    else if (!string.IsNullOrEmpty(childName))
+                    {
+                        var frameworkElement = child as FrameworkElement;
+                        // If the child's name is set for search
+                        if (frameworkElement != null && frameworkElement.Name == childName && frameworkElement is Play && _play != null)
+                        {
+                            if (frameworkElement.DataContext == _play)
+                            {
+                                foundChild = (T)child;
+                                break;
+                            }
+                        }
+                        else if (frameworkElement != null && frameworkElement.Name == childName)
+                        {
+                            // if the child's name is of the request name
+                            foundChild = (T)child;
+                            break;
+                        }
+                        foundChild = FindChild<T>(child, childName, _play);
+                    }
+                    else
+                    {
+                        // child element found.
+                        foundChild = (T)child;
+                        break;
+                    }
+                }
+                return foundChild;
+            }
+        }
+
         #endregion
 
-        #region Drag & Drop
+        #region UI Events
 
         private void treeView_MouseDown(object sender, MouseButtonEventArgs e)
         {
@@ -834,40 +928,141 @@ namespace MaddenTeamPlaybookEditor
 
         private void lvwSituations_MouseUp(object sender, MouseButtonEventArgs e)
         {
-            foreach (FormationVM _formation in ((TeamPlaybook)tvwPlaybook.DataContext).Formations)
+            if (lvwSituations.SelectedItem != null)
             {
-                foreach (SubFormationVM _subFormation in _formation.SubFormations)
+                foreach (FormationVM _formation in ((TeamPlaybook)tvwPlaybook.DataContext).Formations)
                 {
-                    List<PlayVM> _plays = _subFormation.Plays.Where(p => p.IsExpanded || p.IsSelected).ToList();
-                    for (int i = 0; i < _plays.Count; i++)
+                    foreach (SubFormationVM _subFormation in _formation.SubFormations)
                     {
-                        Madden.TeamPlaybook.PBAI _pbai = _plays[i].Situations.Where(p => p.AIGR == ((Madden.TeamPlaybook.PBAI)lvwSituations.SelectedItem).AIGR).FirstOrDefault();
-                        if (_pbai != null)
+                        List<PlayVM> _plays = _subFormation.Plays.Where(p => p.IsExpanded || p.IsSelected).ToList();
+                        for (int i = 0; i < _plays.Count; i++)
                         {
-                            _pbai.prct = ((Madden.TeamPlaybook.PBAI)lvwSituations.SelectedItem).prct;
-                        }
-                        else if (((Madden.TeamPlaybook.PBAI)lvwSituations.SelectedItem).prct > 0)
-                        {
-                            Madden.TeamPlaybook.PBAI newPBAI = new Madden.TeamPlaybook.PBAI 
-                            {  
-                                AIGR = ((Madden.TeamPlaybook.PBAI)lvwSituations.SelectedItem).AIGR,
-                                Flag = _plays[i].PBPL.Flag,
-                                PBPL = _plays[i].PBPL.pbpl,
-                                PLF_ = _plays[i].PLYL.PLF_,
-                                PLYT = _plays[i].PLYL.PLYT,
-                                prct = ((Madden.TeamPlaybook.PBAI)lvwSituations.SelectedItem).prct,
-                                rec = TeamPlaybook.NextAvailableID((from pbai in ((TeamPlaybook)tvwPlaybook.DataContext).PBAI select pbai.rec).ToList()),
-                                SETL = _plays[i].SubFormation.SETL.setl,
-                                vpos = _plays[i].PLYL.vpos
-                            };
-                            ((TeamPlaybook)tvwPlaybook.DataContext).PBAI.Add(newPBAI);
-                            _plays[i].Situations.Add(newPBAI);
+                            Madden.TeamPlaybook.PBAI _pbai = _plays[i].Situations.Where(p => p.AIGR == ((Madden.TeamPlaybook.PBAI)lvwSituations.SelectedItem).AIGR).FirstOrDefault();
+                            if (_pbai != null)
+                            {
+                                _pbai.prct = ((Madden.TeamPlaybook.PBAI)lvwSituations.SelectedItem).prct;
+                            }
+                            else if (((Madden.TeamPlaybook.PBAI)lvwSituations.SelectedItem).prct > 0)
+                            {
+                                Madden.TeamPlaybook.PBAI newPBAI = new Madden.TeamPlaybook.PBAI
+                                {
+                                    AIGR = ((Madden.TeamPlaybook.PBAI)lvwSituations.SelectedItem).AIGR,
+                                    Flag = _plays[i].PBPL.Flag,
+                                    PBPL = _plays[i].PBPL.pbpl,
+                                    PLF_ = _plays[i].PLYL.PLF_,
+                                    PLYT = _plays[i].PLYL.PLYT,
+                                    prct = ((Madden.TeamPlaybook.PBAI)lvwSituations.SelectedItem).prct,
+                                    rec = TeamPlaybook.NextAvailableID((from pbai in ((TeamPlaybook)tvwPlaybook.DataContext).PBAI select pbai.rec).ToList()),
+                                    SETL = _plays[i].SubFormation.SETL.setl,
+                                    vpos = _plays[i].PLYL.vpos
+                                };
+                                ((TeamPlaybook)tvwPlaybook.DataContext).PBAI.Add(newPBAI);
+                                _plays[i].Situations.Add(newPBAI);
+                            }
                         }
                     }
                 }
+                ((TeamPlaybook)tvwPlaybook.DataContext).PBAI = Madden.TeamPlaybook.PBAI.Sort(((TeamPlaybook)tvwPlaybook.DataContext).PBAI);
+                uclPBAITable.dgdPBAI.Items.Refresh();
             }
-            ((TeamPlaybook)tvwPlaybook.DataContext).PBAI = Madden.TeamPlaybook.PBAI.Sort(((TeamPlaybook)tvwPlaybook.DataContext).PBAI);
-            uclPBAITable.dgdPBAI.Items.Refresh();
+        }
+
+        private void cbxPLYT_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (cbxPLYT.SelectedValue != null)
+            {
+                List<PlayVM> _plays = new List<PlayVM>();
+                foreach (FormationVM _formation in ((TeamPlaybook)tvwPlaybook.DataContext).Formations)
+                {
+                    foreach (SubFormationVM _subFormation in _formation.SubFormations)
+                    {
+                        foreach (PlayVM _play in _subFormation.Plays)
+                        {
+                            _play.IsExpanded = false;
+                            _play.IsSelected = false;
+                            _plays.Add(_play);
+                        }
+                    }
+                }
+                List<PlayVM> _playsFiltered = _plays.Where(p => p.PLYL.PLYT == (int)cbxPLYT.SelectedValue).ToList();
+                foreach (PlayVM _play in _playsFiltered)
+                {
+                    _play.IsExpanded = true;
+                }
+                uclPlayModal.UpdateLayout();
+            } 
+        }
+
+        private void btnRevampGameplan_Click(object sender, RoutedEventArgs e)
+        {
+            if (MessageBox.Show("Are you sure you want to Revamp the Gameplan?", "Warning", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
+            {
+                List<Madden.TeamPlaybook.PBAI> _pbai = TeamPlaybook.PBAI.Where(p => TeamPlaybook.KeySituations1.Contains(p.AIGR)).ToList();
+                TeamPlaybook.PBAI.RemoveAll(p => _pbai.Contains(p));
+                List<int> _form = TeamPlaybook.FORM.Where(p => TeamPlaybook.KeyFormations.Contains(p.name)).Select(p => p.form).ToList();
+                List<int> _setl = TeamPlaybook.SETL.Where(p => _form.Contains(p.FORM)).Select(p => p.setl).ToList();
+                foreach (Madden.TeamPlaybook.PLYL play in TeamPlaybook.PLYL)
+                {
+                    foreach (int airg in TeamPlaybook.KeySituations1.Where(p => p != 4).ToList())
+                    {
+                        TeamPlaybook.PBAI.Add(new Madden.TeamPlaybook.PBAI
+                        {
+                            rec = TeamPlaybook.NextAvailableID(TeamPlaybook.PBAI.Select(p => p.rec).ToList()),
+                            PBPL = TeamPlaybook.PBPL.Where(p => p.PLYL == play.plyl).FirstOrDefault().pbpl,
+                            SETL = play.SETL,
+                            AIGR = airg,
+                            PLYT = play.PLYT,
+                            PLF_ = play.PLF_,
+                            Flag = TeamPlaybook.PBPL.Where(p => p.PLYL == play.plyl).FirstOrDefault().Flag,
+                            vpos = play.vpos,
+                            prct = 10
+                        });
+                    }
+                }
+                List<Madden.TeamPlaybook.PBAI> _pbaiToRemove = TeamPlaybook.PBAI.Where(p => TeamPlaybook.IgnoreFormation.Contains(p.SETL) && TeamPlaybook.IgnoreSituations.Contains(p.AIGR)).ToList();
+                TeamPlaybook.PBAI.RemoveAll(p => _pbaiToRemove.Contains(p));
+
+                _pbai = TeamPlaybook.PBAI.Where(p => TeamPlaybook.KeySituations2.Contains(p.AIGR)).ToList();
+                _pbai = _pbai.Where(p => TeamPlaybook.KeyPlayTypes.Contains(p.PLYT)).ToList();
+                TeamPlaybook.PBAI.RemoveAll(p => _pbai.Contains(p));
+                List<Madden.TeamPlaybook.PLYL> _plyl = TeamPlaybook.PLYL.Where(p => TeamPlaybook.KeyPlays.Contains(p.plyl) && !_setl.Contains(p.SETL)).ToList();
+                foreach (Madden.TeamPlaybook.PLYL play in _plyl)
+                {
+                    foreach (int airg in TeamPlaybook.KeySituations2)
+                    {
+                        TeamPlaybook.PBAI.Add(new Madden.TeamPlaybook.PBAI
+                        {
+                            rec = TeamPlaybook.NextAvailableID(TeamPlaybook.PBAI.Select(p => p.rec).ToList()),
+                            PBPL = TeamPlaybook.PBPL.Where(p => p.PLYL == play.plyl).FirstOrDefault().pbpl,
+                            SETL = play.SETL,
+                            AIGR = airg,
+                            PLYT = play.PLYT,
+                            PLF_ = play.PLF_,
+                            Flag = TeamPlaybook.PBPL.Where(p => p.PLYL == play.plyl).FirstOrDefault().Flag,
+                            vpos = play.vpos,
+                            prct = 10
+                        });
+                    }
+                }
+                _pbaiToRemove = TeamPlaybook.PBAI.Where(p => TeamPlaybook.IgnoreFormation.Contains(p.SETL) && TeamPlaybook.IgnoreSituations.Contains(p.AIGR)).ToList();
+                TeamPlaybook.PBAI.RemoveAll(p => _pbaiToRemove.Contains(p));
+                for (int i = 0; i < TeamPlaybook.PBAI.Count(); i++)
+                {
+                    TeamPlaybook.PBAI[i].rec = i;
+                }
+
+                foreach (FormationVM _formation in ((TeamPlaybook)tvwPlaybook.DataContext).Formations)
+                {
+                    foreach (SubFormationVM _subFormation in _formation.SubFormations)
+                    {
+                        foreach (PlayVM _play in _subFormation.Plays)
+                        {
+                            _play.GetSituations();
+                        }
+                    }
+                }
+                lvwSituations.Items.Refresh();
+            }
         }
 
         #endregion
