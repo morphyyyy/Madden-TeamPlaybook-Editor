@@ -15,10 +15,6 @@ using MaddenTeamPlaybookEditor.Classes;
 using System.Windows.Documents;
 using System.Runtime.InteropServices;
 using System.Linq;
-using System.Windows.Data;
-using Madden.TeamPlaybook;
-using Madden.CustomPlaybook;
-using Madden.Team;
 
 namespace MaddenTeamPlaybookEditor
 {
@@ -926,65 +922,18 @@ namespace MaddenTeamPlaybookEditor
             return new Point(w32Mouse.X, w32Mouse.Y);
         }
 
-        private void lvwSituations_MouseUp(object sender, MouseButtonEventArgs e)
-        {
-            if (lvwSituations.SelectedItem != null)
-            {
-                foreach (FormationVM _formation in ((TeamPlaybook)tvwPlaybook.DataContext).Formations)
-                {
-                    foreach (SubFormationVM _subFormation in _formation.SubFormations)
-                    {
-                        List<PlayVM> _plays = _subFormation.Plays.Where(p => p.IsExpanded || p.IsSelected).ToList();
-                        for (int i = 0; i < _plays.Count; i++)
-                        {
-                            Madden.TeamPlaybook.PBAI _pbai = _plays[i].Situations.Where(p => p.AIGR == ((Madden.TeamPlaybook.PBAI)lvwSituations.SelectedItem).AIGR).FirstOrDefault();
-                            if (_pbai != null)
-                            {
-                                _pbai.prct = ((Madden.TeamPlaybook.PBAI)lvwSituations.SelectedItem).prct;
-                            }
-                            else if (((Madden.TeamPlaybook.PBAI)lvwSituations.SelectedItem).prct > 0)
-                            {
-                                Madden.TeamPlaybook.PBAI newPBAI = new Madden.TeamPlaybook.PBAI
-                                {
-                                    AIGR = ((Madden.TeamPlaybook.PBAI)lvwSituations.SelectedItem).AIGR,
-                                    Flag = _plays[i].PBPL.Flag,
-                                    PBPL = _plays[i].PBPL.pbpl,
-                                    PLF_ = _plays[i].PLYL.PLF_,
-                                    PLYT = _plays[i].PLYL.PLYT,
-                                    prct = ((Madden.TeamPlaybook.PBAI)lvwSituations.SelectedItem).prct,
-                                    rec = TeamPlaybook.NextAvailableID((from pbai in ((TeamPlaybook)tvwPlaybook.DataContext).PBAI select pbai.rec).ToList()),
-                                    SETL = _plays[i].SubFormation.SETL.setl,
-                                    vpos = _plays[i].PLYL.vpos
-                                };
-                                ((TeamPlaybook)tvwPlaybook.DataContext).PBAI.Add(newPBAI);
-                                _plays[i].Situations.Add(newPBAI);
-                            }
-                        }
-                    }
-                }
-                ((TeamPlaybook)tvwPlaybook.DataContext).PBAI = Madden.TeamPlaybook.PBAI.Sort(((TeamPlaybook)tvwPlaybook.DataContext).PBAI);
-                uclPBAITable.dgdPBAI.Items.Refresh();
-            }
-        }
-
         private void cbxPLYT_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (cbxPLYT.SelectedValue != null)
             {
                 List<PlayVM> _plays = new List<PlayVM>();
-                foreach (FormationVM _formation in TeamPlaybook.Formations)
+                foreach (PlayVM _play in ((TeamPlaybook)tvwPlaybook.DataContext).Plays)
                 {
-                    foreach (SubFormationVM _subFormation in _formation.SubFormations)
-                    {
-                        foreach (PlayVM _play in _subFormation.Plays)
-                        {
-                            _play.IsSelected = false;
-                            _play.IsExpanded = _play.PLYL.PLYT == (int)cbxPLYT.SelectedValue;
-                        }
-                    }
+                    _play.IsSelected = false;
+                    _play.IsExpanded = _play.PLYL.PLYT == (int)cbxPLYT.SelectedValue;
                 }
                 uclPlayModal.UpdateLayout();
-            } 
+            }
         }
 
         private void btnRevampGameplan_Click(object sender, RoutedEventArgs e)
@@ -993,6 +942,282 @@ namespace MaddenTeamPlaybookEditor
             {
                 TeamPlaybook.RevampGameplan();
                 lvwSituations.Items.Refresh();
+            }
+        }
+
+        private void lvwSituations_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (lvwSituations.SelectedItem != null)
+            {
+                List<PlayVM> _plays = ((TeamPlaybook)tvwPlaybook.DataContext).Plays.Where(p => p.IsExpanded || p.IsSelected).ToList();
+                for (int i = 0; i < _plays.Count; i++)
+                {
+                    Madden.TeamPlaybook.PBAI _pbai = _plays[i].Situations.Where(p => p.AIGR == ((Madden.TeamPlaybook.PBAI)lvwSituations.SelectedItem).AIGR).FirstOrDefault();
+                    if (_pbai != null)
+                    {
+                        _pbai.prct = ((Madden.TeamPlaybook.PBAI)lvwSituations.SelectedItem).prct;
+                    }
+                    else if (((Madden.TeamPlaybook.PBAI)lvwSituations.SelectedItem).prct > 0)
+                    {
+                        Madden.TeamPlaybook.PBAI newPBAI = new Madden.TeamPlaybook.PBAI
+                        {
+                            AIGR = ((Madden.TeamPlaybook.PBAI)lvwSituations.SelectedItem).AIGR,
+                            Flag = _plays[i].PBPL.Flag,
+                            PBPL = _plays[i].PBPL.pbpl,
+                            PLF_ = _plays[i].PLYL.PLF_,
+                            PLYT = _plays[i].PLYL.PLYT,
+                            prct = ((Madden.TeamPlaybook.PBAI)lvwSituations.SelectedItem).prct,
+                            rec = TeamPlaybook.NextAvailableID((from pbai in ((TeamPlaybook)tvwPlaybook.DataContext).PBAI select pbai.rec).ToList()),
+                            SETL = _plays[i].SubFormation.SETL.setl,
+                            vpos = _plays[i].PLYL.vpos
+                        };
+                        ((TeamPlaybook)tvwPlaybook.DataContext).PBAI.Add(newPBAI);
+                        _plays[i].Situations.Add(newPBAI);
+                    }
+                    else if (((Madden.TeamPlaybook.PBAI)lvwSituations.SelectedItem).prct == 0)
+                    {
+                        ((TeamPlaybook)tvwPlaybook.DataContext).PBAI.Remove(_pbai);
+                        _plays[i].Situations.Remove(_pbai);
+                    }
+                }
+                ((TeamPlaybook)tvwPlaybook.DataContext).PBAI = Madden.TeamPlaybook.PBAI.Sort(((TeamPlaybook)tvwPlaybook.DataContext).PBAI);
+                uclPBAITable.dgdPBAI.Items.Refresh();
+
+                List<SituationVM> PlayTypes = new List<SituationVM>();
+                int playCount = 0;
+                List<int> _plyl = ((TeamPlaybook)tvwPlaybook.DataContext).PBAI.Where(p => p.AIGR == ((Madden.TeamPlaybook.PBAI)lvwSituations.SelectedItem).AIGR).Select(p => p.PLYT).Distinct().ToList();
+                Random random255 = new Random();
+                foreach (int playtype in _plyl)
+                {
+                    PlayTypes.Add(new SituationVM { Title = TeamPlaybook.PlayType[playtype], ColorBrush = new SolidColorBrush(Color.FromArgb((byte)160, (byte)random255.Next(0, 255), (byte)random255.Next(0, 255), (byte)random255.Next(0, 255))), Plays = ((TeamPlaybook)tvwPlaybook.DataContext).Plays.Where(p => p.PLYL.PLYT == playtype).ToList() });
+                    playCount += PlayTypes[PlayTypes.Count() - 1].Plays.Count();
+                }
+                foreach (SituationVM playtype in PlayTypes)
+                {
+                    playtype.Percentage = (float)Math.Round(((double)playtype.Plays.Count / (double)playCount) * 100, 1);
+                }
+                PlayTypes = PlayTypes.OrderByDescending(p => p.Percentage).ToList();
+                iclGameplanPercent.ItemsSource = PlayTypes;
+
+                float angle = 0, prevAngle = 0;
+                cvsGameplanPercent.Children.Clear();
+                foreach (SituationVM playtype in PlayTypes)
+                {
+                    double line1X = ((cvsGameplanPercent.Width / 2) * Math.Cos(angle * Math.PI / 180)) + (cvsGameplanPercent.Width / 2);
+                    double line1Y = ((cvsGameplanPercent.Width / 2) * Math.Sin(angle * Math.PI / 180)) + (cvsGameplanPercent.Height / 2);
+
+                    angle = playtype.Percentage * (float)360 / 100 + prevAngle;
+                    Debug.WriteLine(angle);
+
+                    double arcX = ((cvsGameplanPercent.Width / 2) * Math.Cos(angle * Math.PI / 180)) + (cvsGameplanPercent.Width / 2);
+                    double arcY = ((cvsGameplanPercent.Width / 2) * Math.Sin(angle * Math.PI / 180)) + (cvsGameplanPercent.Height / 2);
+
+                    var line1Segment = new LineSegment(new Point(line1X, line1Y), false);
+                    double arcWidth = (cvsGameplanPercent.Width / 2), arcHeight = (cvsGameplanPercent.Width / 2);
+                    bool isLargeArc = playtype.Percentage > 50;
+                    var arcSegment = new ArcSegment()
+                    {
+                        Size = new Size(arcWidth, arcHeight),
+                        Point = new Point(arcX, arcY),
+                        SweepDirection = SweepDirection.Clockwise,
+                        IsLargeArc = isLargeArc,
+                    };
+                    var line2Segment = new LineSegment(new Point((cvsGameplanPercent.Width / 2), (cvsGameplanPercent.Height / 2)), false);
+
+                    var pathFigure = new PathFigure(
+                        new Point((cvsGameplanPercent.Width / 2), (cvsGameplanPercent.Height / 2)),
+                        new List<PathSegment>()
+                        {
+                        line1Segment,
+                        arcSegment,
+                        line2Segment,
+                        },
+                        true);
+
+                    var pathFigures = new List<PathFigure>() { pathFigure, };
+                    var pathGeometry = new PathGeometry(pathFigures);
+                    var path = angle == 360 ?
+                        new System.Windows.Shapes.Path()
+                        {
+                            Fill = playtype.ColorBrush,
+                            Data = new EllipseGeometry(pathFigure.StartPoint, cvsGameplanPercent.Width / 2, cvsGameplanPercent.Height / 2),
+                        } :
+                        new System.Windows.Shapes.Path()
+                        {
+                            Fill = playtype.ColorBrush,
+                            Data = pathGeometry,
+                        };
+                    cvsGameplanPercent.Children.Add(path);
+                    prevAngle = angle;
+
+
+                    // draw outlines
+                    //var outline1 = new System.Windows.Shapes.Line()
+                    //{
+                    //    X1 = (cvsGameplanPercent.Width / 2),
+                    //    Y1 = (cvsGameplanPercent.Height / 2),
+                    //    X2 = line1Segment.Point.X,
+                    //    Y2 = line1Segment.Point.Y,
+                    //    Stroke = Brushes.Black,
+                    //    StrokeThickness = 1,
+                    //};
+                    //var outline2 = new System.Windows.Shapes.Line()
+                    //{
+                    //    X1 = (cvsGameplanPercent.Width / 2),
+                    //    Y1 = (cvsGameplanPercent.Height / 2),
+                    //    X2 = arcSegment.Point.X,
+                    //    Y2 = arcSegment.Point.Y,
+                    //    Stroke = Brushes.Black,
+                    //    StrokeThickness = 1,
+                    //};
+
+                    //cvsGameplanPercent.Children.Add(outline1);
+                    //cvsGameplanPercent.Children.Add(outline2);
+                }
+            }
+        }
+
+        private void iclGameplanPercent_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (iclGameplanPercent.SelectedItem != null)
+            {
+                foreach (PlayVM _play in ((TeamPlaybook)tvwPlaybook.DataContext).Plays)
+                {
+                    _play.IsSelected = false;
+                    _play.IsExpanded = ((SituationVM)iclGameplanPercent.SelectedItem).Plays.Contains(_play);
+                }
+            }
+        }
+
+        private void lvwSituations_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            if (lvwSituations.SelectedItem != null)
+            {
+                List<PlayVM> _plays = ((TeamPlaybook)tvwPlaybook.DataContext).Plays.Where(p => p.IsExpanded || p.IsSelected).ToList();
+                for (int i = 0; i < _plays.Count; i++)
+                {
+                    Madden.TeamPlaybook.PBAI _pbai = _plays[i].Situations.Where(p => p.AIGR == ((Madden.TeamPlaybook.PBAI)lvwSituations.SelectedItem).AIGR).FirstOrDefault();
+                    if (_pbai != null)
+                    {
+                        _pbai.prct = ((Madden.TeamPlaybook.PBAI)lvwSituations.SelectedItem).prct;
+                    }
+                    else if (((Madden.TeamPlaybook.PBAI)lvwSituations.SelectedItem).prct > 0)
+                    {
+                        Madden.TeamPlaybook.PBAI newPBAI = new Madden.TeamPlaybook.PBAI
+                        {
+                            AIGR = ((Madden.TeamPlaybook.PBAI)lvwSituations.SelectedItem).AIGR,
+                            Flag = _plays[i].PBPL.Flag,
+                            PBPL = _plays[i].PBPL.pbpl,
+                            PLF_ = _plays[i].PLYL.PLF_,
+                            PLYT = _plays[i].PLYL.PLYT,
+                            prct = ((Madden.TeamPlaybook.PBAI)lvwSituations.SelectedItem).prct,
+                            rec = TeamPlaybook.NextAvailableID((from pbai in ((TeamPlaybook)tvwPlaybook.DataContext).PBAI select pbai.rec).ToList()),
+                            SETL = _plays[i].SubFormation.SETL.setl,
+                            vpos = _plays[i].PLYL.vpos
+                        };
+                        ((TeamPlaybook)tvwPlaybook.DataContext).PBAI.Add(newPBAI);
+                        _plays[i].Situations.Add(newPBAI);
+                    }
+                    else if (((Madden.TeamPlaybook.PBAI)lvwSituations.SelectedItem).prct == 0)
+                    {
+                        ((TeamPlaybook)tvwPlaybook.DataContext).PBAI.Remove(_pbai);
+                        _plays[i].Situations.Remove(_pbai);
+                    }
+                }
+                ((TeamPlaybook)tvwPlaybook.DataContext).PBAI = Madden.TeamPlaybook.PBAI.Sort(((TeamPlaybook)tvwPlaybook.DataContext).PBAI);
+                uclPBAITable.dgdPBAI.Items.Refresh();
+
+                List<SituationVM> PlayTypes = new List<SituationVM>();
+                int playCount = 0;
+                List<int> _plyl = ((TeamPlaybook)tvwPlaybook.DataContext).PBAI.Where(p => p.AIGR == ((Madden.TeamPlaybook.PBAI)lvwSituations.SelectedItem).AIGR).Select(p => p.PLYT).Distinct().ToList();
+                Random random255 = new Random();
+                foreach (int playtype in _plyl)
+                {
+                    PlayTypes.Add(new SituationVM { Title = TeamPlaybook.PlayType[playtype], ColorBrush = new SolidColorBrush(Color.FromArgb((byte)160, (byte)random255.Next(0, 255), (byte)random255.Next(0, 255), (byte)random255.Next(0, 255))), Plays = ((TeamPlaybook)tvwPlaybook.DataContext).Plays.Where(p => p.PLYL.PLYT == playtype).ToList() });
+                    playCount += PlayTypes[PlayTypes.Count() - 1].Plays.Count();
+                }
+                foreach (SituationVM playtype in PlayTypes)
+                {
+                    playtype.Percentage = (float)Math.Round(((double)playtype.Plays.Count / (double)playCount) * 100, 1);
+                }
+                PlayTypes = PlayTypes.OrderByDescending(p => p.Percentage).ToList();
+                iclGameplanPercent.ItemsSource = PlayTypes;
+
+                float angle = 0, prevAngle = 0;
+                cvsGameplanPercent.Children.Clear();
+                foreach (SituationVM playtype in PlayTypes)
+                {
+                    double line1X = ((cvsGameplanPercent.Width / 2) * Math.Cos(angle * Math.PI / 180)) + (cvsGameplanPercent.Width / 2);
+                    double line1Y = ((cvsGameplanPercent.Width / 2) * Math.Sin(angle * Math.PI / 180)) + (cvsGameplanPercent.Height / 2);
+
+                    angle = playtype.Percentage * (float)360 / 100 + prevAngle;
+                    Debug.WriteLine(angle);
+
+                    double arcX = ((cvsGameplanPercent.Width / 2) * Math.Cos(angle * Math.PI / 180)) + (cvsGameplanPercent.Width / 2);
+                    double arcY = ((cvsGameplanPercent.Width / 2) * Math.Sin(angle * Math.PI / 180)) + (cvsGameplanPercent.Height / 2);
+
+                    var line1Segment = new LineSegment(new Point(line1X, line1Y), false);
+                    double arcWidth = (cvsGameplanPercent.Width / 2), arcHeight = (cvsGameplanPercent.Width / 2);
+                    bool isLargeArc = playtype.Percentage > 50;
+                    var arcSegment = new ArcSegment()
+                    {
+                        Size = new Size(arcWidth, arcHeight),
+                        Point = new Point(arcX, arcY),
+                        SweepDirection = SweepDirection.Clockwise,
+                        IsLargeArc = isLargeArc,
+                    };
+                    var line2Segment = new LineSegment(new Point((cvsGameplanPercent.Width / 2), (cvsGameplanPercent.Height / 2)), false);
+
+                    var pathFigure = new PathFigure(
+                        new Point((cvsGameplanPercent.Width / 2), (cvsGameplanPercent.Height / 2)),
+                        new List<PathSegment>()
+                        {
+                        line1Segment,
+                        arcSegment,
+                        line2Segment,
+                        },
+                        true);
+
+                    var pathFigures = new List<PathFigure>() { pathFigure, };
+                    var pathGeometry = new PathGeometry(pathFigures);
+                    var path = angle == 360 ?
+                        new System.Windows.Shapes.Path()
+                        {
+                            Fill = playtype.ColorBrush,
+                            Data = new EllipseGeometry(pathFigure.StartPoint, cvsGameplanPercent.Width / 2, cvsGameplanPercent.Height / 2),
+                        } :
+                        new System.Windows.Shapes.Path()
+                        {
+                            Fill = playtype.ColorBrush,
+                            Data = pathGeometry,
+                        };
+                    cvsGameplanPercent.Children.Add(path);
+                    prevAngle = angle;
+
+
+                    // draw outlines
+                    //var outline1 = new System.Windows.Shapes.Line()
+                    //{
+                    //    X1 = (cvsGameplanPercent.Width / 2),
+                    //    Y1 = (cvsGameplanPercent.Height / 2),
+                    //    X2 = line1Segment.Point.X,
+                    //    Y2 = line1Segment.Point.Y,
+                    //    Stroke = Brushes.Black,
+                    //    StrokeThickness = 1,
+                    //};
+                    //var outline2 = new System.Windows.Shapes.Line()
+                    //{
+                    //    X1 = (cvsGameplanPercent.Width / 2),
+                    //    Y1 = (cvsGameplanPercent.Height / 2),
+                    //    X2 = arcSegment.Point.X,
+                    //    Y2 = arcSegment.Point.Y,
+                    //    Stroke = Brushes.Black,
+                    //    StrokeThickness = 1,
+                    //};
+
+                    //cvsGameplanPercent.Children.Add(outline1);
+                    //cvsGameplanPercent.Children.Add(outline2);
+                }
             }
         }
 

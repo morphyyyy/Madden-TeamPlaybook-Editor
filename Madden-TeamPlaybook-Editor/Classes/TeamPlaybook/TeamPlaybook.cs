@@ -198,7 +198,7 @@ namespace MaddenTeamPlaybookEditor.ViewModels
             {209, "Jet Sweep"}
        };
 
-        public class Situation
+        public class Gameplan
         { 
             public static readonly List<int> KeyPlays = new List<int>
             {
@@ -281,6 +281,11 @@ namespace MaddenTeamPlaybookEditor.ViewModels
             public static readonly List<string> KeyFormations = new List<string>
             {
                 "Goal Line Offense", "Hail Mary", "Kickoff", "Onside", "Safety Kickoff", "Special", "Direct Snaps", "Wildcat"
+            };
+
+            public static readonly List<int> Percentages = new List<int>
+            {
+                0, 1, 5, 10, 15, 20, 30, 45, 60, 75, 90
             };
 
             public static readonly List<int> Run = new List<int>
@@ -569,6 +574,26 @@ namespace MaddenTeamPlaybookEditor.ViewModels
         public string filePath { get; set; }
 
         public ObservableCollection<FormationVM> Formations { get; set; }
+
+        public ObservableCollection<SubFormationVM> SubFormations
+        {
+            get 
+            {
+                ObservableCollection<SubFormationVM> _subFormations = new ObservableCollection<SubFormationVM>();
+                foreach (FormationVM _Formation in Formations) foreach (SubFormationVM _subFormation in _Formation.SubFormations) _subFormations.Add(_subFormation);
+                return _subFormations;
+            }
+        }
+
+        public ObservableCollection<PlayVM> Plays
+        {
+            get
+            {
+                ObservableCollection<PlayVM> _Plays = new ObservableCollection<PlayVM>();
+                foreach (FormationVM _Formation in Formations) foreach (SubFormationVM _subFormation in _Formation.SubFormations) foreach (PlayVM _play in _subFormation.Plays) _Plays.Add(_play);
+                return _Plays;
+            }
+        }
 
         public Point LOS { get; set; } = new Point(266.5, 600);
 
@@ -959,15 +984,15 @@ namespace MaddenTeamPlaybookEditor.ViewModels
 
         public void RevampGameplan()
         {
-            List<int> _form = FORM.Where(p => Situation.KeyFormations.Contains(p.name)).Select(p => p.form).ToList();
+            List<int> _form = FORM.Where(p => Gameplan.KeyFormations.Contains(p.name)).Select(p => p.form).ToList();
             List<int> _setl = SETL.Where(p => _form.Contains(p.FORM)).Select(p => p.setl).ToList();
             List<Madden.TeamPlaybook.PLYL> _plyl = PLYL.Where(p => !_setl.Contains(p.SETL)).ToList();
 
-            List<Madden.TeamPlaybook.PBAI> _pbai = PBAI.Where(p => Situation.KeySituations1.Contains(p.AIGR)).ToList();
+            List<Madden.TeamPlaybook.PBAI> _pbai = PBAI.Where(p => Gameplan.KeySituations1.Contains(p.AIGR)).ToList();
             PBAI.RemoveAll(p => _pbai.Contains(p));
             foreach (Madden.TeamPlaybook.PLYL play in _plyl)
             {
-                foreach (int airg in Situation.KeySituations1.Where(p => p != 4).ToList())
+                foreach (int airg in Gameplan.KeySituations1.Where(p => p != 4).ToList())
                 {
                     PBAI.Add(new Madden.TeamPlaybook.PBAI
                     {
@@ -983,17 +1008,17 @@ namespace MaddenTeamPlaybookEditor.ViewModels
                     });
                 }
             }
-            _pbai = PBAI.Where(p => Situation.IgnoreFormations1.Contains(p.SETL) && Situation.IgnoreSituations1.Contains(p.AIGR)).ToList();
+            _pbai = PBAI.Where(p => Gameplan.IgnoreFormations1.Contains(p.SETL) && Gameplan.IgnoreSituations1.Contains(p.AIGR)).ToList();
             PBAI.RemoveAll(p => _pbai.Contains(p));
-            _pbai = PBAI.Where(p => Situation.IgnoreFormations2.Contains(p.SETL) && Situation.IgnoreSituations2.Contains(p.AIGR)).ToList();
+            _pbai = PBAI.Where(p => Gameplan.IgnoreFormations2.Contains(p.SETL) && Gameplan.IgnoreSituations2.Contains(p.AIGR)).ToList();
             PBAI.RemoveAll(p => _pbai.Contains(p));
 
-            _pbai = PBAI.Where(p => Situation.KeySituations2.Contains(p.AIGR) && Situation.KeyPlayTypes.Contains(p.PLYT)).ToList();
+            _pbai = PBAI.Where(p => Gameplan.KeySituations2.Contains(p.AIGR) && Gameplan.KeyPlayTypes.Contains(p.PLYT)).ToList();
             PBAI.RemoveAll(p => _pbai.Contains(p));
-            _plyl = PLYL.Where(p => Situation.KeyPlays.Contains(p.plyl) && !_setl.Contains(p.SETL)).ToList();
+            _plyl = PLYL.Where(p => Gameplan.KeyPlays.Contains(p.plyl) && !_setl.Contains(p.SETL)).ToList();
             foreach (Madden.TeamPlaybook.PLYL play in _plyl)
             {
-                foreach (int airg in Situation.KeySituations2)
+                foreach (int airg in Gameplan.KeySituations2)
                 {
                     PBAI.Add(new Madden.TeamPlaybook.PBAI
                     {
@@ -1009,9 +1034,9 @@ namespace MaddenTeamPlaybookEditor.ViewModels
                     });
                 }
             }
-            _pbai = PBAI.Where(p => Situation.IgnoreFormations1.Contains(p.SETL) && Situation.IgnoreSituations1.Contains(p.AIGR)).ToList();
+            _pbai = PBAI.Where(p => Gameplan.IgnoreFormations1.Contains(p.SETL) && Gameplan.IgnoreSituations1.Contains(p.AIGR)).ToList();
             PBAI.RemoveAll(p => _pbai.Contains(p));
-            _pbai = PBAI.Where(p => Situation.IgnoreFormations2.Contains(p.SETL) && Situation.IgnoreSituations2.Contains(p.AIGR)).ToList();
+            _pbai = PBAI.Where(p => Gameplan.IgnoreFormations2.Contains(p.SETL) && Gameplan.IgnoreSituations2.Contains(p.AIGR)).ToList();
             PBAI.RemoveAll(p => _pbai.Contains(p));
             _pbai = PBAI.Where(p => new List<int> { 7, 8 }.Contains(p.AIGR) && new List<int> { 101, 102, 159 }.Contains(p.PLYT)).ToList();
             PBAI.RemoveAll(p => _pbai.Contains(p));
@@ -1022,9 +1047,9 @@ namespace MaddenTeamPlaybookEditor.ViewModels
 
             foreach (Madden.TeamPlaybook.PBAI play in PBAI.Where(p => p.AIGR == 35))
             {
-                if (Situation.ZoneRun.Contains(play.PLYT)) play.prct = 75;
-                if (Situation.RPO.Contains(play.PLYT)) play.prct = 45;
-                if (Situation.GapRun.Contains(play.PLYT)) play.prct = 45;
+                if (Gameplan.ZoneRun.Contains(play.PLYT)) play.prct = 75;
+                if (Gameplan.RPO.Contains(play.PLYT)) play.prct = 45;
+                if (Gameplan.GapRun.Contains(play.PLYT)) play.prct = 45;
                 if (play.PLYT == 4 && play.vpos != 5)
                 {
                     play.prct = 30;
@@ -1033,24 +1058,24 @@ namespace MaddenTeamPlaybookEditor.ViewModels
                 {
                     play.prct = 15;
                 }
-                if (Situation.Pass.Contains(play.PLYT) && play.vpos != 5)
+                if (Gameplan.Pass.Contains(play.PLYT) && play.vpos != 5)
                 {
                     play.prct = 30;
                 }
-                else if(Situation.Pass.Contains(play.PLYT) && play.vpos == 5)
+                else if(Gameplan.Pass.Contains(play.PLYT) && play.vpos == 5)
                 {
                     play.prct = 15;
                 }
-                if (Situation.Screen.Contains(play.PLYT)) play.prct = 10;
+                if (Gameplan.Screen.Contains(play.PLYT)) play.prct = 10;
             }
             foreach (Madden.TeamPlaybook.PBAI play in PBAI.Where(p => p.AIGR == 6))
             {
-                if (Situation.ZoneRun.Contains(play.PLYT)) play.prct = 40;
-                if (Situation.Pass.Contains(play.PLYT) && play.vpos != 5)
+                if (Gameplan.ZoneRun.Contains(play.PLYT)) play.prct = 40;
+                if (Gameplan.Pass.Contains(play.PLYT) && play.vpos != 5)
                 {
                     play.prct = 30;
                 }
-                else if (Situation.Pass.Contains(play.PLYT) && play.vpos == 5)
+                else if (Gameplan.Pass.Contains(play.PLYT) && play.vpos == 5)
                 {
                     play.prct = 15;
                 }
@@ -1058,14 +1083,14 @@ namespace MaddenTeamPlaybookEditor.ViewModels
                 {
                     play.prct = 15;
                 }
-                if (Situation.GapRun.Contains(play.PLYT)) play.prct = 10;
-                if (Situation.Screen.Contains(play.PLYT)) play.prct = 10;
+                if (Gameplan.GapRun.Contains(play.PLYT)) play.prct = 10;
+                if (Gameplan.Screen.Contains(play.PLYT)) play.prct = 10;
             }
             foreach (Madden.TeamPlaybook.PBAI play in PBAI.Where(p => p.AIGR == 17))
             {
-                if (Situation.ZoneRun.Contains(play.PLYT)) play.prct = 60;
-                if (Situation.RPO.Contains(play.PLYT)) play.prct = 45;
-                if (Situation.GapRun.Contains(play.PLYT)) play.prct = 45;
+                if (Gameplan.ZoneRun.Contains(play.PLYT)) play.prct = 60;
+                if (Gameplan.RPO.Contains(play.PLYT)) play.prct = 45;
+                if (Gameplan.GapRun.Contains(play.PLYT)) play.prct = 45;
                 if (play.PLYT == 4 && play.vpos != 5)
                 {
                     play.prct = 30;
@@ -1074,19 +1099,19 @@ namespace MaddenTeamPlaybookEditor.ViewModels
                 {
                     play.prct = 15;
                 }
-                if (Situation.Pass.Contains(play.PLYT) && play.vpos != 5)
+                if (Gameplan.Pass.Contains(play.PLYT) && play.vpos != 5)
                 {
                     play.prct = 30;
                 }
-                else if (Situation.Pass.Contains(play.PLYT) && play.vpos == 5)
+                else if (Gameplan.Pass.Contains(play.PLYT) && play.vpos == 5)
                 {
                     play.prct = 15;
                 }
-                if (Situation.Screen.Contains(play.PLYT)) play.prct = 10;
+                if (Gameplan.Screen.Contains(play.PLYT)) play.prct = 10;
             }
             foreach (Madden.TeamPlaybook.PBAI play in PBAI.Where(p => p.AIGR == 3 || p.AIGR == 4 || p.AIGR == 20 || p.AIGR == 25 || p.AIGR == 26 || p.AIGR == 27 || p.AIGR == 28 || p.AIGR == 39))
             {
-                if (Situation.Run.Contains(play.PLYT)) play.prct = 30;
+                if (Gameplan.Run.Contains(play.PLYT)) play.prct = 30;
                 else
                 {
                     play.prct = 10;
@@ -1094,22 +1119,22 @@ namespace MaddenTeamPlaybookEditor.ViewModels
             }
             foreach (Madden.TeamPlaybook.PBAI play in PBAI.Where(p => p.AIGR == 7))
             {
-                if (Situation.Pass.Contains(play.PLYT)) play.prct = 10;
-                if (Situation.Screen.Contains(play.PLYT)) play.prct = 1;
-                if (Situation.GapRun.Contains(play.PLYT)) play.prct = 1;
-                if (Situation.Run.Contains(play.PLYT)) play.prct = 0;
+                if (Gameplan.Pass.Contains(play.PLYT)) play.prct = 10;
+                if (Gameplan.Screen.Contains(play.PLYT)) play.prct = 1;
+                if (Gameplan.GapRun.Contains(play.PLYT)) play.prct = 1;
+                if (Gameplan.Run.Contains(play.PLYT)) play.prct = 0;
             }
             foreach (Madden.TeamPlaybook.PBAI play in PBAI.Where(p => p.AIGR == 8))
             {
-                if (Situation.Pass.Contains(play.PLYT)) play.prct = 10;
+                if (Gameplan.Pass.Contains(play.PLYT)) play.prct = 10;
                 if (play.PLYT == 4) play.prct = 1;
-                if (Situation.Screen.Contains(play.PLYT)) play.prct = 1;
-                if (Situation.GapRun.Contains(play.PLYT)) play.prct = 1;
-                if (Situation.Run.Contains(play.PLYT)) play.prct = 0;
+                if (Gameplan.Screen.Contains(play.PLYT)) play.prct = 1;
+                if (Gameplan.GapRun.Contains(play.PLYT)) play.prct = 1;
+                if (Gameplan.Run.Contains(play.PLYT)) play.prct = 0;
             }
             foreach (Madden.TeamPlaybook.PBAI play in PBAI.Where(p => p.AIGR == 1))
             {
-                if (Situation.Run.Contains(play.PLYT)) play.prct = 20;
+                if (Gameplan.Run.Contains(play.PLYT)) play.prct = 20;
                 else
                 {
                     play.prct = 10;

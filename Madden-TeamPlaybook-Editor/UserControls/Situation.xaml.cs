@@ -32,6 +32,7 @@ namespace MaddenTeamPlaybookEditor.User_Controls
 
         private void pbrSituation_MouseDown(object sender, MouseButtonEventArgs e)
         {
+            //pbrSituation.Value = (Math.Round(e.GetPosition((UIElement)pbrSituation).X / 10)) * 10;
             pbrSituation.Value = e.GetPosition((UIElement)pbrSituation).X;
             isDragging = true;
         }
