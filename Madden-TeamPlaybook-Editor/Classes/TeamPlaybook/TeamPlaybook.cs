@@ -1018,6 +1018,8 @@ namespace MaddenTeamPlaybookEditor.ViewModels
             _pbai = PBAI.Where(p => p.prct == 0).ToList();
             PBAI.RemoveAll(p => _pbai.Contains(p));
 
+            foreach (Madden.TeamPlaybook.PBAI play in PBAI) play.prct = 10;
+
             foreach (Madden.TeamPlaybook.PBAI play in PBAI.Where(p => p.AIGR == 35))
             {
                 if (Situation.ZoneRun.Contains(play.PLYT)) play.prct = 75;
@@ -1031,17 +1033,28 @@ namespace MaddenTeamPlaybookEditor.ViewModels
                 {
                     play.prct = 15;
                 }
-                if (Situation.Pass.Contains(play.PLYT)) play.prct = 30;
+                if (Situation.Pass.Contains(play.PLYT) && play.vpos != 5)
+                {
+                    play.prct = 30;
+                }
+                else if(Situation.Pass.Contains(play.PLYT) && play.vpos == 5)
+                {
+                    play.prct = 15;
+                }
                 if (Situation.Screen.Contains(play.PLYT)) play.prct = 10;
             }
             foreach (Madden.TeamPlaybook.PBAI play in PBAI.Where(p => p.AIGR == 6))
             {
                 if (Situation.ZoneRun.Contains(play.PLYT)) play.prct = 40;
-                if (play.PLYT == 4 && play.vpos != 5)
+                if (Situation.Pass.Contains(play.PLYT) && play.vpos != 5)
                 {
                     play.prct = 30;
                 }
-                else if (play.PLYT == 4 && play.vpos == 5)
+                else if (Situation.Pass.Contains(play.PLYT) && play.vpos == 5)
+                {
+                    play.prct = 15;
+                }
+                if (play.PLYT == 4 && play.vpos == 5)
                 {
                     play.prct = 15;
                 }
@@ -1061,7 +1074,14 @@ namespace MaddenTeamPlaybookEditor.ViewModels
                 {
                     play.prct = 15;
                 }
-                if (Situation.Pass.Contains(play.PLYT)) play.prct = 30;
+                if (Situation.Pass.Contains(play.PLYT) && play.vpos != 5)
+                {
+                    play.prct = 30;
+                }
+                else if (Situation.Pass.Contains(play.PLYT) && play.vpos == 5)
+                {
+                    play.prct = 15;
+                }
                 if (Situation.Screen.Contains(play.PLYT)) play.prct = 10;
             }
             foreach (Madden.TeamPlaybook.PBAI play in PBAI.Where(p => p.AIGR == 3 || p.AIGR == 4 || p.AIGR == 20 || p.AIGR == 25 || p.AIGR == 26 || p.AIGR == 27 || p.AIGR == 28 || p.AIGR == 39))
@@ -1072,9 +1092,17 @@ namespace MaddenTeamPlaybookEditor.ViewModels
                     play.prct = 10;
                 }
             }
-            foreach (Madden.TeamPlaybook.PBAI play in PBAI.Where(p => p.AIGR == 8 || p.AIGR == 7))
+            foreach (Madden.TeamPlaybook.PBAI play in PBAI.Where(p => p.AIGR == 7))
             {
                 if (Situation.Pass.Contains(play.PLYT)) play.prct = 10;
+                if (Situation.Screen.Contains(play.PLYT)) play.prct = 1;
+                if (Situation.GapRun.Contains(play.PLYT)) play.prct = 1;
+                if (Situation.Run.Contains(play.PLYT)) play.prct = 0;
+            }
+            foreach (Madden.TeamPlaybook.PBAI play in PBAI.Where(p => p.AIGR == 8))
+            {
+                if (Situation.Pass.Contains(play.PLYT)) play.prct = 10;
+                if (play.PLYT == 4) play.prct = 1;
                 if (Situation.Screen.Contains(play.PLYT)) play.prct = 1;
                 if (Situation.GapRun.Contains(play.PLYT)) play.prct = 1;
                 if (Situation.Run.Contains(play.PLYT)) play.prct = 0;

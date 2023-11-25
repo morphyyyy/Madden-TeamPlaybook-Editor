@@ -979,7 +979,7 @@ namespace MaddenTeamPlaybookEditor
                         foreach (PlayVM _play in _subFormation.Plays)
                         {
                             _play.IsSelected = false;
-                            _play.IsExpanded = _play.PLYL.PLYT == (int)cbxPLYT.SelectedValue ? true : false;
+                            _play.IsExpanded = _play.PLYL.PLYT == (int)cbxPLYT.SelectedValue;
                         }
                     }
                 }
