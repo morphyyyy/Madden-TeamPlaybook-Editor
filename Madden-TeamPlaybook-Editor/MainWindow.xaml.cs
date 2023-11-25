@@ -972,22 +972,16 @@ namespace MaddenTeamPlaybookEditor
             if (cbxPLYT.SelectedValue != null)
             {
                 List<PlayVM> _plays = new List<PlayVM>();
-                foreach (FormationVM _formation in ((TeamPlaybook)tvwPlaybook.DataContext).Formations)
+                foreach (FormationVM _formation in TeamPlaybook.Formations)
                 {
                     foreach (SubFormationVM _subFormation in _formation.SubFormations)
                     {
                         foreach (PlayVM _play in _subFormation.Plays)
                         {
-                            _play.IsExpanded = false;
                             _play.IsSelected = false;
-                            _plays.Add(_play);
+                            _play.IsExpanded = _play.PLYL.PLYT == (int)cbxPLYT.SelectedValue ? true : false;
                         }
                     }
-                }
-                List<PlayVM> _playsFiltered = _plays.Where(p => p.PLYL.PLYT == (int)cbxPLYT.SelectedValue).ToList();
-                foreach (PlayVM _play in _playsFiltered)
-                {
-                    _play.IsExpanded = true;
                 }
                 uclPlayModal.UpdateLayout();
             } 
@@ -995,73 +989,9 @@ namespace MaddenTeamPlaybookEditor
 
         private void btnRevampGameplan_Click(object sender, RoutedEventArgs e)
         {
-            if (MessageBox.Show("Are you sure you want to Revamp the Gameplan?", "Warning", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
+            if (MessageBox.Show("Are you sure you want to Revamp the Gameplan?", "Warning", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
             {
-                List<Madden.TeamPlaybook.PBAI> _pbai = TeamPlaybook.PBAI.Where(p => TeamPlaybook.KeySituations1.Contains(p.AIGR)).ToList();
-                TeamPlaybook.PBAI.RemoveAll(p => _pbai.Contains(p));
-                List<int> _form = TeamPlaybook.FORM.Where(p => TeamPlaybook.KeyFormations.Contains(p.name)).Select(p => p.form).ToList();
-                List<int> _setl = TeamPlaybook.SETL.Where(p => _form.Contains(p.FORM)).Select(p => p.setl).ToList();
-                List<Madden.TeamPlaybook.PLYL> _plyl = TeamPlaybook.PLYL.Where(p => !_setl.Contains(p.SETL)).ToList();
-                foreach (Madden.TeamPlaybook.PLYL play in _plyl)
-                {
-                    foreach (int airg in TeamPlaybook.KeySituations1.Where(p => p != 4).ToList())
-                    {
-                        TeamPlaybook.PBAI.Add(new Madden.TeamPlaybook.PBAI
-                        {
-                            rec = TeamPlaybook.NextAvailableID(TeamPlaybook.PBAI.Select(p => p.rec).ToList()),
-                            PBPL = TeamPlaybook.PBPL.Where(p => p.PLYL == play.plyl).FirstOrDefault().pbpl,
-                            SETL = play.SETL,
-                            AIGR = airg,
-                            PLYT = play.PLYT,
-                            PLF_ = play.PLF_,
-                            Flag = TeamPlaybook.PBPL.Where(p => p.PLYL == play.plyl).FirstOrDefault().Flag,
-                            vpos = play.vpos,
-                            prct = 10
-                        });
-                    }
-                }
-                List<Madden.TeamPlaybook.PBAI> _pbaiToRemove = TeamPlaybook.PBAI.Where(p => TeamPlaybook.IgnoreFormation.Contains(p.SETL) && TeamPlaybook.IgnoreSituations.Contains(p.AIGR)).ToList();
-                TeamPlaybook.PBAI.RemoveAll(p => _pbaiToRemove.Contains(p));
-
-                _pbai = TeamPlaybook.PBAI.Where(p => TeamPlaybook.KeySituations2.Contains(p.AIGR)).ToList();
-                _pbai = _pbai.Where(p => TeamPlaybook.KeyPlayTypes.Contains(p.PLYT)).ToList();
-                TeamPlaybook.PBAI.RemoveAll(p => _pbai.Contains(p));
-                _plyl = TeamPlaybook.PLYL.Where(p => TeamPlaybook.KeyPlays.Contains(p.plyl) && !_setl.Contains(p.SETL)).ToList();
-                foreach (Madden.TeamPlaybook.PLYL play in _plyl)
-                {
-                    foreach (int airg in TeamPlaybook.KeySituations2)
-                    {
-                        TeamPlaybook.PBAI.Add(new Madden.TeamPlaybook.PBAI
-                        {
-                            rec = TeamPlaybook.NextAvailableID(TeamPlaybook.PBAI.Select(p => p.rec).ToList()),
-                            PBPL = TeamPlaybook.PBPL.Where(p => p.PLYL == play.plyl).FirstOrDefault().pbpl,
-                            SETL = play.SETL,
-                            AIGR = airg,
-                            PLYT = play.PLYT,
-                            PLF_ = play.PLF_,
-                            Flag = TeamPlaybook.PBPL.Where(p => p.PLYL == play.plyl).FirstOrDefault().Flag,
-                            vpos = play.vpos,
-                            prct = 10
-                        });
-                    }
-                }
-                _pbaiToRemove = TeamPlaybook.PBAI.Where(p => TeamPlaybook.IgnoreFormation.Contains(p.SETL) && TeamPlaybook.IgnoreSituations.Contains(p.AIGR)).ToList();
-                TeamPlaybook.PBAI.RemoveAll(p => _pbaiToRemove.Contains(p));
-                for (int i = 0; i < TeamPlaybook.PBAI.Count(); i++)
-                {
-                    TeamPlaybook.PBAI[i].rec = i;
-                }
-
-                foreach (FormationVM _formation in ((TeamPlaybook)tvwPlaybook.DataContext).Formations)
-                {
-                    foreach (SubFormationVM _subFormation in _formation.SubFormations)
-                    {
-                        foreach (PlayVM _play in _subFormation.Plays)
-                        {
-                            _play.GetSituations();
-                        }
-                    }
-                }
+                TeamPlaybook.RevampGameplan();
                 lvwSituations.Items.Refresh();
             }
         }
