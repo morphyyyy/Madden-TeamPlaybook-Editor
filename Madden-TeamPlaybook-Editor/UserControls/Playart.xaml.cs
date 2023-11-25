@@ -65,7 +65,7 @@ namespace MaddenTeamPlaybookEditor.User_Controls
             PathGeometry basePath = Route == null || Route.Count == 0 ? new PathGeometry() : Route[0].Data.Clone() as PathGeometry;
             PathGeometry option1Path = Route == null || Route.Count == 0 ? new PathGeometry() : Route.Count > 1 ? Route[1].Data.Clone() as PathGeometry : new PathGeometry();
             PathGeometry option2Path = Route == null || Route.Count == 0 ? new PathGeometry() : Route.Count == 3 ? Route[2].Data.Clone() as PathGeometry : new PathGeometry();
-            Point pos = !AbsolutePositioning ? new Point(Player.XY.X + TeamPlaybook.LOS.X, Player.XY.Y + TeamPlaybook.LOS.Y) : new Point(0, 0);
+            Point pos = !AbsolutePositioning ? new Point(Player.XY.X + Player.Play.SubFormation.Formation.Playbook.LOS.X, Player.XY.Y + Player.Play.SubFormation.Formation.Playbook.LOS.Y) : new Point(0, 0);
 
             tg.Children.Add(new TranslateTransform(pos.X, pos.Y));
             dc.PushTransform(tg);
@@ -75,16 +75,16 @@ namespace MaddenTeamPlaybookEditor.User_Controls
                 for (int i = 0; i < ((PolyLineSegment)basePath.Figures[0].Segments[0]).Points.Count; i++)
                 {
                     Point p2 = ((PolyLineSegment)basePath.Figures[0].Segments[0]).Points[i];
-                    if (p2.X + Player.XY.X + TeamPlaybook.LOS.X < 25 || p2.X + Player.XY.X + TeamPlaybook.LOS.X > 508)
+                    if (p2.X + Player.XY.X + Player.Play.SubFormation.Formation.Playbook.LOS.X < 25 || p2.X + Player.XY.X + Player.Play.SubFormation.Formation.Playbook.LOS.X > 508)
                     {
                         double xIntercept = 0;
-                        if (p2.X + Player.XY.X + TeamPlaybook.LOS.X < 25)
+                        if (p2.X + Player.XY.X + Player.Play.SubFormation.Formation.Playbook.LOS.X < 25)
                         {
-                            xIntercept = -(Player.XY.X + TeamPlaybook.LOS.X - 25);
+                            xIntercept = -(Player.XY.X + Player.Play.SubFormation.Formation.Playbook.LOS.X - 25);
                         }
-                        else if (p2.X + Player.XY.X + TeamPlaybook.LOS.X > 508)
+                        else if (p2.X + Player.XY.X + Player.Play.SubFormation.Formation.Playbook.LOS.X > 508)
                         {
-                            xIntercept = 508 - (Player.XY.X + TeamPlaybook.LOS.X);
+                            xIntercept = 508 - (Player.XY.X + Player.Play.SubFormation.Formation.Playbook.LOS.X);
                         }
                         Point p1 = i > 0 ? ((PolyLineSegment)basePath.Figures[0].Segments[0]).Points[i - 1] : basePath.Figures[0].StartPoint;
                         double m = (p2.Y - p1.Y) / (p2.X - p1.X);

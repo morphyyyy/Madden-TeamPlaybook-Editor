@@ -48,7 +48,7 @@ namespace MaddenTeamPlaybookEditor.User_Controls
             SolidColorBrush EPosBrush = new SolidColorBrush(Colors.Black);
             Pen EPosPen = new Pen(playerIconBrush, 0.3);
             TransformGroup tg = new TransformGroup();
-            Point pos = !AbsolutePositioning ? new Point(Player.XY.X + TeamPlaybook.LOS.X, Player.XY.Y + TeamPlaybook.LOS.Y) : new Point(0, 0);
+            Point pos = !AbsolutePositioning ? new Point(Player.XY.X + Player.Play.SubFormation.Formation.Playbook.LOS.X, Player.XY.Y + Player.Play.SubFormation.Formation.Playbook.LOS.Y) : new Point(0, 0);
 
             tg.Children.Add(new TranslateTransform(pos.X, pos.Y));
             tg.Children.Add(new ScaleTransform(Scale, Scale));
