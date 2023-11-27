@@ -168,9 +168,9 @@ namespace MaddenTeamPlaybookEditor.ViewModels
         public void GetRouteDepth(PointCollection Points)
         {
             RouteDepth = 0;
-            if (Points.Count > 0 && (TeamPlaybook.Gameplan.Pass.Contains(PLYS.PLRR)))
+            if (TeamPlaybook.RouteType.Where(p => p.Value[0] == "RR").Select(p => p.Key).Contains(PLYS.PLRR))
             {
-                foreach (var point in Points) RouteDepth += Math.Abs(point.Y);
+                RouteDepth = Math.Abs(Points.Min(p => p.Y));
                 RouteDepth -= XY.Y;
             }
         }
