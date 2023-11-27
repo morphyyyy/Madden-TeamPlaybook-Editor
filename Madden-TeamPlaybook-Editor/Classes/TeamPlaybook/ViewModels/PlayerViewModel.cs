@@ -165,14 +165,17 @@ namespace MaddenTeamPlaybookEditor.ViewModels
             GetAttributes();
         }
 
+        /// <summary>
+        /// Returns the absolute value of RoutePoints.Min minus Player.XY.Y represented in pixels
+        /// </summary>
         public void GetRouteDepth(PointCollection Points)
         {
-            RouteDepth = 0;
-            if (TeamPlaybook.RouteType.Where(p => p.Value[0] == "RR").Select(p => p.Key).Contains(PLYS.PLRR))
-            {
-                RouteDepth = Math.Abs(Points.Min(p => p.Y));
-                RouteDepth -= XY.Y;
-            }
+            RouteDepth = TeamPlaybook.RouteType
+                .Where(p => p.Value[0] == "RR")
+                .Select(p => p.Key)
+                .Contains(PLYS.PLRR)
+                ?Math.Abs(Points.Min(p => p.Y)) - XY.Y
+                :0;
         }
 
         public void GetAssignment()
