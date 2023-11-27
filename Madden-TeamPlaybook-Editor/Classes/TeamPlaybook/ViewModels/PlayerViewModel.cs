@@ -10,6 +10,7 @@ using System.Windows;
 using System.Windows.Media;
 using System.Globalization;
 using MaddenTeamPlaybookEditor.User_Controls;
+using System.Windows.Markup;
 
 namespace MaddenTeamPlaybookEditor.ViewModels
 {
@@ -118,6 +119,7 @@ namespace MaddenTeamPlaybookEditor.ViewModels
             }
         }
         public Progression progression { get; set; }
+        public double RouteDepth { get; set; }
         public DCHT DCHT { get; set; }
         public PLAY Player { get; set; }
 
@@ -161,6 +163,16 @@ namespace MaddenTeamPlaybookEditor.ViewModels
             GetRouteCap();
             if (Play.PLPD != null) GetIcxIcy();
             GetAttributes();
+        }
+
+        public void GetRouteDepth(PointCollection Points)
+        {
+            RouteDepth = 0;
+            if (Points.Count > 0 && (TeamPlaybook.Gameplan.Pass.Contains(PLYS.PLRR)))
+            {
+                foreach (var point in Points) RouteDepth += Math.Abs(point.Y);
+                RouteDepth -= XY.Y;
+            }
         }
 
         public void GetAssignment()
@@ -1480,6 +1492,8 @@ namespace MaddenTeamPlaybookEditor.ViewModels
             }
 
             //foreach (Path path in PSALpath) ((PathGeometry)path.Data).Freeze();
+
+            GetRouteDepth(RoutePoints);
 
             this.PSALpath = PSALpath;
         }
