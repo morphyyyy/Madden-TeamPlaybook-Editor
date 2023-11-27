@@ -87,6 +87,7 @@ namespace MaddenTeamPlaybookEditor
             {
                 lvwSituations.DataContext = TeamPlaybook.SituationDef.Select(p => new Madden.TeamPlaybook.PBAI { AIGR = p.Key, Name = p.Value }).ToList();
             }
+            lvwPlaysByRouteDepth.DataContext = TeamPlaybook.Plays.Where(p => p.PLPD != null).OrderByDescending(p => p.AverageRouteDepth);
             tclTables.DataContext = Playbook;
             tvwPSALs.DataContext = Playbook.GetPSALlist();
             //tabPlaybook.DataContext = Playbook;
@@ -528,7 +529,9 @@ namespace MaddenTeamPlaybookEditor
 
         #endregion
 
-        #region TreeViewItem
+        #region UI Events
+
+        #region Playbook TreeView Events
 
         private void tvwPlaybook_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
@@ -697,8 +700,6 @@ namespace MaddenTeamPlaybookEditor
         }
 
         #endregion
-
-        #region UI Events
 
         private void treeView_MouseDown(object sender, MouseButtonEventArgs e)
         {

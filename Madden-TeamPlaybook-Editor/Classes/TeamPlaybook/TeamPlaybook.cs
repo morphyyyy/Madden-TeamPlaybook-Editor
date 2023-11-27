@@ -590,8 +590,18 @@ namespace MaddenTeamPlaybookEditor.ViewModels
             get
             {
                 ObservableCollection<PlayVM> _Plays = new ObservableCollection<PlayVM>();
-                foreach (FormationVM _Formation in Formations) foreach (SubFormationVM _subFormation in _Formation.SubFormations) foreach (PlayVM _play in _subFormation.Plays) _Plays.Add(_play);
+                foreach (SubFormationVM _subFormation in SubFormations) foreach (PlayVM _play in _subFormation.Plays) _Plays.Add(_play);
                 return _Plays;
+            }
+        }
+
+        public ObservableCollection<PlayerVM> Players
+        {
+            get
+            {
+                ObservableCollection<PlayerVM> _Players = new ObservableCollection<PlayerVM>();
+                foreach (PlayVM _play in Plays) foreach (PlayerVM _player in _play.Players) _Players.Add(_player);
+                return _Players;
             }
         }
 

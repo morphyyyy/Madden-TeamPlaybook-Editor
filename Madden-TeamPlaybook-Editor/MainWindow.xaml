@@ -380,7 +380,27 @@
             </DockPanel>
         
         </Expander>
-        
+
+        <Expander Foreground="LightGray" Header="Plays by Average Route Depth by PLPD.per" ExpandDirection="Down" IsExpanded="True">
+            <TreeView 
+                x:Name="lvwPlaysByRouteDepth" 
+                ItemsSource="{Binding}"
+                Background="Transparent"
+                BorderBrush="Transparent"
+                DockPanel.Dock="Top">
+                <TreeView.ItemTemplate>
+                    <DataTemplate>
+                        <UserControls:Play play="{Binding}"/>
+                    </DataTemplate>
+                </TreeView.ItemTemplate>
+                <TreeView.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <classes:UniformGridOrientations VerticalAlignment="Top" Orientation="Horizontal" VerticalOrientation="Top" FlowDirection="LeftToRight" IsItemsHost="True" Columns="3"/>
+                    </ItemsPanelTemplate>
+                </TreeView.ItemsPanel>
+            </TreeView>
+        </Expander>
+
         <Expander Foreground="LightGray" Header="PSALs" ExpandDirection="Down" IsExpanded="True">
 
             <DockPanel Width="Auto" Height="Auto" HorizontalAlignment="Stretch" DockPanel.Dock="Left">

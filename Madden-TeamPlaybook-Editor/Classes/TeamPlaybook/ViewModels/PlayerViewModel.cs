@@ -120,6 +120,15 @@ namespace MaddenTeamPlaybookEditor.ViewModels
         }
         public Progression progression { get; set; }
         public double RouteDepth { get; set; }
+        public double RouteDepthPLPDnormalized
+        {
+            get
+            {
+                Progression progression = this.Play.PLPD != null ? this.Play.PLPD.progressions.Where(p => p.rcv == PLYS.poso).FirstOrDefault() : null;
+                double routeMultiplier = progression != null ? progression.per : 1;
+                return RouteDepth * routeMultiplier;
+            }
+        }
         public DCHT DCHT { get; set; }
         public PLAY Player { get; set; }
 
