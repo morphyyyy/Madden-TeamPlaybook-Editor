@@ -198,7 +198,7 @@ namespace MaddenTeamPlaybookEditor.ViewModels
             AverageRouteDepth = _players.Count > 0 ?
                 Math.Round(_players.Where(p => p.progression.per > 1)
                         .Select(p => p.RouteDepthPLPDnormalized)
-                        .Average()) / 10 :
+                        .Sum()) / 10 :
                 0;
         }
 
