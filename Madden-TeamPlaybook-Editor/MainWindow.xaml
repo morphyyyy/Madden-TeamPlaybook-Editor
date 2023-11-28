@@ -390,7 +390,10 @@
                 DockPanel.Dock="Top">
                 <TreeView.ItemTemplate>
                     <DataTemplate>
-                        <UserControls:Play play="{Binding}"/>
+                        <DockPanel>
+                            <UserControls:Play play="{Binding}" DockPanel.Dock="Top"/>
+                            <TextBlock Text="{Binding AverageRouteDepth, StringFormat=Avg Route Depth: {0} Yards}" DockPanel.Dock="Top" Foreground="LightGray" HorizontalAlignment="Center"/>
+                        </DockPanel>
                     </DataTemplate>
                 </TreeView.ItemTemplate>
                 <TreeView.ItemsPanel>

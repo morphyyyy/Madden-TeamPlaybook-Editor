@@ -194,7 +194,12 @@ namespace MaddenTeamPlaybookEditor.ViewModels
 
         public void GetAverageRouteDepth()
         {
-            AverageRouteDepth = Players.Where(p => p.PLYS.poso == 1 || p.PLYS.poso == 2 || p.PLYS.poso == 3 || p.PLYS.poso == 4 || p.PLYS.poso == 5).Select(p => p.RouteDepthPLPDnormalized).Average();
+            List<PlayerVM> _players = Players.Where(p => p.progression != null).ToList();
+            AverageRouteDepth = _players.Count > 0 ?
+                Math.Round(_players.Where(p => p.progression.per > 1)
+                        .Select(p => p.RouteDepthPLPDnormalized)
+                        .Average()) / 10 :
+                0;
         }
 
         public void UpdatePlayers()

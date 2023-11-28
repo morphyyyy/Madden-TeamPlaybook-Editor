@@ -124,9 +124,15 @@ namespace MaddenTeamPlaybookEditor.ViewModels
         {
             get
             {
-                Progression progression = this.Play.PLPD != null ? this.Play.PLPD.progressions.Where(p => p.rcv == PLYS.poso).FirstOrDefault() : null;
-                double routeMultiplier = progression != null ? progression.per : 1;
-                return RouteDepth * routeMultiplier;
+                int totalWeight = 
+                    this.Play.PLPD != null ? 
+                    this.Play.PLPD.progressions.Where(p => p.per > 1).Select(p => p.per).Sum() :
+                    1;
+                double routeMultiplier = 
+                    progression != null ? 
+                    progression.per : 
+                    1;
+                return (RouteDepth * routeMultiplier) / totalWeight;
             }
         }
         public DCHT DCHT { get; set; }
