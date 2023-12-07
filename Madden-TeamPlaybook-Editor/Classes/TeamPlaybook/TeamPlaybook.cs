@@ -319,6 +319,25 @@ namespace MaddenTeamPlaybookEditor.ViewModels
             };
         }
 
+        public class Tendency
+        {
+            public double PA { get; set; }
+            public double RPO { get; set; }
+            public double Pass { get; set; }
+            public double Screen { get; set; }
+            public double Gap { get; set; }
+            public double Zone { get; set; }
+        }
+
+        public Dictionary<string, List<KeyValuePair<int, Tendency>>> TeamTendencies = new Dictionary<string, List<KeyValuePair<int, Tendency>>>
+        {
+            {"49ers", new List<KeyValuePair<int, Tendency>>
+                {
+                    new KeyValuePair<int, Tendency>(SituationOff.FirstOrDefault(s => string.Equals(s.Value, "1st Down", StringComparison.OrdinalIgnoreCase)).Key, new Tendency { PA = 15, RPO = 4, Pass = 23, Screen = 5, Gap = 14, Zone = 40 } ),
+                }
+            },
+        };
+
         public static readonly Dictionary<int, List<string>> RouteType = new Dictionary<int, List<string>>
         {
             {0, new List<string> { "Invalid", "Invalid" } },
@@ -590,8 +609,18 @@ namespace MaddenTeamPlaybookEditor.ViewModels
             get
             {
                 ObservableCollection<PlayVM> _Plays = new ObservableCollection<PlayVM>();
-                foreach (FormationVM _Formation in Formations) foreach (SubFormationVM _subFormation in _Formation.SubFormations) foreach (PlayVM _play in _subFormation.Plays) _Plays.Add(_play);
+                foreach (SubFormationVM _subFormation in SubFormations) foreach (PlayVM _play in _subFormation.Plays) _Plays.Add(_play);
                 return _Plays;
+            }
+        }
+
+        public ObservableCollection<PlayerVM> Players
+        {
+            get
+            {
+                ObservableCollection<PlayerVM> _Players = new ObservableCollection<PlayerVM>();
+                foreach (PlayVM _play in Plays) foreach (PlayerVM _player in _play.Players) _Players.Add(_player);
+                return _Players;
             }
         }
 

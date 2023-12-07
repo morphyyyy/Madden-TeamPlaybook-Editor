@@ -10,6 +10,7 @@ using System.Windows;
 using System.Windows.Media;
 using System.Globalization;
 using MaddenTeamPlaybookEditor.User_Controls;
+using System.Windows.Markup;
 
 namespace MaddenTeamPlaybookEditor.ViewModels
 {
@@ -118,6 +119,22 @@ namespace MaddenTeamPlaybookEditor.ViewModels
             }
         }
         public Progression progression { get; set; }
+        public double RouteDepth { get; set; }
+        public double RouteDepthPLPDnormalized
+        {
+            get
+            {
+                int totalWeight = 
+                    this.Play.PLPD != null ? 
+                    this.Play.PLPD.progressions.Where(p => p.per > 1).Select(p => p.per).Sum() :
+                    1;
+                double routeMultiplier = 
+                    progression != null ? 
+                    progression.per : 
+                    1;
+                return (RouteDepth * routeMultiplier) / totalWeight;
+            }
+        }
         public DCHT DCHT { get; set; }
         public PLAY Player { get; set; }
 
@@ -161,6 +178,19 @@ namespace MaddenTeamPlaybookEditor.ViewModels
             GetRouteCap();
             if (Play.PLPD != null) GetIcxIcy();
             GetAttributes();
+        }
+
+        /// <summary>
+        /// Returns the absolute value of RoutePoints.Min minus Player.XY.Y represented in pixels
+        /// </summary>
+        public void GetRouteDepth(PointCollection Points)
+        {
+            RouteDepth = TeamPlaybook.RouteType
+                .Where(p => p.Value[0] == "RR")
+                .Select(p => p.Key)
+                .Contains(PLYS.PLRR)
+                ?Math.Abs(Points.Min(p => p.Y)) - XY.Y
+                :0;
         }
 
         public void GetAssignment()
@@ -1480,6 +1510,8 @@ namespace MaddenTeamPlaybookEditor.ViewModels
             }
 
             //foreach (Path path in PSALpath) ((PathGeometry)path.Data).Freeze();
+
+            GetRouteDepth(RoutePoints);
 
             this.PSALpath = PSALpath;
         }

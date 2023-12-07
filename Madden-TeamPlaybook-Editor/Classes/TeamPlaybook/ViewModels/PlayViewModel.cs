@@ -106,6 +106,7 @@ namespace MaddenTeamPlaybookEditor.ViewModels
 
         public string PlayType { get; set; }
         public string PlayArtFilePath { get; set; }
+        public double AverageRouteDepth { get; set; }
 
         private bool _isExpanded { get; set; }
         private bool _isVisible { get; set; }
@@ -187,7 +188,18 @@ namespace MaddenTeamPlaybookEditor.ViewModels
                 PLYS.Add(player);
                 Players.Add(new PlayerVM(player, this));
             }
+            GetAverageRouteDepth();
             GetPlayerPlayartViewList();
+        }
+
+        public void GetAverageRouteDepth()
+        {
+            List<PlayerVM> _players = Players.Where(p => p.progression != null).ToList();
+            AverageRouteDepth = _players.Count > 0 ?
+                Math.Round(_players.Where(p => p.progression.per > 1)
+                        .Select(p => p.RouteDepthPLPDnormalized)
+                        .Sum()) / 10 :
+                0;
         }
 
         public void UpdatePlayers()

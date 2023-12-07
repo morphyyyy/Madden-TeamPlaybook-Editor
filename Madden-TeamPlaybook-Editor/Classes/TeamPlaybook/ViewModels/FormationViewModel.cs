@@ -168,7 +168,7 @@ namespace MaddenTeamPlaybookEditor.ViewModels
             SETG = new List<SETG>(SETG.OrderBy(s => s.rec).ToList());
             for (int i = SETG.Count - 1; i >= 0; i--)
             {
-                Playbook.SETG.RemoveAt(Playbook.SETG.IndexOf(SETG[i]));
+                Playbook.SETG.Remove(Playbook.SETG.FirstOrDefault(s => s.rec == SETG[i].rec));
             }
 
             #endregion
