@@ -87,7 +87,7 @@ namespace MaddenTeamPlaybookEditor
             {
                 lvwSituations.DataContext = TeamPlaybook.SituationDef.Select(p => new Madden.TeamPlaybook.PBAI { AIGR = p.Key, Name = p.Value }).ToList();
             }
-            lvwPlaysByRouteDepth.DataContext = TeamPlaybook.Plays.Where(p => p.PLPD != null).OrderByDescending(p => p.AverageRouteDepth);
+            //lvwPlaysByRouteDepth.DataContext = TeamPlaybook.Plays.Where(p => p.PLPD != null).OrderByDescending(p => p.AverageRouteDepth);
             tclTables.DataContext = Playbook;
             tvwPSALs.DataContext = Playbook.GetPSALlist();
             //tabPlaybook.DataContext = Playbook;

@@ -381,7 +381,7 @@
         
         </Expander>
 
-        <Expander Foreground="LightGray" Header="Plays by Average Route Depth by PLPD.per" ExpandDirection="Down" IsExpanded="True">
+        <!--<Expander Foreground="LightGray" Header="Plays by Average Route Depth by PLPD.per" ExpandDirection="Down" IsExpanded="True">
             <TreeView 
                 x:Name="lvwPlaysByRouteDepth" 
                 ItemsSource="{Binding}"
@@ -402,7 +402,7 @@
                     </ItemsPanelTemplate>
                 </TreeView.ItemsPanel>
             </TreeView>
-        </Expander>
+        </Expander>-->
 
         <Expander Foreground="LightGray" Header="PSALs" ExpandDirection="Down" IsExpanded="True">
 

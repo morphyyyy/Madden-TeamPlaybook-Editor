@@ -319,6 +319,25 @@ namespace MaddenTeamPlaybookEditor.ViewModels
             };
         }
 
+        public class Tendency
+        {
+            public double PA { get; set; }
+            public double RPO { get; set; }
+            public double Pass { get; set; }
+            public double Screen { get; set; }
+            public double Gap { get; set; }
+            public double Zone { get; set; }
+        }
+
+        public Dictionary<string, List<KeyValuePair<int, Tendency>>> TeamTendencies = new Dictionary<string, List<KeyValuePair<int, Tendency>>>
+        {
+            {"49ers", new List<KeyValuePair<int, Tendency>>
+                {
+                    new KeyValuePair<int, Tendency>(SituationOff.FirstOrDefault(s => string.Equals(s.Value, "1st Down", StringComparison.OrdinalIgnoreCase)).Key, new Tendency { PA = 15, RPO = 4, Pass = 23, Screen = 5, Gap = 14, Zone = 40 } ),
+                }
+            },
+        };
+
         public static readonly Dictionary<int, List<string>> RouteType = new Dictionary<int, List<string>>
         {
             {0, new List<string> { "Invalid", "Invalid" } },
