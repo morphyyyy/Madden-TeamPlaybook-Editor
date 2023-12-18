@@ -333,7 +333,12 @@ namespace MaddenTeamPlaybookEditor.ViewModels
         {
             {"49ers", new List<KeyValuePair<int, Tendency>>
                 {
-                    new KeyValuePair<int, Tendency>(SituationOff.FirstOrDefault(s => string.Equals(s.Value, "1st Down", StringComparison.OrdinalIgnoreCase)).Key, new Tendency { PA = 15, RPO = 4, Pass = 23, Screen = 5, Gap = 14, Zone = 40 } ),
+                    new KeyValuePair<int, Tendency>(SituationOff.FirstOrDefault(s => string.Equals(s.Value, "1st Down", StringComparison.OrdinalIgnoreCase)).Key, new Tendency { PA = 15, RPO = 4, Pass = 23, Screen = 5, Gap = 14, Zone = 40 } )
+                }
+            },
+            {"Saints", new List<KeyValuePair<int, Tendency>>
+                {
+                    new KeyValuePair<int, Tendency>(SituationOff.FirstOrDefault(s => string.Equals(s.Value, "1st Down", StringComparison.OrdinalIgnoreCase)).Key, new Tendency { PA = 15, RPO = 8, Pass = 22, Screen = 3, Gap = 19, Zone = 33 } )
                 }
             },
         };
@@ -624,6 +629,8 @@ namespace MaddenTeamPlaybookEditor.ViewModels
             }
         }
 
+        public List<KeyValuePair<int, Tendency>> Tendencies { get; set; }
+
         public Point LOS { get; set; } = new Point(266.5, 600);
 
         public string Type { get; set; }
@@ -667,6 +674,7 @@ namespace MaddenTeamPlaybookEditor.ViewModels
             BuildPlaybook();
             GetType();
             BuildSituations();
+            GetTendencies();
         }
 
         public void RemoveFormation(FormationVM Formation, bool dbOnly = false)
@@ -879,6 +887,11 @@ namespace MaddenTeamPlaybookEditor.ViewModels
         {
             DCHT = Madden.Team.DCHT.GetDCHT(DBIndex: 1);
             PLAY = Madden.Team.PLAY.GetPLAY(DBIndex: 1);
+        }
+
+        public void GetTendencies()
+        {
+            Tendencies = TeamTendencies.FirstOrDefault(tt => this.ToString().IndexOf(tt.Key, StringComparison.OrdinalIgnoreCase) >= 0 && Type == "Offense").Value;
         }
 
         public ObservableCollection<FormationVM> GetPSALlist()

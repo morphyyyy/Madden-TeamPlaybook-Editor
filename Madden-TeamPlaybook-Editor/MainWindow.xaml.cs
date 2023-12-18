@@ -943,6 +943,15 @@ namespace MaddenTeamPlaybookEditor
             if (MessageBox.Show("Are you sure you want to Revamp the Gameplan?", "Warning", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
             {
                 TeamPlaybook.RevampGameplan();
+                if (TeamPlaybook.PBAI.Count > 2000)
+                {
+                    int threshold = 1;
+                    List<Madden.TeamPlaybook.PBAI> _pbai = TeamPlaybook.PBAI.Where(p => p.prct == threshold && TeamPlaybook.PBAI.Select(n => n.AIGR > threshold) != null).ToList();
+                    if (MessageBox.Show("There are " + (2000 - TeamPlaybook.PBAI.Count).ToString() + " too many PBAI records and the game will crash.\nWould you like to remove " + _pbai.Count + " records with a 1 prct?", "Warning", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                    {
+                        TeamPlaybook.PBAI.RemoveAll(p => _pbai.Contains(p));
+                    }
+                }
                 lvwSituations.Items.Refresh();
             }
         }

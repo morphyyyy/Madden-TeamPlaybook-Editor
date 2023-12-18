@@ -1,14 +1,20 @@
-﻿using MaddenTeamPlaybookEditor.ViewModels;
+﻿using Madden.CustomPlaybook;
+using MaddenTeamPlaybookEditor.ViewModels;
 using System;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Shapes;
+using System.Xml.Linq;
 
 namespace MaddenTeamPlaybookEditor.User_Controls
 {
     public partial class PlayModal : UserControl
     {
+        private bool showPlayerText = false;
+        private bool PSALView = false;
         public PlayModal()
         {
             InitializeComponent();
@@ -42,7 +48,10 @@ namespace MaddenTeamPlaybookEditor.User_Controls
 
         private void bdrField_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            tabPlayControls.SelectedIndex = 0;
+            if (e.LeftButton == System.Windows.Input.MouseButtonState.Pressed)
+            {
+                tabPlayControls.SelectedIndex = 0;
+            }
         }
 
         private void dgdPSALupdated(object sender, EventArgs e)
@@ -141,6 +150,46 @@ namespace MaddenTeamPlaybookEditor.User_Controls
                     }
                 }
                 return foundChild;
+            }
+        }
+
+        private void savePlayart(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            Microsoft.Win32.SaveFileDialog dlg = new Microsoft.Win32.SaveFileDialog();
+            dlg.FileName = (play.SubFormation.Formation.PBFM.name + "." + play.SubFormation.PBST.name + "." + play.PBPL.name).Replace(' ', '_'); // Default file name
+            dlg.DefaultExt = ".png"; // Default file extension
+            dlg.Filter = "PNG File (.png)|*.png"; // Filter files by extension
+
+            // Show save file dialog box
+            Nullable<bool> result = dlg.ShowDialog();
+
+            // Process save file dialog box results
+            if (result == true)
+            {
+                // Save document
+                string filename = dlg.FileName;
+
+                SaveCanvasToFile(play.ToPlayArtCanvas(1), 96, filename);
+            }
+        }
+
+        public static void SaveCanvasToFile(Canvas canvas, int dpi, string filename)
+        {
+            var rtb = new RenderTargetBitmap(
+                (int)canvas.Width, //width
+                (int)canvas.Height, //height
+                dpi, //dpi x
+                dpi, //dpi y
+                PixelFormats.Pbgra32 // pixelformat
+                );
+            rtb.Render(canvas);
+
+            var enc = new PngBitmapEncoder();
+            BitmapFrame btf = BitmapFrame.Create(rtb);
+            enc.Frames.Add(btf);
+            using (var stm = System.IO.File.Create(filename))
+            {
+                enc.Save(stm);
             }
         }
     }

@@ -1,7 +1,10 @@
 ﻿using MaddenTeamPlaybookEditor.ViewModels;
+using System;
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media.Imaging;
+using System.Windows.Media;
 
 namespace MaddenTeamPlaybookEditor.User_Controls
 {
@@ -32,6 +35,46 @@ namespace MaddenTeamPlaybookEditor.User_Controls
         {
             get { return (bool)GetValue(ShowAudiblesProperty); }
             set { SetValue(ShowAudiblesProperty, value); }
+        }
+
+        private void saveArtview(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            Microsoft.Win32.SaveFileDialog dlg = new Microsoft.Win32.SaveFileDialog();
+            dlg.FileName = (play.SubFormation.Formation.PBFM.name + "." + play.SubFormation.PBST.name + "." + play.PBPL.name + ".PlayArt").Replace(' ', '_'); // Default file name
+            dlg.DefaultExt = ".png"; // Default file extension
+            dlg.Filter = "PNG File (.png)|*.png"; // Filter files by extension
+
+            // Show save file dialog box
+            Nullable<bool> result = dlg.ShowDialog();
+
+            // Process save file dialog box results
+            if (result == true)
+            {
+                // Save document
+                string filename = dlg.FileName;
+
+                SaveCanvasToFile(play.ToBookArtCanvas(1), 96, filename);
+            }
+        }
+
+        public static void SaveCanvasToFile(Canvas canvas, int dpi, string filename)
+        {
+            var rtb = new RenderTargetBitmap(
+                (int)canvas.Width, //width
+                (int)canvas.Height, //height
+                dpi, //dpi x
+                dpi, //dpi y
+                PixelFormats.Pbgra32 // pixelformat
+                );
+            rtb.Render(canvas);
+
+            var enc = new PngBitmapEncoder();
+            BitmapFrame btf = BitmapFrame.Create(rtb);
+            enc.Frames.Add(btf);
+            using (var stm = System.IO.File.Create(filename))
+            {
+                enc.Save(stm);
+            }
         }
     }
 }

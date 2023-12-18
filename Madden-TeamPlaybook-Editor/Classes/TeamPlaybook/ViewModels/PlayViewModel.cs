@@ -4,7 +4,9 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Data;
+using Madden.Team;
 using Madden.TeamPlaybook;
 using MaddenTeamPlaybookEditor.User_Controls;
 
@@ -328,6 +330,58 @@ namespace MaddenTeamPlaybookEditor.ViewModels
                 PPCT.Add(ppct);
             }
         } 
+
+        public Canvas ToPlayArtCanvas(int Scale)
+        {
+            Canvas cvsSave = new Canvas { Height = 750 * Scale, Width = 533 * Scale };
+            foreach (PlayerVM player in PlayerPlayartView)
+            {
+                Playart playart = new Playart { Player = player, PSALView = true, Scale = 2 * Scale, AbsolutePositioning = true };
+                Canvas.SetLeft(playart, (SubFormation.Formation.Playbook.LOS.X + player.XY.X) * Scale);
+                Canvas.SetTop(playart, (SubFormation.Formation.Playbook.LOS.Y + player.XY.Y) * Scale);
+                cvsSave.Children.Add(playart);
+            }
+            foreach (PlayerVM player in PlayerPlayartView)
+            {
+                PlayerIcon playart = new PlayerIcon { Player = player, ShowPosition = false, Scale = 2 * Scale, AbsolutePositioning = true };
+                Canvas.SetLeft(playart, (SubFormation.Formation.Playbook.LOS.X + player.XY.X) * Scale);
+                Canvas.SetTop(playart, (SubFormation.Formation.Playbook.LOS.Y + player.XY.Y) * Scale);
+                cvsSave.Children.Add(playart);
+            }
+
+            var size = new Size(533 * Scale, 750 * Scale);
+            cvsSave.Measure(size);
+            cvsSave.Arrange(new Rect(size));
+            cvsSave.UpdateLayout();
+
+            return cvsSave;
+        }
+
+        public Canvas ToBookArtCanvas(int Scale)
+        {
+            Canvas cvsSave = new Canvas { Height = 120 * Scale, Width = 180 * Scale };
+            foreach (PlayerVM player in PlayerPlayartView)
+            {
+                Playart playart = new Playart { Player = player, PSALView = false, Scale = 1 * Scale, AbsolutePositioning = true };
+                Canvas.SetLeft(playart, player.SETP.artx * Scale);
+                Canvas.SetTop(playart, player.SETP.arty * Scale);
+                cvsSave.Children.Add(playart);
+            }
+            foreach (PlayerVM player in PlayerPlayartView)
+            {
+                PlayerIcon playart = new PlayerIcon { Player = player, ShowPosition = false, Scale = 1 * Scale, AbsolutePositioning = true };
+                Canvas.SetLeft(playart, player.SETP.artx * Scale);
+                Canvas.SetTop(playart, player.SETP.arty * Scale);
+                cvsSave.Children.Add(playart);
+            }
+
+            var size = new Size(180 * Scale, 120 * Scale);
+            cvsSave.Measure(size);
+            cvsSave.Arrange(new Rect(size));
+            cvsSave.UpdateLayout();
+
+            return cvsSave;
+        }
 
         #endregion
 

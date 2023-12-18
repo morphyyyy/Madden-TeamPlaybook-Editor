@@ -313,22 +313,22 @@ namespace MaddenTeamPlaybookEditor.ViewModels
                         16,
                         new SolidColorBrush(Madden.TeamPlaybook.ARTLColor.PlayerIconColor)
                         );
-                    Icon = X.BuildGeometry(new Point(-4, -12)).GetFlattenedPathGeometry();
+                    Icon = X.BuildGeometry(new Point(-4, -12)).GetFlattenedPathGeometry(.05, ToleranceType.Absolute);
                     break;
                 case 1://Circle
-                    Icon = new EllipseGeometry(new Point(0, 0), 4, 4).GetFlattenedPathGeometry();
+                    Icon = new EllipseGeometry(new Point(0, 0), 4, 4).GetFlattenedPathGeometry(.05, ToleranceType.Absolute);
                     break;
                 case 2://Square
                     Icon = new RectangleGeometry(new Rect(new Point(-4, -4), new Size(8, 8))).GetFlattenedPathGeometry();
                     break;
                 case 4://Circle
-                    Icon = new EllipseGeometry(new Point(0, 0), 4, 4).GetFlattenedPathGeometry();
+                    Icon = new EllipseGeometry(new Point(0, 0), 4, 4).GetFlattenedPathGeometry(.05, ToleranceType.Absolute);
                     break;
                 case 5://Square
                     Icon = new RectangleGeometry(new Rect(new Point(-4, -4), new Size(8, 8))).GetFlattenedPathGeometry();
                     break;
                 default:
-                    Icon = new EllipseGeometry(new Point(0, 0), 4, 4).GetFlattenedPathGeometry();
+                    Icon = new EllipseGeometry(new Point(0, 0), 4, 4).GetFlattenedPathGeometry(.1, ToleranceType.Absolute);
                     break;
             }
 

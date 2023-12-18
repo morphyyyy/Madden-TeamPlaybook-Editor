@@ -66,6 +66,17 @@
                 />
     </UserControl.Resources>
 
+    <UserControl.ContextMenu>
+        <ContextMenu>
+            <TextBlock  
+                Background="Transparent" 
+                Foreground="LightGreen"
+                Text="Save Playart"
+                MouseUp="savePlayart"
+                />
+        </ContextMenu>
+    </UserControl.ContextMenu>
+
     <Canvas x:Name="cvsField" Height="950" Width="533">
 
         <Border 
@@ -76,7 +87,7 @@
             Height="950"
             MouseDown="bdrField_MouseDown"
             />
-
+        
         <Line X1="0" Y1="599.5" X2="533" Y2="599.5" StrokeThickness="5">
             <Line.Stroke>
                 <SolidColorBrush>
@@ -97,167 +108,169 @@
             </Line.Stroke>
         </Line>
 
-        <ItemsControl 
-            IsEnabled="true"
-            x:Name="iclPSALs"
-            DockPanel.Dock="Top"
-            ItemsSource="{Binding PlayerPlayartView, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-            Canvas.Left="266.5"
-            Canvas.Top="600"
-            MouseDown="iclPSALs_MouseDown">
-            <ItemsControl.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <Canvas x:Name="cvsPlayerRoutes"/>
-                </ItemsPanelTemplate>
-            </ItemsControl.ItemsPanel>
-            <ItemsControl.ItemTemplate>
-                <DataTemplate>
-                    <Canvas>
-                        <UserControls:Playart
-                            x:Name="clnPSAL"
-                            Player="{Binding}"
-                            PSALView="True"
-                            Scale="2"
-                            AbsolutePositioning="True"/>
-                    </Canvas>
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
-            <ItemsControl.ItemContainerStyle>
-                <Style>
-                    <Setter 
-                    Property="Canvas.Left" 
-                    Value="{Binding XY.X, Mode=TwoWay}"/>
-                    <Setter 
-                    Property="Canvas.Top" 
-                    Value="{Binding XY.Y, Mode=TwoWay}"/>
-                    <Style.Triggers>
-
-                        <Trigger Property="UserControls:PlayerIcon.IsMouseOver" Value="True">
-                            <Setter Property="UserControls:PlayerIcon.Effect">
-                                <Setter.Value>
-                                    <DropShadowEffect ShadowDepth="0" Color="White" Opacity="1" BlurRadius="20"/>
-                                </Setter.Value>
-                            </Setter>
-                        </Trigger>
-
-                        <!--<Trigger Property="Canvas.IsMouseOver" Value="True">
-                            <Trigger.EnterActions>
-                                <BeginStoryboard>
-                                    <Storyboard>
-                                        <DoubleAnimation
-                                            Storyboard.TargetProperty="(Canvas).(RenderTransform).(ScaleTransform.ScaleX)"
-                                            From="1" To="2" Duration="0:0:0.2"/>
-                                        <DoubleAnimation
-                                            Storyboard.TargetProperty="(Canvas).(RenderTransform).(ScaleTransform.ScaleY)"
-                                            From="1" To="2" Duration="0:0:0.2"/>
-                                    </Storyboard>
-                                </BeginStoryboard>
-                            </Trigger.EnterActions>
-                        </Trigger>
-                        
-                        <Trigger Property="Canvas.IsMouseOver" Value="False">
-                            <Trigger.EnterActions>
-                                <BeginStoryboard>
-                                    <Storyboard>
-                                        <DoubleAnimation
-                                            Storyboard.TargetProperty="(Canvas).(RenderTransform).(ScaleTransform.ScaleX)"
-                                            From="2" To="1" Duration="0:0:0.2"/>
-                                        <DoubleAnimation
-                                            Storyboard.TargetProperty="(Canvas).(RenderTransform).(ScaleTransform.ScaleY)"
-                                            From="2" To="1" Duration="0:0:0.2"/>
-                                    </Storyboard>
-                                </BeginStoryboard>
-                            </Trigger.EnterActions>
-                        </Trigger>-->
-
-                    </Style.Triggers>
-                </Style>
-            </ItemsControl.ItemContainerStyle>
-        </ItemsControl>
-
-        <ItemsControl 
-            IsEnabled="True"
-            x:Name="iclIcons"
-            DockPanel.Dock="Top"
-            ItemsSource="{Binding PlayerPlayartView, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-            Canvas.Left="266.5"
-            Canvas.Top="600"
-            MouseDown="iclIcons_MouseDown">
-            <ItemsControl.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <Canvas x:Name="cvsPlayerIcons"/>
-                </ItemsPanelTemplate>
-            </ItemsControl.ItemsPanel>
-            <ItemsControl.ItemTemplate>
-                <DataTemplate>
-                    <Canvas>
-                        <UserControls:PlayerIcon
-                            x:Name="clnIcon"
-                            Player="{Binding}"
-                            Scale="2"
-                            ShowPosition="True"
-                            AbsolutePositioning="True"/>
-                    </Canvas>
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
-            <ItemsControl.ItemContainerStyle>
-                <Style>
-                    <Setter 
+        <Canvas x:Name="cvsPlayart" Height="750" Width="533">
+            <ItemsControl 
+                IsEnabled="true"
+                x:Name="iclPSALs"
+                DockPanel.Dock="Top"
+                ItemsSource="{Binding PlayerPlayartView, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                Canvas.Left="266.5"
+                Canvas.Top="600"
+                MouseDown="iclPSALs_MouseDown">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <Canvas x:Name="cvsPlayerRoutes"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Canvas>
+                            <UserControls:Playart
+                                x:Name="clnPSAL"
+                                Player="{Binding}"
+                                PSALView="True"
+                                Scale="2"
+                                AbsolutePositioning="True"/>
+                        </Canvas>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+                <ItemsControl.ItemContainerStyle>
+                    <Style>
+                        <Setter 
                         Property="Canvas.Left" 
-                        Value="{Binding XY.X}"/>
-                    <Setter 
+                        Value="{Binding XY.X, Mode=TwoWay}"/>
+                        <Setter 
                         Property="Canvas.Top" 
-                        Value="{Binding XY.Y}"/>
-                    <Style.Triggers>
+                        Value="{Binding XY.Y, Mode=TwoWay}"/>
+                        <Style.Triggers>
 
-                        <Trigger Property="UserControls:PlayerIcon.IsMouseOver" Value="True">
-                            <Setter Property="UserControls:PlayerIcon.Effect">
-                                <Setter.Value>
-                                    <DropShadowEffect ShadowDepth="0" Color="White" Opacity="1" BlurRadius="20"/>
-                                </Setter.Value>
-                            </Setter>
-                            <Setter Property="UserControls:PlayerIcon.RenderTransform">
-                                <Setter.Value>
-                                    <ScaleTransform ScaleX="2" ScaleY="2"/>
-                                </Setter.Value>
-                            </Setter>
-                        </Trigger>
+                            <Trigger Property="UserControls:PlayerIcon.IsMouseOver" Value="True">
+                                <Setter Property="UserControls:PlayerIcon.Effect">
+                                    <Setter.Value>
+                                        <DropShadowEffect ShadowDepth="0" Color="White" Opacity="1" BlurRadius="20"/>
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
 
-                        <!--<Trigger Property="Canvas.IsMouseOver" Value="True">
-                            <Trigger.EnterActions>
-                                <BeginStoryboard>
-                                    <Storyboard>
-                                        <DoubleAnimation
-                                            Storyboard.TargetProperty="(Canvas).(RenderTransform).(ScaleTransform.ScaleX)"
-                                            From="1" To="2" Duration="0:0:0.2"/>
-                                        <DoubleAnimation
-                                            Storyboard.TargetProperty="(Canvas).(RenderTransform).(ScaleTransform.ScaleY)"
-                                            From="1" To="2" Duration="0:0:0.2"/>
-                                    </Storyboard>
-                                </BeginStoryboard>
-                            </Trigger.EnterActions>
-                        </Trigger>
+                            <!--<Trigger Property="Canvas.IsMouseOver" Value="True">
+                                <Trigger.EnterActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimation
+                                                Storyboard.TargetProperty="(Canvas).(RenderTransform).(ScaleTransform.ScaleX)"
+                                                From="1" To="2" Duration="0:0:0.2"/>
+                                            <DoubleAnimation
+                                                Storyboard.TargetProperty="(Canvas).(RenderTransform).(ScaleTransform.ScaleY)"
+                                                From="1" To="2" Duration="0:0:0.2"/>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </Trigger.EnterActions>
+                            </Trigger>
                         
-                        <Trigger Property="Canvas.IsMouseOver" Value="False">
-                            <Trigger.EnterActions>
-                                <BeginStoryboard>
-                                    <Storyboard>
-                                        <DoubleAnimation
-                                            Storyboard.TargetProperty="(Canvas).(RenderTransform).(ScaleTransform.ScaleX)"
-                                            From="2" To="1" Duration="0:0:0.2"/>
-                                        <DoubleAnimation
-                                            Storyboard.TargetProperty="(Canvas).(RenderTransform).(ScaleTransform.ScaleY)"
-                                            From="2" To="1" Duration="0:0:0.2"/>
-                                    </Storyboard>
-                                </BeginStoryboard>
-                            </Trigger.EnterActions>
-                        </Trigger>-->
+                            <Trigger Property="Canvas.IsMouseOver" Value="False">
+                                <Trigger.EnterActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimation
+                                                Storyboard.TargetProperty="(Canvas).(RenderTransform).(ScaleTransform.ScaleX)"
+                                                From="2" To="1" Duration="0:0:0.2"/>
+                                            <DoubleAnimation
+                                                Storyboard.TargetProperty="(Canvas).(RenderTransform).(ScaleTransform.ScaleY)"
+                                                From="2" To="1" Duration="0:0:0.2"/>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </Trigger.EnterActions>
+                            </Trigger>-->
 
-                    </Style.Triggers>
-                </Style>
-            </ItemsControl.ItemContainerStyle>
-        </ItemsControl>
-        
+                        </Style.Triggers>
+                    </Style>
+                </ItemsControl.ItemContainerStyle>
+            </ItemsControl>
+
+            <ItemsControl 
+                IsEnabled="True"
+                x:Name="iclIcons"
+                DockPanel.Dock="Top"
+                ItemsSource="{Binding PlayerPlayartView, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                Canvas.Left="266.5"
+                Canvas.Top="600"
+                MouseDown="iclIcons_MouseDown">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <Canvas x:Name="cvsPlayerIcons"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Canvas>
+                            <UserControls:PlayerIcon
+                                x:Name="clnIcon"
+                                Player="{Binding}"
+                                Scale="2"
+                                ShowPosition="True"
+                                AbsolutePositioning="True"/>
+                        </Canvas>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+                <ItemsControl.ItemContainerStyle>
+                    <Style>
+                        <Setter 
+                            Property="Canvas.Left" 
+                            Value="{Binding XY.X}"/>
+                        <Setter 
+                            Property="Canvas.Top" 
+                            Value="{Binding XY.Y}"/>
+                        <Style.Triggers>
+
+                            <Trigger Property="UserControls:PlayerIcon.IsMouseOver" Value="True">
+                                <Setter Property="UserControls:PlayerIcon.Effect">
+                                    <Setter.Value>
+                                        <DropShadowEffect ShadowDepth="0" Color="White" Opacity="1" BlurRadius="20"/>
+                                    </Setter.Value>
+                                </Setter>
+                                <Setter Property="UserControls:PlayerIcon.RenderTransform">
+                                    <Setter.Value>
+                                        <ScaleTransform ScaleX="2" ScaleY="2"/>
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+
+                            <!--<Trigger Property="Canvas.IsMouseOver" Value="True">
+                                <Trigger.EnterActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimation
+                                                Storyboard.TargetProperty="(Canvas).(RenderTransform).(ScaleTransform.ScaleX)"
+                                                From="1" To="2" Duration="0:0:0.2"/>
+                                            <DoubleAnimation
+                                                Storyboard.TargetProperty="(Canvas).(RenderTransform).(ScaleTransform.ScaleY)"
+                                                From="1" To="2" Duration="0:0:0.2"/>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </Trigger.EnterActions>
+                            </Trigger>
+                        
+                            <Trigger Property="Canvas.IsMouseOver" Value="False">
+                                <Trigger.EnterActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimation
+                                                Storyboard.TargetProperty="(Canvas).(RenderTransform).(ScaleTransform.ScaleX)"
+                                                From="2" To="1" Duration="0:0:0.2"/>
+                                            <DoubleAnimation
+                                                Storyboard.TargetProperty="(Canvas).(RenderTransform).(ScaleTransform.ScaleY)"
+                                                From="2" To="1" Duration="0:0:0.2"/>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </Trigger.EnterActions>
+                            </Trigger>-->
+
+                        </Style.Triggers>
+                    </Style>
+                </ItemsControl.ItemContainerStyle>
+            </ItemsControl>
+        </Canvas>
+
         <DockPanel 
             Margin="0,0,0,0" 
             x:Name="ReferenceInfo" 
