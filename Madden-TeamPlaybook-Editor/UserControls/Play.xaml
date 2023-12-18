@@ -105,6 +105,17 @@
             Height="120"
             >
 
+            <Canvas.ContextMenu>
+                <ContextMenu>
+                    <TextBlock  
+                        Background="Transparent" 
+                        Foreground="LightGreen"
+                        Text="Save Artview"
+                        MouseUp="saveArtview"
+                        />
+                </ContextMenu>
+            </Canvas.ContextMenu>
+
             <ItemsControl 
                 x:Name="iclPlayarts"
                 ItemsSource="{Binding PlayerPlayartView, Mode=TwoWay}">
@@ -158,7 +169,7 @@
                             x:Name="clnIcon"
                             Player="{Binding}"
                             Scale="1"
-                            ShowPosition="True"
+                            ShowPosition="False"
                             AbsolutePositioning="True"/>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
