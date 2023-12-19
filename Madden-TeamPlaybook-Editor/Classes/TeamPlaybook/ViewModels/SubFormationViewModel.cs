@@ -41,6 +41,7 @@ namespace MaddenTeamPlaybookEditor.ViewModels
 
             #region INotifyPropertyChanged Members
 
+            [field: NonSerializedAttribute()]
             public event PropertyChangedEventHandler PropertyChanged;
 
             protected virtual void OnPropertyChanged(string propertyName)
@@ -82,6 +83,7 @@ namespace MaddenTeamPlaybookEditor.ViewModels
 
             #region INotifyPropertyChanged Members
 
+            [field: NonSerializedAttribute()]
             public event PropertyChangedEventHandler PropertyChanged;
 
             protected virtual void OnPropertyChanged(string propertyName)
@@ -125,8 +127,8 @@ namespace MaddenTeamPlaybookEditor.ViewModels
         public FormationVM Formation { get; set; }
         public ObservableCollection<PlayVM> Plays { get; set; }
         public ObservableCollection<PlayerVM> Players { get; set; }
-        [field: NonSerializedAttribute()]
-        private ICollectionView _PlayerPlayartView { get; set; }
+        [NonSerialized]
+        private ICollectionView _PlayerPlayartView;
         public ICollectionView PlayerPlayartView
         {
             get { return _PlayerPlayartView; }
@@ -146,9 +148,9 @@ namespace MaddenTeamPlaybookEditor.ViewModels
         public int Position2count { get; set; }
         public int Position3count { get; set; }
 
-        private bool _isExpanded { get; set; }
-        private bool _isVisible { get; set; }
-        private bool _isSelected { get; set; }
+        private bool _isExpanded;
+        private bool _isVisible;
+        private bool _isSelected;
 
         public SubFormationVM()
         {

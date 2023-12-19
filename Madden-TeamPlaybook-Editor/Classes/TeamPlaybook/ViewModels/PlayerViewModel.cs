@@ -47,17 +47,7 @@ namespace MaddenTeamPlaybookEditor.ViewModels
             }
         }
         public SETP SETP { get; set; }
-        private SETG _SETG { get; set; }
-        public SETG SETG
-        {
-            get { return _SETG; }
-            set
-            {
-                if (_SETG == value)
-                    return;
-                _SETG = value;
-            }
-        }
+        public SETG SETG { get; set; }
         public SRFT SRFT { get; set; }
         private List<PSAL> _PSAL { get; set; }
         public List<PSAL> PSAL
@@ -76,7 +66,7 @@ namespace MaddenTeamPlaybookEditor.ViewModels
             }
         }
         public ARTL ARTL { get; set; }
-        private Point _XY;
+        private Point _XY { get; set; }
         public Point XY
         {
             get { return _XY; }
@@ -145,18 +135,18 @@ namespace MaddenTeamPlaybookEditor.ViewModels
         public int Number { get; set; }
         public int Speed { get; set; }
 
-        [field: NonSerializedAttribute()]
+        [field: NonSerialized] 
         public PathGeometry Icon { get; set; }
-        [field: NonSerializedAttribute()]
+        [field: NonSerialized]
         public ARTLColor artlColor { get; set; }
-        [field: NonSerializedAttribute()]
+        [field: NonSerialized] 
         public List<Path> ARTLpath { get; set; }
-        [field: NonSerializedAttribute()]
+        [field: NonSerialized] 
         public List<Path> PSALpath { get; set; }
-        [field: NonSerializedAttribute()]
+        [field: NonSerialized] 
         public PathGeometry RouteCap { get; set; }
 
-        private bool _isSelected { get; set; }
+        private bool _isSelected;
 
         public PlayerVM()
         {
@@ -365,34 +355,37 @@ namespace MaddenTeamPlaybookEditor.ViewModels
             {
                 RouteCap = ARTL.Block;
             }
-            else if (ARTL != null)
+            else if (ARTL != null )
             {
-                //Get Zone Size
-                int EndOfList = ARTL.ARTList.FindIndex(playart => playart.ct != 0);
-                if (EndOfList < 0) EndOfList = 0;
-                if (ARTL.ARTList.Count > 0)
+                if (ARTL.ARTList != null)
                 {
-                    switch (ARTL.ARTList[EndOfList].ct)
+                    //Get Zone Size
+                    int EndOfList = ARTL.ARTList.FindIndex(playart => playart.ct != 0);
+                    if (EndOfList < 0) EndOfList = 0;
+                    if (ARTL.ARTList.Count > 0)
                     {
-                        case 3: //Deep quarter, hook, flat
-                            RouteCap = ARTL.QuarterHookFlat;
-                            break;
+                        switch (ARTL.ARTList[EndOfList].ct)
+                        {
+                            case 3: //Deep quarter, hook, flat
+                                RouteCap = ARTL.QuarterHookFlat;
+                                break;
 
-                        case 4: //Deep third
-                            RouteCap = ARTL.DeepThird;
-                            break;
+                            case 4: //Deep third
+                                RouteCap = ARTL.DeepThird;
+                                break;
 
-                        case 5: //Deep half
-                            RouteCap = ARTL.DeepHalf;
-                            break;
+                            case 5: //Deep half
+                                RouteCap = ARTL.DeepHalf;
+                                break;
 
-                        case 6: //QB spy
-                            RouteCap = ARTL.QBSpy;
-                            break;
+                            case 6: //QB spy
+                                RouteCap = ARTL.QBSpy;
+                                break;
 
-                        default: //Arrow
-                            RouteCap = ARTL.Arrow;
-                            break;
+                            default: //Arrow
+                                RouteCap = ARTL.Arrow;
+                                break;
+                        }
                     }
                 }
             }

@@ -198,6 +198,7 @@ namespace MaddenTeamPlaybookEditor.ViewModels
             {209, "Jet Sweep"}
        };
 
+        [Serializable]
         public class Gameplan
         { 
             public static readonly List<int> KeyPlays = new List<int>
@@ -319,6 +320,7 @@ namespace MaddenTeamPlaybookEditor.ViewModels
             };
         }
 
+        [Serializable]
         public class Tendency
         {
             public double PA { get; set; }
