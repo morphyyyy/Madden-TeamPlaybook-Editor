@@ -156,7 +156,7 @@ namespace MaddenTeamPlaybookEditor.User_Controls
         private void savePlayart(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             Microsoft.Win32.SaveFileDialog dlg = new Microsoft.Win32.SaveFileDialog();
-            dlg.FileName = (play.SubFormation.Formation.PBFM.name + "." + play.SubFormation.PBST.name + "." + play.PBPL.name).Replace(' ', '_'); // Default file name
+            dlg.FileName = play.PLYL.plyl.ToString(); // Default file name
             dlg.DefaultExt = ".png"; // Default file extension
             dlg.Filter = "PNG File (.png)|*.png"; // Filter files by extension
 
@@ -173,7 +173,7 @@ namespace MaddenTeamPlaybookEditor.User_Controls
             }
         }
 
-        public static void SaveCanvasToFile(Canvas canvas, int dpi, string filename)
+        public void SaveCanvasToFile(Canvas canvas, int dpi, string filename)
         {
             var rtb = new RenderTargetBitmap(
                 (int)canvas.Width, //width

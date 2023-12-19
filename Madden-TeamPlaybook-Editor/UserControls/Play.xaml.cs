@@ -40,7 +40,7 @@ namespace MaddenTeamPlaybookEditor.User_Controls
         private void saveArtview(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             Microsoft.Win32.SaveFileDialog dlg = new Microsoft.Win32.SaveFileDialog();
-            dlg.FileName = (play.SubFormation.Formation.PBFM.name + "." + play.SubFormation.PBST.name + "." + play.PBPL.name + ".PlayArt").Replace(' ', '_'); // Default file name
+            dlg.FileName = play.PLYL.plyl.ToString(); // Default file name
             dlg.DefaultExt = ".png"; // Default file extension
             dlg.Filter = "PNG File (.png)|*.png"; // Filter files by extension
 
@@ -53,7 +53,7 @@ namespace MaddenTeamPlaybookEditor.User_Controls
                 // Save document
                 string filename = dlg.FileName;
 
-                SaveCanvasToFile(play.ToBookArtCanvas(1), 96, filename);
+                SaveCanvasToFile(play.ToARTLCanvas(1), 96, filename);
             }
         }
 

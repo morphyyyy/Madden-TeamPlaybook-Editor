@@ -356,7 +356,7 @@ namespace MaddenTeamPlaybookEditor.ViewModels
             return cvsSave;
         }
 
-        public Canvas ToBookArtCanvas(int Scale)
+        public Canvas ToARTLCanvas(int Scale)
         {
             Canvas cvsSave = new Canvas { Height = 120 * Scale, Width = 180 * Scale };
             foreach (PlayerVM player in PlayerPlayartView)
