@@ -62,11 +62,10 @@ namespace MaddenTeamPlaybookEditor.ViewModels
 
         #region Instantiation
 
-        public PBPL PBPL { get; set; }
-        public PLYL PLYL { get; set; }
-
         public SubFormationVM SubFormation { get; set; }
 
+        public PBPL PBPL { get; set; }
+        public PLYL PLYL { get; set; }
         public PLPD PLPD { get; set; }
         public PLRD PLRD { get; set; }
         public List<PBAI> Situations { get; set; }
@@ -78,7 +77,7 @@ namespace MaddenTeamPlaybookEditor.ViewModels
         public List<SRFT> SRFT { get; set; }
         public List<PLYS> PLYS { get; set; }
 
-        private ObservableCollection<PlayerVM> _Players { get; set; }
+        private ObservableCollection<PlayerVM> _Players;
         public ObservableCollection<PlayerVM> Players
         {
             get { return _Players; }
@@ -90,13 +89,13 @@ namespace MaddenTeamPlaybookEditor.ViewModels
                 OnPropertyChanged("Players");
             }
         }
-        [field: NonSerializedAttribute()]
+        [field: NonSerialized()]
         public ICollectionView PlayerPlayartView { get; set; }
 
-        private bool _isShortAudible { get; set; }
-        private bool _isRunAudible { get; set; }
-        private bool _isDeepAudible { get; set; }
-        private bool _isFakeAudible { get; set; }
+        private bool _isShortAudible;
+        private bool _isRunAudible;
+        private bool _isDeepAudible;
+        private bool _isFakeAudible;
 
         public static readonly Dictionary<int, string> Situation = new Dictionary<int, string>
         {
@@ -110,9 +109,9 @@ namespace MaddenTeamPlaybookEditor.ViewModels
         public string PlayArtFilePath { get; set; }
         public double AverageRouteDepth { get; set; }
 
-        private bool _isExpanded { get; set; }
-        private bool _isVisible { get; set; }
-        private bool _isSelected { get; set; }
+        private bool _isExpanded;
+        private bool _isVisible;
+        private bool _isSelected;
 
         public PlayVM()
         {
@@ -530,7 +529,7 @@ namespace MaddenTeamPlaybookEditor.ViewModels
             }
         }
 
-            #endregion // IsExpanded
+        #endregion // IsExpanded
 
         #region IsVisible
 

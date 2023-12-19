@@ -15,6 +15,7 @@ using MaddenTeamPlaybookEditor.Classes;
 using System.Windows.Documents;
 using System.Runtime.InteropServices;
 using System.Linq;
+using Madden.TeamPlaybook;
 
 namespace MaddenTeamPlaybookEditor
 {
