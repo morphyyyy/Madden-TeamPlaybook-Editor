@@ -15,7 +15,9 @@ using MaddenTeamPlaybookEditor.Classes;
 using System.Windows.Documents;
 using System.Runtime.InteropServices;
 using System.Linq;
-using Madden.TeamPlaybook;
+using System.Windows.Media.Imaging;
+using IDataObject = System.Windows.IDataObject;
+using System.Threading;
 
 namespace MaddenTeamPlaybookEditor
 {
@@ -1230,6 +1232,76 @@ namespace MaddenTeamPlaybookEditor
                     //cvsGameplanPercent.Children.Add(outline1);
                     //cvsGameplanPercent.Children.Add(outline2);
                 }
+            }
+        }
+
+        private void SaveAllPlayart(object sender, RoutedEventArgs e)
+        {
+            Microsoft.Win32.SaveFileDialog dlg = new Microsoft.Win32.SaveFileDialog();
+            dlg.FileName = "Save Here"; // Default file name
+            dlg.DefaultExt = ".png"; // Default file extension
+            dlg.Filter = "PNG File (.png)|*.png"; // Filter files by extension
+
+            // Show save file dialog box
+            Nullable<bool> result = dlg.ShowDialog();
+
+            // Process save file dialog box results
+            if (result == true)
+            {
+                //progressBar.Value = 0;
+                for (int n = 0; n < TeamPlaybook.Plays.Count; n++)
+                {
+                    // Save document
+                    string filename = Path.GetDirectoryName(dlg.FileName) + "\\" + TeamPlaybook.Plays[n].PLYL.plyl.ToString() + Path.GetExtension(dlg.FileName);
+                    SaveCanvasToFile(TeamPlaybook.Plays[n].ToPlayArtCanvas(1), 96, filename);
+                    //progressBar.Value = n / (TeamPlaybook.Plays.Count - 1);
+                }
+                //progressBar.Value = 0;
+            }
+        }
+
+        private void SaveAllARTL(object sender, RoutedEventArgs e)
+        {
+            Microsoft.Win32.SaveFileDialog dlg = new Microsoft.Win32.SaveFileDialog();
+            dlg.FileName = "Save Here"; // Default file name
+            dlg.DefaultExt = ".png"; // Default file extension
+            dlg.Filter = "PNG File (.png)|*.png"; // Filter files by extension
+
+            // Show save file dialog box
+            Nullable<bool> result = dlg.ShowDialog();
+
+            // Process save file dialog box results
+            if (result == true)
+            {
+                //progressBar.Value = 0;
+                for (int n = 0; n < TeamPlaybook.Plays.Count; n++)
+                {
+                    // Save document
+                    string filename = Path.GetDirectoryName(dlg.FileName) + "\\" + TeamPlaybook.Plays[n].PLYL.plyl.ToString() + Path.GetExtension(dlg.FileName);
+                    SaveCanvasToFile(TeamPlaybook.Plays[n].ToARTLCanvas(1), 96, filename);
+                    //progressBar.Value = n / (TeamPlaybook.Plays.Count - 1);
+                }
+                //progressBar.Value = 0;
+            }
+        }
+
+        public void SaveCanvasToFile(Canvas canvas, int dpi, string filename)
+        {
+            var rtb = new RenderTargetBitmap(
+                (int)canvas.Width, //width
+                (int)canvas.Height, //height
+                dpi, //dpi x
+                dpi, //dpi y
+                PixelFormats.Pbgra32 // pixelformat
+                );
+            rtb.Render(canvas);
+
+            var enc = new PngBitmapEncoder();
+            BitmapFrame btf = BitmapFrame.Create(rtb);
+            enc.Frames.Add(btf);
+            using (var stm = System.IO.File.Create(filename))
+            {
+                enc.Save(stm);
             }
         }
 
