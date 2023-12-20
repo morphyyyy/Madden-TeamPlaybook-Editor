@@ -858,6 +858,11 @@ namespace MaddenTeamPlaybookEditor.ViewModels
             }
         }
 
+        public void AddFormation(MaddenCustomPlaybookEditor.ViewModels.FormationVM Formation, int ord = 0)
+        {
+            //FORM existingFORM = FORM.Where(formation => formation.form == Formation.CPFM.FORM).FirstOrDefault();
+        }
+
         public void GetTables()
         {
             ARTL = Madden.TeamPlaybook.ARTL.GetARTL();    //ARTO ARTD

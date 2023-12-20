@@ -18,6 +18,8 @@ using System.Linq;
 using System.Windows.Media.Imaging;
 using IDataObject = System.Windows.IDataObject;
 using System.Threading;
+using System.Windows.Controls.Primitives;
+using Madden.CustomPlaybook;
 
 namespace MaddenTeamPlaybookEditor
 {
@@ -75,37 +77,6 @@ namespace MaddenTeamPlaybookEditor
 
         #endregion
 
-        #region BindPlaybook
-
-        public void BindPlaybook(TeamPlaybook Playbook)
-        {
-            wdwPlaybookEditor.Title = "Madden Team Playbook Editor - " + Path.GetFileName(Playbook.filePath);
-            tvwPlaybook.DataContext = Playbook;
-            cbxPLYT.DataContext = TeamPlaybook.PlayType.OrderBy(s => s.Value);
-            if (Playbook.Type == "Offense")
-            {
-                lvwSituations.DataContext = TeamPlaybook.SituationOff.Select(p => new Madden.TeamPlaybook.PBAI { AIGR = p.Key, Name = p.Value }).ToList();
-            }
-            else if (Playbook.Type == "Defense")
-            {
-                lvwSituations.DataContext = TeamPlaybook.SituationDef.Select(p => new Madden.TeamPlaybook.PBAI { AIGR = p.Key, Name = p.Value }).ToList();
-            }
-            //lvwPlaysByRouteDepth.DataContext = TeamPlaybook.Plays.Where(p => p.PLPD != null).OrderByDescending(p => p.AverageRouteDepth);
-            tclTables.DataContext = Playbook;
-            tvwPSALs.DataContext = Playbook.GetPSALlist();
-            //tabPlaybook.DataContext = Playbook;
-        }
-
-        public void BindPlaybook(MaddenCustomPlaybookEditor.ViewModels.CustomPlaybook Playbook)
-        {
-            wdwPlaybookEditor.Title = "Madden Team Playbook Editor - " + Path.GetFileName(Playbook.filePath);
-            tvwPlaybook.DataContext = Playbook;
-            //lvwSituations.DataContext = Playbook;
-            tclTables.DataContext = Playbook;
-        }
-
-        #endregion
-
         #region Open
 
         private void mnuOpen_Click(object sender, RoutedEventArgs e)
@@ -156,16 +127,34 @@ namespace MaddenTeamPlaybookEditor
                     TeamPlaybook = new TeamPlaybook(filePath);
                     BindPlaybook(TeamPlaybook);
                 }
-                //else if (dictionaty.Except(MaddenCustomPlaybookEditor.ViewModels.CustomPlaybook.Tables).Count() == 0)
-                //{
-                //    CustomPlaybook = new MaddenCustomPlaybookEditor.ViewModels.CustomPlaybook(filePath);
-                //    //TeamPlaybook = new TeamPlaybook();
-                //    //foreach (Madden20CustomPlaybookEditor.ViewModels.FormationVM formation in CustomPlaybook.Formations)
-                //    //{
-                //    //    TeamPlaybook.AddFormation(formation, TeamPlaybook.Formations.Count);
-                //    //}
-                //    BindPlaybook(CustomPlaybook);
-                //}
+                else if (dictionaty.Except(MaddenCustomPlaybookEditor.ViewModels.CustomPlaybook.Tables).Count() == 0)
+                {
+                    var rgch = "\U0001F61B".ToCharArray();
+                    var str = rgch[0] + "" + rgch[1];
+                    MessageBox.Show("Custom Playbooks are not supported, yet! " + str);
+                    return;
+
+                    CustomPlaybook = new MaddenCustomPlaybookEditor.ViewModels.CustomPlaybook(filePath);
+                    TeamPlaybook = new TeamPlaybook();
+                    //foreach (MaddenCustomPlaybookEditor.ViewModels.FormationVM formation in CustomPlaybook.Formations)
+                    //{
+                    //    TeamPlaybook.AddFormation(formation);
+                    //}
+
+                    Window codePopup = new Window { Title = "Create Playbook", Height = 200, Width = 300, SizeToContent = SizeToContent.WidthAndHeight };
+                    ComboBox listUnit = new ComboBox { DisplayMemberPath = "Key", SelectedValuePath = "Value", ItemsSource = new List<KeyValuePair<string, string>> { new KeyValuePair<string, string>("Offense", "Madden_"), new KeyValuePair<string, string>("Defense", "Madden_Def_") } };
+                    ComboBox listTeam = new ComboBox { DisplayMemberPath = "Key", SelectedValuePath = "Value"};
+                    listTeam.ItemsSource = CustomPlaybook.PBFI.Select(p => new KeyValuePair<string, int>(p.name.Substring(p.name.LastIndexOf('_') + 1), p.BOKL)).GroupBy(p => p.Key).OrderBy(p => p.Key);
+                    StackPanel content = new StackPanel { CanVerticallyScroll = true };
+                    content.Children.Add(listUnit);
+                    content.Children.Add(listTeam);
+                    codePopup.Content = content;
+                    codePopup.Show();
+
+                    PBFI BOKL = CustomPlaybook.PBFI.FirstOrDefault(p => p.name == ((KeyValuePair<string, string>)listUnit.SelectedValue).Value + ((KeyValuePair<string, int>)listTeam.SelectedValue).Value);
+
+                    //BindPlaybook(CustomPlaybook);
+                }
                 tvwPlaybook.Items.Refresh();
                 tvwPlaybook.UpdateLayout();
             }
@@ -189,6 +178,37 @@ namespace MaddenTeamPlaybookEditor
                 TeamPlaybook.BuildPlaybook();
                 TDBAccess.TDB.TDBClose(RosterOpenIndex);
             }
+        }
+
+        #endregion
+
+        #region BindPlaybook
+
+        public void BindPlaybook(TeamPlaybook Playbook)
+        {
+            wdwPlaybookEditor.Title = "Madden Team Playbook Editor - " + Path.GetFileName(Playbook.filePath);
+            tvwPlaybook.DataContext = Playbook;
+            cbxPLYT.DataContext = TeamPlaybook.PlayType.OrderBy(s => s.Value);
+            if (Playbook.Type == "Offense")
+            {
+                lvwSituations.DataContext = TeamPlaybook.SituationOff.Select(p => new Madden.TeamPlaybook.PBAI { AIGR = p.Key, Name = p.Value }).ToList();
+            }
+            else if (Playbook.Type == "Defense")
+            {
+                lvwSituations.DataContext = TeamPlaybook.SituationDef.Select(p => new Madden.TeamPlaybook.PBAI { AIGR = p.Key, Name = p.Value }).ToList();
+            }
+            //lvwPlaysByRouteDepth.DataContext = TeamPlaybook.Plays.Where(p => p.PLPD != null).OrderByDescending(p => p.AverageRouteDepth);
+            tclTables.DataContext = Playbook;
+            tvwPSALs.DataContext = Playbook.GetPSALlist();
+            //tabPlaybook.DataContext = Playbook;
+        }
+
+        public void BindPlaybook(MaddenCustomPlaybookEditor.ViewModels.CustomPlaybook Playbook)
+        {
+            wdwPlaybookEditor.Title = "Madden Team Playbook Editor - " + Path.GetFileName(Playbook.filePath);
+            tvwPlaybook.DataContext = Playbook;
+            //lvwSituations.DataContext = Playbook;
+            tclTables.DataContext = Playbook;
         }
 
         #endregion
