@@ -143,27 +143,26 @@ namespace MaddenTeamPlaybookEditor
                     }
 
                     CustomPlaybook = new MaddenCustomPlaybookEditor.ViewModels.CustomPlaybook(filePath);
+                    BindPlaybook(CustomPlaybook);
+                    xpdCustomPlaybook.Visibility = Visibility.Visible;
+                    xpdTeamPlaybook.Visibility = Visibility.Collapsed;
 
-                    Window codePopup = new Window { Title = "Create Playbook", Height = 200, Width = 300, SizeToContent = SizeToContent.WidthAndHeight };
-                    ComboBox listUnit = new ComboBox { DisplayMemberPath = "Key", SelectedValuePath = "Value", ItemsSource = new List<KeyValuePair<string, string>> { new KeyValuePair<string, string>("Offense", "Madden_"), new KeyValuePair<string, string>("Defense", "Madden_Def_") } };
-                    ComboBox listTeam = new ComboBox { ItemsSource = CustomPlaybook.PBFI.Select(p => p.name.Substring(p.name.LastIndexOf('_') + 1)).Distinct().OrderBy(p => p) };
-                    StackPanel content = new StackPanel { CanVerticallyScroll = true };
-                    content.Children.Add(listUnit);
-                    content.Children.Add(listTeam);
-                    codePopup.Content = content;
-                    codePopup.ShowDialog();
+                    //Window codePopup = new Window { Title = "Create Playbook", Height = 200, Width = 300, SizeToContent = SizeToContent.WidthAndHeight };
+                    //ComboBox listUnit = new ComboBox { DisplayMemberPath = "Key", SelectedValuePath = "Value", ItemsSource = new List<KeyValuePair<string, string>> { new KeyValuePair<string, string>("Offense", "Madden_"), new KeyValuePair<string, string>("Defense", "Madden_Def_") } };
+                    //ComboBox listTeam = new ComboBox { ItemsSource = CustomPlaybook.PBFI.Select(p => p.name.Substring(p.name.LastIndexOf('_') + 1)).Distinct().OrderBy(p => p) };
+                    //StackPanel content = new StackPanel { CanVerticallyScroll = true };
+                    //content.Children.Add(listUnit);
+                    //content.Children.Add(listTeam);
+                    //codePopup.Content = content;
+                    //codePopup.ShowDialog();
 
-                    PBFI BOKL = CustomPlaybook.PBFI.FirstOrDefault(p => p.name == (string)listUnit.SelectedValue + (string)listTeam.SelectedValue);
+                    //PBFI BOKL = CustomPlaybook.PBFI.FirstOrDefault(p => p.name == (string)listUnit.SelectedValue + (string)listTeam.SelectedValue);
 
                     //TeamPlaybook = new TeamPlaybook();
                     //foreach (MaddenCustomPlaybookEditor.ViewModels.FormationVM formation in CustomPlaybook.Formations)
                     //{
                     //    TeamPlaybook.AddFormation(formation);
                     //}
-
-                    BindPlaybook(CustomPlaybook);
-                    xpdCustomPlaybook.Visibility = Visibility.Visible;
-                    xpdTeamPlaybook.Visibility = Visibility.Collapsed;
                 }
             }
             else
@@ -974,17 +973,24 @@ namespace MaddenTeamPlaybookEditor
         {
             if (MessageBox.Show("Are you sure you want to Revamp the Gameplan?", "Warning", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
             {
-                TeamPlaybook.RevampGameplan();
-                if (TeamPlaybook.PBAI.Count > 2000)
+                try
                 {
-                    int threshold = 1;
-                    List<Madden.TeamPlaybook.PBAI> _pbai = TeamPlaybook.PBAI.Where(p => p.prct == threshold && TeamPlaybook.PBAI.Select(n => n.AIGR > threshold) != null).ToList();
-                    if (MessageBox.Show("There are " + (2000 - TeamPlaybook.PBAI.Count).ToString() + " too many PBAI records and the game will crash.\nWould you like to remove " + _pbai.Count + " records with a 1 prct?", "Warning", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                    TeamPlaybook.RevampGameplan();
+                    if (TeamPlaybook.PBAI.Count > 2000)
                     {
-                        TeamPlaybook.PBAI.RemoveAll(p => _pbai.Contains(p));
+                        int threshold = 1;
+                        List<Madden.TeamPlaybook.PBAI> _pbai = TeamPlaybook.PBAI.Where(p => p.prct == threshold && TeamPlaybook.PBAI.Select(n => n.AIGR > threshold) != null).ToList();
+                        if (MessageBox.Show("There are " + (2000 - TeamPlaybook.PBAI.Count).ToString() + " too many PBAI records and the game will crash.\nWould you like to remove " + _pbai.Count + " records with a 1 prct?", "Warning", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                        {
+                            TeamPlaybook.PBAI.RemoveAll(p => _pbai.Contains(p));
+                        }
                     }
+                    lvwSituations.Items.Refresh();
                 }
-                lvwSituations.Items.Refresh();
+                catch (Exception)
+                {
+                    throw;
+                } 
             }
         }
 
