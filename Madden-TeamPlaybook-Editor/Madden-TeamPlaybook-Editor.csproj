@@ -177,11 +177,8 @@
     <Compile Include="UserControls\Play.xaml.cs">
       <DependentUpon>Play.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UserControls\Tables\ARTL.xaml.cs">
-      <DependentUpon>ARTL.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UserControls\Tables\FORM.xaml.cs">
-      <DependentUpon>FORM.xaml</DependentUpon>
+    <Compile Include="UserControls\FilterableTable.xaml.cs">
+      <DependentUpon>FilterableTable.xaml</DependentUpon>
     </Compile>
     <Compile Include="UserControls\Formation.xaml.cs">
       <DependentUpon>Formation.xaml</DependentUpon>
@@ -190,76 +187,10 @@
       <DependentUpon>SubFormation.xaml</DependentUpon>
     </Compile>
     <Compile Include="Classes\TeamPlaybook\ViewModels\SituationViewModel.cs" />
-    <Compile Include="UserControls\Tables\PBPLindex.xaml.cs">
-      <DependentUpon>PBPLindex.xaml</DependentUpon>
-    </Compile>
     <Compile Include="UserControls\TestUserControl.xaml.cs">
       <DependentUpon>TestUserControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="VirtualOneClickExpandButtonBehavior.cs" />
-    <Compile Include="UserControls\Tables\PBCC.xaml.cs">
-      <DependentUpon>PBCC.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UserControls\Tables\PPCT.xaml.cs">
-      <DependentUpon>PPCT.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UserControls\Tables\PLCM.xaml.cs">
-      <DependentUpon>PLCM.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UserControls\Tables\PBAU.xaml.cs">
-      <DependentUpon>PBAU.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UserControls\Tables\PBAI.xaml.cs">
-      <DependentUpon>PBAI.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UserControls\Tables\PSAL.xaml.cs">
-      <DependentUpon>PSAL.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UserControls\Tables\PLYS.xaml.cs">
-      <DependentUpon>PLYS.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UserControls\Tables\PLRD.xaml.cs">
-      <DependentUpon>PLRD.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UserControls\Tables\PLPD.xaml.cs">
-      <DependentUpon>PLPD.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UserControls\Tables\PLYL.xaml.cs">
-      <DependentUpon>PLYL.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UserControls\Tables\SETG.xaml.cs">
-      <DependentUpon>SETG.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UserControls\Tables\PBPL.xaml.cs">
-      <DependentUpon>PBPL.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UserControls\Tables\SDEF.xaml.cs">
-      <DependentUpon>SDEF.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UserControls\Tables\SGFM.xaml.cs">
-      <DependentUpon>SGFM.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UserControls\Tables\SRFT.xaml.cs">
-      <DependentUpon>SRFT.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UserControls\Tables\SPKG.xaml.cs">
-      <DependentUpon>SPKG.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UserControls\Tables\SPKF.xaml.cs">
-      <DependentUpon>SPKF.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UserControls\Tables\SETP.xaml.cs">
-      <DependentUpon>SETP.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UserControls\Tables\SETL.xaml.cs">
-      <DependentUpon>SETL.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UserControls\Tables\PBST.xaml.cs">
-      <DependentUpon>PBST.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UserControls\Tables\PBFM.xaml.cs">
-      <DependentUpon>PBFM.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Classes\TeamPlaybook\ViewModels\PlayerViewModel.cs" />
     <Compile Include="Classes\TeamPlaybook\TeamPlaybook.cs" />
     <Compile Include="Classes\TeamPlaybook\ViewModels\PlayViewModel.cs" />
@@ -358,101 +289,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="UserControls\Tables\ARTL.xaml">
+    <Page Include="UserControls\FilterableTable.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-    </Page>
-    <Page Include="UserControls\Tables\FORM.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="UserControls\Tables\PBCC.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="UserControls\Tables\PBPLindex.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="UserControls\Tables\PPCT.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="UserControls\Tables\PLCM.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="UserControls\Tables\PBAU.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="UserControls\Tables\PBAI.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="UserControls\Tables\PSAL.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="UserControls\Tables\PLYS.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="UserControls\Tables\PLRD.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="UserControls\Tables\PLPD.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="UserControls\Tables\PLYL.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="UserControls\Tables\SETG.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="UserControls\Tables\PBPL.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="UserControls\Tables\SDEF.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="UserControls\Tables\SGFM.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="UserControls\Tables\SRFT.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="UserControls\Tables\SPKG.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="UserControls\Tables\SPKF.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="UserControls\Tables\SETP.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="UserControls\Tables\SETL.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="UserControls\Tables\PBST.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="UserControls\Tables\PBFM.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UserControls\Formation.xaml">
       <Generator>MSBuild:Compile</Generator>

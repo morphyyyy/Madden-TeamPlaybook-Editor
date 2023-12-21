@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 D:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\App.xaml
-48-570953005
+25-950975517
 
-1131266689820
+901343448968
 18-408720924
-Styles\AudibleRun.xaml;Styles\AudibleFake.xaml;Styles\AudibleDeep.xaml;Styles\AudibleQuick.xaml;Styles\FormationTabItemStyle.xaml;Styles\PlayTabItemStyle.xaml;Styles\SituationStyle.xaml;Styles\NameTextBox.xaml;Styles\SubFormationTabItemStyle.xaml;Styles\SubFormationStyle.xaml;Styles\PlayStyle.xaml;MainWindow.xaml;Styles\FormationStyle.xaml;UserControls\SubFormation_Modal.xaml;UserControls\Play_Modal.xaml;UserControls\Playart.xaml;UserControls\PlayerIcon.xaml;UserControls\PSAL_Editor.xaml;UserControls\RouteHighlight.xaml;UserControls\Situation.xaml;UserControls\Play.xaml;UserControls\Tables\ARTL.xaml;UserControls\Tables\FORM.xaml;UserControls\Tables\PBCC.xaml;UserControls\Tables\PBPLindex.xaml;UserControls\Tables\PPCT.xaml;UserControls\Tables\PLCM.xaml;UserControls\Tables\PBAU.xaml;UserControls\Tables\PBAI.xaml;UserControls\Tables\PSAL.xaml;UserControls\Tables\PLYS.xaml;UserControls\Tables\PLRD.xaml;UserControls\Tables\PLPD.xaml;UserControls\Tables\PLYL.xaml;UserControls\Tables\SETG.xaml;UserControls\Tables\PBPL.xaml;UserControls\Tables\SDEF.xaml;UserControls\Tables\SGFM.xaml;UserControls\Tables\SRFT.xaml;UserControls\Tables\SPKG.xaml;UserControls\Tables\SPKF.xaml;UserControls\Tables\SETP.xaml;UserControls\Tables\SETL.xaml;UserControls\Tables\PBST.xaml;UserControls\Tables\PBFM.xaml;UserControls\Formation.xaml;UserControls\SubFormation.xaml;UserControls\TestUserControl.xaml;
+Styles\AudibleRun.xaml;Styles\AudibleFake.xaml;Styles\AudibleDeep.xaml;Styles\AudibleQuick.xaml;Styles\FormationTabItemStyle.xaml;Styles\PlayTabItemStyle.xaml;Styles\SituationStyle.xaml;Styles\NameTextBox.xaml;Styles\SubFormationTabItemStyle.xaml;Styles\SubFormationStyle.xaml;Styles\PlayStyle.xaml;MainWindow.xaml;Styles\FormationStyle.xaml;UserControls\SubFormation_Modal.xaml;UserControls\Play_Modal.xaml;UserControls\Playart.xaml;UserControls\PlayerIcon.xaml;UserControls\PSAL_Editor.xaml;UserControls\RouteHighlight.xaml;UserControls\Situation.xaml;UserControls\Play.xaml;UserControls\FilterableTable.xaml;UserControls\Formation.xaml;UserControls\SubFormation.xaml;UserControls\TestUserControl.xaml;
 
 False
 

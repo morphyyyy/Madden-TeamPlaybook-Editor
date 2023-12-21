@@ -29,6 +29,7 @@ namespace MaddenTeamPlaybookEditor
         public int OpenIndex = -1;
         public TeamPlaybook TeamPlaybook;
         public MaddenCustomPlaybookEditor.ViewModels.CustomPlaybook CustomPlaybook;
+        public bool CustomPlaybookSupport = true;
         private Point _lastMouseDown;
         public TreeViewItem draggedItem, _target;
         [DllImport("user32.dll")]
@@ -56,7 +57,7 @@ namespace MaddenTeamPlaybookEditor
         {
             InitializeComponent();
 
-            filePath = "E:\\Software\\MMC_Editor\\Madden 24\\All_Legacy_Files\\common\\database\\playbooks\\madden_saints.db.DB";
+            //filePath = "E:\\Software\\MMC_Editor\\Madden 24\\All_Legacy_Files\\common\\database\\playbooks\\madden_saints.db.DB";
 
             if (File.Exists(filePath))
             {
@@ -126,37 +127,44 @@ namespace MaddenTeamPlaybookEditor
                 {
                     TeamPlaybook = new TeamPlaybook(filePath);
                     BindPlaybook(TeamPlaybook);
+                    xpdTeamPlaybook.Visibility = Visibility.Visible;
+                    xpdCustomPlaybook.Visibility = Visibility.Collapsed;
+                    tvwPlaybook.Items.Refresh();
+                    tvwPlaybook.UpdateLayout();
                 }
                 else if (dictionaty.Except(MaddenCustomPlaybookEditor.ViewModels.CustomPlaybook.Tables).Count() == 0)
                 {
-                    var rgch = "\U0001F61B".ToCharArray();
-                    var str = rgch[0] + "" + rgch[1];
-                    MessageBox.Show("Custom Playbooks are not supported, yet! " + str);
-                    return;
+                    if (!CustomPlaybookSupport)
+                    {
+                        var rgch = "\U0001F61B".ToCharArray();
+                        var str = rgch[0] + "" + rgch[1];
+                        MessageBox.Show("Custom Playbooks are not supported, yet! " + str);
+                        return;
+                    }
 
                     CustomPlaybook = new MaddenCustomPlaybookEditor.ViewModels.CustomPlaybook(filePath);
-                    TeamPlaybook = new TeamPlaybook();
+
+                    Window codePopup = new Window { Title = "Create Playbook", Height = 200, Width = 300, SizeToContent = SizeToContent.WidthAndHeight };
+                    ComboBox listUnit = new ComboBox { DisplayMemberPath = "Key", SelectedValuePath = "Value", ItemsSource = new List<KeyValuePair<string, string>> { new KeyValuePair<string, string>("Offense", "Madden_"), new KeyValuePair<string, string>("Defense", "Madden_Def_") } };
+                    ComboBox listTeam = new ComboBox { ItemsSource = CustomPlaybook.PBFI.Select(p => p.name.Substring(p.name.LastIndexOf('_') + 1)).Distinct().OrderBy(p => p) };
+                    StackPanel content = new StackPanel { CanVerticallyScroll = true };
+                    content.Children.Add(listUnit);
+                    content.Children.Add(listTeam);
+                    codePopup.Content = content;
+                    codePopup.ShowDialog();
+
+                    PBFI BOKL = CustomPlaybook.PBFI.FirstOrDefault(p => p.name == (string)listUnit.SelectedValue + (string)listTeam.SelectedValue);
+
+                    //TeamPlaybook = new TeamPlaybook();
                     //foreach (MaddenCustomPlaybookEditor.ViewModels.FormationVM formation in CustomPlaybook.Formations)
                     //{
                     //    TeamPlaybook.AddFormation(formation);
                     //}
 
-                    Window codePopup = new Window { Title = "Create Playbook", Height = 200, Width = 300, SizeToContent = SizeToContent.WidthAndHeight };
-                    ComboBox listUnit = new ComboBox { DisplayMemberPath = "Key", SelectedValuePath = "Value", ItemsSource = new List<KeyValuePair<string, string>> { new KeyValuePair<string, string>("Offense", "Madden_"), new KeyValuePair<string, string>("Defense", "Madden_Def_") } };
-                    ComboBox listTeam = new ComboBox { DisplayMemberPath = "Key", SelectedValuePath = "Value"};
-                    listTeam.ItemsSource = CustomPlaybook.PBFI.Select(p => new KeyValuePair<string, int>(p.name.Substring(p.name.LastIndexOf('_') + 1), p.BOKL)).GroupBy(p => p.Key).OrderBy(p => p.Key);
-                    StackPanel content = new StackPanel { CanVerticallyScroll = true };
-                    content.Children.Add(listUnit);
-                    content.Children.Add(listTeam);
-                    codePopup.Content = content;
-                    codePopup.Show();
-
-                    PBFI BOKL = CustomPlaybook.PBFI.FirstOrDefault(p => p.name == ((KeyValuePair<string, string>)listUnit.SelectedValue).Value + ((KeyValuePair<string, int>)listTeam.SelectedValue).Value);
-
-                    //BindPlaybook(CustomPlaybook);
+                    BindPlaybook(CustomPlaybook);
+                    xpdCustomPlaybook.Visibility = Visibility.Visible;
+                    xpdTeamPlaybook.Visibility = Visibility.Collapsed;
                 }
-                tvwPlaybook.Items.Refresh();
-                tvwPlaybook.UpdateLayout();
             }
             else
             {
@@ -206,9 +214,7 @@ namespace MaddenTeamPlaybookEditor
         public void BindPlaybook(MaddenCustomPlaybookEditor.ViewModels.CustomPlaybook Playbook)
         {
             wdwPlaybookEditor.Title = "Madden Team Playbook Editor - " + Path.GetFileName(Playbook.filePath);
-            tvwPlaybook.DataContext = Playbook;
-            //lvwSituations.DataContext = Playbook;
-            tclTables.DataContext = Playbook;
+            tclCustomPlaybookTables.DataContext = Playbook;
         }
 
         #endregion
@@ -474,10 +480,13 @@ namespace MaddenTeamPlaybookEditor
 
         private void searchTDB(object sender, RoutedEventArgs e)
         {
-            int PSAL = 0;
+            int id = 0;
             try
             {
-                PSAL = ((Madden.TeamPlaybook.PSAL)((PSALTable)((TabItem)tclTables.Items[14]).Content).uclPSALTable.dgdPSAL.SelectedItem).psal;
+                TabItem tab = tclTables.Items[14] as TabItem;
+                FilterableTable tbl = tab.Content as FilterableTable;
+                Madden.TeamPlaybook.PSAL PSAL = tbl.dataGrid.SelectedItem as Madden.TeamPlaybook.PSAL;
+                id = PSAL.psal;
             }
             catch
             {
@@ -494,7 +503,7 @@ namespace MaddenTeamPlaybookEditor
                     {
                         foreach (Madden.TeamPlaybook.PLYS assignment in play.PLYS)
                         {
-                            if (assignment.PSAL == PSAL)
+                            if (assignment.PSAL == id)
                             {
                                 Plays.Add(play);
                                 break;
@@ -1015,7 +1024,7 @@ namespace MaddenTeamPlaybookEditor
                     }
                 }
                 ((TeamPlaybook)tvwPlaybook.DataContext).PBAI = Madden.TeamPlaybook.PBAI.Sort(((TeamPlaybook)tvwPlaybook.DataContext).PBAI);
-                uclPBAITable.dgdPBAI.Items.Refresh();
+                uclPBAITable.dataGrid.Items.Refresh();
 
                 List<SituationVM> PlayTypes = new List<SituationVM>();
                 int playCount = 0;
@@ -1159,7 +1168,7 @@ namespace MaddenTeamPlaybookEditor
                     }
                 }
                 ((TeamPlaybook)tvwPlaybook.DataContext).PBAI = Madden.TeamPlaybook.PBAI.Sort(((TeamPlaybook)tvwPlaybook.DataContext).PBAI);
-                uclPBAITable.dgdPBAI.Items.Refresh();
+                uclPBAITable.dataGrid.Items.Refresh();
 
                 List<SituationVM> PlayTypes = new List<SituationVM>();
                 int playCount = 0;
