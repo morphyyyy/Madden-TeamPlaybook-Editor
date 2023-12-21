@@ -297,7 +297,7 @@
                                             VerticalAlignment="Top"
                                             HorizontalAlignment="Center"
                                             ContentSource="Header"
-                                            Margin="102.15,2"/>
+                                            Margin="5,0"/>
                                     </Label>
                                     <ControlTemplate.Triggers>
                                         <Trigger Property="IsSelected" Value="True">
@@ -322,7 +322,7 @@
                         BorderBrush="Transparent" 
                         DockPanel.Dock="Bottom"
                         VerticalAlignment="Bottom"
-                        HorizontalAlignment="Stretch">
+                        HorizontalAlignment="Center">
                         <TabControl.Resources>
                             <Style TargetType="TabItem">
                                 <Setter Property="Template">
@@ -333,7 +333,7 @@
                                                 VerticalAlignment="Center"
                                                 HorizontalAlignment="Center"
                                                 ContentSource="Header"
-                                                Margin="14.1,2"/>
+                                                Margin="5,0"/>
                                             </Label>
                                             <ControlTemplate.Triggers>
                                                 <Trigger Property="IsSelected" Value="True">
@@ -519,7 +519,7 @@
                         BorderBrush="Transparent" 
                         DockPanel.Dock="Top"
                         VerticalAlignment="Bottom"
-                        HorizontalAlignment="Stretch">
+                        HorizontalAlignment="Center">
                         <TabControl.Resources>
                             <Style TargetType="TabItem">
                                 <Setter Property="Template">
@@ -530,7 +530,7 @@
                                                 VerticalAlignment="Top"
                                                 HorizontalAlignment="Center"
                                                 ContentSource="Header"
-                                                Margin="69.1, 2"/>
+                                                Margin="5,0"/>
                                             </Label>
                                             <ControlTemplate.Triggers>
                                                 <Trigger Property="IsSelected" Value="True">
@@ -547,7 +547,7 @@
                                 </Setter>
                             </Style>
                         </TabControl.Resources>
-                        <!--<TabItem Header="PLYS">
+                        <TabItem Header="PLYS">
                             <Grid HorizontalAlignment="Center">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto"/>
@@ -574,7 +574,7 @@
                                 <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="5" Grid.Row="0" Text="poso"/>
                                 <TextBox Grid.Column="5" Grid.Row="1" Text="{Binding PLYS.poso, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextChanged="txtPlayerUpdated"/>
                             </Grid>
-                        </TabItem>-->
+                        </TabItem>
                         <TabItem Header="SETP">
                             <Grid HorizontalAlignment="Center">
                                 <Grid.ColumnDefinitions>
@@ -725,14 +725,14 @@
                                 <TextBox Grid.Column="12" Grid.Row="1" Text="{Binding SRFT.ASSW, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextChanged="txtPlayerUpdated"/>
                             </Grid>
                         </TabItem>
-                        <!--<TabItem Header="PSAL">
+                        <TabItem Header="PSAL">
                             <DataGrid 
                                 ItemsSource="{Binding PSAL, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                 DockPanel.Dock="Bottom"
                                 VerticalAlignment="Bottom"
                                 HorizontalAlignment="Center"
                                 CurrentCellChanged="dgdPSALupdated"/>
-                        </TabItem>-->
+                        </TabItem>
                     </TabControl>
                 </TabItem>
                 

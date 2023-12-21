@@ -6,7 +6,7 @@
 
     <StackPanel>
         <StackPanel Orientation="Horizontal" Margin="5">
-            <ComboBox x:Name="cbxFilter" Margin="5,0" SelectedIndex="0" MinWidth="100"/>
+            <ComboBox x:Name="cbxFilter" Margin="5,0" SelectedIndex="0" MinWidth="100" SelectionChanged="cbxValueChanged"/>
             <TextBox x:Name="tbxValue" Margin="5,0" Width="200" TextChanged="tbxValueChanged"/>
         </StackPanel>
         <DataGrid 

@@ -1,7 +1,3 @@
-D:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\bin\Debug\Madden-Playbook-Editor.exe.config
-D:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\bin\Debug\Madden-Playbook-Editor.exe
-D:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\bin\Debug\Madden-Playbook-Editor.pdb
-D:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\bin\Debug\Dragablz.xml
 D:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\obj\Debug\Madden-TeamPlaybook-Editor.csproj.AssemblyReference.cache
 D:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\obj\Debug\Madden-TeamPlaybook-Editor.csproj.SuggestedBindingRedirects.cache
 D:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\obj\Debug\Styles\AudibleRun.baml
@@ -17,6 +13,7 @@ D:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\obj\Debug\Styles\Su
 D:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\obj\Debug\Styles\PlayStyle.baml
 D:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\obj\Debug\Styles\FormationStyle.baml
 D:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\obj\Debug\UserControls\Playart.baml
+D:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\obj\Debug\UserControls\FilterableTable.baml
 D:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\obj\Debug\UserControls\Formation.baml
 D:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\obj\Debug\UserControls\TestUserControl.baml
 D:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\obj\Debug\App.baml
@@ -29,6 +26,7 @@ D:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\obj\Debug\UserContr
 D:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\obj\Debug\UserControls\RouteHighlight.g.cs
 D:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\obj\Debug\UserControls\Situation.g.cs
 D:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\obj\Debug\UserControls\Play.g.cs
+D:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\obj\Debug\UserControls\FilterableTable.g.cs
 D:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\obj\Debug\UserControls\Formation.g.cs
 D:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\obj\Debug\UserControls\SubFormation.g.cs
 D:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\obj\Debug\UserControls\TestUserControl.g.cs
@@ -36,6 +34,10 @@ D:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\obj\Debug\App.g.cs
 D:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\obj\Debug\GeneratedInternalTypeHelper.g.cs
 D:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\obj\Debug\Madden-Playbook-Editor_MarkupCompile.cache
 D:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\obj\Debug\Madden-Playbook-Editor_MarkupCompile.lref
+D:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\bin\Debug\Madden-Playbook-Editor.exe.config
+D:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\bin\Debug\Madden-Playbook-Editor.exe
+D:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\bin\Debug\Madden-Playbook-Editor.pdb
+D:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\bin\Debug\Dragablz.xml
 D:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\obj\Debug\MainWindow.baml
 D:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\obj\Debug\UserControls\SubFormation_Modal.baml
 D:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\obj\Debug\UserControls\Play_Modal.baml
@@ -53,5 +55,3 @@ D:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\obj\Debug\Madden-Te
 D:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\obj\Debug\Madden-TeamPlaybook-Editor.csproj.CopyComplete
 D:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\obj\Debug\Madden-Playbook-Editor.exe
 D:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\obj\Debug\Madden-Playbook-Editor.pdb
-D:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\obj\Debug\UserControls\FilterableTable.baml
-D:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\obj\Debug\UserControls\FilterableTable.g.cs

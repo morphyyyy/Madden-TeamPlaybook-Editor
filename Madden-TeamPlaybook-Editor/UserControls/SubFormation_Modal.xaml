@@ -203,7 +203,7 @@
                                                 VerticalAlignment="Top"
                                                 HorizontalAlignment="Center"
                                                 ContentSource="Header"
-                                                Margin="114.5,2"/>
+                                                Margin="5,0"/>
                                     </Label>
                                     <ControlTemplate.Triggers>
                                         <Trigger Property="IsSelected" Value="True">
