@@ -15,6 +15,7 @@ using MaddenTeamPlaybookEditor.Classes;
 using System.Windows.Documents;
 using System.Runtime.InteropServices;
 using System.Linq;
+using System.Windows.Media.Media3D;
 
 namespace MaddenTeamPlaybookEditor
 {
@@ -947,6 +948,15 @@ namespace MaddenTeamPlaybookEditor
             }
         }
 
+        private void btnRedDobeRevampGameplan_Click(object sender, RoutedEventArgs e)
+        {
+            if (MessageBox.Show("Run Sabos gameplan revamp and save the playbook before running this. You will need to modify the lua offense script in game so that every redzone situation uses the 16-20 situation. Since this revamp combines all of those plays into the 16-20 Situation. This revamp will shorten the average route depth and run/pass ratio of the gameplan to that of the nfl per each teams tendency, are you sure that you want to proceed?", "Warning", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+            {
+                TeamPlaybook.RedDobeRevampGameplan();
+                lvwSituations.Items.Refresh();
+            }
+        }
+
         private void lvwSituations_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (lvwSituations.SelectedItem != null)
@@ -986,18 +996,20 @@ namespace MaddenTeamPlaybookEditor
                 uclPBAITable.dgdPBAI.Items.Refresh();
 
                 List<SituationVM> PlayTypes = new List<SituationVM>();
-                int playCount = 0;
+                int SelectedSituation = ((Madden.TeamPlaybook.PBAI)lvwSituations.SelectedItem).AIGR;
+                int TotalSitWeight = TeamPlaybook.PBAI.Where(p => p.AIGR == SelectedSituation).Sum(p => p.prct);
+                int Weight = 0;
+
                 List<int> _plyl = ((TeamPlaybook)tvwPlaybook.DataContext).PBAI.Where(p => p.AIGR == ((Madden.TeamPlaybook.PBAI)lvwSituations.SelectedItem).AIGR).Select(p => p.PLYT).Distinct().ToList();
                 Random random255 = new Random();
                 foreach (int playtype in _plyl)
                 {
-                    PlayTypes.Add(new SituationVM { Title = TeamPlaybook.PlayType[playtype], ColorBrush = new SolidColorBrush(Color.FromArgb((byte)160, (byte)random255.Next(0, 255), (byte)random255.Next(0, 255), (byte)random255.Next(0, 255))), Plays = ((TeamPlaybook)tvwPlaybook.DataContext).Plays.Where(p => p.PLYL.PLYT == playtype).ToList() });
-                    playCount += PlayTypes[PlayTypes.Count() - 1].Plays.Count();
+                    Weight = TeamPlaybook.PBAI.Where(p => p.PLYT == playtype && p.AIGR == SelectedSituation).Sum(p => p.prct);
+                    PlayTypes.Add(new SituationVM { Title = TeamPlaybook.PlayType[playtype], ColorBrush = new SolidColorBrush(Color.FromArgb((byte)160, (byte)random255.Next(0, 255), (byte)random255.Next(0, 255), (byte)random255.Next(0, 255))), 
+                        Plays = ((TeamPlaybook)tvwPlaybook.DataContext).Plays.Where(p => p.PLYL.PLYT == playtype).ToList(),Weight = Weight,
+                        Percentage = (float)Math.Round(((double)Weight / (double)TotalSitWeight) * 100, 1)});
                 }
-                foreach (SituationVM playtype in PlayTypes)
-                {
-                    playtype.Percentage = (float)Math.Round(((double)playtype.Plays.Count / (double)playCount) * 100, 1);
-                }
+                
                 PlayTypes = PlayTypes.OrderByDescending(p => p.Percentage).ToList();
                 iclGameplanPercent.ItemsSource = PlayTypes;
 

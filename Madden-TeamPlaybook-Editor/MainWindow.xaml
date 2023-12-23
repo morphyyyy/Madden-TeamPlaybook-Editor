@@ -288,7 +288,8 @@
             
                 <DockPanel>
 
-                    <Button x:Name="btnRevampGameplan" Content="Revamp Gameplan" DockPanel.Dock="Top" Margin="5" Click="btnRevampGameplan_Click" />
+                    <Button x:Name="btnRevampGameplan" Content="Sabos Revamp Gameplan" DockPanel.Dock="Top" Margin="5" Click="btnRevampGameplan_Click" />
+                    <Button x:Name="btnRedDobeRevampGameplan" Content="RedDobe Revamp Gameplan" DockPanel.Dock="Top" Margin="5" Click="btnRedDobeRevampGameplan_Click" />
 
                     <ComboBox 
                         x:Name="cbxPLYT"

@@ -15,6 +15,8 @@ namespace MaddenTeamPlaybookEditor.ViewModels
         public Brush ColorBrush { get; set; }
         public List<PlayVM> Plays { get; set; }
 
+        public int Weight { get; set; }
+
         public SituationVM()
         {
         }
