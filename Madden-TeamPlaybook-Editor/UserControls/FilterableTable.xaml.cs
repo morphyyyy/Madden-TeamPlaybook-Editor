@@ -31,14 +31,15 @@ namespace MaddenTeamPlaybookEditor.User_Controls
 
         private bool Filter(object obj)
         {
-            Type oType = obj?.GetType();
-            PropertyInfo pInfo = oType.GetProperty(cbxFilter.SelectedValue.ToString());
-            Type pType = pInfo.PropertyType;
-            object value = pInfo.GetValue(obj);
-            if (tbxValue.Text == "")
+            if (tbxValue.Text == "" || cbxFilter.SelectedValue == null)
             {
                 return true;
             }
+            Type oType = obj?.GetType();
+            PropertyInfo pInfo = oType.GetProperty(cbxFilter.SelectedValue?.ToString());
+            Type pType = pInfo.PropertyType;
+            object value = pInfo.GetValue(obj);
+
             switch (pType.Name)
             {
                 case "Int32":

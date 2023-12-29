@@ -12,6 +12,7 @@ namespace MaddenTeamPlaybookEditor.ViewModels
     {
         public float Percentage { get; set; }
         public string Title { get; set; }
+        public int Weight{ get; set; }
         public Brush ColorBrush { get; set; }
         public List<PlayVM> Plays { get; set; }
 

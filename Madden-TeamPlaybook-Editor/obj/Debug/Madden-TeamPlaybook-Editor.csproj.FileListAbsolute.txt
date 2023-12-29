@@ -1,3 +1,7 @@
+D:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\bin\Debug\Madden-Playbook-Editor.exe.config
+D:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\bin\Debug\Madden-Playbook-Editor.exe
+D:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\bin\Debug\Madden-Playbook-Editor.pdb
+D:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\bin\Debug\Dragablz.xml
 D:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\obj\Debug\Madden-TeamPlaybook-Editor.csproj.AssemblyReference.cache
 D:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\obj\Debug\Madden-TeamPlaybook-Editor.csproj.SuggestedBindingRedirects.cache
 D:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\obj\Debug\Styles\AudibleRun.baml
@@ -34,10 +38,6 @@ D:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\obj\Debug\App.g.cs
 D:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\obj\Debug\GeneratedInternalTypeHelper.g.cs
 D:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\obj\Debug\Madden-Playbook-Editor_MarkupCompile.cache
 D:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\obj\Debug\Madden-Playbook-Editor_MarkupCompile.lref
-D:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\bin\Debug\Madden-Playbook-Editor.exe.config
-D:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\bin\Debug\Madden-Playbook-Editor.exe
-D:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\bin\Debug\Madden-Playbook-Editor.pdb
-D:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\bin\Debug\Dragablz.xml
 D:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\obj\Debug\MainWindow.baml
 D:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\obj\Debug\UserControls\SubFormation_Modal.baml
 D:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\obj\Debug\UserControls\Play_Modal.baml

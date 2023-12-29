@@ -92,8 +92,7 @@
             </MenuItem>
         </Menu>
 
-        <Expander
-            x:Name="xpdTeamPlaybook"
+        <Expander x:Name="xpdTeamPlaybook"
             Foreground="LightGray"
             Header="Team Playbook"
             ExpandDirection="Down"
@@ -357,7 +356,12 @@
         
         </Expander>
 
-        <Expander x:Name="xpdCustomPlaybook" Foreground="LightGray" Header="Custom Playbook" ExpandDirection="Down" IsExpanded="True" Visibility="Collapsed">
+        <Expander x:Name="xpdCustomPlaybook"
+                  Foreground="LightGray"
+                  Header="Custom Playbook"
+                  ExpandDirection="Down"
+                  IsExpanded="True"
+                  Visibility="Collapsed">
 
             <TabControl 
                 x:Name="tclCustomPlaybookTables"
@@ -463,11 +467,21 @@
 
         </Expander>
 
-        <Expander x:Name="xpdSubFormationModal" Visibility="Visible" Foreground="LightGray" Header="Sub Formation" ExpandDirection="Down" IsExpanded="True">
+        <Expander x:Name="xpdSubFormationModal"
+                  Visibility="Visible"
+                  Foreground="LightGray"
+                  Header="Sub Formation"
+                  ExpandDirection="Down"
+                  IsExpanded="True">
             <UserControls:SubFormationModal x:Name="uclSubFormationModal" VerticalAlignment="Top"/>
         </Expander>
 
-        <Expander x:Name="xpdPlayModal" Visibility="Collapsed" Foreground="LightGray" Header="Play" ExpandDirection="Down" IsExpanded="True">
+        <Expander x:Name="xpdPlayModal"
+                  Visibility="Collapsed"
+                  Foreground="LightGray"
+                  Header="Play"
+                  ExpandDirection="Down"
+                  IsExpanded="True">
 
             <StackPanel Width="Auto" Height="Auto" HorizontalAlignment="Stretch" Orientation="Horizontal">
                 
@@ -566,7 +580,10 @@
             
         </Expander>
         
-        <Expander Foreground="LightGray" Header="Sabo's Gameplan Editor" ExpandDirection="Down" IsExpanded="True">
+        <Expander Header="Sabo's Gameplan Editor"
+            Foreground="LightGray"
+            ExpandDirection="Down"
+            IsExpanded="True">
 
             <DockPanel VerticalAlignment="Top">
             
@@ -615,9 +632,39 @@
 
                 </DockPanel>
 
-                <Canvas x:Name="cvsGameplanPercent" Height="600" Width="600" DockPanel.Dock="Left"/>
+                <TreeView 
+                    x:Name="lvwPlaysByRouteDepth" 
+                    ItemsSource="{Binding}"
+                    Background="Transparent"
+                    BorderBrush="Transparent"
+                    ScrollViewer.VerticalScrollBarVisibility="Hidden"
+                    Width="600"
+                    MaxHeight="1080"
+                    DockPanel.Dock="Top">
+                    <TreeView.ItemTemplate>
+                        <DataTemplate>
+                            <DockPanel>
+                                <UserControls:Play play="{Binding}" DockPanel.Dock="Top"/>
+                                <TextBlock Text="{Binding AverageRouteDepth, StringFormat=Avg Route Depth: {0} Yards}" DockPanel.Dock="Top" Foreground="LightGray" HorizontalAlignment="Center"/>
+                            </DockPanel>
+                        </DataTemplate>
+                    </TreeView.ItemTemplate>
+                    <TreeView.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <classes:UniformGridOrientations VerticalAlignment="Top" Orientation="Horizontal" VerticalOrientation="Top" FlowDirection="LeftToRight" IsItemsHost="True" Columns="3"/>
+                        </ItemsPanelTemplate>
+                    </TreeView.ItemsPanel>
+                    <TreeView.ItemContainerStyle>
+                        <Style TargetType="{x:Type TreeViewItem}" BasedOn="{StaticResource PlayTreeViewItem}">
+                            <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}" />
+                            <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay}" />
+                        </Style>
+                    </TreeView.ItemContainerStyle>
+                </TreeView>
+                
+                <!--<Canvas x:Name="cvsGameplanPercent" Height="600" Width="600" DockPanel.Dock="Left"/>-->
 
-                <ListView 
+                <!--<ListView 
                     x:Name="iclGameplanPercent" 
                     VerticalAlignment="Center"
                     ScrollViewer.CanContentScroll="False"
@@ -660,34 +707,11 @@
                             </StackPanel>
                         </DataTemplate>
                     </ListView.ItemTemplate>
-                </ListView>
+                </ListView>-->
                 
             </DockPanel>
         
         </Expander>
-
-        <!--<Expander Foreground="LightGray" Header="Plays by Average Route Depth by PLPD.per" ExpandDirection="Down" IsExpanded="True">
-            <TreeView 
-                x:Name="lvwPlaysByRouteDepth" 
-                ItemsSource="{Binding}"
-                Background="Transparent"
-                BorderBrush="Transparent"
-                DockPanel.Dock="Top">
-                <TreeView.ItemTemplate>
-                    <DataTemplate>
-                        <DockPanel>
-                            <UserControls:Play play="{Binding}" DockPanel.Dock="Top"/>
-                            <TextBlock Text="{Binding AverageRouteDepth, StringFormat=Avg Route Depth: {0} Yards}" DockPanel.Dock="Top" Foreground="LightGray" HorizontalAlignment="Center"/>
-                        </DockPanel>
-                    </DataTemplate>
-                </TreeView.ItemTemplate>
-                <TreeView.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <classes:UniformGridOrientations VerticalAlignment="Top" Orientation="Horizontal" VerticalOrientation="Top" FlowDirection="LeftToRight" IsItemsHost="True" Columns="3"/>
-                    </ItemsPanelTemplate>
-                </TreeView.ItemsPanel>
-            </TreeView>
-        </Expander>-->
         
     </DockPanel>
 
