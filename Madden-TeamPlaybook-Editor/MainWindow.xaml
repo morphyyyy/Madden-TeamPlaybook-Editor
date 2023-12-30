@@ -580,7 +580,7 @@
             
         </Expander>
         
-        <Expander Header="Sabo's Gameplan Editor"
+        <Expander Header="Gameplan Editor"
             Foreground="LightGray"
             ExpandDirection="Down"
             IsExpanded="True">
@@ -589,8 +589,9 @@
             
                 <DockPanel>
 
-                    <Button x:Name="btnRevampGameplan" Content="Revamp Gameplan" DockPanel.Dock="Top" Margin="5" Click="btnRevampGameplan_Click" />
-
+                    <Button x:Name="btnRevampGameplan" Content="Sabos Revamp Gameplan" ToolTip="Based on Sabos Revamp" DockPanel.Dock="Top" Margin="5" Click="btnRevampGameplan_Click" />
+                    <Button x:Name="btnRedDobeRevampGameplan" Content="RedDobe Revamp Gameplan" ToolTip="Based on NFL 2023 Regular Season" DockPanel.Dock="Top" Margin="5" Click="btnRedDobeRevampGameplan_Click" />
+                    
                     <ComboBox 
                         x:Name="cbxPLYT"
                         ItemsSource="{Binding}"

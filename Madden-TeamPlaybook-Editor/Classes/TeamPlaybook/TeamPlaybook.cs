@@ -13,6 +13,7 @@ using System.Windows.Media;
 using Madden.CustomPlaybook;
 using MaddenCustomPlaybookEditor;
 using MaddenTeamPlaybookEditor.User_Controls;
+using System.Security.Cryptography;
 
 namespace MaddenTeamPlaybookEditor.ViewModels
 {
@@ -301,7 +302,7 @@ namespace MaddenTeamPlaybookEditor.ViewModels
 
             public static readonly List<int> Pass = new List<int>
             {
-                101, 102, 103, 159
+                101, 102, 103, 159, 208
             };
 
             public static readonly List<int> Screen = new List<int>
@@ -316,33 +317,692 @@ namespace MaddenTeamPlaybookEditor.ViewModels
 
             public static readonly List<int> ZoneRun = new List<int>
             {
-                15, 16, 17, 151, 161, 163, 165, 169, 195, 196, 203, 208, 209
+                15, 16, 17, 151, 161, 163, 165, 169, 195, 196, 203, 209
             };
         }
 
         [Serializable]
         public class Tendency
         {
-            public double PA { get; set; }
+            public double PA { get; set; } // Playaction
             public double RPO { get; set; }
-            public double Pass { get; set; }
+            public double Shotgun { get; set; } // Shotgun formation 
             public double Screen { get; set; }
-            public double Gap { get; set; }
-            public double Zone { get; set; }
+            public double Gap { get; set; } // Gap Run
+            public double Zone { get; set; } // Zone Run
         }
 
+        // int is the Situation ID
         public Dictionary<string, List<KeyValuePair<int, Tendency>>> TeamTendencies = new Dictionary<string, List<KeyValuePair<int, Tendency>>>
         {
+            {"cardinals", new List<KeyValuePair<int, Tendency>> // 100 WIll be the default value in the event the sit id is not found, it will be an overall tendency value
+				{
+                    new KeyValuePair<int, Tendency>(100, new Tendency { PA = 16, RPO = 10, Shotgun = 72, Screen = 10, Gap = 40, Zone = 58 } ), //Overall
+					new KeyValuePair<int, Tendency>(35, new Tendency { PA = 22, RPO = 10, Shotgun = 57, Screen = 9, Gap = 39, Zone = 57 } ), //1st down
+					new KeyValuePair<int, Tendency>(20, new Tendency { PA = 6, RPO = 10, Shotgun = 52, Screen = 10, Gap = 29, Zone = 71 } ), //2nd & short
+					new KeyValuePair<int, Tendency>(17, new Tendency { PA = 28, RPO = 5, Shotgun = 55, Screen = 9, Gap = 33, Zone = 67 } ), //2nd & medium
+					new KeyValuePair<int, Tendency>(6, new Tendency { PA = 18, RPO = 19, Shotgun = 80, Screen = 16, Gap = 55, Zone = 45 } ), //2nd & long
+					new KeyValuePair<int, Tendency>(1, new Tendency { PA = 7, RPO = 0, Shotgun = 65, Screen = 0, Gap = 14, Zone = 86 } ), //3rd & short
+					new KeyValuePair<int, Tendency>(7, new Tendency { PA = 3, RPO = 3, Shotgun = 100, Screen = 0, Gap = 67, Zone = 33 } ), //3rd & medium
+					new KeyValuePair<int, Tendency>(8, new Tendency { PA = 3, RPO = 0, Shotgun = 100, Screen = 8, Gap = 100, Zone = 0 } ), //3rd & long
+					new KeyValuePair<int, Tendency>(40, new Tendency { PA = 3, RPO = 6, Shotgun = 100, Screen = 20, Gap = 33, Zone = 50 } ), //3rd & extra long
+					new KeyValuePair<int, Tendency>(25, new Tendency { PA = 19, RPO = 10, Shotgun = 63, Screen = 9, Gap = 41, Zone = 57 } ), //Opp 30 to 21
+					new KeyValuePair<int, Tendency>(26, new Tendency { PA = 12, RPO = 12, Shotgun = 63, Screen = 14, Gap = 30, Zone = 70 } ), //Red Zone 16 to 20
+					new KeyValuePair<int, Tendency>(27, new Tendency { PA = 12, RPO = 12, Shotgun = 63, Screen = 14, Gap = 30, Zone = 70 } ), //Red Zone 11 to 15
+					new KeyValuePair<int, Tendency>(28, new Tendency { PA = 12, RPO = 12, Shotgun = 63, Screen = 14, Gap = 30, Zone = 70 } ), //Red Zone 6 to 10
+					new KeyValuePair<int, Tendency>(3, new Tendency { PA = 0, RPO = 8, Shotgun = 50, Screen = 0, Gap = 18, Zone = 82 } ), //Goal Line
+					new KeyValuePair<int, Tendency>(22, new Tendency { PA = 0, RPO = 0, Shotgun = 100, Screen = 0, Gap = 0, Zone = 0 } ), //GOal Line Pass
+					new KeyValuePair<int, Tendency>(13, new Tendency { PA = 14, RPO = 5, Shotgun = 50, Screen = 8, Gap = 38, Zone = 60 } ), //Waste Time
+				}
+            },
+            {"falcons", new List<KeyValuePair<int, Tendency>>
+                {
+                    new KeyValuePair<int, Tendency>(100, new Tendency { PA = 16, RPO = 9, Shotgun = 76, Screen = 8, Gap = 17, Zone = 83 } ),
+                    new KeyValuePair<int, Tendency>(35, new Tendency { PA = 19, RPO = 11, Shotgun = 71, Screen = 10, Gap = 16, Zone = 84 } ),
+                    new KeyValuePair<int, Tendency>(20, new Tendency { PA = 10, RPO = 21, Shotgun = 70, Screen = 8, Gap = 7, Zone = 93 } ),
+                    new KeyValuePair<int, Tendency>(17, new Tendency { PA = 21, RPO = 6, Shotgun = 72, Screen = 8, Gap = 11, Zone = 89 } ),
+                    new KeyValuePair<int, Tendency>(6, new Tendency { PA = 22, RPO = 8, Shotgun = 82, Screen = 8, Gap = 28, Zone = 72 } ),
+                    new KeyValuePair<int, Tendency>(1, new Tendency { PA = 17, RPO = 13, Shotgun = 53, Screen = 0, Gap = 19, Zone = 81 } ),
+                    new KeyValuePair<int, Tendency>(7, new Tendency { PA = 0, RPO = 0, Shotgun = 100, Screen = 0, Gap = 33, Zone = 67 } ),
+                    new KeyValuePair<int, Tendency>(8, new Tendency { PA = 0, RPO = 2, Shotgun = 100, Screen = 4, Gap = 67, Zone = 33 } ),
+                    new KeyValuePair<int, Tendency>(40, new Tendency { PA = 0, RPO = 0, Shotgun = 100, Screen = 18, Gap = 0, Zone = 100 } ),
+                    new KeyValuePair<int, Tendency>(25, new Tendency { PA = 19, RPO = 9, Shotgun = 74, Screen = 8, Gap = 18, Zone = 82 } ),
+                    new KeyValuePair<int, Tendency>(26, new Tendency { PA = 14, RPO = 14, Shotgun = 72, Screen = 17, Gap = 6, Zone = 94 } ),
+                    new KeyValuePair<int, Tendency>(27, new Tendency { PA = 14, RPO = 14, Shotgun = 72, Screen = 17, Gap = 6, Zone = 94 } ),
+                    new KeyValuePair<int, Tendency>(28, new Tendency { PA = 14, RPO = 14, Shotgun = 72, Screen = 17, Gap = 6, Zone = 94 } ),
+                    new KeyValuePair<int, Tendency>(3, new Tendency { PA = 25, RPO = 31, Shotgun = 59, Screen = 0, Gap = 0, Zone = 100 } ),
+                    new KeyValuePair<int, Tendency>(22, new Tendency { PA = 17, RPO = 33, Shotgun = 83, Screen = 25, Gap = 50, Zone = 50 } ),
+                    new KeyValuePair<int, Tendency>(13, new Tendency { PA = 15, RPO = 5, Shotgun = 53, Screen = 8, Gap = 18, Zone = 82 } ),
+                }
+            },
+            {"ravens", new List<KeyValuePair<int, Tendency>>
+                {
+                    new KeyValuePair<int, Tendency>(100, new Tendency { PA = 19, RPO = 13, Shotgun = 85, Screen = 10, Gap = 47, Zone = 46 } ),
+                    new KeyValuePair<int, Tendency>(35, new Tendency { PA = 26, RPO = 12, Shotgun = 83, Screen = 11, Gap = 51, Zone = 47 } ),
+                    new KeyValuePair<int, Tendency>(20, new Tendency { PA = 26, RPO = 32, Shotgun = 89, Screen = 22, Gap = 34, Zone = 59 } ),
+                    new KeyValuePair<int, Tendency>(17, new Tendency { PA = 14, RPO = 20, Shotgun = 82, Screen = 5, Gap = 52, Zone = 39 } ),
+                    new KeyValuePair<int, Tendency>(6, new Tendency { PA = 15, RPO = 11, Shotgun = 93, Screen = 9, Gap = 43, Zone = 37 } ),
+                    new KeyValuePair<int, Tendency>(1, new Tendency { PA = 16, RPO = 19, Shotgun = 85, Screen = 15, Gap = 33, Zone = 67 } ),
+                    new KeyValuePair<int, Tendency>(7, new Tendency { PA = 3, RPO = 0, Shotgun = 100, Screen = 6, Gap = 33, Zone = 67 } ),
+                    new KeyValuePair<int, Tendency>(8, new Tendency { PA = 4, RPO = 0, Shotgun = 100, Screen = 4, Gap = 100, Zone = 0 } ),
+                    new KeyValuePair<int, Tendency>(40, new Tendency { PA = 4, RPO = 13, Shotgun = 100, Screen = 10, Gap = 0, Zone = 33 } ),
+                    new KeyValuePair<int, Tendency>(25, new Tendency { PA = 23, RPO = 15, Shotgun = 86, Screen = 12, Gap = 43, Zone = 52 } ),
+                    new KeyValuePair<int, Tendency>(26, new Tendency { PA = 16, RPO = 9, Shotgun = 80, Screen = 13, Gap = 63, Zone = 36 } ),
+                    new KeyValuePair<int, Tendency>(27, new Tendency { PA = 16, RPO = 9, Shotgun = 80, Screen = 13, Gap = 63, Zone = 36 } ),
+                    new KeyValuePair<int, Tendency>(28, new Tendency { PA = 16, RPO = 9, Shotgun = 80, Screen = 13, Gap = 63, Zone = 36 } ),
+                    new KeyValuePair<int, Tendency>(3, new Tendency { PA = 25, RPO = 10, Shotgun = 54, Screen = 0, Gap = 53, Zone = 47 } ),
+                    new KeyValuePair<int, Tendency>(22, new Tendency { PA = 0, RPO = 0, Shotgun = 100, Screen = 0, Gap = 0, Zone = 0 } ),
+                    new KeyValuePair<int, Tendency>(13, new Tendency { PA = 19, RPO = 7, Shotgun = 54, Screen = 10, Gap = 47, Zone = 47 } ),
+
+                }
+            },
+            {"bills", new List<KeyValuePair<int, Tendency>>
+                {
+                    new KeyValuePair<int, Tendency>(100, new Tendency { PA = 16, RPO = 20, Shotgun = 74, Screen = 8, Gap = 50, Zone = 48 } ),
+                    new KeyValuePair<int, Tendency>(35, new Tendency { PA = 24, RPO = 26, Shotgun = 68, Screen = 11, Gap = 54, Zone = 45 } ),
+                    new KeyValuePair<int, Tendency>(20, new Tendency { PA = 9, RPO = 34, Shotgun = 73, Screen = 19, Gap = 43, Zone = 57 } ),
+                    new KeyValuePair<int, Tendency>(17, new Tendency { PA = 21, RPO = 19, Shotgun = 67, Screen = 7, Gap = 21, Zone = 79 } ),
+                    new KeyValuePair<int, Tendency>(6, new Tendency { PA = 13, RPO = 12, Shotgun = 90, Screen = 7, Gap = 75, Zone = 25 } ),
+                    new KeyValuePair<int, Tendency>(1, new Tendency { PA = 3, RPO = 34, Shotgun = 74, Screen = 0, Gap = 56, Zone = 44 } ),
+                    new KeyValuePair<int, Tendency>(7, new Tendency { PA = 0, RPO = 6, Shotgun = 100, Screen = 0, Gap = 0, Zone = 0 } ),
+                    new KeyValuePair<int, Tendency>(8, new Tendency { PA = 0, RPO = 0, Shotgun = 100, Screen = 0, Gap = 0, Zone = 0 } ),
+                    new KeyValuePair<int, Tendency>(40, new Tendency { PA = 0, RPO = 0, Shotgun = 100, Screen = 6, Gap = 0, Zone = 100 } ),
+                    new KeyValuePair<int, Tendency>(25, new Tendency { PA = 19, RPO = 21, Shotgun = 74, Screen = 10, Gap = 48, Zone = 52 } ),
+                    new KeyValuePair<int, Tendency>(26, new Tendency { PA = 16, RPO = 24, Shotgun = 78, Screen = 15, Gap = 47, Zone = 47 } ),
+                    new KeyValuePair<int, Tendency>(27, new Tendency { PA = 16, RPO = 24, Shotgun = 78, Screen = 15, Gap = 47, Zone = 47 } ),
+                    new KeyValuePair<int, Tendency>(28, new Tendency { PA = 16, RPO = 24, Shotgun = 78, Screen = 15, Gap = 47, Zone = 47 } ),
+                    new KeyValuePair<int, Tendency>(3, new Tendency { PA = 21, RPO = 7, Shotgun = 44, Screen = 0, Gap = 40, Zone = 60 } ),
+                    new KeyValuePair<int, Tendency>(22, new Tendency { PA = 14, RPO = 14, Shotgun = 100, Screen = 0, Gap = 0, Zone = 0 } ),
+                    new KeyValuePair<int, Tendency>(13, new Tendency { PA = 16, RPO = 10, Shotgun = 44, Screen = 8, Gap = 48, Zone = 50 } ),
+
+
+                }
+            },
+            {"panthers", new List<KeyValuePair<int, Tendency>>
+            {
+                new KeyValuePair<int, Tendency>(100, new Tendency { PA = 13, RPO = 12, Shotgun = 87, Screen = 9, Gap = 32, Zone = 68 } ),
+                new KeyValuePair<int, Tendency>(35, new Tendency { PA = 20, RPO = 14, Shotgun = 82, Screen = 7, Gap = 31, Zone = 69 } ),
+                new KeyValuePair<int, Tendency>(20, new Tendency { PA = 14, RPO = 25, Shotgun = 83, Screen = 0, Gap = 33, Zone = 67 } ),
+                new KeyValuePair<int, Tendency>(17, new Tendency { PA = 9, RPO = 30, Shotgun = 78, Screen = 8, Gap = 39, Zone = 61 } ),
+                new KeyValuePair<int, Tendency>(6, new Tendency { PA = 12, RPO = 10, Shotgun = 88, Screen = 11, Gap = 35, Zone = 63 } ),
+                new KeyValuePair<int, Tendency>(1, new Tendency { PA = 7, RPO = 10, Shotgun = 91, Screen = 8, Gap = 17, Zone = 83 } ),
+                new KeyValuePair<int, Tendency>(7, new Tendency { PA = 0, RPO = 0, Shotgun = 100, Screen = 4, Gap = 0, Zone = 100 } ),
+                new KeyValuePair<int, Tendency>(8, new Tendency { PA = 0, RPO = 0, Shotgun = 100, Screen = 2, Gap = 0, Zone = 0 } ),
+                new KeyValuePair<int, Tendency>(40, new Tendency { PA = 3, RPO = 0, Shotgun = 100, Screen = 30, Gap = 0, Zone = 100 } ),
+                new KeyValuePair<int, Tendency>(25, new Tendency { PA = 14, RPO = 13, Shotgun = 83, Screen = 7, Gap = 33, Zone = 66 } ),
+                new KeyValuePair<int, Tendency>(26, new Tendency { PA = 15, RPO = 17, Shotgun = 75, Screen = 4, Gap = 35, Zone = 65 } ),
+                new KeyValuePair<int, Tendency>(27, new Tendency { PA = 15, RPO = 17, Shotgun = 75, Screen = 4, Gap = 35, Zone = 65 } ),
+                new KeyValuePair<int, Tendency>(28, new Tendency { PA = 15, RPO = 17, Shotgun = 75, Screen = 4, Gap = 35, Zone = 65 } ),
+                new KeyValuePair<int, Tendency>(3, new Tendency { PA = 18, RPO = 9, Shotgun = 82, Screen = 0, Gap = 13, Zone = 88 } ),
+                new KeyValuePair<int, Tendency>(22, new Tendency { PA = 0, RPO = 0, Shotgun = 100, Screen = 0, Gap = 0, Zone = 0 } ),
+                new KeyValuePair<int, Tendency>(13, new Tendency { PA = 12, RPO = 6, Shotgun = 75, Screen = 8, Gap = 32, Zone = 68 } ),
+
+            }
+            },
+            {"bears", new List<KeyValuePair<int, Tendency>>
+                {
+                    new KeyValuePair<int, Tendency>(100, new Tendency { PA = 19, RPO = 13, Shotgun = 76, Screen = 13, Gap = 26, Zone = 72 } ),
+                    new KeyValuePair<int, Tendency>(35, new Tendency { PA = 25, RPO = 13, Shotgun = 72, Screen = 15, Gap = 30, Zone = 69 } ),
+                    new KeyValuePair<int, Tendency>(20, new Tendency { PA = 21, RPO = 27, Shotgun = 81, Screen = 8, Gap = 33, Zone = 67 } ),
+                    new KeyValuePair<int, Tendency>(17, new Tendency { PA = 27, RPO = 14, Shotgun = 73, Screen = 17, Gap = 19, Zone = 78 } ),
+                    new KeyValuePair<int, Tendency>(6, new Tendency { PA = 17, RPO = 16, Shotgun = 77, Screen = 12, Gap = 22, Zone = 78 } ),
+                    new KeyValuePair<int, Tendency>(1, new Tendency { PA = 11, RPO = 19, Shotgun = 64, Screen = 18, Gap = 21, Zone = 79 } ),
+                    new KeyValuePair<int, Tendency>(7, new Tendency { PA = 0, RPO = 10, Shotgun = 100, Screen = 12, Gap = 0, Zone = 80 } ),
+                    new KeyValuePair<int, Tendency>(8, new Tendency { PA = 2, RPO = 5, Shotgun = 100, Screen = 8, Gap = 33, Zone = 67 } ),
+                    new KeyValuePair<int, Tendency>(40, new Tendency { PA = 4, RPO = 4, Shotgun = 100, Screen = 19, Gap = 50, Zone = 50 } ),
+                    new KeyValuePair<int, Tendency>(25, new Tendency { PA = 20, RPO = 14, Shotgun = 74, Screen = 13, Gap = 26, Zone = 72 } ),
+                    new KeyValuePair<int, Tendency>(26, new Tendency { PA = 31, RPO = 16, Shotgun = 60, Screen = 13, Gap = 34, Zone = 66 } ),
+                    new KeyValuePair<int, Tendency>(27, new Tendency { PA = 31, RPO = 16, Shotgun = 60, Screen = 13, Gap = 34, Zone = 66 } ),
+                    new KeyValuePair<int, Tendency>(28, new Tendency { PA = 31, RPO = 16, Shotgun = 60, Screen = 13, Gap = 34, Zone = 66 } ),
+                    new KeyValuePair<int, Tendency>(3, new Tendency { PA = 10, RPO = 20, Shotgun = 47, Screen = 0, Gap = 50, Zone = 50 } ),
+                    new KeyValuePair<int, Tendency>(22, new Tendency { PA = 0, RPO = 13, Shotgun = 100, Screen = 17, Gap = 50, Zone = 50 } ),
+                    new KeyValuePair<int, Tendency>(13, new Tendency { PA = 18, RPO = 7, Shotgun = 47, Screen = 13, Gap = 27, Zone = 72 } ),
+
+                }
+            },
+            {"bengals", new List<KeyValuePair<int, Tendency>>
+                {
+                    new KeyValuePair<int, Tendency>(100, new Tendency { PA = 17, RPO = 20, Shotgun = 87, Screen = 12, Gap = 44, Zone = 54 } ),
+                    new KeyValuePair<int, Tendency>(35, new Tendency { PA = 24, RPO = 27, Shotgun = 83, Screen = 16, Gap = 48, Zone = 52 } ),
+                    new KeyValuePair<int, Tendency>(20, new Tendency { PA = 26, RPO = 35, Shotgun = 90, Screen = 14, Gap = 38, Zone = 62 } ),
+                    new KeyValuePair<int, Tendency>(17, new Tendency { PA = 24, RPO = 22, Shotgun = 89, Screen = 8, Gap = 42, Zone = 58 } ),
+                    new KeyValuePair<int, Tendency>(6, new Tendency { PA = 8, RPO = 14, Shotgun = 98, Screen = 16, Gap = 42, Zone = 50 } ),
+                    new KeyValuePair<int, Tendency>(1, new Tendency { PA = 12, RPO = 9, Shotgun = 91, Screen = 15, Gap = 43, Zone = 57 } ),
+                    new KeyValuePair<int, Tendency>(7, new Tendency { PA = 4, RPO = 0, Shotgun = 100, Screen = 0, Gap = 0, Zone = 0 } ),
+                    new KeyValuePair<int, Tendency>(8, new Tendency { PA = 2, RPO = 2, Shotgun = 100, Screen = 0, Gap = 50, Zone = 0 } ),
+                    new KeyValuePair<int, Tendency>(40, new Tendency { PA = 11, RPO = 0, Shotgun = 100, Screen = 19, Gap = 0, Zone = 50 } ),
+                    new KeyValuePair<int, Tendency>(25, new Tendency { PA = 19, RPO = 22, Shotgun = 88, Screen = 15, Gap = 46, Zone = 53 } ),
+                    new KeyValuePair<int, Tendency>(26, new Tendency { PA = 16, RPO = 25, Shotgun = 91, Screen = 13, Gap = 34, Zone = 66 } ),
+                    new KeyValuePair<int, Tendency>(27, new Tendency { PA = 16, RPO = 25, Shotgun = 91, Screen = 13, Gap = 34, Zone = 66 } ),
+                    new KeyValuePair<int, Tendency>(28, new Tendency { PA = 16, RPO = 25, Shotgun = 91, Screen = 13, Gap = 34, Zone = 66 } ),
+                    new KeyValuePair<int, Tendency>(3, new Tendency { PA = 19, RPO = 38, Shotgun = 83, Screen = 0, Gap = 27, Zone = 73 } ),
+                    new KeyValuePair<int, Tendency>(22, new Tendency { PA = 0, RPO = 0, Shotgun = 100, Screen = 0, Gap = 100, Zone = 0 } ),
+                    new KeyValuePair<int, Tendency>(13, new Tendency { PA = 15, RPO = 10, Shotgun = 83, Screen = 12, Gap = 43, Zone = 55 } ),
+
+                }
+            },
+            {"browns", new List<KeyValuePair<int, Tendency>>
+                {
+                    new KeyValuePair<int, Tendency>(100, new Tendency { PA = 16, RPO = 8, Shotgun = 65, Screen = 9, Gap = 49, Zone = 48 } ),
+                    new KeyValuePair<int, Tendency>(35, new Tendency { PA = 24, RPO = 12, Shotgun = 57, Screen = 9, Gap = 52, Zone = 46 } ),
+                    new KeyValuePair<int, Tendency>(20, new Tendency { PA = 16, RPO = 13, Shotgun = 41, Screen = 33, Gap = 42, Zone = 58 } ),
+                    new KeyValuePair<int, Tendency>(17, new Tendency { PA = 24, RPO = 8, Shotgun = 51, Screen = 8, Gap = 39, Zone = 61 } ),
+                    new KeyValuePair<int, Tendency>(6, new Tendency { PA = 12, RPO = 5, Shotgun = 81, Screen = 12, Gap = 38, Zone = 44 } ),
+                    new KeyValuePair<int, Tendency>(1, new Tendency { PA = 5, RPO = 8, Shotgun = 62, Screen = 0, Gap = 37, Zone = 63 } ),
+                    new KeyValuePair<int, Tendency>(7, new Tendency { PA = 0, RPO = 6, Shotgun = 100, Screen = 0, Gap = 60, Zone = 20 } ),
+                    new KeyValuePair<int, Tendency>(8, new Tendency { PA = 2, RPO = 0, Shotgun = 100, Screen = 11, Gap = 0, Zone = 0 } ),
+                    new KeyValuePair<int, Tendency>(40, new Tendency { PA = 0, RPO = 0, Shotgun = 100, Screen = 9, Gap = 100, Zone = 0 } ),
+                    new KeyValuePair<int, Tendency>(25, new Tendency { PA = 18, RPO = 9, Shotgun = 62, Screen = 11, Gap = 45, Zone = 51 } ),
+                    new KeyValuePair<int, Tendency>(26, new Tendency { PA = 25, RPO = 6, Shotgun = 60, Screen = 9, Gap = 60, Zone = 40 } ),
+                    new KeyValuePair<int, Tendency>(27, new Tendency { PA = 25, RPO = 6, Shotgun = 60, Screen = 9, Gap = 60, Zone = 40 } ),
+                    new KeyValuePair<int, Tendency>(28, new Tendency { PA = 25, RPO = 6, Shotgun = 60, Screen = 9, Gap = 60, Zone = 40 } ),
+                    new KeyValuePair<int, Tendency>(3, new Tendency { PA = 23, RPO = 8, Shotgun = 27, Screen = 0, Gap = 63, Zone = 38 } ),
+                    new KeyValuePair<int, Tendency>(22, new Tendency { PA = 14, RPO = 0, Shotgun = 86, Screen = 0, Gap = 100, Zone = 0 } ),
+                    new KeyValuePair<int, Tendency>(13, new Tendency { PA = 15, RPO = 4, Shotgun = 27, Screen = 9, Gap = 48, Zone = 49 } ),
+
+                }
+            },
+            {"cowboys", new List<KeyValuePair<int, Tendency>>
+                {
+                    new KeyValuePair<int, Tendency>(100, new Tendency { PA = 21, RPO = 8, Shotgun = 63, Screen = 8, Gap = 42, Zone = 55 } ),
+                    new KeyValuePair<int, Tendency>(35, new Tendency { PA = 23, RPO = 12, Shotgun = 57, Screen = 8, Gap = 44, Zone = 55 } ),
+                    new KeyValuePair<int, Tendency>(20, new Tendency { PA = 18, RPO = 8, Shotgun = 46, Screen = 7, Gap = 48, Zone = 52 } ),
+                    new KeyValuePair<int, Tendency>(17, new Tendency { PA = 30, RPO = 7, Shotgun = 53, Screen = 11, Gap = 44, Zone = 56 } ),
+                    new KeyValuePair<int, Tendency>(6, new Tendency { PA = 30, RPO = 7, Shotgun = 69, Screen = 11, Gap = 47, Zone = 41 } ),
+                    new KeyValuePair<int, Tendency>(1, new Tendency { PA = 13, RPO = 9, Shotgun = 61, Screen = 5, Gap = 23, Zone = 77 } ),
+                    new KeyValuePair<int, Tendency>(7, new Tendency { PA = 13, RPO = 3, Shotgun = 100, Screen = 0, Gap = 33, Zone = 67 } ),
+                    new KeyValuePair<int, Tendency>(8, new Tendency { PA = 3, RPO = 0, Shotgun = 100, Screen = 0, Gap = 100, Zone = 0 } ),
+                    new KeyValuePair<int, Tendency>(40, new Tendency { PA = 0, RPO = 0, Shotgun = 100, Screen = 6, Gap = 100, Zone = 0 } ),
+                    new KeyValuePair<int, Tendency>(25, new Tendency { PA = 24, RPO = 9, Shotgun = 59, Screen = 10, Gap = 39, Zone = 58 } ),
+                    new KeyValuePair<int, Tendency>(26, new Tendency { PA = 20, RPO = 11, Shotgun = 68, Screen = 10, Gap = 42, Zone = 53 } ),
+                    new KeyValuePair<int, Tendency>(27, new Tendency { PA = 20, RPO = 11, Shotgun = 68, Screen = 10, Gap = 42, Zone = 53 } ),
+                    new KeyValuePair<int, Tendency>(28, new Tendency { PA = 20, RPO = 11, Shotgun = 68, Screen = 10, Gap = 42, Zone = 53 } ),
+                    new KeyValuePair<int, Tendency>(3, new Tendency { PA = 26, RPO = 5, Shotgun = 43, Screen = 0, Gap = 50, Zone = 50 } ),
+                    new KeyValuePair<int, Tendency>(22, new Tendency { PA = 11, RPO = 0, Shotgun = 100, Screen = 22, Gap = 0, Zone = 0 } ),
+                    new KeyValuePair<int, Tendency>(13, new Tendency { PA = 20, RPO = 4, Shotgun = 43, Screen = 9, Gap = 42, Zone = 55 } ),
+
+                }
+            },
+            {"broncos", new List<KeyValuePair<int, Tendency>>
+                {
+                    new KeyValuePair<int, Tendency>(100, new Tendency { PA = 15, RPO = 10, Shotgun = 57, Screen = 12, Gap = 31, Zone = 66 } ),
+                    new KeyValuePair<int, Tendency>(35, new Tendency { PA = 20, RPO = 12, Shotgun = 47, Screen = 8, Gap = 31, Zone = 69 } ),
+                    new KeyValuePair<int, Tendency>(20, new Tendency { PA = 7, RPO = 10, Shotgun = 42, Screen = 11, Gap = 30, Zone = 70 } ),
+                    new KeyValuePair<int, Tendency>(17, new Tendency { PA = 16, RPO = 13, Shotgun = 53, Screen = 0, Gap = 33, Zone = 60 } ),
+                    new KeyValuePair<int, Tendency>(6, new Tendency { PA = 19, RPO = 12, Shotgun = 63, Screen = 27, Gap = 33, Zone = 57 } ),
+                    new KeyValuePair<int, Tendency>(1, new Tendency { PA = 12, RPO = 15, Shotgun = 49, Screen = 0, Gap = 15, Zone = 85 } ),
+                    new KeyValuePair<int, Tendency>(7, new Tendency { PA = 0, RPO = 7, Shotgun = 100, Screen = 0, Gap = 0, Zone = 75 } ),
+                    new KeyValuePair<int, Tendency>(8, new Tendency { PA = 4, RPO = 0, Shotgun = 100, Screen = 15, Gap = 0, Zone = 100 } ),
+                    new KeyValuePair<int, Tendency>(40, new Tendency { PA = 0, RPO = 0, Shotgun = 100, Screen = 10, Gap = 50, Zone = 0 } ),
+                    new KeyValuePair<int, Tendency>(25, new Tendency { PA = 18, RPO = 12, Shotgun = 52, Screen = 13, Gap = 31, Zone = 67 } ),
+                    new KeyValuePair<int, Tendency>(26, new Tendency { PA = 13, RPO = 6, Shotgun = 53, Screen = 5, Gap = 36, Zone = 64 } ),
+                    new KeyValuePair<int, Tendency>(27, new Tendency { PA = 13, RPO = 6, Shotgun = 53, Screen = 5, Gap = 36, Zone = 64 } ),
+                    new KeyValuePair<int, Tendency>(28, new Tendency { PA = 13, RPO = 6, Shotgun = 53, Screen = 5, Gap = 36, Zone = 64 } ),
+                    new KeyValuePair<int, Tendency>(3, new Tendency { PA = 27, RPO = 0, Shotgun = 36, Screen = 0, Gap = 38, Zone = 63 } ),
+                    new KeyValuePair<int, Tendency>(22, new Tendency { PA = 9, RPO = 9, Shotgun = 91, Screen = 10, Gap = 0, Zone = 0 } ),
+                    new KeyValuePair<int, Tendency>(13, new Tendency { PA = 15, RPO = 5, Shotgun = 36, Screen = 11, Gap = 31, Zone = 66 } ),
+
+                }
+            },
+            {"lions", new List<KeyValuePair<int, Tendency>>
+                {
+                    new KeyValuePair<int, Tendency>(100, new Tendency { PA = 15, RPO = 6, Shotgun = 58, Screen = 12, Gap = 45, Zone = 55 } ),
+                    new KeyValuePair<int, Tendency>(35, new Tendency { PA = 22, RPO = 5, Shotgun = 38, Screen = 13, Gap = 39, Zone = 60 } ),
+                    new KeyValuePair<int, Tendency>(20, new Tendency { PA = 29, RPO = 0, Shotgun = 56, Screen = 18, Gap = 40, Zone = 60 } ),
+                    new KeyValuePair<int, Tendency>(17, new Tendency { PA = 20, RPO = 11, Shotgun = 43, Screen = 4, Gap = 33, Zone = 67 } ),
+                    new KeyValuePair<int, Tendency>(6, new Tendency { PA = 8, RPO = 9, Shotgun = 83, Screen = 11, Gap = 68, Zone = 33 } ),
+                    new KeyValuePair<int, Tendency>(1, new Tendency { PA = 7, RPO = 14, Shotgun = 77, Screen = 4, Gap = 39, Zone = 61 } ),
+                    new KeyValuePair<int, Tendency>(7, new Tendency { PA = 0, RPO = 4, Shotgun = 95, Screen = 14, Gap = 0, Zone = 100 } ),
+                    new KeyValuePair<int, Tendency>(8, new Tendency { PA = 0, RPO = 0, Shotgun = 100, Screen = 19, Gap = 67, Zone = 33 } ),
+                    new KeyValuePair<int, Tendency>(40, new Tendency { PA = 0, RPO = 0, Shotgun = 100, Screen = 5, Gap = 0, Zone = 67 } ),
+                    new KeyValuePair<int, Tendency>(25, new Tendency { PA = 17, RPO = 6, Shotgun = 51, Screen = 10, Gap = 40, Zone = 60 } ),
+                    new KeyValuePair<int, Tendency>(26, new Tendency { PA = 14, RPO = 4, Shotgun = 40, Screen = 11, Gap = 52, Zone = 48 } ),
+                    new KeyValuePair<int, Tendency>(27, new Tendency { PA = 14, RPO = 4, Shotgun = 40, Screen = 11, Gap = 52, Zone = 48 } ),
+                    new KeyValuePair<int, Tendency>(28, new Tendency { PA = 14, RPO = 4, Shotgun = 40, Screen = 11, Gap = 52, Zone = 48 } ),
+                    new KeyValuePair<int, Tendency>(3, new Tendency { PA = 13, RPO = 0, Shotgun = 29, Screen = 0, Gap = 73, Zone = 27 } ),
+                    new KeyValuePair<int, Tendency>(22, new Tendency { PA = 7, RPO = 0, Shotgun = 80, Screen = 25, Gap = 33, Zone = 67 } ),
+                    new KeyValuePair<int, Tendency>(13, new Tendency { PA = 14, RPO = 3, Shotgun = 29, Screen = 11, Gap = 44, Zone = 55 } ),
+
+                }
+            },
+            {"packers", new List<KeyValuePair<int, Tendency>>
+                {
+                    new KeyValuePair<int, Tendency>(100, new Tendency { PA = 18, RPO = 17, Shotgun = 73, Screen = 12, Gap = 33, Zone = 64 } ),
+                    new KeyValuePair<int, Tendency>(35, new Tendency { PA = 25, RPO = 19, Shotgun = 60, Screen = 16, Gap = 35, Zone = 63 } ),
+                    new KeyValuePair<int, Tendency>(20, new Tendency { PA = 25, RPO = 36, Shotgun = 64, Screen = 12, Gap = 42, Zone = 58 } ),
+                    new KeyValuePair<int, Tendency>(17, new Tendency { PA = 18, RPO = 11, Shotgun = 65, Screen = 4, Gap = 18, Zone = 82 } ),
+                    new KeyValuePair<int, Tendency>(6, new Tendency { PA = 17, RPO = 16, Shotgun = 84, Screen = 12, Gap = 41, Zone = 59 } ),
+                    new KeyValuePair<int, Tendency>(1, new Tendency { PA = 6, RPO = 21, Shotgun = 74, Screen = 6, Gap = 41, Zone = 59 } ),
+                    new KeyValuePair<int, Tendency>(7, new Tendency { PA = 5, RPO = 9, Shotgun = 100, Screen = 5, Gap = 0, Zone = 100 } ),
+                    new KeyValuePair<int, Tendency>(8, new Tendency { PA = 0, RPO = 0, Shotgun = 100, Screen = 3, Gap = 0, Zone = 0 } ),
+                    new KeyValuePair<int, Tendency>(40, new Tendency { PA = 0, RPO = 4, Shotgun = 100, Screen = 24, Gap = 0, Zone = 0 } ),
+                    new KeyValuePair<int, Tendency>(25, new Tendency { PA = 21, RPO = 17, Shotgun = 67, Screen = 12, Gap = 34, Zone = 66 } ),
+                    new KeyValuePair<int, Tendency>(26, new Tendency { PA = 15, RPO = 32, Shotgun = 77, Screen = 22, Gap = 20, Zone = 69 } ),
+                    new KeyValuePair<int, Tendency>(27, new Tendency { PA = 15, RPO = 32, Shotgun = 77, Screen = 22, Gap = 20, Zone = 69 } ),
+                    new KeyValuePair<int, Tendency>(28, new Tendency { PA = 15, RPO = 32, Shotgun = 77, Screen = 22, Gap = 20, Zone = 69 } ),
+                    new KeyValuePair<int, Tendency>(3, new Tendency { PA = 33, RPO = 67, Shotgun = 73, Screen = 0, Gap = 25, Zone = 75 } ),
+                    new KeyValuePair<int, Tendency>(22, new Tendency { PA = 0, RPO = 0, Shotgun = 100, Screen = 9, Gap = 0, Zone = 0 } ),
+                    new KeyValuePair<int, Tendency>(13, new Tendency { PA = 17, RPO = 9, Shotgun = 60, Screen = 11, Gap = 33, Zone = 65 } ),
+
+                }
+            },
+            {"texans", new List<KeyValuePair<int, Tendency>>
+                {
+                    new KeyValuePair<int, Tendency>(100, new Tendency { PA = 16, RPO = 4, Shotgun = 61, Screen = 9, Gap = 28, Zone = 69 } ),
+                    new KeyValuePair<int, Tendency>(35, new Tendency { PA = 19, RPO = 5, Shotgun = 51, Screen = 10, Gap = 31, Zone = 67 } ),
+                    new KeyValuePair<int, Tendency>(20, new Tendency { PA = 22, RPO = 6, Shotgun = 47, Screen = 7, Gap = 18, Zone = 82 } ),
+                    new KeyValuePair<int, Tendency>(17, new Tendency { PA = 23, RPO = 6, Shotgun = 60, Screen = 9, Gap = 47, Zone = 53 } ),
+                    new KeyValuePair<int, Tendency>(6, new Tendency { PA = 19, RPO = 4, Shotgun = 67, Screen = 12, Gap = 23, Zone = 70 } ),
+                    new KeyValuePair<int, Tendency>(1, new Tendency { PA = 12, RPO = 0, Shotgun = 58, Screen = 0, Gap = 0, Zone = 100 } ),
+                    new KeyValuePair<int, Tendency>(7, new Tendency { PA = 0, RPO = 0, Shotgun = 100, Screen = 0, Gap = 0, Zone = 0 } ),
+                    new KeyValuePair<int, Tendency>(8, new Tendency { PA = 0, RPO = 0, Shotgun = 100, Screen = 0, Gap = 0, Zone = 0 } ),
+                    new KeyValuePair<int, Tendency>(40, new Tendency { PA = 3, RPO = 0, Shotgun = 100, Screen = 30, Gap = 50, Zone = 0 } ),
+                    new KeyValuePair<int, Tendency>(25, new Tendency { PA = 18, RPO = 4, Shotgun = 56, Screen = 9, Gap = 31, Zone = 66 } ),
+                    new KeyValuePair<int, Tendency>(26, new Tendency { PA = 19, RPO = 4, Shotgun = 41, Screen = 6, Gap = 26, Zone = 74 } ),
+                    new KeyValuePair<int, Tendency>(27, new Tendency { PA = 19, RPO = 4, Shotgun = 41, Screen = 6, Gap = 26, Zone = 74 } ),
+                    new KeyValuePair<int, Tendency>(28, new Tendency { PA = 19, RPO = 4, Shotgun = 41, Screen = 6, Gap = 26, Zone = 74 } ),
+                    new KeyValuePair<int, Tendency>(3, new Tendency { PA = 25, RPO = 4, Shotgun = 35, Screen = 0, Gap = 19, Zone = 81 } ),
+                    new KeyValuePair<int, Tendency>(22, new Tendency { PA = 0, RPO = 8, Shotgun = 100, Screen = 9, Gap = 0, Zone = 0 } ),
+                    new KeyValuePair<int, Tendency>(13, new Tendency { PA = 15, RPO = 2, Shotgun = 35, Screen = 8, Gap = 30, Zone = 68 } ),
+
+                }
+            },
+            {"colts", new List<KeyValuePair<int, Tendency>>
+                {
+                    new KeyValuePair<int, Tendency>(100, new Tendency { PA = 20, RPO = 28, Shotgun = 93, Screen = 9, Gap = 23, Zone = 77 } ),
+                    new KeyValuePair<int, Tendency>(35, new Tendency { PA = 25, RPO = 37, Shotgun = 90, Screen = 9, Gap = 27, Zone = 72 } ),
+                    new KeyValuePair<int, Tendency>(20, new Tendency { PA = 21, RPO = 38, Shotgun = 100, Screen = 18, Gap = 9, Zone = 91 } ),
+                    new KeyValuePair<int, Tendency>(17, new Tendency { PA = 28, RPO = 40, Shotgun = 91, Screen = 18, Gap = 20, Zone = 80 } ),
+                    new KeyValuePair<int, Tendency>(6, new Tendency { PA = 18, RPO = 17, Shotgun = 97, Screen = 5, Gap = 16, Zone = 84 } ),
+                    new KeyValuePair<int, Tendency>(1, new Tendency { PA = 14, RPO = 26, Shotgun = 92, Screen = 6, Gap = 6, Zone = 94 } ),
+                    new KeyValuePair<int, Tendency>(7, new Tendency { PA = 8, RPO = 11, Shotgun = 100, Screen = 6, Gap = 25, Zone = 75 } ),
+                    new KeyValuePair<int, Tendency>(8, new Tendency { PA = 0, RPO = 0, Shotgun = 100, Screen = 3, Gap = 0, Zone = 0 } ),
+                    new KeyValuePair<int, Tendency>(40, new Tendency { PA = 4, RPO = 8, Shotgun = 100, Screen = 29, Gap = 33, Zone = 33 } ),
+                    new KeyValuePair<int, Tendency>(25, new Tendency { PA = 22, RPO = 28, Shotgun = 92, Screen = 8, Gap = 21, Zone = 79 } ),
+                    new KeyValuePair<int, Tendency>(26, new Tendency { PA = 23, RPO = 52, Shotgun = 97, Screen = 16, Gap = 32, Zone = 68 } ),
+                    new KeyValuePair<int, Tendency>(27, new Tendency { PA = 23, RPO = 52, Shotgun = 97, Screen = 16, Gap = 32, Zone = 68 } ),
+                    new KeyValuePair<int, Tendency>(28, new Tendency { PA = 23, RPO = 52, Shotgun = 97, Screen = 16, Gap = 32, Zone = 68 } ),
+                    new KeyValuePair<int, Tendency>(3, new Tendency { PA = 17, RPO = 39, Shotgun = 89, Screen = 0, Gap = 21, Zone = 79 } ),
+                    new KeyValuePair<int, Tendency>(22, new Tendency { PA = 0, RPO = 0, Shotgun = 100, Screen = 20, Gap = 0, Zone = 0 } ),
+                    new KeyValuePair<int, Tendency>(13, new Tendency { PA = 19, RPO = 14, Shotgun = 89, Screen = 9, Gap = 23, Zone = 76 } ),
+
+                }
+            },
+            {"jaguars", new List<KeyValuePair<int, Tendency>>
+                {
+                    new KeyValuePair<int, Tendency>(100, new Tendency { PA = 18, RPO = 11, Shotgun = 79, Screen = 14, Gap = 49, Zone = 50 } ),
+                    new KeyValuePair<int, Tendency>(35, new Tendency { PA = 27, RPO = 15, Shotgun = 75, Screen = 20, Gap = 48, Zone = 50 } ),
+                    new KeyValuePair<int, Tendency>(20, new Tendency { PA = 20, RPO = 18, Shotgun = 76, Screen = 21, Gap = 52, Zone = 44 } ),
+                    new KeyValuePair<int, Tendency>(17, new Tendency { PA = 20, RPO = 14, Shotgun = 82, Screen = 18, Gap = 56, Zone = 44 } ),
+                    new KeyValuePair<int, Tendency>(6, new Tendency { PA = 14, RPO = 4, Shotgun = 96, Screen = 12, Gap = 47, Zone = 53 } ),
+                    new KeyValuePair<int, Tendency>(1, new Tendency { PA = 8, RPO = 13, Shotgun = 76, Screen = 10, Gap = 53, Zone = 41 } ),
+                    new KeyValuePair<int, Tendency>(7, new Tendency { PA = 3, RPO = 17, Shotgun = 100, Screen = 0, Gap = 40, Zone = 60 } ),
+                    new KeyValuePair<int, Tendency>(8, new Tendency { PA = 0, RPO = 3, Shotgun = 100, Screen = 3, Gap = 0, Zone = 100 } ),
+                    new KeyValuePair<int, Tendency>(40, new Tendency { PA = 0, RPO = 5, Shotgun = 100, Screen = 17, Gap = 0, Zone = 100 } ),
+                    new KeyValuePair<int, Tendency>(25, new Tendency { PA = 21, RPO = 11, Shotgun = 81, Screen = 16, Gap = 48, Zone = 51 } ),
+                    new KeyValuePair<int, Tendency>(26, new Tendency { PA = 18, RPO = 12, Shotgun = 69, Screen = 12, Gap = 39, Zone = 59 } ),
+                    new KeyValuePair<int, Tendency>(27, new Tendency { PA = 18, RPO = 12, Shotgun = 69, Screen = 12, Gap = 39, Zone = 59 } ),
+                    new KeyValuePair<int, Tendency>(28, new Tendency { PA = 18, RPO = 12, Shotgun = 69, Screen = 12, Gap = 39, Zone = 59 } ),
+                    new KeyValuePair<int, Tendency>(3, new Tendency { PA = 6, RPO = 13, Shotgun = 75, Screen = 0, Gap = 0, Zone = 100 } ),
+                    new KeyValuePair<int, Tendency>(22, new Tendency { PA = 0, RPO = 0, Shotgun = 100, Screen = 0, Gap = 0, Zone = 0 } ),
+                    new KeyValuePair<int, Tendency>(13, new Tendency { PA = 17, RPO = 6, Shotgun = 69, Screen = 14, Gap = 46, Zone = 52 } ),
+
+                }
+            },
+            {"chiefs", new List<KeyValuePair<int, Tendency>>
+                {
+                    new KeyValuePair<int, Tendency>(100, new Tendency { PA = 17, RPO = 18, Shotgun = 83, Screen = 12, Gap = 31, Zone = 67 } ),
+                    new KeyValuePair<int, Tendency>(35, new Tendency { PA = 25, RPO = 23, Shotgun = 79, Screen = 10, Gap = 34, Zone = 66 } ),
+                    new KeyValuePair<int, Tendency>(20, new Tendency { PA = 15, RPO = 41, Shotgun = 70, Screen = 21, Gap = 16, Zone = 84 } ),
+                    new KeyValuePair<int, Tendency>(17, new Tendency { PA = 20, RPO = 22, Shotgun = 89, Screen = 26, Gap = 33, Zone = 67 } ),
+                    new KeyValuePair<int, Tendency>(6, new Tendency { PA = 13, RPO = 10, Shotgun = 92, Screen = 16, Gap = 50, Zone = 45 } ),
+                    new KeyValuePair<int, Tendency>(1, new Tendency { PA = 6, RPO = 18, Shotgun = 85, Screen = 0, Gap = 13, Zone = 87 } ),
+                    new KeyValuePair<int, Tendency>(7, new Tendency { PA = 0, RPO = 0, Shotgun = 100, Screen = 5, Gap = 0, Zone = 0 } ),
+                    new KeyValuePair<int, Tendency>(8, new Tendency { PA = 0, RPO = 0, Shotgun = 100, Screen = 4, Gap = 0, Zone = 0 } ),
+                    new KeyValuePair<int, Tendency>(40, new Tendency { PA = 0, RPO = 0, Shotgun = 100, Screen = 11, Gap = 0, Zone = 0 } ),
+                    new KeyValuePair<int, Tendency>(25, new Tendency { PA = 20, RPO = 21, Shotgun = 83, Screen = 14, Gap = 30, Zone = 70 } ),
+                    new KeyValuePair<int, Tendency>(26, new Tendency { PA = 15, RPO = 21, Shotgun = 84, Screen = 18, Gap = 39, Zone = 58 } ),
+                    new KeyValuePair<int, Tendency>(27, new Tendency { PA = 15, RPO = 21, Shotgun = 84, Screen = 18, Gap = 39, Zone = 58 } ),
+                    new KeyValuePair<int, Tendency>(28, new Tendency { PA = 15, RPO = 21, Shotgun = 84, Screen = 18, Gap = 39, Zone = 58 } ),
+                    new KeyValuePair<int, Tendency>(3, new Tendency { PA = 32, RPO = 32, Shotgun = 80, Screen = 0, Gap = 45, Zone = 55 } ),
+                    new KeyValuePair<int, Tendency>(22, new Tendency { PA = 0, RPO = 50, Shotgun = 100, Screen = 0, Gap = 0, Zone = 100 } ),
+                    new KeyValuePair<int, Tendency>(13, new Tendency { PA = 16, RPO = 9, Shotgun = 70, Screen = 12, Gap = 31, Zone = 68 } ),
+
+                }
+            },
+            {"raiders", new List<KeyValuePair<int, Tendency>>
+                {
+                    new KeyValuePair<int, Tendency>(100, new Tendency { PA = 15, RPO = 4, Shotgun = 57, Screen = 9, Gap = 29, Zone = 68 } ),
+                    new KeyValuePair<int, Tendency>(35, new Tendency { PA = 19, RPO = 5, Shotgun = 42, Screen = 7, Gap = 25, Zone = 71 } ),
+                    new KeyValuePair<int, Tendency>(20, new Tendency { PA = 12, RPO = 4, Shotgun = 20, Screen = 0, Gap = 37, Zone = 63 } ),
+                    new KeyValuePair<int, Tendency>(17, new Tendency { PA = 17, RPO = 6, Shotgun = 40, Screen = 23, Gap = 54, Zone = 46 } ),
+                    new KeyValuePair<int, Tendency>(6, new Tendency { PA = 17, RPO = 6, Shotgun = 65, Screen = 10, Gap = 33, Zone = 57 } ),
+                    new KeyValuePair<int, Tendency>(1, new Tendency { PA = 5, RPO = 3, Shotgun = 59, Screen = 4, Gap = 20, Zone = 80 } ),
+                    new KeyValuePair<int, Tendency>(7, new Tendency { PA = 8, RPO = 3, Shotgun = 100, Screen = 8, Gap = 0, Zone = 67 } ),
+                    new KeyValuePair<int, Tendency>(8, new Tendency { PA = 0, RPO = 0, Shotgun = 100, Screen = 5, Gap = 0, Zone = 100 } ),
+                    new KeyValuePair<int, Tendency>(40, new Tendency { PA = 0, RPO = 0, Shotgun = 100, Screen = 6, Gap = 0, Zone = 0 } ),
+                    new KeyValuePair<int, Tendency>(25, new Tendency { PA = 18, RPO = 4, Shotgun = 47, Screen = 9, Gap = 30, Zone = 66 } ),
+                    new KeyValuePair<int, Tendency>(26, new Tendency { PA = 9, RPO = 9, Shotgun = 44, Screen = 19, Gap = 37, Zone = 63 } ),
+                    new KeyValuePair<int, Tendency>(27, new Tendency { PA = 9, RPO = 9, Shotgun = 44, Screen = 19, Gap = 37, Zone = 63 } ),
+                    new KeyValuePair<int, Tendency>(28, new Tendency { PA = 9, RPO = 9, Shotgun = 44, Screen = 19, Gap = 37, Zone = 63 } ),
+                    new KeyValuePair<int, Tendency>(3, new Tendency { PA = 0, RPO = 0, Shotgun = 40, Screen = 0, Gap = 38, Zone = 63 } ),
+                    new KeyValuePair<int, Tendency>(22, new Tendency { PA = 9, RPO = 0, Shotgun = 100, Screen = 0, Gap = 0, Zone = 100 } ),
+                    new KeyValuePair<int, Tendency>(13, new Tendency { PA = 14, RPO = 2, Shotgun = 20, Screen = 9, Gap = 30, Zone = 67 } ),
+
+                }
+            },
+            {"chargers", new List<KeyValuePair<int, Tendency>>
+                {
+                    new KeyValuePair<int, Tendency>(100, new Tendency { PA = 18, RPO = 16, Shotgun = 81, Screen = 11, Gap = 33, Zone = 65 } ),
+                    new KeyValuePair<int, Tendency>(35, new Tendency { PA = 23, RPO = 21, Shotgun = 74, Screen = 18, Gap = 34, Zone = 65 } ),
+                    new KeyValuePair<int, Tendency>(20, new Tendency { PA = 20, RPO = 38, Shotgun = 68, Screen = 15, Gap = 28, Zone = 72 } ),
+                    new KeyValuePair<int, Tendency>(17, new Tendency { PA = 25, RPO = 23, Shotgun = 79, Screen = 12, Gap = 18, Zone = 73 } ),
+                    new KeyValuePair<int, Tendency>(6, new Tendency { PA = 19, RPO = 7, Shotgun = 88, Screen = 7, Gap = 30, Zone = 70 } ),
+                    new KeyValuePair<int, Tendency>(1, new Tendency { PA = 8, RPO = 18, Shotgun = 74, Screen = 10, Gap = 37, Zone = 63 } ),
+                    new KeyValuePair<int, Tendency>(7, new Tendency { PA = 0, RPO = 3, Shotgun = 100, Screen = 0, Gap = 50, Zone = 50 } ),
+                    new KeyValuePair<int, Tendency>(8, new Tendency { PA = 5, RPO = 0, Shotgun = 100, Screen = 0, Gap = 0, Zone = 0 } ),
+                    new KeyValuePair<int, Tendency>(40, new Tendency { PA = 0, RPO = 0, Shotgun = 100, Screen = 26, Gap = 0, Zone = 0 } ),
+                    new KeyValuePair<int, Tendency>(25, new Tendency { PA = 22, RPO = 16, Shotgun = 78, Screen = 13, Gap = 32, Zone = 67 } ),
+                    new KeyValuePair<int, Tendency>(26, new Tendency { PA = 15, RPO = 29, Shotgun = 84, Screen = 16, Gap = 36, Zone = 62 } ),
+                    new KeyValuePair<int, Tendency>(27, new Tendency { PA = 15, RPO = 29, Shotgun = 84, Screen = 16, Gap = 36, Zone = 62 } ),
+                    new KeyValuePair<int, Tendency>(28, new Tendency { PA = 15, RPO = 29, Shotgun = 84, Screen = 16, Gap = 36, Zone = 62 } ),
+                    new KeyValuePair<int, Tendency>(3, new Tendency { PA = 20, RPO = 35, Shotgun = 71, Screen = 0, Gap = 18, Zone = 82 } ),
+                    new KeyValuePair<int, Tendency>(22, new Tendency { PA = 0, RPO = 0, Shotgun = 100, Screen = 0, Gap = 0, Zone = 0 } ),
+                    new KeyValuePair<int, Tendency>(13, new Tendency { PA = 18, RPO = 8, Shotgun = 68, Screen = 10, Gap = 35, Zone = 64 } ),
+
+                }
+            },
+            {"rams", new List<KeyValuePair<int, Tendency>>
+                {
+                    new KeyValuePair<int, Tendency>(100, new Tendency { PA = 15, RPO = 2, Shotgun = 62, Screen = 9, Gap = 47, Zone = 52 } ),
+                    new KeyValuePair<int, Tendency>(35, new Tendency { PA = 23, RPO = 3, Shotgun = 47, Screen = 8, Gap = 43, Zone = 57 } ),
+                    new KeyValuePair<int, Tendency>(20, new Tendency { PA = 6, RPO = 0, Shotgun = 46, Screen = 18, Gap = 52, Zone = 48 } ),
+                    new KeyValuePair<int, Tendency>(17, new Tendency { PA = 28, RPO = 2, Shotgun = 46, Screen = 12, Gap = 52, Zone = 48 } ),
+                    new KeyValuePair<int, Tendency>(6, new Tendency { PA = 7, RPO = 4, Shotgun = 86, Screen = 9, Gap = 48, Zone = 52 } ),
+                    new KeyValuePair<int, Tendency>(1, new Tendency { PA = 0, RPO = 0, Shotgun = 55, Screen = 6, Gap = 57, Zone = 43 } ),
+                    new KeyValuePair<int, Tendency>(7, new Tendency { PA = 0, RPO = 4, Shotgun = 100, Screen = 0, Gap = 0, Zone = 100 } ),
+                    new KeyValuePair<int, Tendency>(8, new Tendency { PA = 0, RPO = 0, Shotgun = 100, Screen = 16, Gap = 0, Zone = 0 } ),
+                    new KeyValuePair<int, Tendency>(40, new Tendency { PA = 0, RPO = 0, Shotgun = 100, Screen = 10, Gap = 71, Zone = 29 } ),
+                    new KeyValuePair<int, Tendency>(25, new Tendency { PA = 18, RPO = 3, Shotgun = 57, Screen = 9, Gap = 46, Zone = 54 } ),
+                    new KeyValuePair<int, Tendency>(26, new Tendency { PA = 10, RPO = 3, Shotgun = 51, Screen = 18, Gap = 52, Zone = 48 } ),
+                    new KeyValuePair<int, Tendency>(27, new Tendency { PA = 10, RPO = 3, Shotgun = 51, Screen = 18, Gap = 52, Zone = 48 } ),
+                    new KeyValuePair<int, Tendency>(28, new Tendency { PA = 10, RPO = 3, Shotgun = 51, Screen = 18, Gap = 52, Zone = 48 } ),
+                    new KeyValuePair<int, Tendency>(3, new Tendency { PA = 6, RPO = 0, Shotgun = 41, Screen = 0, Gap = 46, Zone = 54 } ),
+                    new KeyValuePair<int, Tendency>(22, new Tendency { PA = 0, RPO = 0, Shotgun = 91, Screen = 0, Gap = 100, Zone = 0 } ),
+                    new KeyValuePair<int, Tendency>(13, new Tendency { PA = 14, RPO = 1, Shotgun = 41, Screen = 9, Gap = 47, Zone = 52 } ),
+
+                }
+            },
+            {"dolphins", new List<KeyValuePair<int, Tendency>>
+                {
+                    new KeyValuePair<int, Tendency>(100, new Tendency { PA = 23, RPO = 7, Shotgun = 78, Screen = 12, Gap = 27, Zone = 72 } ),
+                    new KeyValuePair<int, Tendency>(35, new Tendency { PA = 25, RPO = 7, Shotgun = 76, Screen = 13, Gap = 23, Zone = 77 } ),
+                    new KeyValuePair<int, Tendency>(20, new Tendency { PA = 26, RPO = 18, Shotgun = 84, Screen = 5, Gap = 28, Zone = 72 } ),
+                    new KeyValuePair<int, Tendency>(17, new Tendency { PA = 41, RPO = 13, Shotgun = 74, Screen = 4, Gap = 20, Zone = 80 } ),
+                    new KeyValuePair<int, Tendency>(6, new Tendency { PA = 24, RPO = 4, Shotgun = 87, Screen = 12, Gap = 41, Zone = 52 } ),
+                    new KeyValuePair<int, Tendency>(1, new Tendency { PA = 20, RPO = 7, Shotgun = 89, Screen = 9, Gap = 43, Zone = 57 } ),
+                    new KeyValuePair<int, Tendency>(7, new Tendency { PA = 0, RPO = 0, Shotgun = 100, Screen = 0, Gap = 0, Zone = 0 } ),
+                    new KeyValuePair<int, Tendency>(8, new Tendency { PA = 0, RPO = 0, Shotgun = 100, Screen = 4, Gap = 100, Zone = 0 } ),
+                    new KeyValuePair<int, Tendency>(40, new Tendency { PA = 0, RPO = 0, Shotgun = 100, Screen = 36, Gap = 0, Zone = 0 } ),
+                    new KeyValuePair<int, Tendency>(25, new Tendency { PA = 26, RPO = 7, Shotgun = 79, Screen = 11, Gap = 21, Zone = 78 } ),
+                    new KeyValuePair<int, Tendency>(26, new Tendency { PA = 20, RPO = 8, Shotgun = 70, Screen = 17, Gap = 35, Zone = 65 } ),
+                    new KeyValuePair<int, Tendency>(27, new Tendency { PA = 20, RPO = 8, Shotgun = 70, Screen = 17, Gap = 35, Zone = 65 } ),
+                    new KeyValuePair<int, Tendency>(28, new Tendency { PA = 20, RPO = 8, Shotgun = 70, Screen = 17, Gap = 35, Zone = 65 } ),
+                    new KeyValuePair<int, Tendency>(3, new Tendency { PA = 18, RPO = 9, Shotgun = 62, Screen = 0, Gap = 33, Zone = 67 } ),
+                    new KeyValuePair<int, Tendency>(22, new Tendency { PA = 0, RPO = 0, Shotgun = 100, Screen = 0, Gap = 0, Zone = 0 } ),
+                    new KeyValuePair<int, Tendency>(13, new Tendency { PA = 22, RPO = 4, Shotgun = 62, Screen = 13, Gap = 25, Zone = 74 } ),
+
+                }
+            },
+            {"vikings", new List<KeyValuePair<int, Tendency>>
+                {
+                    new KeyValuePair<int, Tendency>(100, new Tendency { PA = 21, RPO = 8, Shotgun = 54, Screen = 8, Gap = 24, Zone = 75 } ),
+                    new KeyValuePair<int, Tendency>(35, new Tendency { PA = 31, RPO = 9, Shotgun = 31, Screen = 11, Gap = 24, Zone = 75 } ),
+                    new KeyValuePair<int, Tendency>(20, new Tendency { PA = 21, RPO = 6, Shotgun = 24, Screen = 4, Gap = 33, Zone = 63 } ),
+                    new KeyValuePair<int, Tendency>(17, new Tendency { PA = 23, RPO = 14, Shotgun = 52, Screen = 5, Gap = 32, Zone = 68 } ),
+                    new KeyValuePair<int, Tendency>(6, new Tendency { PA = 19, RPO = 10, Shotgun = 73, Screen = 10, Gap = 13, Zone = 83 } ),
+                    new KeyValuePair<int, Tendency>(1, new Tendency { PA = 3, RPO = 0, Shotgun = 75, Screen = 0, Gap = 30, Zone = 70 } ),
+                    new KeyValuePair<int, Tendency>(7, new Tendency { PA = 0, RPO = 0, Shotgun = 100, Screen = 0, Gap = 0, Zone = 0 } ),
+                    new KeyValuePair<int, Tendency>(8, new Tendency { PA = 0, RPO = 0, Shotgun = 100, Screen = 6, Gap = 0, Zone = 100 } ),
+                    new KeyValuePair<int, Tendency>(40, new Tendency { PA = 0, RPO = 4, Shotgun = 100, Screen = 13, Gap = 0, Zone = 0 } ),
+                    new KeyValuePair<int, Tendency>(25, new Tendency { PA = 25, RPO = 10, Shotgun = 44, Screen = 10, Gap = 24, Zone = 75 } ),
+                    new KeyValuePair<int, Tendency>(26, new Tendency { PA = 29, RPO = 7, Shotgun = 41, Screen = 16, Gap = 21, Zone = 76 } ),
+                    new KeyValuePair<int, Tendency>(27, new Tendency { PA = 29, RPO = 7, Shotgun = 41, Screen = 16, Gap = 21, Zone = 76 } ),
+                    new KeyValuePair<int, Tendency>(28, new Tendency { PA = 29, RPO = 7, Shotgun = 41, Screen = 16, Gap = 21, Zone = 76 } ),
+                    new KeyValuePair<int, Tendency>(3, new Tendency { PA = 24, RPO = 10, Shotgun = 33, Screen = 0, Gap = 36, Zone = 64 } ),
+                    new KeyValuePair<int, Tendency>(22, new Tendency { PA = 0, RPO = 0, Shotgun = 100, Screen = 0, Gap = 0, Zone = 0 } ),
+                    new KeyValuePair<int, Tendency>(13, new Tendency { PA = 20, RPO = 4, Shotgun = 24, Screen = 8, Gap = 23, Zone = 75 } ),
+
+                }
+            },
+            {"patriots", new List<KeyValuePair<int, Tendency>>
+                {
+                    new KeyValuePair<int, Tendency>(100, new Tendency { PA = 14, RPO = 13, Shotgun = 65, Screen = 14, Gap = 40, Zone = 56 } ),
+                    new KeyValuePair<int, Tendency>(35, new Tendency { PA = 20, RPO = 19, Shotgun = 58, Screen = 18, Gap = 44, Zone = 53 } ),
+                    new KeyValuePair<int, Tendency>(20, new Tendency { PA = 5, RPO = 20, Shotgun = 46, Screen = 7, Gap = 45, Zone = 55 } ),
+                    new KeyValuePair<int, Tendency>(17, new Tendency { PA = 21, RPO = 8, Shotgun = 48, Screen = 7, Gap = 35, Zone = 55 } ),
+                    new KeyValuePair<int, Tendency>(6, new Tendency { PA = 15, RPO = 9, Shotgun = 68, Screen = 18, Gap = 29, Zone = 60 } ),
+                    new KeyValuePair<int, Tendency>(1, new Tendency { PA = 4, RPO = 4, Shotgun = 54, Screen = 0, Gap = 40, Zone = 60 } ),
+                    new KeyValuePair<int, Tendency>(7, new Tendency { PA = 0, RPO = 0, Shotgun = 100, Screen = 6, Gap = 0, Zone = 0 } ),
+                    new KeyValuePair<int, Tendency>(8, new Tendency { PA = 0, RPO = 0, Shotgun = 100, Screen = 8, Gap = 100, Zone = 0 } ),
+                    new KeyValuePair<int, Tendency>(40, new Tendency { PA = 3, RPO = 0, Shotgun = 100, Screen = 24, Gap = 33, Zone = 33 } ),
+                    new KeyValuePair<int, Tendency>(25, new Tendency { PA = 17, RPO = 15, Shotgun = 58, Screen = 17, Gap = 41, Zone = 54 } ),
+                    new KeyValuePair<int, Tendency>(26, new Tendency { PA = 13, RPO = 20, Shotgun = 65, Screen = 0, Gap = 40, Zone = 60 } ),
+                    new KeyValuePair<int, Tendency>(27, new Tendency { PA = 13, RPO = 20, Shotgun = 65, Screen = 0, Gap = 40, Zone = 60 } ),
+                    new KeyValuePair<int, Tendency>(28, new Tendency { PA = 13, RPO = 20, Shotgun = 65, Screen = 0, Gap = 40, Zone = 60 } ),
+                    new KeyValuePair<int, Tendency>(3, new Tendency { PA = 20, RPO = 20, Shotgun = 67, Screen = 0, Gap = 56, Zone = 44 } ),
+                    new KeyValuePair<int, Tendency>(22, new Tendency { PA = 0, RPO = 20, Shotgun = 100, Screen = 0, Gap = 50, Zone = 50 } ),
+                    new KeyValuePair<int, Tendency>(13, new Tendency { PA = 14, RPO = 6, Shotgun = 46, Screen = 13, Gap = 40, Zone = 56 } ),
+
+                }
+            },
+            {"saints", new List<KeyValuePair<int, Tendency>>
+                {
+                    new KeyValuePair<int, Tendency>(100, new Tendency { PA = 10, RPO = 7, Shotgun = 65, Screen = 8, Gap = 30, Zone = 67 } ),
+                    new KeyValuePair<int, Tendency>(35, new Tendency { PA = 14, RPO = 8, Shotgun = 51, Screen = 8, Gap = 33, Zone = 63 } ),
+                    new KeyValuePair<int, Tendency>(20, new Tendency { PA = 6, RPO = 8, Shotgun = 47, Screen = 31, Gap = 32, Zone = 68 } ),
+                    new KeyValuePair<int, Tendency>(17, new Tendency { PA = 9, RPO = 12, Shotgun = 52, Screen = 7, Gap = 20, Zone = 80 } ),
+                    new KeyValuePair<int, Tendency>(6, new Tendency { PA = 12, RPO = 8, Shotgun = 78, Screen = 9, Gap = 21, Zone = 71 } ),
+                    new KeyValuePair<int, Tendency>(1, new Tendency { PA = 8, RPO = 10, Shotgun = 76, Screen = 8, Gap = 21, Zone = 79 } ),
+                    new KeyValuePair<int, Tendency>(7, new Tendency { PA = 0, RPO = 0, Shotgun = 100, Screen = 9, Gap = 100, Zone = 0 } ),
+                    new KeyValuePair<int, Tendency>(8, new Tendency { PA = 0, RPO = 0, Shotgun = 100, Screen = 7, Gap = 100, Zone = 0 } ),
+                    new KeyValuePair<int, Tendency>(40, new Tendency { PA = 0, RPO = 0, Shotgun = 100, Screen = 0, Gap = 0, Zone = 0 } ),
+                    new KeyValuePair<int, Tendency>(25, new Tendency { PA = 12, RPO = 8, Shotgun = 58, Screen = 9, Gap = 29, Zone = 68 } ),
+                    new KeyValuePair<int, Tendency>(26, new Tendency { PA = 11, RPO = 9, Shotgun = 62, Screen = 10, Gap = 26, Zone = 69 } ),
+                    new KeyValuePair<int, Tendency>(27, new Tendency { PA = 11, RPO = 9, Shotgun = 62, Screen = 10, Gap = 26, Zone = 69 } ),
+                    new KeyValuePair<int, Tendency>(28, new Tendency { PA = 11, RPO = 9, Shotgun = 62, Screen = 10, Gap = 26, Zone = 69 } ),
+                    new KeyValuePair<int, Tendency>(3, new Tendency { PA = 6, RPO = 6, Shotgun = 48, Screen = 0, Gap = 33, Zone = 67 } ),
+                    new KeyValuePair<int, Tendency>(22, new Tendency { PA = 0, RPO = 0, Shotgun = 88, Screen = 0, Gap = 50, Zone = 50 } ),
+                    new KeyValuePair<int, Tendency>(13, new Tendency { PA = 10, RPO = 4, Shotgun = 47, Screen = 8, Gap = 31, Zone = 65 } ),
+
+                }
+            },
+            {"giants", new List<KeyValuePair<int, Tendency>>
+                {
+                    new KeyValuePair<int, Tendency>(100, new Tendency { PA = 20, RPO = 19, Shotgun = 71, Screen = 6, Gap = 36, Zone = 62 } ),
+                    new KeyValuePair<int, Tendency>(35, new Tendency { PA = 33, RPO = 22, Shotgun = 60, Screen = 6, Gap = 37, Zone = 61 } ),
+                    new KeyValuePair<int, Tendency>(20, new Tendency { PA = 7, RPO = 26, Shotgun = 63, Screen = 0, Gap = 35, Zone = 60 } ),
+                    new KeyValuePair<int, Tendency>(17, new Tendency { PA = 14, RPO = 41, Shotgun = 64, Screen = 8, Gap = 46, Zone = 50 } ),
+                    new KeyValuePair<int, Tendency>(6, new Tendency { PA = 15, RPO = 19, Shotgun = 70, Screen = 4, Gap = 44, Zone = 56 } ),
+                    new KeyValuePair<int, Tendency>(1, new Tendency { PA = 5, RPO = 16, Shotgun = 76, Screen = 0, Gap = 18, Zone = 82 } ),
+                    new KeyValuePair<int, Tendency>(7, new Tendency { PA = 0, RPO = 4, Shotgun = 100, Screen = 10, Gap = 0, Zone = 100 } ),
+                    new KeyValuePair<int, Tendency>(8, new Tendency { PA = 8, RPO = 5, Shotgun = 100, Screen = 3, Gap = 33, Zone = 67 } ),
+                    new KeyValuePair<int, Tendency>(40, new Tendency { PA = 8, RPO = 5, Shotgun = 100, Screen = 18, Gap = 33, Zone = 67 } ),
+                    new KeyValuePair<int, Tendency>(25, new Tendency { PA = 21, RPO = 20, Shotgun = 64, Screen = 7, Gap = 37, Zone = 59 } ),
+                    new KeyValuePair<int, Tendency>(26, new Tendency { PA = 32, RPO = 28, Shotgun = 51, Screen = 4, Gap = 33, Zone = 64 } ),
+                    new KeyValuePair<int, Tendency>(27, new Tendency { PA = 32, RPO = 28, Shotgun = 51, Screen = 4, Gap = 33, Zone = 64 } ),
+                    new KeyValuePair<int, Tendency>(28, new Tendency { PA = 32, RPO = 28, Shotgun = 51, Screen = 4, Gap = 33, Zone = 64 } ),
+                    new KeyValuePair<int, Tendency>(3, new Tendency { PA = 22, RPO = 11, Shotgun = 40, Screen = 0, Gap = 57, Zone = 43 } ),
+                    new KeyValuePair<int, Tendency>(22, new Tendency { PA = 0, RPO = 40, Shotgun = 100, Screen = 0, Gap = 50, Zone = 50 } ),
+                    new KeyValuePair<int, Tendency>(13, new Tendency { PA = 18, RPO = 9, Shotgun = 40, Screen = 7, Gap = 36, Zone = 61 } ),
+
+                }
+            },
+            {"jets", new List<KeyValuePair<int, Tendency>>
+                {
+                    new KeyValuePair<int, Tendency>(100, new Tendency { PA = 18, RPO = 9, Shotgun = 64, Screen = 10, Gap = 32, Zone = 65 } ),
+                    new KeyValuePair<int, Tendency>(35, new Tendency { PA = 24, RPO = 11, Shotgun = 43, Screen = 15, Gap = 35, Zone = 61 } ),
+                    new KeyValuePair<int, Tendency>(20, new Tendency { PA = 28, RPO = 10, Shotgun = 50, Screen = 14, Gap = 20, Zone = 80 } ),
+                    new KeyValuePair<int, Tendency>(17, new Tendency { PA = 18, RPO = 8, Shotgun = 44, Screen = 8, Gap = 42, Zone = 58 } ),
+                    new KeyValuePair<int, Tendency>(6, new Tendency { PA = 17, RPO = 7, Shotgun = 66, Screen = 8, Gap = 21, Zone = 74 } ),
+                    new KeyValuePair<int, Tendency>(1, new Tendency { PA = 15, RPO = 15, Shotgun = 83, Screen = 13, Gap = 20, Zone = 70 } ),
+                    new KeyValuePair<int, Tendency>(7, new Tendency { PA = 6, RPO = 3, Shotgun = 100, Screen = 3, Gap = 0, Zone = 0 } ),
+                    new KeyValuePair<int, Tendency>(8, new Tendency { PA = 0, RPO = 0, Shotgun = 100, Screen = 0, Gap = 0, Zone = 0 } ),
+                    new KeyValuePair<int, Tendency>(40, new Tendency { PA = 3, RPO = 8, Shotgun = 100, Screen = 16, Gap = 0, Zone = 100 } ),
+                    new KeyValuePair<int, Tendency>(25, new Tendency { PA = 20, RPO = 8, Shotgun = 50, Screen = 11, Gap = 32, Zone = 65 } ),
+                    new KeyValuePair<int, Tendency>(26, new Tendency { PA = 16, RPO = 10, Shotgun = 38, Screen = 8, Gap = 42, Zone = 58 } ),
+                    new KeyValuePair<int, Tendency>(27, new Tendency { PA = 16, RPO = 10, Shotgun = 38, Screen = 8, Gap = 42, Zone = 58 } ),
+                    new KeyValuePair<int, Tendency>(28, new Tendency { PA = 16, RPO = 10, Shotgun = 38, Screen = 8, Gap = 42, Zone = 58 } ),
+                    new KeyValuePair<int, Tendency>(3, new Tendency { PA = 17, RPO = 17, Shotgun = 33, Screen = 0, Gap = 0, Zone = 100 } ),
+                    new KeyValuePair<int, Tendency>(22, new Tendency { PA = 0, RPO = 0, Shotgun = 100, Screen = 0, Gap = 0, Zone = 0 } ),
+                    new KeyValuePair<int, Tendency>(13, new Tendency { PA = 16, RPO = 4, Shotgun = 33, Screen = 9, Gap = 32, Zone = 65 } ),
+
+                }
+            },
+            {"eagles", new List<KeyValuePair<int, Tendency>>
+                {
+                    new KeyValuePair<int, Tendency>(100, new Tendency { PA = 18, RPO = 18, Shotgun = 93, Screen = 10, Gap = 30, Zone = 66 } ),
+                    new KeyValuePair<int, Tendency>(35, new Tendency { PA = 22, RPO = 20, Shotgun = 95, Screen = 10, Gap = 31, Zone = 67 } ),
+                    new KeyValuePair<int, Tendency>(20, new Tendency { PA = 17, RPO = 21, Shotgun = 95, Screen = 10, Gap = 21, Zone = 79 } ),
+                    new KeyValuePair<int, Tendency>(17, new Tendency { PA = 17, RPO = 24, Shotgun = 100, Screen = 0, Gap = 37, Zone = 63 } ),
+                    new KeyValuePair<int, Tendency>(6, new Tendency { PA = 21, RPO = 16, Shotgun = 99, Screen = 9, Gap = 45, Zone = 48 } ),
+                    new KeyValuePair<int, Tendency>(1, new Tendency { PA = 18, RPO = 27, Shotgun = 75, Screen = 7, Gap = 0, Zone = 100 } ),
+                    new KeyValuePair<int, Tendency>(7, new Tendency { PA = 0, RPO = 17, Shotgun = 100, Screen = 8, Gap = 67, Zone = 22 } ),
+                    new KeyValuePair<int, Tendency>(8, new Tendency { PA = 2, RPO = 2, Shotgun = 100, Screen = 11, Gap = 25, Zone = 25 } ),
+                    new KeyValuePair<int, Tendency>(40, new Tendency { PA = 4, RPO = 0, Shotgun = 100, Screen = 14, Gap = 100, Zone = 0 } ),
+                    new KeyValuePair<int, Tendency>(25, new Tendency { PA = 21, RPO = 18, Shotgun = 97, Screen = 8, Gap = 33, Zone = 64 } ),
+                    new KeyValuePair<int, Tendency>(26, new Tendency { PA = 11, RPO = 26, Shotgun = 88, Screen = 14, Gap = 28, Zone = 70 } ),
+                    new KeyValuePair<int, Tendency>(27, new Tendency { PA = 11, RPO = 26, Shotgun = 88, Screen = 14, Gap = 28, Zone = 70 } ),
+                    new KeyValuePair<int, Tendency>(28, new Tendency { PA = 11, RPO = 26, Shotgun = 88, Screen = 14, Gap = 28, Zone = 70 } ),
+                    new KeyValuePair<int, Tendency>(3, new Tendency { PA = 11, RPO = 17, Shotgun = 63, Screen = 0, Gap = 13, Zone = 87 } ),
+                    new KeyValuePair<int, Tendency>(22, new Tendency { PA = 20, RPO = 20, Shotgun = 100, Screen = 0, Gap = 100, Zone = 0 } ),
+                    new KeyValuePair<int, Tendency>(13, new Tendency { PA = 17, RPO = 9, Shotgun = 63, Screen = 9, Gap = 30, Zone = 66 } ),
+
+                }
+            },
+            {"steelers", new List<KeyValuePair<int, Tendency>>
+                {
+                    new KeyValuePair<int, Tendency>(100, new Tendency { PA = 13, RPO = 13, Shotgun = 70, Screen = 9, Gap = 28, Zone = 67 } ),
+                    new KeyValuePair<int, Tendency>(35, new Tendency { PA = 18, RPO = 16, Shotgun = 64, Screen = 11, Gap = 34, Zone = 65 } ),
+                    new KeyValuePair<int, Tendency>(20, new Tendency { PA = 29, RPO = 23, Shotgun = 69, Screen = 22, Gap = 15, Zone = 85 } ),
+                    new KeyValuePair<int, Tendency>(17, new Tendency { PA = 11, RPO = 14, Shotgun = 63, Screen = 15, Gap = 16, Zone = 74 } ),
+                    new KeyValuePair<int, Tendency>(6, new Tendency { PA = 13, RPO = 13, Shotgun = 68, Screen = 6, Gap = 28, Zone = 61 } ),
+                    new KeyValuePair<int, Tendency>(1, new Tendency { PA = 3, RPO = 0, Shotgun = 67, Screen = 0, Gap = 15, Zone = 61 } ),
+                    new KeyValuePair<int, Tendency>(7, new Tendency { PA = 3, RPO = 0, Shotgun = 100, Screen = 3, Gap = 0, Zone = 0 } ),
+                    new KeyValuePair<int, Tendency>(8, new Tendency { PA = 0, RPO = 0, Shotgun = 100, Screen = 2, Gap = 0, Zone = 0 } ),
+                    new KeyValuePair<int, Tendency>(40, new Tendency { PA = 4, RPO = 21, Shotgun = 100, Screen = 23, Gap = 17, Zone = 17 } ),
+                    new KeyValuePair<int, Tendency>(25, new Tendency { PA = 16, RPO = 14, Shotgun = 65, Screen = 10, Gap = 27, Zone = 68 } ),
+                    new KeyValuePair<int, Tendency>(26, new Tendency { PA = 10, RPO = 20, Shotgun = 59, Screen = 10, Gap = 39, Zone = 61 } ),
+                    new KeyValuePair<int, Tendency>(27, new Tendency { PA = 10, RPO = 20, Shotgun = 59, Screen = 10, Gap = 39, Zone = 61 } ),
+                    new KeyValuePair<int, Tendency>(28, new Tendency { PA = 10, RPO = 20, Shotgun = 59, Screen = 10, Gap = 39, Zone = 61 } ),
+                    new KeyValuePair<int, Tendency>(3, new Tendency { PA = 0, RPO = 0, Shotgun = 55, Screen = 0, Gap = 0, Zone = 100 } ),
+                    new KeyValuePair<int, Tendency>(22, new Tendency { PA = 0, RPO = 0, Shotgun = 100, Screen = 0, Gap = 0, Zone = 0 } ),
+                    new KeyValuePair<int, Tendency>(13, new Tendency { PA = 12, RPO = 7, Shotgun = 55, Screen = 8, Gap = 28, Zone = 67 } ),
+
+                }
+            },
             {"49ers", new List<KeyValuePair<int, Tendency>>
                 {
-                    new KeyValuePair<int, Tendency>(SituationOff.FirstOrDefault(s => string.Equals(s.Value, "1st Down", StringComparison.OrdinalIgnoreCase)).Key, new Tendency { PA = 15, RPO = 4, Pass = 23, Screen = 5, Gap = 14, Zone = 40 } )
+                    new KeyValuePair<int, Tendency>(100, new Tendency { PA = 15, RPO = 2, Shotgun = 59, Screen = 8, Gap = 25, Zone = 72 } ),
+                    new KeyValuePair<int, Tendency>(35, new Tendency { PA = 21, RPO = 3, Shotgun = 60, Screen = 9, Gap = 23, Zone = 75 } ),
+                    new KeyValuePair<int, Tendency>(20, new Tendency { PA = 7, RPO = 2, Shotgun = 28, Screen = 0, Gap = 30, Zone = 70 } ),
+                    new KeyValuePair<int, Tendency>(17, new Tendency { PA = 13, RPO = 8, Shotgun = 67, Screen = 0, Gap = 31, Zone = 69 } ),
+                    new KeyValuePair<int, Tendency>(6, new Tendency { PA = 13, RPO = 1, Shotgun = 77, Screen = 8, Gap = 35, Zone = 52 } ),
+                    new KeyValuePair<int, Tendency>(1, new Tendency { PA = 7, RPO = 0, Shotgun = 49, Screen = 0, Gap = 13, Zone = 87 } ),
+                    new KeyValuePair<int, Tendency>(7, new Tendency { PA = 0, RPO = 0, Shotgun = 100, Screen = 0, Gap = 100, Zone = 0 } ),
+                    new KeyValuePair<int, Tendency>(8, new Tendency { PA = 0, RPO = 0, Shotgun = 100, Screen = 0, Gap = 0, Zone = 100 } ),
+                    new KeyValuePair<int, Tendency>(40, new Tendency { PA = 0, RPO = 4, Shotgun = 100, Screen = 27, Gap = 20, Zone = 20 } ),
+                    new KeyValuePair<int, Tendency>(25, new Tendency { PA = 16, RPO = 2, Shotgun = 62, Screen = 9, Gap = 25, Zone = 74 } ),
+                    new KeyValuePair<int, Tendency>(26, new Tendency { PA = 16, RPO = 3, Shotgun = 51, Screen = 15, Gap = 23, Zone = 72 } ),
+                    new KeyValuePair<int, Tendency>(27, new Tendency { PA = 16, RPO = 3, Shotgun = 51, Screen = 15, Gap = 23, Zone = 72 } ),
+                    new KeyValuePair<int, Tendency>(28, new Tendency { PA = 16, RPO = 3, Shotgun = 51, Screen = 15, Gap = 23, Zone = 72 } ),
+                    new KeyValuePair<int, Tendency>(3, new Tendency { PA = 9, RPO = 5, Shotgun = 35, Screen = 0, Gap = 37, Zone = 63 } ),
+                    new KeyValuePair<int, Tendency>(22, new Tendency { PA = 0, RPO = 0, Shotgun = 100, Screen = 0, Gap = 0, Zone = 0 } ),
+                    new KeyValuePair<int, Tendency>(13, new Tendency { PA = 14, RPO = 1, Shotgun = 28, Screen = 9, Gap = 25, Zone = 72 } ),
+
                 }
             },
-            {"Saints", new List<KeyValuePair<int, Tendency>>
+            {"seahawks", new List<KeyValuePair<int, Tendency>>
                 {
-                    new KeyValuePair<int, Tendency>(SituationOff.FirstOrDefault(s => string.Equals(s.Value, "1st Down", StringComparison.OrdinalIgnoreCase)).Key, new Tendency { PA = 15, RPO = 8, Pass = 22, Screen = 3, Gap = 19, Zone = 33 } )
+                    new KeyValuePair<int, Tendency>(100, new Tendency { PA = 21, RPO = 15, Shotgun = 72, Screen = 8, Gap = 24, Zone = 74 } ),
+                    new KeyValuePair<int, Tendency>(35, new Tendency { PA = 30, RPO = 14, Shotgun = 58, Screen = 6, Gap = 22, Zone = 78 } ),
+                    new KeyValuePair<int, Tendency>(20, new Tendency { PA = 12, RPO = 32, Shotgun = 74, Screen = 0, Gap = 32, Zone = 64 } ),
+                    new KeyValuePair<int, Tendency>(17, new Tendency { PA = 27, RPO = 15, Shotgun = 60, Screen = 0, Gap = 35, Zone = 65 } ),
+                    new KeyValuePair<int, Tendency>(6, new Tendency { PA = 18, RPO = 19, Shotgun = 88, Screen = 16, Gap = 26, Zone = 63 } ),
+                    new KeyValuePair<int, Tendency>(1, new Tendency { PA = 17, RPO = 10, Shotgun = 79, Screen = 4, Gap = 0, Zone = 100 } ),
+                    new KeyValuePair<int, Tendency>(7, new Tendency { PA = 0, RPO = 0, Shotgun = 100, Screen = 6, Gap = 0, Zone = 0 } ),
+                    new KeyValuePair<int, Tendency>(8, new Tendency { PA = 0, RPO = 3, Shotgun = 100, Screen = 6, Gap = 0, Zone = 100 } ),
+                    new KeyValuePair<int, Tendency>(40, new Tendency { PA = 9, RPO = 4, Shotgun = 100, Screen = 18, Gap = 0, Zone = 100 } ),
+                    new KeyValuePair<int, Tendency>(25, new Tendency { PA = 27, RPO = 15, Shotgun = 67, Screen = 9, Gap = 25, Zone = 73 } ),
+                    new KeyValuePair<int, Tendency>(26, new Tendency { PA = 7, RPO = 27, Shotgun = 70, Screen = 6, Gap = 24, Zone = 73 } ),
+                    new KeyValuePair<int, Tendency>(27, new Tendency { PA = 7, RPO = 27, Shotgun = 70, Screen = 6, Gap = 24, Zone = 73 } ),
+                    new KeyValuePair<int, Tendency>(28, new Tendency { PA = 7, RPO = 27, Shotgun = 70, Screen = 6, Gap = 24, Zone = 73 } ),
+                    new KeyValuePair<int, Tendency>(3, new Tendency { PA = 13, RPO = 33, Shotgun = 56, Screen = 0, Gap = 17, Zone = 83 } ),
+                    new KeyValuePair<int, Tendency>(22, new Tendency { PA = 17, RPO = 0, Shotgun = 100, Screen = 0, Gap = 0, Zone = 0 } ),
+                    new KeyValuePair<int, Tendency>(13, new Tendency { PA = 20, RPO = 8, Shotgun = 56, Screen = 8, Gap = 25, Zone = 72 } ),
+
                 }
             },
+            {"buccaneers", new List<KeyValuePair<int, Tendency>>
+                {
+                   new KeyValuePair<int, Tendency>(100, new Tendency { PA = 20, RPO = 20, Shotgun = 71, Screen = 8, Gap = 30, Zone = 68 } ),
+                    new KeyValuePair<int, Tendency>(35, new Tendency { PA = 24, RPO = 25, Shotgun = 56, Screen = 9, Gap = 30, Zone = 69 } ),
+                    new KeyValuePair<int, Tendency>(20, new Tendency { PA = 21, RPO = 48, Shotgun = 82, Screen = 8, Gap = 12, Zone = 88 } ),
+                    new KeyValuePair<int, Tendency>(17, new Tendency { PA = 29, RPO = 21, Shotgun = 67, Screen = 8, Gap = 22, Zone = 78 } ),
+                    new KeyValuePair<int, Tendency>(6, new Tendency { PA = 25, RPO = 21, Shotgun = 74, Screen = 11, Gap = 45, Zone = 53 } ),
+                    new KeyValuePair<int, Tendency>(1, new Tendency { PA = 19, RPO = 22, Shotgun = 72, Screen = 9, Gap = 15, Zone = 77 } ),
+                    new KeyValuePair<int, Tendency>(7, new Tendency { PA = 3, RPO = 0, Shotgun = 100, Screen = 12, Gap = 100, Zone = 0 } ),
+                    new KeyValuePair<int, Tendency>(8, new Tendency { PA = 0, RPO = 2, Shotgun = 100, Screen = 2, Gap = 0, Zone = 100 } ),
+                    new KeyValuePair<int, Tendency>(40, new Tendency { PA = 4, RPO = 0, Shotgun = 100, Screen = 4, Gap = 0, Zone = 0 } ),
+                    new KeyValuePair<int, Tendency>(25, new Tendency { PA = 23, RPO = 22, Shotgun = 63, Screen = 9, Gap = 32, Zone = 67 } ),
+                    new KeyValuePair<int, Tendency>(26, new Tendency { PA = 18, RPO = 35, Shotgun = 71, Screen = 6, Gap = 21, Zone = 75 } ),
+                    new KeyValuePair<int, Tendency>(27, new Tendency { PA = 18, RPO = 35, Shotgun = 71, Screen = 6, Gap = 21, Zone = 75 } ),
+                    new KeyValuePair<int, Tendency>(28, new Tendency { PA = 18, RPO = 35, Shotgun = 71, Screen = 6, Gap = 21, Zone = 75 } ),
+                    new KeyValuePair<int, Tendency>(3, new Tendency { PA = 38, RPO = 56, Shotgun = 55, Screen = 0, Gap = 14, Zone = 86 } ),
+                    new KeyValuePair<int, Tendency>(22, new Tendency { PA = 17, RPO = 17, Shotgun = 100, Screen = 0, Gap = 0, Zone = 100 } ),
+                    new KeyValuePair<int, Tendency>(13, new Tendency { PA = 19, RPO = 10, Shotgun = 55, Screen = 8, Gap = 30, Zone = 68 } ),
+                }
+            },
+            {"titans", new List<KeyValuePair<int, Tendency>>
+                {
+                    new KeyValuePair<int, Tendency>(100, new Tendency { PA = 20, RPO = 7, Shotgun = 63, Screen = 14, Gap = 32, Zone = 67 } ),
+                    new KeyValuePair<int, Tendency>(35, new Tendency { PA = 29, RPO = 9, Shotgun = 49, Screen = 14, Gap = 35, Zone = 65 } ),
+                    new KeyValuePair<int, Tendency>(20, new Tendency { PA = 17, RPO = 40, Shotgun = 40, Screen = 0, Gap = 30, Zone = 70 } ),
+                    new KeyValuePair<int, Tendency>(17, new Tendency { PA = 38, RPO = 10, Shotgun = 41, Screen = 18, Gap = 30, Zone = 70 } ),
+                    new KeyValuePair<int, Tendency>(6, new Tendency { PA = 12, RPO = 9, Shotgun = 73, Screen = 18, Gap = 29, Zone = 67 } ),
+                    new KeyValuePair<int, Tendency>(1, new Tendency { PA = 9, RPO = 0, Shotgun = 60, Screen = 5, Gap = 0, Zone = 100 } ),
+                    new KeyValuePair<int, Tendency>(7, new Tendency { PA = 6, RPO = 3, Shotgun = 100, Screen = 0, Gap = 50, Zone = 50 } ),
+                    new KeyValuePair<int, Tendency>(8, new Tendency { PA = 0, RPO = 0, Shotgun = 100, Screen = 14, Gap = 0, Zone = 0 } ),
+                    new KeyValuePair<int, Tendency>(40, new Tendency { PA = 0, RPO = 0, Shotgun = 100, Screen = 37, Gap = 0, Zone = 100 } ),
+                    new KeyValuePair<int, Tendency>(25, new Tendency { PA = 24, RPO = 9, Shotgun = 54, Screen = 16, Gap = 32, Zone = 67 } ),
+                    new KeyValuePair<int, Tendency>(26, new Tendency { PA = 11, RPO = 6, Shotgun = 59, Screen = 6, Gap = 34, Zone = 66 } ),
+                    new KeyValuePair<int, Tendency>(27, new Tendency { PA = 11, RPO = 6, Shotgun = 59, Screen = 6, Gap = 34, Zone = 66 } ),
+                    new KeyValuePair<int, Tendency>(28, new Tendency { PA = 11, RPO = 6, Shotgun = 59, Screen = 6, Gap = 34, Zone = 66 } ),
+                    new KeyValuePair<int, Tendency>(3, new Tendency { PA = 0, RPO = 10, Shotgun = 42, Screen = 0, Gap = 38, Zone = 63 } ),
+                    new KeyValuePair<int, Tendency>(22, new Tendency { PA = 22, RPO = 11, Shotgun = 100, Screen = 11, Gap = 0, Zone = 0 } ),
+                    new KeyValuePair<int, Tendency>(13, new Tendency { PA = 19, RPO = 4, Shotgun = 40, Screen = 14, Gap = 33, Zone = 66 } ),
+                }
+            },
+            {"redskins", new List<KeyValuePair<int, Tendency>>
+                {
+                    new KeyValuePair<int, Tendency>(100, new Tendency { PA = 16, RPO = 14, Shotgun = 83, Screen = 9, Gap = 29, Zone = 70 } ),
+                    new KeyValuePair<int, Tendency>(35, new Tendency { PA = 21, RPO = 17, Shotgun = 79, Screen = 8, Gap = 34, Zone = 66 } ),
+                    new KeyValuePair<int, Tendency>(20, new Tendency { PA = 10, RPO = 22, Shotgun = 71, Screen = 25, Gap = 31, Zone = 69 } ),
+                    new KeyValuePair<int, Tendency>(17, new Tendency { PA = 17, RPO = 22, Shotgun = 72, Screen = 20, Gap = 24, Zone = 76 } ),
+                    new KeyValuePair<int, Tendency>(6, new Tendency { PA = 21, RPO = 16, Shotgun = 89, Screen = 8, Gap = 26, Zone = 69 } ),
+                    new KeyValuePair<int, Tendency>(1, new Tendency { PA = 0, RPO = 11, Shotgun = 82, Screen = 0, Gap = 8, Zone = 92 } ),
+                    new KeyValuePair<int, Tendency>(7, new Tendency { PA = 0, RPO = 0, Shotgun = 100, Screen = 4, Gap = 0, Zone = 0 } ),
+                    new KeyValuePair<int, Tendency>(8, new Tendency { PA = 8, RPO = 0, Shotgun = 100, Screen = 5, Gap = 0, Zone = 0 } ),
+                    new KeyValuePair<int, Tendency>(40, new Tendency { PA = 0, RPO = 0, Shotgun = 100, Screen = 20, Gap = 0, Zone = 0 } ),
+                    new KeyValuePair<int, Tendency>(25, new Tendency { PA = 19, RPO = 16, Shotgun = 80, Screen = 9, Gap = 31, Zone = 68 } ),
+                    new KeyValuePair<int, Tendency>(26, new Tendency { PA = 11, RPO = 14, Shotgun = 79, Screen = 10, Gap = 33, Zone = 67 } ),
+                    new KeyValuePair<int, Tendency>(27, new Tendency { PA = 11, RPO = 14, Shotgun = 79, Screen = 10, Gap = 33, Zone = 67 } ),
+                    new KeyValuePair<int, Tendency>(28, new Tendency { PA = 11, RPO = 14, Shotgun = 79, Screen = 10, Gap = 33, Zone = 67 } ),
+                    new KeyValuePair<int, Tendency>(3, new Tendency { PA = 13, RPO = 31, Shotgun = 69, Screen = 0, Gap = 33, Zone = 67 } ),
+                    new KeyValuePair<int, Tendency>(22, new Tendency { PA = 17, RPO = 33, Shotgun = 100, Screen = 0, Gap = 0, Zone = 100 } ),
+                    new KeyValuePair<int, Tendency>(13, new Tendency { PA = 15, RPO = 7, Shotgun = 69, Screen = 8, Gap = 29, Zone = 70 } ),
+                }
+            }
         };
 
         public static readonly Dictionary<int, List<string>> RouteType = new Dictionary<int, List<string>>
@@ -528,7 +1188,7 @@ namespace MaddenTeamPlaybookEditor.ViewModels
             {32,"4th & Medium"},
             {33,"4th & Long"},
             {41,"4rd & Extra Long"},
-            {25,"Red Zone Fringe"},
+            {25,"Opp 21 to 25"},
             {26,"Red Zone 16 to 20"},
             {27,"Red Zone 11 to 15"},
             {28,"Red Zone 6 to 10"},
@@ -596,6 +1256,274 @@ namespace MaddenTeamPlaybookEditor.ViewModels
             {23,"FG Return"},
             {30,"Max"}
         };
+
+        #region RedDobe
+
+        // Defines the likely number of plays that this situation will present itself in the game that are not special teams plays
+        public static readonly Dictionary<int, double> SituationExpectedNumPlays = new Dictionary<int, double>
+            {
+                {0,0}, // 1st Play
+                {35,17.76}, // 1st Down
+                {20,1.36}, // "2nd & Short"},
+                {17,5.01}, //"2nd & Med"},
+                {6,8.16}, //"2nd & Long"},
+                {1,1.48}, //3rd and short
+                {7,3.53}, // "3rd & Med"},
+                {8,4.07}, // "3rd & Long"},
+                {40,1.20 }, // "3rd & Extra Long"},
+                {31,0.72 }, // "4th & Short"},
+                {32,0.36 }, // "4th & Medium"},
+                {33,0.17 }, // "4th & Long"},
+                {41,0.09 }, // "4rd & Extra Long"},
+                {25,0 }, // "Opp 25 to 21"},// combined all with 16 to 20 in LUA offense script
+                {26,6.18 }, //"Red Zone 16 to 20"},
+                {27,0 }, // "Red Zone 11 to 15"},
+                {28,0 }, // "Red Zone 6 to 10"},
+                {39,0 }, // "Red Zone 3 to 5"},Unused - Goal line and goal line pass take precedent
+                {4,0 }, // "Red Zone"}, Not Used
+                {5,0.20}, // "Inside Two"}, Changed from five to two by Sabos Mod
+                {3,1.50}, // "Goal Line"},
+                {22,0.67 }, // "Goal Line Pass"},
+                {24,3.55 }, // "4 min Offense"}, Similar to 2 minute offense when playing from behind
+                {10,3.55}, // "2 min Offense"},
+                {37,0 }, // "Play Action"},
+                {23,0 }, // "Signiature Plays"},
+                {42,0 }, // "Sudden Change"},
+                {43,0},// "Last Play"
+                {21,0}, // "Hail Mary"
+                {44,0}, // "Max"
+                {2,0}, // "Stop Clock"
+                {29,0}, // "Stop Clock User"
+                {30,0}, // "Stop Clock Fake User"
+                {13,3.27}, // "Waste Time" Don't know when this kicks in, will just assume last 3 minutes of game - should be mostly runs
+                {14,0}, // "Kneel"
+                {38,0}, // "Extra Point"
+                {34,0}, // "Go for 2"
+                {12,0}, // "Fake FG"
+                {9,0}, // "Punt"
+                {19,0}, // "Punt Max Protect"
+                {11,0}, // "Fake Punt"
+                {15,0}, // "Kickoff"
+                {36,0}, // "Squib"
+                {16,0}, // "Kickoff Onside"
+                {18,0} // "Kickoff Safety"
+            };
+
+        // Defines the target pass depth per situation, this will give an average pass depth for the gameplan close to the nfl ~ 7.75
+        public static readonly Dictionary<int, double> SituationTargetPassDepth = new Dictionary<int, double>
+            {
+                {35,7.95}, // 1st Down
+                {20,7.85}, // "2nd & Short"},
+                {17,7.40}, //"2nd & Med"},
+                {6,6.78}, //"2nd & Long"},
+                {1,7.10}, //3rd and short
+                {7,9.06}, // "3rd & Med"},
+                {8,10.36}, // "3rd & Long"},
+                {40,8.21}, // "3rd & Extra Long"},
+                {31,6.22}, // "4th & Short"},
+                {32,7.80}, // "4th & Medium"},
+                {33,13.80}, // "4th & Long"},
+                {41,20.11}, // "4rd & Extra Long"},
+                {25,6.06}, // "Red Zone Fringe"},
+                {26,6.89}, //"Red Zone 16 to 20"},
+                {27,7.63}, // "Red Zone 11 to 15"},
+                {28,7.47}, // "Red Zone 6 to 10"},
+                {39,7.52}, // "Red Zone 3 to 5"},
+                {5,8.0}, // "Inside Two"}, Changed from five to two by Sabos Mod
+                {24,8.13}, // "4 min Offense"}, Similar to 2 minute offense when playing from behind
+                {10,9.72}, // "2 min Offense"},
+                {3,6.44}, // "Goal Line"}
+                {13,3.20 }, // "Waste Time"}
+                {22,7.52 } // "Goal Line Pass"}
+            };
+
+        // Defines the target run percentage per situation, this will give an average run percent for the gameplan close to the nfl ~ 42.5
+        public static readonly Dictionary<int, double> SituationTargetRunPercentage = new Dictionary<int, double>
+            {
+                {35,50.84}, // 1st Down
+                {20,66.74}, // "2nd & Short"},
+                {17,49.55}, //"2nd & Med"},
+                {6,29.86}, //"2nd & Long"},
+                {1,53.00}, //3rd and short
+                {7,14.31}, // "3rd & Med"},
+                {8,9.39}, // "3rd & Long"},
+                {40,9.39}, // "3rd & Extra Long"},
+                {31,53.99}, // "4th & Short"},
+                {32,0}, // "4th & Medium"},
+                {33,0}, // "4th & Long"},
+                {41,0}, // "4rd & Extra Long"},
+                {25,50.87}, // "Opp 30 to 21"},
+                {26,54.05}, //"Red Zone 16 to 20"},
+                {27,53.22}, // "Red Zone 11 to 15"},
+                {28,57.64}, // "Red Zone 6 to 10"},
+                {5,51.28}, // "Inside Two"}, Changed from five to two by Sabos Mod
+                {24,19.45}, // "4 min Offense"}, Similar to 2 minute offense when playing from behind
+                {10,0}, // "2 min Offense"},
+                {13,95.00}, // "Waste Time"
+                {3,66.09}, // "Goal Line"},
+                {22,20.00} // "Goal Line Pass"},
+            };
+
+        // List of low percentage situations in the PBAI that can have long pass records removed in order to get under the 2000 record limit of that table
+        public static readonly List<int> SituationsToTrim = new List<int>
+            {
+                24, 25, 27, 28, 37, 39
+            };
+        // List of situations to ignore for the purposes of getting rpo, shotgun, playaction, gap, zone and screen passes adjusted to the team's tendency
+        // I don't have data on these and am just going to adjust these for route depth and run/pass ratio only
+        public static readonly List<int> SituationsToIgnore = new List<int>
+            {
+                31, 32, 33, 41, 10, 5, 13, 22, 3, 24
+            };
+        // These sitatuations do not have a lot of passes so can't really adjust route depth
+        public static readonly List<int> SituationsToIgnoreRouteDepth = new List<int>
+            {
+                41
+            };
+        // Situations that are missing screen plays
+        public static readonly List<int> SituationsToAddHBScreens = new List<int>
+            {
+                20, 1, 40, 13
+            };
+        // Situations that are missing WR and TE screen plays
+        public static readonly List<int> SituationsToAddWRTEScreens = new List<int>
+            {
+                20, 1, 40, 13
+            };
+        // Situations that are missing RPO plays
+        public static readonly List<int> SituationsToAddRPOs = new List<int>
+            {
+                1, 40, 13
+            };
+        // Situations that are missing playaction plays
+        public static readonly List<int> SituationsToAddPlayAction = new List<int>
+            {
+                20, 40, 1, 13
+            };
+        // Situations that are missing draw plays
+        public static readonly List<int> SituationsToAddDraws = new List<int>
+            {
+                24, 40
+            };
+        // Situations that are missing all run plays
+        public static readonly List<int> SituationsToAddGapZoneRuns = new List<int>
+        {
+
+        };
+        // Situations that are missing non-shotgun run plays
+        public static readonly List<int> SituationsToAddNonShotgunGapZoneRuns = new List<int>
+        {
+
+        };
+        // Situations that are missing shotgun zone and gap run plays
+        public static readonly List<int> SituationsToAddShotgunGapZoneRuns = new List<int>
+            {
+                22, 40, 1
+            };
+        // Situations that are missing pass plays non shotgun
+        public static readonly List<int> SituationsToAddNonShotgunPasses = new List<int>
+            {
+                5
+            };
+        // Situations that are missing shotgun pass plays
+        public static readonly List<int> SituationsToAddShotgunPasses = new List<int>
+            {
+                33, 10, 32, 31, 24, 40
+            };
+        // Situations to add all plays
+        public static readonly List<int> SituationsToAddAllPlays = new List<int>
+            {
+                6, 7, 8, 26
+            };
+
+        // Defines the average throw depth for each team when calculating the revised gameplan
+        // default is 2023 nfl values
+        public Dictionary<string, double> TeamAverageThrowDepth = new Dictionary<string, double>
+            {
+                {"cardinals",8.1},
+                {"falcons",8.3},
+                {"ravens",8.6},
+                {"bills",8.0},
+                {"panthers",7.3},
+                {"bears",6.8},
+                {"bengals",6.1},
+                {"browns",8.4},
+                {"cowboys",7.9},
+                {"broncos",7.0},
+                {"lions",6.9},
+                {"packers",8.4},
+                {"texans",9.2},
+                {"colts",7.3},
+                {"jaguars",7.8},
+                {"chiefs",6.8},
+                {"raiders",7.4},
+                {"chargers",7.9},
+                {"rams",8.1},
+                {"dolphins",7.7},
+                {"vikings",7.1},
+                {"patriots",7.2},
+                {"saints",8.5},
+                {"giants",7.1},
+                {"jets",7.4},
+                {"eagles",8.4},
+                {"steelers",7.4},
+                {"49ers",7.9},
+                {"seahawks",7.9},
+                {"buccaneers",8.9},
+                {"titans",9.7},
+                {"redskins",7.4}
+            };
+
+        // Defines the run percentages for each team when calculating the revised gameplan, considers QB scrambles as pass att ~ 2 per game,
+        // default is 2023 nfl values
+        public Dictionary<string, double> TeamRunPercentage = new Dictionary<string, double>
+            {
+                {"cardinals",37.98},
+                {"falcons",45.24},
+                {"ravens",44.68},
+                {"bills",38.08},
+                {"panthers",33.94},
+                {"bears",43.56},
+                {"bengals",30.44},
+                {"browns",42.98},
+                {"cowboys",40.18},
+                {"broncos",40.44},
+                {"lions",42.57},
+                {"packers",37.97},
+                {"texans",38.54},
+                {"colts",40.81},
+                {"jaguars",40.30},
+                {"chiefs",34.23},
+                {"raiders",39.46},
+                {"chargers",35.79},
+                {"rams",40.09},
+                {"dolphins",41.01},
+                {"vikings",34.47},
+                {"patriots",38.69},
+                {"saints",39.07},
+                {"giants",36.85},
+                {"jets",31.28},
+                {"eagles",42.93},
+                {"steelers",41.52},
+                {"49ers",48.50},
+                {"seahawks",36.53},
+                {"buccaneers",36.00},
+                {"titans",40.78},
+                {"redskins",28.95}
+            };
+
+        private int RandomInt(int min, int max)
+        {
+            var rng = RandomNumberGenerator.Create();
+            var buffer = new byte[4];
+
+            rng.GetBytes(buffer);
+            int result = BitConverter.ToInt32(buffer, 0);
+
+            return new Random(result).Next(min, max);
+        }
+
+        #endregion
 
         public string filePath { get; set; }
 
@@ -1207,6 +2135,977 @@ namespace MaddenTeamPlaybookEditor.ViewModels
                 }
             }
         }
+
+        #region RedDobe
+
+        public double GetTeamRunPercentage()
+        {
+            return TeamRunPercentage.Where(p => Path.GetFileName(filePath).Contains(p.Key)).FirstOrDefault().Value;
+        }
+
+        public double GetTeamPassDepth()
+        {
+            return TeamAverageThrowDepth.Where(p => Path.GetFileName(filePath).Contains(p.Key)).FirstOrDefault().Value;
+        }
+
+        public double GetSituationRunPercentage(int SituationID)
+        {
+            return SituationTargetRunPercentage.Where(p => p.Key == SituationID).FirstOrDefault().Value;
+        }
+
+        public double GetSituationRouteDepth(int SituationID)
+        {
+            return SituationTargetPassDepth.Where(p => p.Key == SituationID).FirstOrDefault().Value;
+        }
+
+        public Tendency GetTeamSituationTendency(int SituationID)
+        {
+            return TeamTendencies.Where(p => Path.GetFileName(filePath).Contains(p.Key)).FirstOrDefault().Value.Where(p => p.Key == SituationID).FirstOrDefault().Value ??
+                 TeamTendencies.Where(p => Path.GetFileName(filePath).Contains(p.Key)).FirstOrDefault().Value.Where(p => p.Key == 100).FirstOrDefault().Value;
+        }
+
+        public bool IsDivisible(int x, int n)
+        {
+            return (x % n) == 0;
+        }
+        // Used to determine how much to adjust the prct or weight for each play, factor increases the significance of the adjustment
+        public int GetWeightAdjustment(double Adjustment, double Factor = 1.0)
+        {
+            int WeightAdjustment;
+            if (Adjustment > 0)
+            {
+                WeightAdjustment = Convert.ToInt32(1 * Factor);
+            }
+            else
+            {
+                WeightAdjustment = -1;
+            }
+            //NewWeight = Math.Max(Math.Min(NewWeight, 99), 0);
+            return WeightAdjustment;
+        }
+
+        public void AddPlaysToGameplan(int airg, List<Madden.TeamPlaybook.PLYL> _plyl, int Amount, bool Random)
+        {
+            int idx;
+            for (int i = Math.Min(Amount, _plyl.Count()); i > 0; i--)
+            {
+                if (Random)
+                {
+                    idx = RandomInt(0, _plyl.Count() - 1);
+                }
+                else
+                {
+                    idx = i - 1;
+                }
+
+
+                PBAI.Add(new Madden.TeamPlaybook.PBAI
+                {
+                    rec = NextAvailableID(PBAI.Select(p => p.rec).ToList()),
+                    PBPL = PBPL.Where(p => p.PLYL == _plyl[idx].plyl).FirstOrDefault().pbpl,
+                    SETL = _plyl[idx].SETL,
+                    AIGR = airg,
+                    PLYT = _plyl[idx].PLYT,
+                    PLF_ = _plyl[idx].PLF_,
+                    Flag = PBPL.Where(p => p.PLYL == _plyl[idx].plyl).FirstOrDefault().Flag,
+                    vpos = _plyl[idx].vpos,
+                    prct = 10
+                });
+                // Remove the already used play so it doesn't get picked again
+                _plyl.Remove(_plyl[idx]);
+                if (_plyl.Count() == 0)
+                    break;
+            }
+        }
+        public void RedDobeRevampGameplan()
+        {
+            // Now lets add some play types that are missing in certain situations
+            List<int> _form = FORM.Where(p => Gameplan.KeyFormations.Contains(p.name)).Select(p => p.form).ToList();
+            List<int> _setl = SETL.Where(p => _form.Contains(p.FORM)).Select(p => p.setl).ToList();
+            List<int> _setlShotgun = SETL.Where(p => p.FORM == 1 || p.FORM == 103).Select(p => p.setl).ToList();
+            List<Madden.TeamPlaybook.PLYL> _plyl = PLYL.Where(p => !_setl.Contains(p.SETL)).ToList();
+            List<Madden.TeamPlaybook.PLYL> _plylShotgun = _plyl.Where(p => _setlShotgun.Contains(p.SETL)).ToList();
+            List<Madden.TeamPlaybook.PLYL> _plylNonShotgun = _plyl.Where(p => !_setlShotgun.Contains(p.SETL)).ToList();
+
+            List<Madden.TeamPlaybook.PLYL> _rpo = _plyl.Where(p => Gameplan.RPO.Contains(p.PLYT)).ToList();
+            List<Madden.TeamPlaybook.PLYL> _screenHB = _plyl.Where(p => Gameplan.Screen.Contains(p.PLYT) && p.vpos == 1).ToList();
+            List<Madden.TeamPlaybook.PLYL> _screenWRTE = _plyl.Where(p => Gameplan.Screen.Contains(p.PLYT) && p.vpos != 1).ToList();
+            List<Madden.TeamPlaybook.PLYL> _pa = _plyl.Where(p => p.PLYT == 4).ToList();
+            List<Madden.TeamPlaybook.PLYL> _draw = _plyl.Where(p => p.PLYT == 14).ToList();
+            List<Madden.TeamPlaybook.PLYL> _gap = _plyl.Where(p => Gameplan.GapRun.Contains(p.PLYT)).ToList();
+            List<Madden.TeamPlaybook.PLYL> _zone = _plyl.Where(p => Gameplan.ZoneRun.Contains(p.PLYT)).ToList();
+            List<Madden.TeamPlaybook.PLYL> _gapShotgun = _plylShotgun.Where(p => Gameplan.GapRun.Contains(p.PLYT)).ToList();
+            List<Madden.TeamPlaybook.PLYL> _gapNonShotgun = _plylNonShotgun.Where(p => Gameplan.GapRun.Contains(p.PLYT)).ToList();
+            List<Madden.TeamPlaybook.PLYL> _zoneNonShotgun = _plylNonShotgun.Where(p => Gameplan.ZoneRun.Contains(p.PLYT)).ToList();
+            List<Madden.TeamPlaybook.PLYL> _zoneShotgun = _plylShotgun.Where(p => Gameplan.ZoneRun.Contains(p.PLYT)).ToList();
+            List<Madden.TeamPlaybook.PLYL> _passNonShotgun = _plylNonShotgun.Where(p => Gameplan.Pass.Contains(p.PLYT)).ToList();
+            List<Madden.TeamPlaybook.PLYL> _passShotgun = _plylShotgun.Where(p => Gameplan.Pass.Contains(p.PLYT)).ToList();
+
+            List<Madden.TeamPlaybook.PLYL> _plylCopy;
+            // RPOs
+            foreach (int airg in SituationsToAddRPOs.ToList())
+            {
+                _plylCopy = new List<Madden.TeamPlaybook.PLYL>(_rpo);
+                AddPlaysToGameplan(airg, _plylCopy, 12, true);
+            }
+            // Screens
+            foreach (int airg in SituationsToAddHBScreens.ToList())
+            {
+                _plylCopy = new List<Madden.TeamPlaybook.PLYL>(_screenHB);
+                AddPlaysToGameplan(airg, _plylCopy, 5, true);
+            }
+            foreach (int airg in SituationsToAddWRTEScreens.ToList())
+            {
+                _plylCopy = new List<Madden.TeamPlaybook.PLYL>(_screenWRTE);
+                AddPlaysToGameplan(airg, _plylCopy, 5, true);
+            }
+            // Playaction passes
+            foreach (int airg in SituationsToAddPlayAction.ToList())
+            {
+                _plylCopy = new List<Madden.TeamPlaybook.PLYL>(_pa);
+                AddPlaysToGameplan(airg, _plylCopy, 20, true);
+            }
+            // Draws
+            foreach (int airg in SituationsToAddDraws.ToList())
+            {
+                _plylCopy = new List<Madden.TeamPlaybook.PLYL>(_draw);
+                AddPlaysToGameplan(airg, _plylCopy, 3, false);
+            }
+            // all gap and zone runs
+            foreach (int airg in SituationsToAddGapZoneRuns.ToList())
+            {
+                _plylCopy = new List<Madden.TeamPlaybook.PLYL>(_gap);
+                AddPlaysToGameplan(airg, _plylCopy, 4, true);
+                _plylCopy = new List<Madden.TeamPlaybook.PLYL>(_zone);
+                AddPlaysToGameplan(airg, _plylCopy, 6, true);
+            }
+            // Non-Shotgun gap and zone runs
+            foreach (int airg in SituationsToAddNonShotgunGapZoneRuns.ToList())
+            {
+                _plylCopy = new List<Madden.TeamPlaybook.PLYL>(_gapNonShotgun);
+                AddPlaysToGameplan(airg, _plylCopy, 4, true);
+                _plylCopy = new List<Madden.TeamPlaybook.PLYL>(_zoneNonShotgun);
+                AddPlaysToGameplan(airg, _plylCopy, 6, true);
+            }
+            // Shotgun gap and zone runs
+            foreach (int airg in SituationsToAddShotgunGapZoneRuns.ToList())
+            {
+                _plylCopy = new List<Madden.TeamPlaybook.PLYL>(_gapShotgun);
+                AddPlaysToGameplan(airg, _plylCopy, 4, true);
+                _plylCopy = new List<Madden.TeamPlaybook.PLYL>(_zoneShotgun);
+                AddPlaysToGameplan(airg, _plylCopy, 6, true);
+            }
+            //shotgun passes
+            foreach (int airg in SituationsToAddShotgunPasses.ToList())
+            {
+                _plylCopy = new List<Madden.TeamPlaybook.PLYL>(_passShotgun);
+                AddPlaysToGameplan(airg, _plylCopy, 20, true);
+            }
+            // Non shotgun passes
+            foreach (int airg in SituationsToAddNonShotgunPasses.ToList())
+            {
+                _plylCopy = new List<Madden.TeamPlaybook.PLYL>(_passNonShotgun);
+                AddPlaysToGameplan(airg, _plylCopy, 10, true);
+            }
+            // All Plays
+            List<Madden.TeamPlaybook.PBAI> _pbai;
+
+            foreach (int airg in SituationsToAddAllPlays.ToList())
+            {
+                _pbai = PBAI.Where(p => p.AIGR == airg).ToList();
+                PBAI.RemoveAll(p => _pbai.Contains(p));
+                _plylCopy = new List<Madden.TeamPlaybook.PLYL>(_plyl);
+                AddPlaysToGameplan(airg, _plylCopy, 500, false);
+            }
+
+            // Count the number records to see if we need to trim down PBAI to get under the 2000 play cap, removing entries from situations that aren't used very often
+            int PBAIRecordCount = PBAI.Count();
+            Console.WriteLine("AI Play calling records after adding entries: " + PBAIRecordCount);
+
+            // Add up the depth of all pass plays in this PB
+            double TotalRouteDepth = Plays.Where(p => (Gameplan.Pass.Contains(p.PLYL.PLYT) || Gameplan.RPO.Contains(p.PLYL.PLYT) ||
+            Gameplan.Screen.Contains(p.PLYL.PLYT) || p.PLYL.PLYT == 4)).Sum(p => p.AverageRouteDepth);
+            int NumPassPlays = Plays.Count(p => Gameplan.Pass.Contains(p.PLYL.PLYT));
+            int NumPlayActionPlays = Plays.Count(p => p.PLYL.PLYT == 4);
+            int NumScreenPlays = Plays.Count(p => Gameplan.Screen.Contains(p.PLYL.PLYT));
+            int NumWRTEScreenPlays = Plays.Count(p => Gameplan.Screen.Contains(p.PLYL.PLYT) && p.PLYL.vpos != 1);
+            int NumRPOPlays = Plays.Count(p => Gameplan.RPO.Contains(p.PLYL.PLYT));
+            int NumRunPlays = Plays.Count(p => Gameplan.Run.Contains(p.PLYL.PLYT));
+            // Need to get number of jet passes separately since they don't have a route depth value and figure out the new average depth with those passes
+            int NumJetPasses = Plays.Count(p => p.PLYL.PLYT == 208);
+            int NumTrickPasses = Plays.Count(p => p.PLYL.PLYT == 157 || p.PLYL.PLYT == 158);
+            int TotPassPlays = NumPassPlays + NumPlayActionPlays + NumScreenPlays + NumRPOPlays + NumTrickPasses;
+            // FOR INFORMATIONAL PURPOSES ONLY
+            Console.WriteLine("Num Reg Pass Plays: " + NumPassPlays);
+            Console.WriteLine("Num PlayAction Pass Plays: " + NumPlayActionPlays);
+            Console.WriteLine("Num Jet Pass Plays: " + NumJetPasses);
+            Console.WriteLine("Num Trick Pass Plays: " + NumTrickPasses);
+            Console.WriteLine("Num Screen Plays: " + NumScreenPlays);
+            Console.WriteLine("Num RPO Plays: " + NumRPOPlays);
+            Console.WriteLine("Total Pass Plays: " + TotPassPlays);
+            Console.WriteLine("Total Run Plays: " + NumRunPlays);
+            Console.WriteLine("Avg Pass Depth including jet passes: " + Math.Round(TotalRouteDepth / TotPassPlays, 2));
+
+            // Vars to target when revamping this entire gameplan
+            double GameplanTargetRunPercentage = GetTeamRunPercentage(); // This will be the run percent that we are trying to target for this gameplan ~ .5%
+            double GameplanTargetPassDepth = GetTeamPassDepth(); // This will be the run percent that we are trying to target for this gameplan ~ .5%
+            double NFLAverageRunPercentage = 39.67; // THis is the 2023 nfl average of run plays called (QB scrambles are counted as passes)
+            double NFLAveragePassDepth = 7.75; // THis is the 2023 nfl average pass depth
+            // Variance above or below the nfl average run percentage (for adjusting each situation)
+            double GameplanRunPercentageVariance = (GameplanTargetRunPercentage - NFLAverageRunPercentage) / NFLAverageRunPercentage;
+            if (GameplanRunPercentageVariance > 0)
+            {
+                GameplanRunPercentageVariance *= 1; // needs to be increased for higher than average gameplans to account for all of the 100% passing downs
+            }
+            // Variance above or below the nfl average pass depth (for adjusting each situation)
+            double GameplanPassDepthVariance = (GameplanTargetPassDepth - NFLAveragePassDepth) / NFLAveragePassDepth;
+
+            // Vars for cumilative PB totals for this gameplan
+            double TotalPassWeight = 0; // The sum of all of the prct for pass plays
+            double TotalWeightedRouteDepth = 0; // play route depth times pass weight
+            double TotalAvgRouteDepth = 0; // Sum of (SitExpectedPassPlays * SitAvgRouteDepth) - divid this by TotalExpectedPassPlays to get the gameplan's average route depth
+            double TotalRunWeight = 0; // The sum of all of the prct for run plays
+            double TotalScreenWeight = 0; //For tracking the total wieght of all screens
+            double TotalRPOWeight = 0;//For tracking the total wieght of all RPOs
+            double TotalWeight = 0; // The sum of all of the prct for all plays
+            double TotalRunPercentage = 0; // Total expected runs / total expected plays
+            double TotalGapRunPercentage = 0; // Total expected gap runs / total expected runs
+            double TotalZoneRunPercentage = 0; // Total expected zone runs / total expected runs
+            double TotalShotgunPercentage = 0; // Total shotgun pass plays / total expected plays
+            double TotalScreenPassPercentage = 0; // Total expected screen plays / total expected pass plays
+            double TotalWRTEScreenPercentage = 0; // Total expected WR/TE screen plays / total expected screen plays
+            double TotalRPOPercentage = 0; // Total expected RPO's / total expected plays
+            double TotalPlayActionPercentage = 0; // Total expected Play Action passes / total expected plays
+            double TotalExpectedRunPlays = 0; // Expected number of run plays
+            double TotalExpectedGapRunPlays = 0; // Expected number of gap run plays
+            double TotalExpectedZoneRunPlays = 0; // Expected number of zone run plays
+            double TotalExpectedPassPlays = 0; // Expected number of pass plays
+            double TotalExpectedRPOPlays = 0; // expected number of RPO plays
+            double TotalExpectedShotgunPlays = 0; // Expected number of shotgun pass plays
+            double TotalExpectedScreenPlays = 0; // expected number of screen pass play
+            double TotalExpectedWRTEScreenPlays = 0; // expected number of WR and TE screens
+            double TotalExpectedPlayActionPlays = 0; // expected number of playaction passes
+            double TotalExpectedPlays = 0; // Expected total number of runs and passes
+
+            var groupedPBAI = from s in PBAI
+                              group s by s.AIGR;
+
+            //iterate each Situation group        
+            foreach (var Situation in groupedPBAI)
+            {
+                if (SituationExpectedNumPlays[Situation.Key] == 0) // Skip if no plays are expected for this situation
+                    continue;
+                string SituationName = SituationOff[Situation.Key];
+                Console.WriteLine("Situation ID: {0}", Situation.Key + " Name: " + SituationName); //Each group has a key 
+                // Target Values
+                var SitTendency = GetTeamSituationTendency(Situation.Key);
+                // This will be the run percent that we are trying to target for this situation ~ 5%
+                double SitTargetRunPercentage = Math.Min(Math.Max(GetSituationRunPercentage(Situation.Key) * (1 + GameplanRunPercentageVariance), 0), 100);
+                // THis will be the target pass depth that we are tying to target for this situation ~ 10%
+                double SitTargetRouteDepth = Math.Min(Math.Max(GetSituationRouteDepth(Situation.Key) * (1 + GameplanPassDepthVariance), 0), 100);
+                double SitTargetShotgunPercentage = SitTendency.Shotgun; // The percent of all plays that should be shotgun formation ~ 10%
+                double SitTargetScreenPercentage = SitTendency.Screen; // The percent of all PASS plays that should be screens ~ 10%
+                double SitTargetWRTEScreenPercentage = 58; // The percent of SCREEN plays that should be WR or TE screens ~ 20%
+                if (SitTargetScreenPercentage == 0)
+                {
+                    SitTargetWRTEScreenPercentage = 0;
+                }
+                double SitTargetRPOPercentage = SitTendency.RPO; // The percent of ALL plays called that should be RPOs ~ 10%
+                double SitTargetPlayActionPercentage = SitTendency.PA; // The percentage of all plays called that should be Play action passes ~10%
+                double SitTargetGapRunPercentage = SitTendency.Gap; // The percentage of all RUN plays called that should be gap runs ~10%
+                double SitTargetZoneRunPercentage = SitTendency.Zone; // The percentage of all RUN plays called that should be zone runs ~10%
+
+                // vars for this situation
+                double SitPassWeight = 0;
+                double SitWeightedRouteDepth = 0;
+                double SitAvgRouteDepth = 0;
+                double SitRunWeight = 0;
+                double SitGapRunWeight = 0; // The sum of all of the prct for gap run plays
+                double SitZoneRunWeight = 0; // The sum of all of the prct for zone run plays
+                double SitShotgunWeight = 0; // The sum of all of the prct for shotgun plays
+                double SitScreenWeight = 0; //For tracking the total wieght of all screens in this situation
+                double SitWRTEScreenWeight = 0;
+                double SitRPOWeight = 0;//For tracking the total wieght of all RPOs in this situation
+                double SitPlayActionWeight = 0;
+                double SitWeight = 0;
+                double SitRunPercentage = 0;
+                double SitGapRunPercentage = 0; // Sit expected gap runs / total expected runs
+                double SitZoneRunPercentage = 0; // Sit expected zone runs / total expected runs
+                double SitShotgunPercentage = 0;
+                double SitScreenPercentage = 0;
+                double SitWRTEScreenPercentage = 0; // Used the track the percent of all Screen passes that are WR or TE screens
+                double SitRPOPercentage = 0;
+                double SitPlayActionPercentage = 0;
+                double SitRouteDepth = 0;
+                double SitExpectedRunPlays = 0;
+                double SitExpectedGapRunPlays = 0; // Expected number of gap run plays
+                double SitExpectedZoneRunPlays = 0; // Expected number of zone run plays
+                double SitExpectedPassPlays = 0;
+                double SitExpectedRPOPlays = 0;
+                double SitExpectedShotgunPlays = 0; // Expected number of shotgun plays
+                double SitExpectedScreenPlays = 0;
+                double SitExpectedWRTEScreenPlays = 0;
+                double SitExpectedPlayActionPlays = 0;
+                double SitExpectedTotPlays = 0;
+
+                bool SituationComplete = false; // Stop loop and adjusting situation when this is true
+                bool ShotgunsComplete = false; // Stop adjusting shotgun passes when true
+                bool ScreensComplete = false; // Stop adjusting screens when true
+                bool WRTEScreensComplete = false; // Stop adjusting WR and TE screens when true
+                bool RPOsComplete = false; // Stop adjusting RPOs when true
+                bool RouteDepthComplete = false; // Sopt adjusting Route depth when true
+                bool RunPercentComplete = false; // stop adjusting run/pass percentage when true
+                bool GapRunsComplete = false; // Stop adjusting gap runs when true
+                bool ZoneRunsComplete = false; // Stop adjusting zone runs when true
+                bool PlayActionPercentComplete = false; // stop adjusting Play action percentage when true
+                double ScreenPercentageAdjustment = 0; // How much the situation screen ratio is off from the target
+                double WRTEScreenPercentageAdjustment = 0; // How much the situation WR TE screen ratio is off from the target
+                double RPOPercentageAdjustment = 0; // How much the situation RPO ratio is off from the target
+                double RouteDepthAdjustment = 0; // How much the situation average route depth is off from the target
+                double RunPercentAdjustment = 0; // How much the situation run percent is off from the target
+                double PlayActionPercentAdjustment = 0; // How much the situation Play action percent is off from the target
+                double ShotgunPercentAdjustment = 0; // How much the situation Shotgun pass percent is off from the target
+                double GapRunPercentAdjustment = 0; // How much the situation gap run percent is off from the target
+                double ZoneRunPercentAdjustment = 0; // How much the situation zone run percent is off from the target
+                // The following situation tendency adjustments will be ignored when these are set to true
+                bool IgnoreSomeTendencies = false;
+                bool IgnoreRouteDepth = false;
+
+                if (SituationsToIgnore.Contains(Situation.Key))
+                {
+                    IgnoreSomeTendencies = true;
+                }
+
+                if (SituationsToIgnoreRouteDepth.Contains(Situation.Key))
+                {
+                    IgnoreRouteDepth = true;
+                }
+                double AcceptableDistanceToTarget = 2.50;
+                double AcceptableDistanceRouteDepth = .50;
+                double AcceptableDistanceToRunPercentTarget = 1.25;
+                double RPORunPercent = 0;
+                int x = 1; // counter for do while loop
+                // Start looping until we get the target values
+                do
+                {
+                    // 1/2 of RPO is added to the run weight, RPO's are a mixture of zone and gap runs and need to be subtracted from the target
+                    // Otherwise it would impossible to acheive the target gap and zone run percentages
+                    RPORunPercent = SitTargetRPOPercentage / 4 / SitTargetRunPercentage * 100;
+                    SitTargetGapRunPercentage = Math.Max(SitTendency.Gap - RPORunPercent, 0);
+                    SitTargetZoneRunPercentage = Math.Max(SitTendency.Zone - RPORunPercent, 0);
+                    // Vars for this situation, Reset totals to 0 before we restart the loop and try reaching our target value again
+                    SitPassWeight = SitWeightedRouteDepth = SitAvgRouteDepth = SitRunWeight = SitWeight = SitRunPercentage = SitGapRunPercentage =
+                        SitZoneRunPercentage = SitScreenPercentage = SitWRTEScreenPercentage = SitRPOPercentage = SitShotgunPercentage =
+                        SitPlayActionPercentage = SitRouteDepth = SitExpectedRunPlays = SitExpectedGapRunPlays = SitExpectedZoneRunPlays =
+                        SitExpectedPassPlays = SitExpectedRPOPlays = SitExpectedScreenPlays = SitExpectedShotgunPlays = SitShotgunWeight =
+                        SitExpectedWRTEScreenPlays = SitExpectedPlayActionPlays = SitExpectedTotPlays = SitScreenWeight =
+                        SitWRTEScreenWeight = SitRPOWeight = SitPlayActionWeight = SitGapRunWeight = SitZoneRunWeight = 0;
+
+                    // Let's collect all of the weighting for runs and passes along with everything else needed to make this work
+                    foreach (Madden.TeamPlaybook.PBAI s in Situation) // Each group has inner collection
+                    {
+                        // Find this play
+                        var ThisPlay = Plays.FirstOrDefault(p => s.PBPL == p.PBPL.pbpl);
+                        if (ThisPlay != null)
+                        {
+                            // Set all plays to be 10 weighting on first run - this allows better balancing
+                            if (x == 1)
+                            {
+                                s.prct = 50;
+                            }
+                            //Console.WriteLine("Playbook Play ID Found: {0}", s.PBPL);
+                            // Passes to include RPOs - 208 is a jet pass
+                            bool IsPass = Gameplan.Pass.Contains(s.PLYT) || s.PLYT == 104; // 104 is hail mary, they are in the 4th down gameplan sometimes
+                            bool IsPlayAction = s.PLYT == 4;
+                            bool IsShotgun = ThisPlay.SubFormation.SETL.FORM == 1 || ThisPlay.SubFormation.SETL.FORM == 103;
+                            bool IsScreen = Gameplan.Screen.Contains(s.PLYT);
+                            bool IsWRTEScreen = false;
+                            bool IsRun = Gameplan.Run.Contains(s.PLYT);
+                            bool IsGapRun = Gameplan.GapRun.Contains(s.PLYT);
+                            bool IsZoneRun = Gameplan.ZoneRun.Contains(s.PLYT);
+                            bool IsTrickPass = s.PLYT == 157 || s.PLYT == 158;
+
+                            if (IsScreen)
+                            {
+                                if (ThisPlay.PLYL.vpos != 1)
+                                {
+                                    IsWRTEScreen = true;
+                                }
+                            }
+                            bool IsJetPass = s.PLYT == 208;
+                            bool IsRPO = Gameplan.RPO.Contains(s.PLYT);
+                            int WeightAdjustment = 0;
+
+                            // First clear out all plays that are not in the gameplan unless the situation ignores certain tendencies
+                            if (!IgnoreSomeTendencies)
+                            {
+                                if ((IsShotgun && SitTargetShotgunPercentage < AcceptableDistanceToTarget) ||
+                                    (!IsShotgun && SitTargetShotgunPercentage > 100 - AcceptableDistanceToTarget))
+                                {
+                                    WeightAdjustment = -200;
+                                }
+                                if (IsRPO && SitTargetRPOPercentage < AcceptableDistanceToTarget)
+                                {
+                                    WeightAdjustment = -200;
+                                }
+                                if (IsScreen && SitTargetScreenPercentage < AcceptableDistanceToTarget)
+                                {
+                                    WeightAdjustment = -200;
+                                }
+                                if (IsPlayAction && SitTargetPlayActionPercentage < AcceptableDistanceToTarget)
+                                {
+                                    WeightAdjustment = -200;
+                                }
+                                if (IsRun)
+                                {
+                                    if (!IsGapRun && !IsZoneRun && SitTargetGapRunPercentage +
+                                        SitTargetZoneRunPercentage >
+                                        100 - AcceptableDistanceToTarget) // for other runs that need to be removed
+                                    {
+                                        WeightAdjustment = -200;
+                                    }
+                                    if ((IsZoneRun && SitTargetZoneRunPercentage < AcceptableDistanceToTarget) ||
+                                        (!IsZoneRun && SitTargetZoneRunPercentage > 100 - AcceptableDistanceToTarget))
+                                    {
+                                        WeightAdjustment = -200;
+                                    }
+                                    else if ((IsGapRun && SitTargetGapRunPercentage < AcceptableDistanceToTarget)
+                                        || (!IsGapRun && SitTargetGapRunPercentage > 100 - AcceptableDistanceToTarget))
+                                    {
+                                        WeightAdjustment = -200;
+                                    }
+                                }
+                            }
+                            if ((IsRun && SitTargetRunPercentage < AcceptableDistanceToRunPercentTarget) ||
+                                (!IsRun && SitTargetRunPercentage > 100 - AcceptableDistanceToRunPercentTarget))
+                            {
+                                WeightAdjustment = -200;
+                            }
+
+                            //Adjust all play weighting
+                            if (x > 1 && !ShotgunsComplete) // Need to process this first so that the weight is adjusted since shotguns can be runs and passes
+                            {
+                                if (IsShotgun)
+                                {
+                                    WeightAdjustment += GetWeightAdjustment(ShotgunPercentAdjustment);
+                                }
+                                else // Need to adjust all other plays when Shotgun percent is below or above the target
+                                {
+                                    WeightAdjustment += GetWeightAdjustment(-ShotgunPercentAdjustment);
+                                }
+                            }
+                            if ((x > 1 && x <= 31 && !RunPercentComplete) || (x > 1 && !RunPercentComplete))
+                            { // Weighting adjustments done after first loop
+                                if (IsRun)
+                                {
+                                    WeightAdjustment += GetWeightAdjustment(RunPercentAdjustment);
+                                }
+                                else if (!IsRPO) // Any passes need to be adjusted the other way when run percent is not met
+                                {
+                                    // Weighting adjustments done after first loop
+                                    WeightAdjustment += GetWeightAdjustment(-RunPercentAdjustment);
+                                }
+                            }
+                            if ((x > 31 && x <= 61 && !RPOsComplete) || (x > 1 && !RPOsComplete))
+                            {
+                                if (IsRPO)
+                                {
+                                    // Weighting adjustments done after first loop
+                                    WeightAdjustment += GetWeightAdjustment(RPOPercentageAdjustment);
+                                }
+                                else
+                                {
+                                    WeightAdjustment += GetWeightAdjustment(-RPOPercentageAdjustment);
+                                }
+                            }
+
+                            if ((x > 121 && x <= 151 && !ScreensComplete) || (x > 1 && !ScreensComplete))
+                            {
+                                if (IsScreen)
+                                {
+                                    // Weighting adjustments done after first loop
+                                    WeightAdjustment += GetWeightAdjustment(ScreenPercentageAdjustment);
+                                }
+                                else if (IsPass || IsJetPass || IsPlayAction || IsTrickPass) // Since screen is a percent of pass
+                                {
+                                    WeightAdjustment += GetWeightAdjustment(-ScreenPercentageAdjustment);
+                                }
+                            }
+                            if ((x > 121 && x <= 151 && !WRTEScreensComplete) || (x > 1 && !WRTEScreensComplete)) // for handling WR or TE screens
+                            {
+                                if (IsWRTEScreen)
+                                {
+                                    WeightAdjustment += GetWeightAdjustment(WRTEScreenPercentageAdjustment);
+                                }
+                                else if (IsScreen) // Since these are a percent of all screens
+                                {
+                                    WeightAdjustment += GetWeightAdjustment(-WRTEScreenPercentageAdjustment);
+                                }
+                            }
+
+                            if ((x > 91 && x <= 121 && !PlayActionPercentComplete) || (x > 1 && !PlayActionPercentComplete))
+                            {
+                                if (IsPlayAction)
+                                {
+                                    // Weighting adjustments done after first loop
+                                    WeightAdjustment += GetWeightAdjustment(PlayActionPercentAdjustment);
+                                }
+                                else if (IsPass || IsJetPass || IsScreen || IsTrickPass)
+                                {
+                                    WeightAdjustment += GetWeightAdjustment(-PlayActionPercentAdjustment);
+                                }
+                            }
+                            if ((x > 61 && x <= 91 && !RouteDepthComplete) || (x > 1 && !RouteDepthComplete))
+                            {
+                                if (IsJetPass)
+                                {
+                                    // Weighting adjustments done after first loop
+                                    WeightAdjustment += GetWeightAdjustment(-RouteDepthAdjustment);
+                                }
+                                else if ((IsPass || IsPlayAction || IsTrickPass) && !IsRPO && !IsScreen)
+                                {
+                                    // Weighting adjustments done after first loop, don't want to adjust screens or RPOs here, they are already handled
+                                    double LastSitRouteDepth = SitTargetRouteDepth - RouteDepthAdjustment;
+                                    if ((RouteDepthAdjustment > 0 && LastSitRouteDepth < ThisPlay.AverageRouteDepth) ||
+                                               (RouteDepthAdjustment < 0 && LastSitRouteDepth >= ThisPlay.AverageRouteDepth))
+                                    {
+                                        WeightAdjustment += GetWeightAdjustment(1);
+                                    }
+                                    else if ((RouteDepthAdjustment > 0 && LastSitRouteDepth - 5 < ThisPlay.AverageRouteDepth) ||
+                                               (RouteDepthAdjustment < 0 && LastSitRouteDepth + 5 >= ThisPlay.AverageRouteDepth))
+                                    {
+                                        // do nothing
+                                    }
+                                    else
+                                    {
+                                        WeightAdjustment += GetWeightAdjustment(-1);
+                                    }
+                                }
+                            }
+                            if (((IsRun || IsRPO) && x > 1 && x <= 31) || ((IsRun || IsRPO) && x > 1))
+                            {
+                                if (IsGapRun)
+                                {
+                                    if (!GapRunsComplete)
+                                    {
+                                        WeightAdjustment += GetWeightAdjustment(GapRunPercentAdjustment);
+                                    }
+                                }
+                                else if (IsZoneRun)
+                                {
+                                    if (!ZoneRunsComplete)
+                                    {
+                                        WeightAdjustment += GetWeightAdjustment(ZoneRunPercentAdjustment);
+                                    }
+                                } // Need to adjust all other run plays and rpo's when gap or run percent are below or above the target
+                                else
+                                {
+                                    if (!ZoneRunsComplete && !GapRunsComplete && (GapRunPercentAdjustment > 0 && ZoneRunPercentAdjustment > 0))
+                                    {
+                                        WeightAdjustment += GetWeightAdjustment(-1);
+                                    }
+                                    else if (!ZoneRunsComplete && GapRunsComplete && ZoneRunPercentAdjustment > 0)
+                                    {
+                                        WeightAdjustment += GetWeightAdjustment(-1);
+                                    }
+                                    else if (ZoneRunsComplete && !GapRunsComplete && GapRunPercentAdjustment > 0)
+                                    {
+                                        WeightAdjustment += GetWeightAdjustment(-1);
+                                    }
+                                }
+                            }
+                            s.prct = Math.Max(Math.Min(s.prct + WeightAdjustment, 99), 0);
+                            // Now add the new adjusted weighting to the Sit Vars
+                            if (IsPass || IsScreen || IsRPO || IsJetPass || IsPlayAction || IsTrickPass)
+                            {
+                                if (IsRPO)
+                                {
+                                    // Assume RPO is a 50% chance to be a run or pass
+                                    SitRPOWeight += s.prct;
+                                    SitPassWeight += (double)s.prct / 2.0;
+                                    SitWeightedRouteDepth += ThisPlay.AverageRouteDepth * (double)s.prct / 2.0;
+                                    SitRunWeight += (double)s.prct / 2.0;
+                                    SitRouteDepth += ThisPlay.AverageRouteDepth;
+                                }
+                                else if (IsJetPass)
+                                {
+                                    SitRouteDepth += -2.0; // Assign a depth to jet pass since they don't have one
+                                    SitPassWeight += (double)s.prct;
+                                    SitWeightedRouteDepth += -2.0 * (double)s.prct;
+                                }
+                                else // this is just a screen or pass or playaction
+                                {
+                                    if (IsScreen)
+                                    {
+                                        if (IsWRTEScreen)
+                                        {
+                                            SitWRTEScreenWeight += (double)s.prct;
+                                        }
+                                        SitScreenWeight += (double)s.prct;
+                                    }
+                                    if (IsPlayAction)
+                                    {
+                                        SitPlayActionWeight += (double)s.prct;
+                                    }
+                                    SitRouteDepth += ThisPlay.AverageRouteDepth;
+                                    SitPassWeight += (double)s.prct;
+                                    SitWeightedRouteDepth += ThisPlay.AverageRouteDepth * (double)s.prct;
+                                }
+                                SitWeight += (double)s.prct;
+                            }
+
+                            // Runs     
+                            if (IsRun)
+                            {
+                                if (IsGapRun)
+                                {
+                                    SitGapRunWeight += (double)s.prct;
+                                }
+                                else if (IsZoneRun)
+                                {
+                                    SitZoneRunWeight += (double)s.prct;
+                                } // Need to adjust all other run plays when gap or run percent are below or above the target                            
+                                SitRunWeight += (double)s.prct;
+                                SitWeight += (double)s.prct;
+                            }
+                            if (IsShotgun) // add to shotgun weight at the end since the weight can be adjusted by playtype
+                            {
+                                SitShotgunWeight += (double)s.prct;
+                            }
+
+                        }
+                        else
+                        {
+                            Console.WriteLine("Could Not Find Playbook Play ID: {0}", s.PBPL);
+                        }
+                    }
+                    //Console.WriteLine("Summary for Situation ID: {0}", Situation.Key + " Name: " + SituationName); //Each group has a key 
+                    //Console.WriteLine("Sit Pass Weight: {0}", SitPassWeight);
+                    //Console.WriteLine("Sit Route Depth: {0}", SitWeightedRouteDepth);
+                    //Console.WriteLine("Average Route Depth: {0}", Math.Round(SitAvgRouteDepth, 2));
+                    //Console.WriteLine("Sit Run Weight: {0}", SitRunWeight);
+                    //Console.WriteLine("Sit Screen Weight: {0}", SitScreenWeight);
+                    //Console.WriteLine("Sit RPO Weight: {0}", SitRPOWeight);
+
+                    if (SitPassWeight > 0)
+                    {
+                        SitAvgRouteDepth = SitWeightedRouteDepth / SitPassWeight;
+                    }
+                    SitExpectedRunPlays = SituationExpectedNumPlays[Situation.Key] * SitRunWeight / SitWeight;
+                    SitExpectedPassPlays = SituationExpectedNumPlays[Situation.Key] * SitPassWeight / SitWeight;
+                    SitExpectedTotPlays = SitExpectedRunPlays + SitExpectedPassPlays;
+                    SitExpectedGapRunPlays = SituationExpectedNumPlays[Situation.Key] * SitGapRunWeight / SitWeight;
+                    SitExpectedZoneRunPlays = SituationExpectedNumPlays[Situation.Key] * SitZoneRunWeight / SitWeight;
+                    SitExpectedRPOPlays = SituationExpectedNumPlays[Situation.Key] * SitRPOWeight / SitWeight;
+                    SitExpectedShotgunPlays = SituationExpectedNumPlays[Situation.Key] * SitShotgunWeight / SitWeight;
+                    SitExpectedScreenPlays = SituationExpectedNumPlays[Situation.Key] * SitScreenWeight / SitWeight;
+                    SitExpectedWRTEScreenPlays = SituationExpectedNumPlays[Situation.Key] * SitWRTEScreenWeight / SitWeight;
+                    SitExpectedPlayActionPlays = SituationExpectedNumPlays[Situation.Key] * SitPlayActionWeight / SitWeight;
+                    SitRunPercentage = SitRunWeight / SitWeight * 100.0;
+                    SitShotgunPercentage = SitShotgunWeight / SitWeight * 100.0;
+                    if (SitPassWeight > 0)
+                    {
+                        SitScreenPercentage = SitScreenWeight / SitPassWeight * 100.0;
+                    }
+
+                    if (SitScreenWeight > 0)
+                    {
+                        SitWRTEScreenPercentage = SitWRTEScreenWeight / SitScreenWeight * 100.0;
+                    }
+
+                    if (SitRunWeight > 0)
+                    {
+                        SitGapRunPercentage = SitGapRunWeight / SitRunWeight * 100.0;
+                        SitZoneRunPercentage = SitZoneRunWeight / SitRunWeight * 100.0;
+                    }
+
+                    SitRPOPercentage = SitRPOWeight / SitWeight * 100.0;
+
+                    SitPlayActionPercentage = SitPlayActionWeight / SitWeight * 100;
+                    //Console.WriteLine("Sit expected num of runs: {0}", Math.Round(SitExpectedRunPlays, 1));
+                    //Console.WriteLine("Sit expected num of passes: {0}", Math.Round(SitExpectedPassPlays, 2));
+                    //Console.WriteLine("Sit Run/Pass Ratio: {0}", Math.Round(SitRunPercentage, 1));
+                    //Console.WriteLine("Sit Screen/Pass Ratio: {0}", Math.Round(SitScreenPercentage, 1));
+                    //Console.WriteLine("Sit RPO Ratio: {0}", Math.Round(SitRPOPercentage, 1));
+
+
+                    // Final checks to see the target values are met before repeating another loop
+                    if (SitScreenPercentage < SitTargetScreenPercentage - AcceptableDistanceToTarget ||
+                        SitScreenPercentage > SitTargetScreenPercentage + AcceptableDistanceToTarget)
+                    {
+                        ScreenPercentageAdjustment = SitTargetScreenPercentage - SitScreenPercentage;
+                        ScreensComplete = false;
+                    }
+                    else
+                    {
+                        ScreensComplete = true;
+                        ScreenPercentageAdjustment = 0;
+                    }
+
+                    if (SitShotgunPercentage < SitTargetShotgunPercentage - AcceptableDistanceToTarget ||
+                        SitShotgunPercentage > SitTargetShotgunPercentage + AcceptableDistanceToTarget)
+                    {
+                        ShotgunPercentAdjustment = SitTargetShotgunPercentage - SitShotgunPercentage;
+                        ShotgunsComplete = false;
+                    }
+                    else
+                    {
+                        ShotgunsComplete = true;
+                        ShotgunPercentAdjustment = 0;
+                    }
+
+                    if (NumWRTEScreenPlays > 0 && (SitWRTEScreenPercentage < SitTargetWRTEScreenPercentage - AcceptableDistanceToTarget ||
+                        SitWRTEScreenPercentage > SitTargetWRTEScreenPercentage + AcceptableDistanceToTarget))
+                    {
+                        WRTEScreenPercentageAdjustment = SitTargetWRTEScreenPercentage - SitWRTEScreenPercentage;
+                        WRTEScreensComplete = false;
+                    }
+                    else
+                    {
+                        WRTEScreensComplete = true;
+                        WRTEScreenPercentageAdjustment = 0;
+                    }
+
+                    if (SitRPOPercentage < SitTargetRPOPercentage - AcceptableDistanceToTarget ||
+                        SitRPOPercentage > SitTargetRPOPercentage + AcceptableDistanceToTarget)
+                    {
+                        RPOPercentageAdjustment = SitTargetRPOPercentage - SitRPOPercentage;
+                        RPOsComplete = false;
+                    }
+                    else
+                    {
+                        RPOsComplete = true;
+                        RPOPercentageAdjustment = 0;
+                    }
+
+                    if (SitTargetRunPercentage < 100 && SitAvgRouteDepth < SitTargetRouteDepth - AcceptableDistanceRouteDepth ||
+                        SitAvgRouteDepth > SitTargetRouteDepth + AcceptableDistanceRouteDepth)
+                    {
+                        RouteDepthAdjustment = SitTargetRouteDepth - SitAvgRouteDepth;
+                        RouteDepthComplete = false;
+                    }
+                    else
+                    {
+                        RouteDepthComplete = true;
+                        RouteDepthAdjustment = 0;
+                    }
+
+                    if (SitPlayActionPercentage < SitTargetPlayActionPercentage - AcceptableDistanceToTarget ||
+                        SitPlayActionPercentage > SitTargetPlayActionPercentage + AcceptableDistanceToTarget)
+                    {
+                        PlayActionPercentAdjustment = SitTargetPlayActionPercentage - SitPlayActionPercentage;
+                        PlayActionPercentComplete = false;
+                    }
+                    else
+                    {
+                        PlayActionPercentComplete = true;
+                        PlayActionPercentAdjustment = 0;
+                    }
+
+                    if (SitRunPercentage < SitTargetRunPercentage - AcceptableDistanceToRunPercentTarget ||
+                        SitRunPercentage > SitTargetRunPercentage + AcceptableDistanceToRunPercentTarget)
+                    {
+                        RunPercentAdjustment = SitTargetRunPercentage - SitRunPercentage;
+                        RunPercentComplete = false;
+                    }
+                    else
+                    {
+                        RunPercentComplete = true;
+                        RunPercentAdjustment = 0;
+                    }
+
+                    if (SitGapRunPercentage < SitTargetGapRunPercentage - AcceptableDistanceToTarget ||
+                        SitGapRunPercentage > SitTargetGapRunPercentage + AcceptableDistanceToTarget)
+                    {
+                        GapRunPercentAdjustment = SitTargetGapRunPercentage - SitGapRunPercentage;
+                        GapRunsComplete = false;
+                    }
+                    else
+                    {
+                        GapRunsComplete = true;
+                        GapRunPercentAdjustment = 0;
+                    }
+
+                    if (SitZoneRunPercentage < SitTargetZoneRunPercentage - AcceptableDistanceToTarget ||
+                        SitZoneRunPercentage > SitTargetZoneRunPercentage + AcceptableDistanceToTarget)
+                    {
+                        ZoneRunPercentAdjustment = SitTargetZoneRunPercentage - SitZoneRunPercentage;
+                        ZoneRunsComplete = false;
+                    }
+                    else
+                    {
+                        ZoneRunsComplete = true;
+                        ZoneRunPercentAdjustment = 0;
+                    }
+
+                    // Final override to ignore certain tendencies for situations that we don't want to adjust those tendencies
+                    if (IgnoreSomeTendencies)
+                    {
+                        ShotgunsComplete = ScreensComplete = WRTEScreensComplete = RPOsComplete = PlayActionPercentComplete =
+                            GapRunsComplete = ZoneRunsComplete = true;
+                        ShotgunPercentAdjustment = ScreenPercentageAdjustment = WRTEScreenPercentageAdjustment = RPOPercentageAdjustment
+                            = PlayActionPercentAdjustment = GapRunPercentAdjustment = ZoneRunPercentAdjustment = 0;
+                    }
+                    if (IgnoreRouteDepth)
+                    {
+                        RouteDepthComplete = true;
+                        RouteDepthAdjustment = 0;
+                    }
+
+                    if (ShotgunsComplete && ScreensComplete && WRTEScreensComplete && RPOsComplete && RouteDepthComplete && PlayActionPercentComplete &&
+                        RunPercentComplete && GapRunsComplete && ZoneRunsComplete)
+                    {
+                        SituationComplete = true;
+                    }
+                    x++;
+                } while (!SituationComplete & x < 200);
+
+                Console.WriteLine("SUMMARY FOR SITUATION ID: {0}", Situation.Key + " NAME: " + SituationName); //Each group has a key 
+                Console.WriteLine("Sit Pass Weight: {0}", SitPassWeight);
+                Console.WriteLine("Sit Run Weight: {0}", SitRunWeight);
+                Console.WriteLine("Sit Shotgun Weight: {0}", SitShotgunWeight);
+                Console.WriteLine("Sit Screen Weight: {0}", SitScreenWeight);
+                Console.WriteLine("Sit WR/TE Screen Weight: {0}", SitWRTEScreenWeight);
+                Console.WriteLine("Sit RPO Weight: {0}", SitRPOWeight);
+                Console.WriteLine("Sit Play Action Weight: {0}", SitPlayActionWeight);
+                Console.WriteLine("Sit Route Depth: {0}", Math.Round(SitWeightedRouteDepth, 1));
+
+                Console.WriteLine("Situation Target Average Route Depth: {0}", Math.Round(SitTargetRouteDepth, 2));
+                Console.WriteLine("Sit Actual Average Route Depth: {0}", Math.Round(SitAvgRouteDepth, 2));
+
+                Console.WriteLine("Situation Target Run Percentage: {0}", Math.Round(SitTargetRunPercentage, 2));
+                Console.WriteLine("Sit Actual Run Percentage: {0}", Math.Round(SitRunPercentage, 1));
+
+                Console.WriteLine("Situation Target Gap Run Percentage: {0}", Math.Round(SitTargetGapRunPercentage, 2));
+                Console.WriteLine("Sit Actual Gap Run Percentage: {0}", Math.Round(SitGapRunPercentage, 1));
+
+                Console.WriteLine("Situation Target Zone Run Percentage: {0}", Math.Round(SitTargetZoneRunPercentage, 2));
+                Console.WriteLine("Sit Actual Zone Run Percentage: {0}", Math.Round(SitZoneRunPercentage, 1));
+
+                Console.WriteLine("Situation Target Shotgun Percentage: {0}", Math.Round(SitTargetShotgunPercentage, 2));
+                Console.WriteLine("Sit Actual Shotgun Percentage: {0}", Math.Round(SitShotgunPercentage, 1));
+
+                Console.WriteLine("Situation Target Screen Percentage: {0}", Math.Round(SitTargetScreenPercentage, 2));
+                Console.WriteLine("Sit Actual Screen Percentage: {0}", Math.Round(SitScreenPercentage, 1));
+
+                Console.WriteLine("Situation Target WR/TE Screen Percentage of all Screens: {0}", Math.Round(SitTargetWRTEScreenPercentage, 2));
+                Console.WriteLine("Sit actual WR TE Screen Percentage of all screens: {0}", Math.Round(SitWRTEScreenPercentage, 1));
+
+                Console.WriteLine("Situation Target RPO Percentage: {0}", Math.Round(SitTargetRPOPercentage, 2));
+                Console.WriteLine("Sit actual RPO Percentage: {0}", Math.Round(SitRPOPercentage, 1));
+
+                Console.WriteLine("Situation Target Play Action Percentage: {0}", Math.Round(SitTargetPlayActionPercentage, 2));
+                Console.WriteLine("Sit actual Playaction Percentage: {0}", Math.Round(SitPlayActionPercentage, 1));
+
+                Console.WriteLine("Sit expected num of runs: {0}", Math.Round(SitExpectedRunPlays, 2));
+                Console.WriteLine("Sit expected num of passes: {0}", Math.Round(SitExpectedPassPlays, 2));
+
+                // Add to cumilative PB values before moving on to next situation
+                TotalPassWeight += SitPassWeight;
+                TotalWeightedRouteDepth += SitWeightedRouteDepth;
+                TotalAvgRouteDepth += SitExpectedPassPlays * SitAvgRouteDepth;
+                TotalRunWeight += SitRunWeight;
+                TotalWeight += SitWeight;
+                TotalScreenWeight += SitScreenWeight;
+                TotalRPOWeight += SitRPOWeight;
+                TotalExpectedRunPlays += SitExpectedRunPlays;
+                TotalExpectedGapRunPlays += SitExpectedGapRunPlays;
+                TotalExpectedZoneRunPlays += SitExpectedZoneRunPlays;
+                TotalExpectedPassPlays += SitExpectedPassPlays;
+                TotalExpectedPlays = TotalExpectedRunPlays + TotalExpectedPassPlays;
+                TotalExpectedShotgunPlays += SitExpectedShotgunPlays;
+                TotalExpectedScreenPlays += SitExpectedScreenPlays;
+                TotalExpectedWRTEScreenPlays += SitExpectedWRTEScreenPlays;
+                TotalExpectedRPOPlays += SitExpectedRPOPlays;
+                TotalExpectedPlayActionPlays += SitExpectedPlayActionPlays;
+                TotalRunPercentage = Math.Round(TotalExpectedRunPlays / TotalExpectedPlays * 100.0, 1);
+                TotalGapRunPercentage = Math.Round(TotalExpectedGapRunPlays / TotalExpectedRunPlays * 100.0, 1);
+                TotalZoneRunPercentage = Math.Round(TotalExpectedZoneRunPlays / TotalExpectedRunPlays * 100.0, 1);
+                TotalShotgunPercentage = Math.Round(TotalExpectedShotgunPlays / TotalExpectedPlays * 100.0, 1);
+                TotalScreenPassPercentage = Math.Round(TotalExpectedScreenPlays / TotalExpectedPassPlays * 100.0, 1);
+                TotalWRTEScreenPercentage = Math.Round(TotalExpectedWRTEScreenPlays / TotalExpectedScreenPlays * 100.0, 1);
+                TotalRPOPercentage = Math.Round(TotalExpectedRPOPlays / TotalExpectedPlays * 100.0, 1);
+                TotalPlayActionPercentage = Math.Round(TotalExpectedPlayActionPlays / TotalExpectedPlays * 100.0, 1);
+
+                Console.WriteLine("expected run percentage of gameplan: {0}", TotalRunPercentage);
+                Console.WriteLine("expected gap run percentage of run plays in gameplan: {0}", TotalGapRunPercentage);
+                Console.WriteLine("expected zone run percentage of run plays in gameplan: {0}", TotalZoneRunPercentage);
+                Console.WriteLine("average route depth of entire gameplan: {0}", Math.Round(TotalAvgRouteDepth / TotalExpectedPassPlays, 2));
+                Console.WriteLine("expected shotgun percentage of plays in gameplan: {0}", TotalShotgunPercentage);
+                Console.WriteLine("expected screen pass percentage of pass plays in gameplan: {0}", TotalScreenPassPercentage);
+                Console.WriteLine("expected WR TE screen percentage of screen passes in gameplan: {0}", TotalWRTEScreenPercentage);
+                Console.WriteLine("expected RPO percentage of gameplan: {0}", TotalRPOPercentage);
+                Console.WriteLine("expected Playaction percentage of gameplan: {0}", TotalPlayActionPercentage);
+
+                Console.WriteLine("total expected run plays in gameplan: {0}", Math.Round(TotalExpectedRunPlays, 2));
+                Console.WriteLine("total expected pass plays in gameplan: {0}", Math.Round(TotalExpectedPassPlays, 2));
+                Console.WriteLine("total expected plays in gameplan: {0}", Math.Round(TotalExpectedPlays, 2));
+                Console.WriteLine("total expected shotgun plays in gameplan: {0}", Math.Round(TotalExpectedShotgunPlays, 2));
+                Console.WriteLine("total expected screen plays in gameplan: {0}", Math.Round(TotalExpectedScreenPlays, 2));
+                Console.WriteLine("total expected WR/TE screen plays in gameplan: {0}", Math.Round(TotalExpectedWRTEScreenPlays, 2));
+                Console.WriteLine("total expected RPO plays in gameplan: {0}", Math.Round(TotalExpectedRPOPlays, 2));
+                Console.WriteLine("total expected PlayAction plays in gameplan: {0}", Math.Round(TotalExpectedPlayActionPlays, 2));
+                Console.WriteLine("total expected gap run plays in gameplan: {0}", Math.Round(TotalExpectedGapRunPlays, 2));
+                Console.WriteLine("total expected zone run plays in gameplan: {0}", Math.Round(TotalExpectedZoneRunPlays, 2));
+            }
+            // remove the entries with a 0 weight, this should get us below 2000
+            PBAIRecordCount = PBAI.Where(p => p.prct == 0).Count();
+            _pbai = PBAI.Where(p => p.prct == 0).ToList();
+            PBAI.RemoveAll(p => _pbai.Contains(p));
+
+            Console.WriteLine("AI Play calling records with 0 weight: " + PBAIRecordCount);
+            Console.WriteLine("AI Play calling records remaining: " + PBAI.Count());
+            if (PBAI.Count() > 2000)
+            {
+                // Remove any situation entries that we don't 
+                _pbai = PBAI.Where(p => SituationsToTrim.Contains(p.AIGR)).ToList();
+                PBAI.RemoveAll(p => _pbai.Contains(p));
+                Console.WriteLine("AI Play calling records in the situations to remove: " + _pbai.Count());
+                Console.WriteLine("AI Play calling records remaining: " + PBAI.Count());
+
+                if (PBAI.Count() > 2000)
+                {
+                    int NumRecordsToRemove = PBAI.Count() - 2000;
+                    Console.WriteLine("Trimming more entries: " + NumRecordsToRemove);
+                    // Remove 1 prct entries first
+                    _pbai = PBAI.Where(p => ((Gameplan.KeySituations1.Contains(p.AIGR) || Gameplan.KeySituations2.Contains(p.AIGR)) ||
+                    SituationsToAddAllPlays.Contains(p.AIGR)) && p.prct == 1).ToList();
+                    // Add 2 prct entries to the list so that they get removed last
+                    _pbai.AddRange(PBAI.Where(p => ((Gameplan.KeySituations1.Contains(p.AIGR) || Gameplan.KeySituations2.Contains(p.AIGR)) ||
+                    SituationsToAddAllPlays.Contains(p.AIGR)) && p.prct == 2).ToList());
+
+                    foreach (Madden.TeamPlaybook.PBAI pbai in _pbai)
+                    {
+                        if (NumRecordsToRemove > 0)
+                        {
+                            PBAI.Remove(pbai);
+                        }
+                        else
+                            break;
+                        NumRecordsToRemove--;
+                    }
+                    Console.WriteLine("AI Play calling records remaining after final removal: " + PBAI.Count());
+                }
+            }
+
+            PBAI = Madden.TeamPlaybook.PBAI.Sort(PBAI);
+            for (int i = 0; i < PBAI.Count(); i++)
+            {
+                PBAI[i].rec = i;
+            }
+
+            foreach (FormationVM _formation in Formations)
+            {
+                foreach (SubFormationVM _subFormation in _formation.SubFormations)
+                {
+                    foreach (PlayVM _play in _subFormation.Plays)
+                    {
+                        _play.GetSituations();
+                    }
+                }
+            }
+        }
+        #endregion
 
         public void SaveTDBTables(int OpenIndex)
         {

@@ -1001,6 +1001,15 @@ namespace MaddenTeamPlaybookEditor
             }
         }
 
+        private void btnRedDobeRevampGameplan_Click(object sender, RoutedEventArgs e)
+        {
+            if (MessageBox.Show("Run Sabos gameplan revamp and save the playbook before running this. You will need to modify the lua offense script in game so that every redzone situation uses the 16-20 situation. Since this revamp combines all of those plays into the 16-20 Situation. This revamp will shorten the average route depth and run/pass ratio of the gameplan to that of the nfl per each teams tendency, are you sure that you want to proceed?", "Warning", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+            {
+                TeamPlaybook.RedDobeRevampGameplan();
+                lvwSituations.Items.Refresh();
+            }
+        }
+
         private void lvwSituations_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (lvwSituations.SelectedItem != null)
@@ -1073,7 +1082,10 @@ namespace MaddenTeamPlaybookEditor
         //    uclPBAITable.dataGrid.Items.Refresh();
 
         //    List<SituationVM> PlayTypes = new List<SituationVM>();
-        //    int playCount = 0;
+        //    //int playCount = 0;
+        //    int SelectedSituation = ((Madden.TeamPlaybook.PBAI)lvwSituations.SelectedItem).AIGR;
+        //    int TotalSitWeight = TeamPlaybook.PBAI.Where(p => p.AIGR == SelectedSituation).Sum(p => p.prct);
+        //    int Weight = 0;
         //    List<int> _plyl = ((TeamPlaybook)tvwPlaybook.DataContext).PBAI.Where(p => p.AIGR == ((Madden.TeamPlaybook.PBAI)lvwSituations.SelectedItem).AIGR).Select(p => p.PLYT).Distinct().ToList();
         //    foreach (int playtype in _plyl)
         //    {
@@ -1089,13 +1101,21 @@ namespace MaddenTeamPlaybookEditor
         //            .Select(c => ((Color)ColorConverter.ConvertFromString(c.Name)))
         //            .OrderBy(c => c.ToString())
         //            .ToList();
+        //        //PlayTypes.Add(new SituationVM
+        //        //{
+        //        //    Title = TeamPlaybook.PlayType[playtype],
+        //        //    ColorBrush = new SolidColorBrush(colors[PlayTypes.Count]),
+        //        //    Plays = ((TeamPlaybook)tvwPlaybook.DataContext).Plays.Where(p => p.PLYL.PLYT == playtype).ToList()
+        //        //});
+        //        //playCount += PlayTypes[PlayTypes.Count() - 1].Plays.Count();
         //        PlayTypes.Add(new SituationVM
         //        {
         //            Title = TeamPlaybook.PlayType[playtype],
         //            ColorBrush = new SolidColorBrush(colors[PlayTypes.Count]),
-        //            Plays = ((TeamPlaybook)tvwPlaybook.DataContext).Plays.Where(p => p.PLYL.PLYT == playtype).ToList()
+        //            Plays = ((TeamPlaybook)tvwPlaybook.DataContext).Plays.Where(p => p.PLYL.PLYT == playtype).ToList(),
+        //            Weight = TeamPlaybook.PBAI.Where(p => p.PLYT == playtype && p.AIGR == SelectedSituation).Sum(p => p.prct),
+        //            Percentage = (float)Math.Round(((double)Weight / (double)TotalSitWeight) * 100, 1)
         //        });
-        //        playCount += PlayTypes[PlayTypes.Count() - 1].Plays.Count();
         //    }
         //    foreach (SituationVM playtype in PlayTypes)
         //    {
