@@ -56,7 +56,7 @@ namespace MaddenTeamPlaybookEditor
         {
             InitializeComponent();
 
-            //filePath = "E:\\Software\\MMC_Editor\\Madden 24\\All_Legacy_Files\\common\\database\\playbooks\\madden_saints.db.DB";
+            filePath = "E:\\Software\\MMC_Editor\\Madden 24\\All_Legacy_Files\\common\\database\\playbooks\\madden_saints.db.DB";
 
             if (File.Exists(filePath))
             {
@@ -198,11 +198,11 @@ namespace MaddenTeamPlaybookEditor
             cbxPLYT.DataContext = TeamPlaybook.PlayType.Where(x => TeamPlaybook.PLYL.Any(y => y.PLYT == x.Key)).OrderBy(s => s.Value);
             if (Playbook.Type == "Offense")
             {
-                lvwSituations.DataContext = TeamPlaybook.SituationOff.Select(p => new Madden.TeamPlaybook.PBAI { AIGR = p.Key, Name = p.Value }).ToList();
+                lvwSituations.DataContext = TeamPlaybook.SituationOff.Select(p => new Madden.TeamPlaybook.PBAI { AIGR = p.Key }).ToList();
             }
             else if (Playbook.Type == "Defense")
             {
-                lvwSituations.DataContext = TeamPlaybook.SituationDef.Select(p => new Madden.TeamPlaybook.PBAI { AIGR = p.Key, Name = p.Value }).ToList();
+                lvwSituations.DataContext = TeamPlaybook.SituationDef.Select(p => new Madden.TeamPlaybook.PBAI { AIGR = p.Key }).ToList();
             }
             lvwPlaysByRouteDepth.DataContext = TeamPlaybook.Plays;
             lvwPlaysByRouteDepth.Items.Filter = PlayListFilter;
@@ -978,36 +978,34 @@ namespace MaddenTeamPlaybookEditor
 
         private void btnRevampGameplan_Click(object sender, RoutedEventArgs e)
         {
-            if (MessageBox.Show("Are you sure you want to Revamp the Gameplan?", "Warning", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+            if (MessageBox.Show("Run Sabo's Gameplan Revamp?", "Warning", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
             {
                 try
                 {
                     TeamPlaybook.RevampGameplan();
-                    if (TeamPlaybook.PBAI.Count > 2000)
-                    {
-                        int threshold = 1;
-                        List<Madden.TeamPlaybook.PBAI> _pbai = TeamPlaybook.PBAI.Where(p => p.prct == threshold && TeamPlaybook.PBAI.Select(n => n.AIGR > threshold) != null).ToList();
-                        if (MessageBox.Show("There are " + (2000 - TeamPlaybook.PBAI.Count).ToString() + " too many PBAI records and the game will crash.\nWould you like to remove " + _pbai.Count + " records with a 1 prct?", "Warning", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
-                        {
-                            TeamPlaybook.PBAI.RemoveAll(p => _pbai.Contains(p));
-                        }
-                    }
                     lvwSituations.Items.Refresh();
                 }
                 catch (Exception)
                 {
                     throw;
-                } 
+                }
+                if (MessageBox.Show("Would you like to adjust the gameplan based on this team's 2023 Regular Season tendencies? This will shorten the average route depth to the league average and match the run/pass ratio per team.\n\nThe in game lua offense script will need to be modified so that every redzone situation uses the 16-20 situation, since this will combine all of those plays into the 16-20 Situation.", "Warning", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                {
+                    try
+                    {
+                        TeamPlaybook.RedDobeRevampGameplan();
+                        lvwSituations.Items.Refresh();
+                    }
+                    catch (Exception)
+                    {
+                        throw;
+                    }
+                }
             }
         }
 
         private void btnRedDobeRevampGameplan_Click(object sender, RoutedEventArgs e)
         {
-            if (MessageBox.Show("Run Sabos gameplan revamp and save the playbook before running this. You will need to modify the lua offense script in game so that every redzone situation uses the 16-20 situation. Since this revamp combines all of those plays into the 16-20 Situation. This revamp will shorten the average route depth and run/pass ratio of the gameplan to that of the nfl per each teams tendency, are you sure that you want to proceed?", "Warning", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
-            {
-                TeamPlaybook.RedDobeRevampGameplan();
-                lvwSituations.Items.Refresh();
-            }
         }
 
         private void lvwSituations_SelectionChanged(object sender, SelectionChangedEventArgs e)

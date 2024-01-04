@@ -15,13 +15,13 @@ namespace MaddenTeamPlaybookEditor.User_Controls
             InitializeComponent();
         }
 
-        public static DependencyProperty DataProperty = DependencyProperty.Register("Data", typeof(IEnumerable), typeof(FilterableTable));
+        public static DependencyProperty DataProperty = DependencyProperty.Register("Data", typeof(IList), typeof(FilterableTable));
 
-        public IEnumerable Data
+        public IList Data
         {
             get
             {
-                return GetValue(DataProperty) as IEnumerable;
+                return GetValue(DataProperty) as IList;
             }
             set
             {
@@ -69,6 +69,13 @@ namespace MaddenTeamPlaybookEditor.User_Controls
 
         private void cbxValueChanged(object sender, SelectionChangedEventArgs e)
         {
+            dataGrid.Items.Filter = Filter;
+        }
+
+        private void dataSourceChanged(object sender, System.Windows.Data.DataTransferEventArgs e)
+        {
+            Type type = Data?.GetType().GetProperty("Item").PropertyType;
+            cbxFilter.ItemsSource = type?.GetProperties().Select(o => o.Name);
             dataGrid.Items.Filter = Filter;
         }
     }

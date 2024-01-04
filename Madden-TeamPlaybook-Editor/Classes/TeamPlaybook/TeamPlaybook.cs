@@ -1566,31 +1566,306 @@ namespace MaddenTeamPlaybookEditor.ViewModels
         public string Type { get; set; }
         public Dictionary<int, string> Situations { get; set; }
         public List<TableNames> TableNames { get; set; }
-        public List<Madden.TeamPlaybook.ARTL> ARTL { get; set; }
-        public List<Madden.TeamPlaybook.FORM> FORM { get; set; }
-        public List<Madden.TeamPlaybook.PBAI> PBAI { get; set; }
-        public List<Madden.TeamPlaybook.PBAU> PBAU { get; set; }
-        public List<Madden.TeamPlaybook.PBCC> PBCC { get; set; }
-        public List<Madden.TeamPlaybook.PBFM> PBFM { get; set; }
-        public List<Madden.TeamPlaybook.PBPL> PBPL { get; set; }
-        public List<Madden.TeamPlaybook.PBST> PBST { get; set; }
-        public List<Madden.TeamPlaybook.PLCM> PLCM { get; set; }
-        public List<Madden.TeamPlaybook.PLPD> PLPD { get; set; }
-        public List<Madden.TeamPlaybook.PLRD> PLRD { get; set; }
-        public List<Madden.TeamPlaybook.PLYL> PLYL { get; set; }
-        public List<Madden.TeamPlaybook.PLYS> PLYS { get; set; }
-        public List<Madden.TeamPlaybook.PPCT> PPCT { get; set; }
-        public List<Madden.TeamPlaybook.PSAL> PSAL { get; set; }
-        public List<Madden.TeamPlaybook.SDEF> SDEF { get; set; }
-        public List<Madden.TeamPlaybook.SETG> SETG { get; set; }
-        public List<Madden.TeamPlaybook.SETL> SETL { get; set; }
-        public List<Madden.TeamPlaybook.SETP> SETP { get; set; }
-        public List<Madden.TeamPlaybook.SGFM> SGFM { get; set; }
-        public List<Madden.TeamPlaybook.SPKF> SPKF { get; set; }
-        public List<Madden.TeamPlaybook.SPKG> SPKG { get; set; }
-        public List<Madden.TeamPlaybook.SRFT> SRFT { get; set; }
-        public List<DCHT> DCHT { get; set; }
-        public List<PLAY> PLAY { get; set; }
+        private List<Madden.TeamPlaybook.ARTL> _ARTL;
+        public List<Madden.TeamPlaybook.ARTL> ARTL
+        {
+            get { return _ARTL; }
+            set
+            {
+                if (_ARTL == value)
+                    return;
+                _ARTL = value;
+                OnPropertyChanged("ARTL");
+            }
+        }
+        private List<Madden.TeamPlaybook.FORM> _FORM;
+        public List<Madden.TeamPlaybook.FORM> FORM
+        {
+            get { return _FORM; }
+            set
+            {
+                if (_FORM == value)
+                    return;
+                _FORM = value;
+                OnPropertyChanged("FORM");
+            }
+        }
+        private List<Madden.TeamPlaybook.PBAI> _PBAI;
+        public List<Madden.TeamPlaybook.PBAI> PBAI
+        {
+            get { return _PBAI; }
+            set
+            {
+                if (_PBAI == value)
+                    return;
+                _PBAI = value;
+                OnPropertyChanged("PBAI");
+            }
+        }
+        private List<Madden.TeamPlaybook.PBAU> _PBAU;
+        public List<Madden.TeamPlaybook.PBAU> PBAU
+        {
+            get { return _PBAU; }
+            set
+            {
+                if (_PBAU == value)
+                    return;
+                _PBAU = value;
+                OnPropertyChanged("PBAU");
+            }
+        }
+        private List<Madden.TeamPlaybook.PBCC> _PBCC;
+        public List<Madden.TeamPlaybook.PBCC> PBCC
+        {
+            get { return _PBCC; }
+            set
+            {
+                if (_PBCC == value)
+                    return;
+                _PBCC = value;
+                OnPropertyChanged("PBCC");
+            }
+        }
+        private List<Madden.TeamPlaybook.PBFM> _PBFM;
+        public List<Madden.TeamPlaybook.PBFM> PBFM
+        {
+            get { return _PBFM; }
+            set
+            {
+                if (_PBFM == value)
+                    return;
+                _PBFM = value;
+                OnPropertyChanged("PBFM");
+            }
+        }
+        private List<Madden.TeamPlaybook.PBPL> _PBPL;
+        public List<Madden.TeamPlaybook.PBPL> PBPL
+        {
+            get { return _PBPL; }
+            set
+            {
+                if (_PBPL == value)
+                    return;
+                _PBPL = value;
+                OnPropertyChanged("PBPL");
+            }
+        }
+        private List<Madden.TeamPlaybook.PBST> _PBST;
+        public List<Madden.TeamPlaybook.PBST> PBST
+        {
+            get { return _PBST; }
+            set
+            {
+                if (_PBST == value)
+                    return;
+                _PBST = value;
+                OnPropertyChanged("PBST");
+            }
+        }
+        private List<Madden.TeamPlaybook.PLCM> _PLCM;
+        public List<Madden.TeamPlaybook.PLCM> PLCM
+        {
+            get { return _PLCM; }
+            set
+            {
+                if (_PLCM == value)
+                    return;
+                _PLCM = value;
+                OnPropertyChanged("PLCM");
+            }
+        }
+        private List<Madden.TeamPlaybook.PLPD> _PLPD;
+        public List<Madden.TeamPlaybook.PLPD> PLPD
+        {
+            get { return _PLPD; }
+            set
+            {
+                if (_PLPD == value)
+                    return;
+                _PLPD = value;
+                OnPropertyChanged("PLPD");
+            }
+        }
+        private List<Madden.TeamPlaybook.PLRD> _PLRD;
+        public List<Madden.TeamPlaybook.PLRD> PLRD
+        {
+            get { return _PLRD; }
+            set
+            {
+                if (_PLRD == value)
+                    return;
+                _PLRD = value;
+                OnPropertyChanged("PLRD");
+            }
+        }
+        private List<Madden.TeamPlaybook.PLYL> _PLYL;
+        public List<Madden.TeamPlaybook.PLYL> PLYL
+        {
+            get { return _PLYL; }
+            set
+            {
+                if (_PLYL == value)
+                    return;
+                _PLYL = value;
+                OnPropertyChanged("PLYL");
+            }
+        }
+        private List<Madden.TeamPlaybook.PLYS> _PLYS;
+        public List<Madden.TeamPlaybook.PLYS> PLYS
+        {
+            get { return _PLYS; }
+            set
+            {
+                if (_PLYS == value)
+                    return;
+                _PLYS = value;
+                OnPropertyChanged("PLYS");
+            }
+        }
+        private List<Madden.TeamPlaybook.PPCT> _PPCT;
+        public List<Madden.TeamPlaybook.PPCT> PPCT
+        {
+            get { return _PPCT; }
+            set
+            {
+                if (_PPCT == value)
+                    return;
+                _PPCT = value;
+                OnPropertyChanged("PPCT");
+            }
+        }
+        private List<Madden.TeamPlaybook.PSAL> _PSAL;
+        public List<Madden.TeamPlaybook.PSAL> PSAL
+        {
+            get { return _PSAL; }
+            set
+            {
+                if (_PSAL == value)
+                    return;
+                _PSAL = value;
+                OnPropertyChanged("PSAL");
+            }
+        }
+        private List<Madden.TeamPlaybook.SDEF> _SDEF;
+        public List<Madden.TeamPlaybook.SDEF> SDEF
+        {
+            get { return _SDEF; }
+            set
+            {
+                if (_SDEF == value)
+                    return;
+                _SDEF = value;
+                OnPropertyChanged("SDEF");
+            }
+        }
+        private List<Madden.TeamPlaybook.SETG> _SETG;
+        public List<Madden.TeamPlaybook.SETG> SETG
+        {
+            get { return _SETG; }
+            set
+            {
+                if (_SETG == value)
+                    return;
+                _SETG = value;
+                OnPropertyChanged("SETG");
+            }
+        }
+        private List<Madden.TeamPlaybook.SETL> _SETL;
+        public List<Madden.TeamPlaybook.SETL> SETL
+        {
+            get { return _SETL; }
+            set
+            {
+                if (_SETL == value)
+                    return;
+                _SETL = value;
+                OnPropertyChanged("SETL");
+            }
+        }
+        private List<Madden.TeamPlaybook.SETP> _SETP;
+        public List<Madden.TeamPlaybook.SETP> SETP
+        {
+            get { return _SETP; }
+            set
+            {
+                if (_SETP == value)
+                    return;
+                _SETP = value;
+                OnPropertyChanged("SETP");
+            }
+        }
+        private List<Madden.TeamPlaybook.SGFM> _SGFM;
+        public List<Madden.TeamPlaybook.SGFM> SGFM
+        {
+            get { return _SGFM; }
+            set
+            {
+                if (_SGFM == value)
+                    return;
+                _SGFM = value;
+                OnPropertyChanged("SGFM");
+            }
+        }
+        private List<Madden.TeamPlaybook.SPKF> _SPKF;
+        public List<Madden.TeamPlaybook.SPKF> SPKF
+        {
+            get { return _SPKF; }
+            set
+            {
+                if (_SPKF == value)
+                    return;
+                _SPKF = value;
+                OnPropertyChanged("SPKF");
+            }
+        }
+        private List<Madden.TeamPlaybook.SPKG> _SPKG;
+        public List<Madden.TeamPlaybook.SPKG> SPKG
+        {
+            get { return _SPKG; }
+            set
+            {
+                if (_SPKG == value)
+                    return;
+                _SPKG = value;
+                OnPropertyChanged("SPKG");
+            }
+        }
+        private List<Madden.TeamPlaybook.SRFT> _SRFT;
+        public List<Madden.TeamPlaybook.SRFT> SRFT
+        {
+            get { return _SRFT; }
+            set
+            {
+                if (_SRFT == value)
+                    return;
+                _SRFT = value;
+                OnPropertyChanged("SRFT");
+            }
+        }
+        private List<DCHT> _DCHT;
+        public List<DCHT> DCHT
+        {
+            get { return _DCHT; }
+            set
+            {
+                if (_DCHT == value)
+                    return;
+                _DCHT = value;
+                OnPropertyChanged("DCHT");
+            }
+        }
+        private List<PLAY> _PLAY;
+        public List<PLAY> PLAY
+        {
+            get { return _PLAY; }
+            set
+            {
+                if (_PLAY == value)
+                    return;
+                _PLAY = value;
+                OnPropertyChanged("PLAY");
+            }
+        }
 
         public TeamPlaybook()
         {
@@ -2118,6 +2393,16 @@ namespace MaddenTeamPlaybookEditor.ViewModels
                 }
             }
 
+            if (PBAI.Count > 2000)
+            {
+                int threshold = 1;
+                _pbai = PBAI.Where(p => p.prct == threshold && PBAI.Select(n => n.AIGR > threshold) != null).ToList();
+                if (MessageBox.Show("There are " + (2000 - PBAI.Count).ToString() + " too many PBAI records and the game will crash.\nWould you like to remove " + _pbai.Count + " records with a 1 prct?", "Warning", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                {
+                    PBAI.RemoveAll(p => _pbai.Contains(p));
+                }
+            }
+
             PBAI = Madden.TeamPlaybook.PBAI.Sort(PBAI);
             for (int i = 0; i < PBAI.Count(); i++)
             {
@@ -2217,6 +2502,7 @@ namespace MaddenTeamPlaybookEditor.ViewModels
                     break;
             }
         }
+
         public void RedDobeRevampGameplan()
         {
             // Now lets add some play types that are missing in certain situations
@@ -3094,17 +3380,12 @@ namespace MaddenTeamPlaybookEditor.ViewModels
                 PBAI[i].rec = i;
             }
 
-            foreach (FormationVM _formation in Formations)
+            foreach (PlayVM _play in Plays)
             {
-                foreach (SubFormationVM _subFormation in _formation.SubFormations)
-                {
-                    foreach (PlayVM _play in _subFormation.Plays)
-                    {
-                        _play.GetSituations();
-                    }
-                }
+                _play.GetSituations();
             }
         }
+
         #endregion
 
         public void SaveTDBTables(int OpenIndex)
