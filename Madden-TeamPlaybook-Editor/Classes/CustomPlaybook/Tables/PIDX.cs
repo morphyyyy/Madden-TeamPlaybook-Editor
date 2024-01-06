@@ -73,7 +73,7 @@ namespace Madden.CustomPlaybook
             {
                 string _name = new string((char)0, (tableFields.Where(field => field.Name == TDB.StrReverse("name")).FirstOrDefault().Size / 8) + 1);
 
-                TDB.TDBFieldGetValueAsString(DBIndex, TDB.StrReverse("PBFM"), TDB.StrReverse("name"), i, ref _name);
+                TDB.TDBFieldGetValueAsString(DBIndex, TDB.StrReverse("PIDX"), TDB.StrReverse("name"), i, ref _name);
                 _name = _name.Replace(",", "");
 
                 if (filter != 0 && (int)(UInt32)TDB.TDBFieldGetValueAsInteger(DBIndex, TDB.StrReverse("PIDX"), TDB.StrReverse("PLYL"), i) == filter)

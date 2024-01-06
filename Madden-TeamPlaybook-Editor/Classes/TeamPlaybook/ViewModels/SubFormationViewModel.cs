@@ -369,43 +369,55 @@ namespace MaddenTeamPlaybookEditor.ViewModels
         {
             #region PLYL
 
-            if (Formation.Playbook.PLYL.Where(play => play.plyl == Play.PLYL.plyl).FirstOrDefault() != null)
+            Play.PLYL.plyl = TeamPlaybook.NextAvailableID((from plyl in Formation.Playbook.PLYL select plyl.plyl).ToList(), false, 0, 29900);
+
+            if (Play.PLYL.plyl > 32768)
             {
-                Play.PLYL.plyl = TeamPlaybook.NextAvailableID((from plyl in Formation.Playbook.PLYL select plyl.plyl).ToList());
-                if (Play.PLPD != null)
-                {
-                    Play.PLPD.PLYL = Play.PLYL.plyl;
-                }
-                if (Play.PLRD != null)
-                {
-                    Play.PLRD.PLYL = Play.PLYL.plyl;
-                }
+                Play.PLYL.plyl = TeamPlaybook.NextAvailableID((from plyl in Formation.Playbook.PLYL select plyl.plyl).ToList(), true, 0, 1);
+                MessageBox.Show(
+                    "PLYL index is over the max allowed of 32768 and no index ids are available above 299000 either, which is the highest number the default game uses!\n\nInserting instead to" + Play.PLYL.plyl + ".",
+                    "PLYL Indexing",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Exclamation);
+            }
+
+            if (Play.PLPD != null)
+            {
+                Play.PLPD.PLYL = Play.PLYL.plyl;
+            }
+            if (Play.PLRD != null)
+            {
+                Play.PLRD.PLYL = Play.PLYL.plyl;
+            }
+            if (Play.PLYS != null)
+            {
                 foreach (PLYS play in Play.PLYS)
                 {
                     play.PLYL = Play.PLYL.plyl;
                 }
-                if (Play.PLCM != null)
+            }
+            if (Play.PLCM != null)
+            {
+                foreach (PLCM play in Play.PLCM)
                 {
-                    foreach (PLCM play in Play.PLCM)
-                    {
-                        play.PLYL = Play.PLYL.plyl;
-                    }
-                }
-                if (Play.PPCT != null)
-                {
-                    foreach (PPCT play in Play.PPCT)
-                    {
-                        play.plyl = Play.PLYL.plyl;
-                    }
-                }
-                if (Play.SRFT != null)
-                {
-                    foreach (SRFT play in Play.SRFT)
-                    {
-                        play.PLYL = Play.PLYL.plyl;
-                    }
+                    play.PLYL = Play.PLYL.plyl;
                 }
             }
+            if (Play.PPCT != null)
+            {
+                foreach (PPCT play in Play.PPCT)
+                {
+                    play.plyl = Play.PLYL.plyl;
+                }
+            }
+            if (Play.SRFT != null)
+            {
+                foreach (SRFT play in Play.SRFT)
+                {
+                    play.PLYL = Play.PLYL.plyl;
+                }
+            }
+            
             Formation.Playbook.PLYL.Add(Play.PLYL);
 
             #endregion
@@ -680,41 +692,52 @@ namespace MaddenTeamPlaybookEditor.ViewModels
         {
             #region PLYL
 
-            if (Formation.Playbook.PLYL.Where(play => play.plyl == Play.PBPL[0].PLYL).FirstOrDefault() != null)
+            Play.PBPL[0].PLYL = TeamPlaybook.NextAvailableID((from plyl in Formation.Playbook.PLYL select plyl.plyl).ToList(), false, 0, 29900);
+
+            if (Play.PBPL[0].PLYL > 32768)
             {
-                Play.PBPL[0].PLYL = TeamPlaybook.NextAvailableID((from plyl in Formation.Playbook.PLYL select plyl.plyl).ToList());
-                if (Play.PLPD.Count > 0)
-                {
-                    Play.PLPD[0].PLYL = Play.PBPL[0].PLYL;
-                }
-                if (Play.PLRD.Count > 0)
-                {
-                    Play.PLRD[0].PLYL = Play.PBPL[0].PLYL;
-                }
+                Play.PBPL[0].PLYL = TeamPlaybook.NextAvailableID((from plyl in Formation.Playbook.PLYL select plyl.plyl).ToList(), true, 0, 1);
+                MessageBox.Show(
+                    "PLYL index is over the max allowed of 32768 and no index ids are available above 299000 either, which is the highest number the default game uses!\n\nInserting instead to " + Play.PBPL[0].PLYL + ".",
+                    "PLYL Indexing",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Exclamation);
+            }
+
+            if (Play.PLPD.Count > 0)
+            {
+                Play.PLPD[0].PLYL = Play.PBPL[0].PLYL;
+            }
+            if (Play.PLRD.Count > 0)
+            {
+                Play.PLRD[0].PLYL = Play.PBPL[0].PLYL;
+            }
+            if (Play.PLYS != null)
+            {
                 foreach (MaddenCustomPlaybookEditor.PLYS play in Play.PLYS)
                 {
                     play.PLYL = Play.PBPL[0].PLYL;
                 }
-                if (Play.PLCM.Count > 0)
+            }
+            if (Play.PLCM.Count > 0)
+            {
+                foreach (MaddenCustomPlaybookEditor.PLCM play in Play.PLCM)
                 {
-                    foreach (MaddenCustomPlaybookEditor.PLCM play in Play.PLCM)
-                    {
-                        play.PLYL = Play.PBPL[0].PLYL;
-                    }
+                    play.PLYL = Play.PBPL[0].PLYL;
                 }
-                if (Play.PPCT.Count > 0)
+            }
+            if (Play.PPCT.Count > 0)
+            {
+                foreach (MaddenCustomPlaybookEditor.PPCT play in Play.PPCT)
                 {
-                    foreach (MaddenCustomPlaybookEditor.PPCT play in Play.PPCT)
-                    {
-                        play.PLYL = Play.PBPL[0].PLYL;
-                    }
+                    play.PLYL = Play.PBPL[0].PLYL;
                 }
-                if (Play.SRFT.Count > 0)
+            }
+            if (Play.SRFT.Count > 0)
+            {
+                foreach (MaddenCustomPlaybookEditor.SRFT play in Play.SRFT)
                 {
-                    foreach (MaddenCustomPlaybookEditor.SRFT play in Play.SRFT)
-                    {
-                        play.PLYL = Play.PBPL[0].PLYL;
-                    }
+                    play.PLYL = Play.PBPL[0].PLYL;
                 }
             }
 

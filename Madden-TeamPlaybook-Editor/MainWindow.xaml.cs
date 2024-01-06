@@ -56,7 +56,7 @@ namespace MaddenTeamPlaybookEditor
         {
             InitializeComponent();
 
-            //filePath = "E:\\Software\\MMC_Editor\\Madden 24\\All_Legacy_Files\\common\\database\\playbooks\\madden_saints.db.DB";
+            filePath = "E:\\Software\\MMC_Editor\\Madden 24\\All_Legacy_Files\\common\\database\\playbooks\\madden_saints.db.DB";
 
             if (File.Exists(filePath))
             {
@@ -198,11 +198,11 @@ namespace MaddenTeamPlaybookEditor
             cbxPLYT.DataContext = TeamPlaybook.PlayType.Where(x => TeamPlaybook.PLYL.Any(y => y.PLYT == x.Key)).OrderBy(s => s.Value);
             if (Playbook.Type == "Offense")
             {
-                lvwSituations.DataContext = TeamPlaybook.SituationOff.Select(p => new Madden.TeamPlaybook.PBAI { AIGR = p.Key, Name = p.Value }).ToList();
+                lvwSituations.DataContext = TeamPlaybook.SituationOff.Select(p => new Madden.TeamPlaybook.PBAI { AIGR = p.Key }).ToList();
             }
             else if (Playbook.Type == "Defense")
             {
-                lvwSituations.DataContext = TeamPlaybook.SituationDef.Select(p => new Madden.TeamPlaybook.PBAI { AIGR = p.Key, Name = p.Value }).ToList();
+                lvwSituations.DataContext = TeamPlaybook.SituationDef.Select(p => new Madden.TeamPlaybook.PBAI { AIGR = p.Key }).ToList();
             }
             lvwPlaysByRouteDepth.DataContext = TeamPlaybook.Plays;
             lvwPlaysByRouteDepth.Items.Filter = PlayListFilter;
@@ -220,6 +220,15 @@ namespace MaddenTeamPlaybookEditor
         {
             wdwPlaybookEditor.Title = "Madden Team Playbook Editor - " + Path.GetFileName(Playbook.filePath);
             tclCustomPlaybookTables.DataContext = Playbook;
+            foreach (PIDX pidx in Playbook.PIDX.GroupBy(x => x.PLYT).Select(y => y.First()))
+            {
+                string Type =
+                    Playbook.PBFM.FirstOrDefault(form => form.pbfm == pidx.PBFM).FTYP < 11 ?
+                    "Offense" :
+                    "Defense";
+
+                Console.WriteLine(pidx.PLYT.ToString() + ", " + Type);
+            }
         }
 
         #endregion
@@ -978,26 +987,29 @@ namespace MaddenTeamPlaybookEditor
 
         private void btnRevampGameplan_Click(object sender, RoutedEventArgs e)
         {
-            if (MessageBox.Show("Are you sure you want to Revamp the Gameplan?", "Warning", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+            if (MessageBox.Show("Run Sabo's Gameplan Revamp?", "Warning", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
             {
                 try
                 {
                     TeamPlaybook.RevampGameplan();
-                    if (TeamPlaybook.PBAI.Count > 2000)
-                    {
-                        int threshold = 1;
-                        List<Madden.TeamPlaybook.PBAI> _pbai = TeamPlaybook.PBAI.Where(p => p.prct == threshold && TeamPlaybook.PBAI.Select(n => n.AIGR > threshold) != null).ToList();
-                        if (MessageBox.Show("There are " + (2000 - TeamPlaybook.PBAI.Count).ToString() + " too many PBAI records and the game will crash.\nWould you like to remove " + _pbai.Count + " records with a 1 prct?", "Warning", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
-                        {
-                            TeamPlaybook.PBAI.RemoveAll(p => _pbai.Contains(p));
-                        }
-                    }
                     lvwSituations.Items.Refresh();
                 }
                 catch (Exception)
                 {
                     throw;
-                } 
+                }
+                if (MessageBox.Show("Would you like to adjust the gameplan based on this team's 2023 Regular Season tendencies? This will shorten the average route depth to the league average and match the run/pass ratio per team.\n\nThe in game lua offense script will need to be modified so that every redzone situation uses the 16-20 situation, since this will combine all of those plays into the 16-20 Situation.", "Warning", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                {
+                    try
+                    {
+                        TeamPlaybook.RedDobeRevampGameplan();
+                        lvwSituations.Items.Refresh();
+                    }
+                    catch (Exception)
+                    {
+                        throw;
+                    }
+                }
             }
         }
 
@@ -1073,7 +1085,10 @@ namespace MaddenTeamPlaybookEditor
         //    uclPBAITable.dataGrid.Items.Refresh();
 
         //    List<SituationVM> PlayTypes = new List<SituationVM>();
-        //    int playCount = 0;
+        //    //int playCount = 0;
+        //    int SelectedSituation = ((Madden.TeamPlaybook.PBAI)lvwSituations.SelectedItem).AIGR;
+        //    int TotalSitWeight = TeamPlaybook.PBAI.Where(p => p.AIGR == SelectedSituation).Sum(p => p.prct);
+        //    int Weight = 0;
         //    List<int> _plyl = ((TeamPlaybook)tvwPlaybook.DataContext).PBAI.Where(p => p.AIGR == ((Madden.TeamPlaybook.PBAI)lvwSituations.SelectedItem).AIGR).Select(p => p.PLYT).Distinct().ToList();
         //    foreach (int playtype in _plyl)
         //    {
@@ -1089,13 +1104,21 @@ namespace MaddenTeamPlaybookEditor
         //            .Select(c => ((Color)ColorConverter.ConvertFromString(c.Name)))
         //            .OrderBy(c => c.ToString())
         //            .ToList();
+        //        //PlayTypes.Add(new SituationVM
+        //        //{
+        //        //    Title = TeamPlaybook.PlayType[playtype],
+        //        //    ColorBrush = new SolidColorBrush(colors[PlayTypes.Count]),
+        //        //    Plays = ((TeamPlaybook)tvwPlaybook.DataContext).Plays.Where(p => p.PLYL.PLYT == playtype).ToList()
+        //        //});
+        //        //playCount += PlayTypes[PlayTypes.Count() - 1].Plays.Count();
         //        PlayTypes.Add(new SituationVM
         //        {
         //            Title = TeamPlaybook.PlayType[playtype],
         //            ColorBrush = new SolidColorBrush(colors[PlayTypes.Count]),
-        //            Plays = ((TeamPlaybook)tvwPlaybook.DataContext).Plays.Where(p => p.PLYL.PLYT == playtype).ToList()
+        //            Plays = ((TeamPlaybook)tvwPlaybook.DataContext).Plays.Where(p => p.PLYL.PLYT == playtype).ToList(),
+        //            Weight = TeamPlaybook.PBAI.Where(p => p.PLYT == playtype && p.AIGR == SelectedSituation).Sum(p => p.prct),
+        //            Percentage = (float)Math.Round(((double)Weight / (double)TotalSitWeight) * 100, 1)
         //        });
-        //        playCount += PlayTypes[PlayTypes.Count() - 1].Plays.Count();
         //    }
         //    foreach (SituationVM playtype in PlayTypes)
         //    {

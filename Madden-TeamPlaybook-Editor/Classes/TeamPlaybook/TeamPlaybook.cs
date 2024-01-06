@@ -13,6 +13,7 @@ using System.Windows.Media;
 using Madden.CustomPlaybook;
 using MaddenCustomPlaybookEditor;
 using MaddenTeamPlaybookEditor.User_Controls;
+using System.Security.Cryptography;
 
 namespace MaddenTeamPlaybookEditor.ViewModels
 {
@@ -196,7 +197,7 @@ namespace MaddenTeamPlaybookEditor.ViewModels
             {207, "RPO Lookie/Alert"},
             {208, "Jet Pass"},
             {209, "Jet Sweep"}
-       };
+        };
 
         [Serializable]
         public class Gameplan
@@ -301,7 +302,7 @@ namespace MaddenTeamPlaybookEditor.ViewModels
 
             public static readonly List<int> Pass = new List<int>
             {
-                101, 102, 103, 159
+                101, 102, 103, 159, 208
             };
 
             public static readonly List<int> Screen = new List<int>
@@ -316,34 +317,30 @@ namespace MaddenTeamPlaybookEditor.ViewModels
 
             public static readonly List<int> ZoneRun = new List<int>
             {
-                15, 16, 17, 151, 161, 163, 165, 169, 195, 196, 203, 208, 209
+                15, 16, 17, 151, 161, 163, 165, 169, 195, 196, 203, 209
+            };
+
+            public static readonly List<int> Offense = new List<int>
+            {
+                1, 2, 3, 4, 5, 6, 11, 13, 14, 15, 16, 17, 18, 19, 21, 22, 23, 24, 25, 37, 38, 100, 101, 102, 103, 104, 105, 106, 107, 151, 152, 153, 154, 155, 157, 159, 161, 163, 165, 169, 172, 195, 196, 197, 198, 201, 202, 203, 204, 205, 207, 208, 209
+            };
+
+            public static readonly List<int> Defense = new List<int>
+            {
+                32, 35, 42, 43, 44, 45, 46, 47, 49, 51, 174, 175, 176, 177, 178, 179, 180, 182, 183, 185, 186, 187, 188, 189, 190, 191, 192, 194, 199, 210, 211
             };
         }
 
         [Serializable]
         public class Tendency
         {
-            public double PA { get; set; }
+            public double PA { get; set; } // Playaction
             public double RPO { get; set; }
-            public double Pass { get; set; }
+            public double Shotgun { get; set; } // Shotgun formation 
             public double Screen { get; set; }
-            public double Gap { get; set; }
-            public double Zone { get; set; }
+            public double Gap { get; set; } // Gap Run
+            public double Zone { get; set; } // Zone Run
         }
-
-        public Dictionary<string, List<KeyValuePair<int, Tendency>>> TeamTendencies = new Dictionary<string, List<KeyValuePair<int, Tendency>>>
-        {
-            {"49ers", new List<KeyValuePair<int, Tendency>>
-                {
-                    new KeyValuePair<int, Tendency>(SituationOff.FirstOrDefault(s => string.Equals(s.Value, "1st Down", StringComparison.OrdinalIgnoreCase)).Key, new Tendency { PA = 15, RPO = 4, Pass = 23, Screen = 5, Gap = 14, Zone = 40 } )
-                }
-            },
-            {"Saints", new List<KeyValuePair<int, Tendency>>
-                {
-                    new KeyValuePair<int, Tendency>(SituationOff.FirstOrDefault(s => string.Equals(s.Value, "1st Down", StringComparison.OrdinalIgnoreCase)).Key, new Tendency { PA = 15, RPO = 8, Pass = 22, Screen = 3, Gap = 19, Zone = 33 } )
-                }
-            },
-        };
 
         public static readonly Dictionary<int, List<string>> RouteType = new Dictionary<int, List<string>>
         {
@@ -528,7 +525,7 @@ namespace MaddenTeamPlaybookEditor.ViewModels
             {32,"4th & Medium"},
             {33,"4th & Long"},
             {41,"4rd & Extra Long"},
-            {25,"Red Zone Fringe"},
+            {25,"Opp 21 to 25"},
             {26,"Red Zone 16 to 20"},
             {27,"Red Zone 11 to 15"},
             {28,"Red Zone 6 to 10"},
@@ -638,31 +635,306 @@ namespace MaddenTeamPlaybookEditor.ViewModels
         public string Type { get; set; }
         public Dictionary<int, string> Situations { get; set; }
         public List<TableNames> TableNames { get; set; }
-        public List<Madden.TeamPlaybook.ARTL> ARTL { get; set; }
-        public List<Madden.TeamPlaybook.FORM> FORM { get; set; }
-        public List<Madden.TeamPlaybook.PBAI> PBAI { get; set; }
-        public List<Madden.TeamPlaybook.PBAU> PBAU { get; set; }
-        public List<Madden.TeamPlaybook.PBCC> PBCC { get; set; }
-        public List<Madden.TeamPlaybook.PBFM> PBFM { get; set; }
-        public List<Madden.TeamPlaybook.PBPL> PBPL { get; set; }
-        public List<Madden.TeamPlaybook.PBST> PBST { get; set; }
-        public List<Madden.TeamPlaybook.PLCM> PLCM { get; set; }
-        public List<Madden.TeamPlaybook.PLPD> PLPD { get; set; }
-        public List<Madden.TeamPlaybook.PLRD> PLRD { get; set; }
-        public List<Madden.TeamPlaybook.PLYL> PLYL { get; set; }
-        public List<Madden.TeamPlaybook.PLYS> PLYS { get; set; }
-        public List<Madden.TeamPlaybook.PPCT> PPCT { get; set; }
-        public List<Madden.TeamPlaybook.PSAL> PSAL { get; set; }
-        public List<Madden.TeamPlaybook.SDEF> SDEF { get; set; }
-        public List<Madden.TeamPlaybook.SETG> SETG { get; set; }
-        public List<Madden.TeamPlaybook.SETL> SETL { get; set; }
-        public List<Madden.TeamPlaybook.SETP> SETP { get; set; }
-        public List<Madden.TeamPlaybook.SGFM> SGFM { get; set; }
-        public List<Madden.TeamPlaybook.SPKF> SPKF { get; set; }
-        public List<Madden.TeamPlaybook.SPKG> SPKG { get; set; }
-        public List<Madden.TeamPlaybook.SRFT> SRFT { get; set; }
-        public List<DCHT> DCHT { get; set; }
-        public List<PLAY> PLAY { get; set; }
+        private List<Madden.TeamPlaybook.ARTL> _ARTL;
+        public List<Madden.TeamPlaybook.ARTL> ARTL
+        {
+            get { return _ARTL; }
+            set
+            {
+                if (_ARTL == value)
+                    return;
+                _ARTL = value;
+                OnPropertyChanged("ARTL");
+            }
+        }
+        private List<Madden.TeamPlaybook.FORM> _FORM;
+        public List<Madden.TeamPlaybook.FORM> FORM
+        {
+            get { return _FORM; }
+            set
+            {
+                if (_FORM == value)
+                    return;
+                _FORM = value;
+                OnPropertyChanged("FORM");
+            }
+        }
+        private List<Madden.TeamPlaybook.PBAI> _PBAI;
+        public List<Madden.TeamPlaybook.PBAI> PBAI
+        {
+            get { return _PBAI; }
+            set
+            {
+                if (_PBAI == value)
+                    return;
+                _PBAI = value;
+                OnPropertyChanged("PBAI");
+            }
+        }
+        private List<Madden.TeamPlaybook.PBAU> _PBAU;
+        public List<Madden.TeamPlaybook.PBAU> PBAU
+        {
+            get { return _PBAU; }
+            set
+            {
+                if (_PBAU == value)
+                    return;
+                _PBAU = value;
+                OnPropertyChanged("PBAU");
+            }
+        }
+        private List<Madden.TeamPlaybook.PBCC> _PBCC;
+        public List<Madden.TeamPlaybook.PBCC> PBCC
+        {
+            get { return _PBCC; }
+            set
+            {
+                if (_PBCC == value)
+                    return;
+                _PBCC = value;
+                OnPropertyChanged("PBCC");
+            }
+        }
+        private List<Madden.TeamPlaybook.PBFM> _PBFM;
+        public List<Madden.TeamPlaybook.PBFM> PBFM
+        {
+            get { return _PBFM; }
+            set
+            {
+                if (_PBFM == value)
+                    return;
+                _PBFM = value;
+                OnPropertyChanged("PBFM");
+            }
+        }
+        private List<Madden.TeamPlaybook.PBPL> _PBPL;
+        public List<Madden.TeamPlaybook.PBPL> PBPL
+        {
+            get { return _PBPL; }
+            set
+            {
+                if (_PBPL == value)
+                    return;
+                _PBPL = value;
+                OnPropertyChanged("PBPL");
+            }
+        }
+        private List<Madden.TeamPlaybook.PBST> _PBST;
+        public List<Madden.TeamPlaybook.PBST> PBST
+        {
+            get { return _PBST; }
+            set
+            {
+                if (_PBST == value)
+                    return;
+                _PBST = value;
+                OnPropertyChanged("PBST");
+            }
+        }
+        private List<Madden.TeamPlaybook.PLCM> _PLCM;
+        public List<Madden.TeamPlaybook.PLCM> PLCM
+        {
+            get { return _PLCM; }
+            set
+            {
+                if (_PLCM == value)
+                    return;
+                _PLCM = value;
+                OnPropertyChanged("PLCM");
+            }
+        }
+        private List<Madden.TeamPlaybook.PLPD> _PLPD;
+        public List<Madden.TeamPlaybook.PLPD> PLPD
+        {
+            get { return _PLPD; }
+            set
+            {
+                if (_PLPD == value)
+                    return;
+                _PLPD = value;
+                OnPropertyChanged("PLPD");
+            }
+        }
+        private List<Madden.TeamPlaybook.PLRD> _PLRD;
+        public List<Madden.TeamPlaybook.PLRD> PLRD
+        {
+            get { return _PLRD; }
+            set
+            {
+                if (_PLRD == value)
+                    return;
+                _PLRD = value;
+                OnPropertyChanged("PLRD");
+            }
+        }
+        private List<Madden.TeamPlaybook.PLYL> _PLYL;
+        public List<Madden.TeamPlaybook.PLYL> PLYL
+        {
+            get { return _PLYL; }
+            set
+            {
+                if (_PLYL == value)
+                    return;
+                _PLYL = value;
+                OnPropertyChanged("PLYL");
+            }
+        }
+        private List<Madden.TeamPlaybook.PLYS> _PLYS;
+        public List<Madden.TeamPlaybook.PLYS> PLYS
+        {
+            get { return _PLYS; }
+            set
+            {
+                if (_PLYS == value)
+                    return;
+                _PLYS = value;
+                OnPropertyChanged("PLYS");
+            }
+        }
+        private List<Madden.TeamPlaybook.PPCT> _PPCT;
+        public List<Madden.TeamPlaybook.PPCT> PPCT
+        {
+            get { return _PPCT; }
+            set
+            {
+                if (_PPCT == value)
+                    return;
+                _PPCT = value;
+                OnPropertyChanged("PPCT");
+            }
+        }
+        private List<Madden.TeamPlaybook.PSAL> _PSAL;
+        public List<Madden.TeamPlaybook.PSAL> PSAL
+        {
+            get { return _PSAL; }
+            set
+            {
+                if (_PSAL == value)
+                    return;
+                _PSAL = value;
+                OnPropertyChanged("PSAL");
+            }
+        }
+        private List<Madden.TeamPlaybook.SDEF> _SDEF;
+        public List<Madden.TeamPlaybook.SDEF> SDEF
+        {
+            get { return _SDEF; }
+            set
+            {
+                if (_SDEF == value)
+                    return;
+                _SDEF = value;
+                OnPropertyChanged("SDEF");
+            }
+        }
+        private List<Madden.TeamPlaybook.SETG> _SETG;
+        public List<Madden.TeamPlaybook.SETG> SETG
+        {
+            get { return _SETG; }
+            set
+            {
+                if (_SETG == value)
+                    return;
+                _SETG = value;
+                OnPropertyChanged("SETG");
+            }
+        }
+        private List<Madden.TeamPlaybook.SETL> _SETL;
+        public List<Madden.TeamPlaybook.SETL> SETL
+        {
+            get { return _SETL; }
+            set
+            {
+                if (_SETL == value)
+                    return;
+                _SETL = value;
+                OnPropertyChanged("SETL");
+            }
+        }
+        private List<Madden.TeamPlaybook.SETP> _SETP;
+        public List<Madden.TeamPlaybook.SETP> SETP
+        {
+            get { return _SETP; }
+            set
+            {
+                if (_SETP == value)
+                    return;
+                _SETP = value;
+                OnPropertyChanged("SETP");
+            }
+        }
+        private List<Madden.TeamPlaybook.SGFM> _SGFM;
+        public List<Madden.TeamPlaybook.SGFM> SGFM
+        {
+            get { return _SGFM; }
+            set
+            {
+                if (_SGFM == value)
+                    return;
+                _SGFM = value;
+                OnPropertyChanged("SGFM");
+            }
+        }
+        private List<Madden.TeamPlaybook.SPKF> _SPKF;
+        public List<Madden.TeamPlaybook.SPKF> SPKF
+        {
+            get { return _SPKF; }
+            set
+            {
+                if (_SPKF == value)
+                    return;
+                _SPKF = value;
+                OnPropertyChanged("SPKF");
+            }
+        }
+        private List<Madden.TeamPlaybook.SPKG> _SPKG;
+        public List<Madden.TeamPlaybook.SPKG> SPKG
+        {
+            get { return _SPKG; }
+            set
+            {
+                if (_SPKG == value)
+                    return;
+                _SPKG = value;
+                OnPropertyChanged("SPKG");
+            }
+        }
+        private List<Madden.TeamPlaybook.SRFT> _SRFT;
+        public List<Madden.TeamPlaybook.SRFT> SRFT
+        {
+            get { return _SRFT; }
+            set
+            {
+                if (_SRFT == value)
+                    return;
+                _SRFT = value;
+                OnPropertyChanged("SRFT");
+            }
+        }
+        private List<DCHT> _DCHT;
+        public List<DCHT> DCHT
+        {
+            get { return _DCHT; }
+            set
+            {
+                if (_DCHT == value)
+                    return;
+                _DCHT = value;
+                OnPropertyChanged("DCHT");
+            }
+        }
+        private List<PLAY> _PLAY;
+        public List<PLAY> PLAY
+        {
+            get { return _PLAY; }
+            set
+            {
+                if (_PLAY == value)
+                    return;
+                _PLAY = value;
+                OnPropertyChanged("PLAY");
+            }
+        }
 
         public TeamPlaybook()
         {
@@ -898,7 +1170,7 @@ namespace MaddenTeamPlaybookEditor.ViewModels
 
         public void GetTendencies()
         {
-            Tendencies = TeamTendencies.FirstOrDefault(tt => this.ToString().IndexOf(tt.Key, StringComparison.OrdinalIgnoreCase) >= 0 && Type == "Offense").Value;
+            Tendencies = RedDobe.TeamTendencies.FirstOrDefault(tt => this.ToString().IndexOf(tt.Key, StringComparison.OrdinalIgnoreCase) >= 0 && Type == "Offense").Value;
         }
 
         public ObservableCollection<FormationVM> GetPSALlist()
@@ -1190,6 +1462,16 @@ namespace MaddenTeamPlaybookEditor.ViewModels
                 }
             }
 
+            if (PBAI.Count > 2000)
+            {
+                int threshold = 1;
+                _pbai = PBAI.Where(p => p.prct == threshold && PBAI.Select(n => n.AIGR > threshold) != null).ToList();
+                if (MessageBox.Show("There are " + (2000 - PBAI.Count).ToString() + " too many PBAI records and the game will crash.\nWould you like to remove " + _pbai.Count + " records with a 1 prct?", "Warning", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                {
+                    PBAI.RemoveAll(p => _pbai.Contains(p));
+                }
+            }
+
             PBAI = Madden.TeamPlaybook.PBAI.Sort(PBAI);
             for (int i = 0; i < PBAI.Count(); i++)
             {
@@ -1205,6 +1487,923 @@ namespace MaddenTeamPlaybookEditor.ViewModels
                         _play.GetSituations();
                     }
                 }
+            }
+        }
+
+        public void AddPlaysToGameplan(int airg, List<Madden.TeamPlaybook.PLYL> _plyl, int Amount, bool Random)
+        {
+            int idx;
+            for (int i = Math.Min(Amount, _plyl.Count()); i > 0; i--)
+            {
+                if (Random)
+                {
+                    idx = RedDobe.RandomInt(0, _plyl.Count() - 1);
+                }
+                else
+                {
+                    idx = i - 1;
+                }
+
+
+                PBAI.Add(new Madden.TeamPlaybook.PBAI
+                {
+                    rec = NextAvailableID(PBAI.Select(p => p.rec).ToList()),
+                    PBPL = PBPL.Where(p => p.PLYL == _plyl[idx].plyl).FirstOrDefault().pbpl,
+                    SETL = _plyl[idx].SETL,
+                    AIGR = airg,
+                    PLYT = _plyl[idx].PLYT,
+                    PLF_ = _plyl[idx].PLF_,
+                    Flag = PBPL.Where(p => p.PLYL == _plyl[idx].plyl).FirstOrDefault().Flag,
+                    vpos = _plyl[idx].vpos,
+                    prct = 10
+                });
+                // Remove the already used play so it doesn't get picked again
+                _plyl.Remove(_plyl[idx]);
+                if (_plyl.Count() == 0)
+                    break;
+            }
+        }
+
+        public void RedDobeRevampGameplan()
+        {
+            // Now lets add some play types that are missing in certain situations
+            List<int> _form = FORM.Where(p => Gameplan.KeyFormations.Contains(p.name)).Select(p => p.form).ToList();
+            List<int> _setl = SETL.Where(p => _form.Contains(p.FORM)).Select(p => p.setl).ToList();
+            List<int> _setlShotgun = SETL.Where(p => p.FORM == 1 || p.FORM == 103).Select(p => p.setl).ToList();
+            List<Madden.TeamPlaybook.PLYL> _plyl = PLYL.Where(p => !_setl.Contains(p.SETL)).ToList();
+            List<Madden.TeamPlaybook.PLYL> _plylShotgun = _plyl.Where(p => _setlShotgun.Contains(p.SETL)).ToList();
+            List<Madden.TeamPlaybook.PLYL> _plylNonShotgun = _plyl.Where(p => !_setlShotgun.Contains(p.SETL)).ToList();
+
+            List<Madden.TeamPlaybook.PLYL> _rpo = _plyl.Where(p => Gameplan.RPO.Contains(p.PLYT)).ToList();
+            List<Madden.TeamPlaybook.PLYL> _screenHB = _plyl.Where(p => Gameplan.Screen.Contains(p.PLYT) && p.vpos == 1).ToList();
+            List<Madden.TeamPlaybook.PLYL> _screenWRTE = _plyl.Where(p => Gameplan.Screen.Contains(p.PLYT) && p.vpos != 1).ToList();
+            List<Madden.TeamPlaybook.PLYL> _pa = _plyl.Where(p => p.PLYT == 4).ToList();
+            List<Madden.TeamPlaybook.PLYL> _draw = _plyl.Where(p => p.PLYT == 14).ToList();
+            List<Madden.TeamPlaybook.PLYL> _gap = _plyl.Where(p => Gameplan.GapRun.Contains(p.PLYT)).ToList();
+            List<Madden.TeamPlaybook.PLYL> _zone = _plyl.Where(p => Gameplan.ZoneRun.Contains(p.PLYT)).ToList();
+            List<Madden.TeamPlaybook.PLYL> _gapShotgun = _plylShotgun.Where(p => Gameplan.GapRun.Contains(p.PLYT)).ToList();
+            List<Madden.TeamPlaybook.PLYL> _gapNonShotgun = _plylNonShotgun.Where(p => Gameplan.GapRun.Contains(p.PLYT)).ToList();
+            List<Madden.TeamPlaybook.PLYL> _zoneNonShotgun = _plylNonShotgun.Where(p => Gameplan.ZoneRun.Contains(p.PLYT)).ToList();
+            List<Madden.TeamPlaybook.PLYL> _zoneShotgun = _plylShotgun.Where(p => Gameplan.ZoneRun.Contains(p.PLYT)).ToList();
+            List<Madden.TeamPlaybook.PLYL> _passNonShotgun = _plylNonShotgun.Where(p => Gameplan.Pass.Contains(p.PLYT)).ToList();
+            List<Madden.TeamPlaybook.PLYL> _passShotgun = _plylShotgun.Where(p => Gameplan.Pass.Contains(p.PLYT)).ToList();
+
+            List<Madden.TeamPlaybook.PLYL> _plylCopy;
+            // RPOs
+            foreach (int airg in RedDobe.SituationsToAddRPOs.ToList())
+            {
+                _plylCopy = new List<Madden.TeamPlaybook.PLYL>(_rpo);
+                AddPlaysToGameplan(airg, _plylCopy, 12, true);
+            }
+            // Screens
+            foreach (int airg in RedDobe.SituationsToAddHBScreens.ToList())
+            {
+                _plylCopy = new List<Madden.TeamPlaybook.PLYL>(_screenHB);
+                AddPlaysToGameplan(airg, _plylCopy, 5, true);
+            }
+            foreach (int airg in RedDobe.SituationsToAddWRTEScreens.ToList())
+            {
+                _plylCopy = new List<Madden.TeamPlaybook.PLYL>(_screenWRTE);
+                AddPlaysToGameplan(airg, _plylCopy, 5, true);
+            }
+            // Playaction passes
+            foreach (int airg in RedDobe.SituationsToAddPlayAction.ToList())
+            {
+                _plylCopy = new List<Madden.TeamPlaybook.PLYL>(_pa);
+                AddPlaysToGameplan(airg, _plylCopy, 20, true);
+            }
+            // Draws
+            foreach (int airg in RedDobe.SituationsToAddDraws.ToList())
+            {
+                _plylCopy = new List<Madden.TeamPlaybook.PLYL>(_draw);
+                AddPlaysToGameplan(airg, _plylCopy, 3, false);
+            }
+            // all gap and zone runs
+            foreach (int airg in RedDobe.SituationsToAddGapZoneRuns.ToList())
+            {
+                _plylCopy = new List<Madden.TeamPlaybook.PLYL>(_gap);
+                AddPlaysToGameplan(airg, _plylCopy, 4, true);
+                _plylCopy = new List<Madden.TeamPlaybook.PLYL>(_zone);
+                AddPlaysToGameplan(airg, _plylCopy, 6, true);
+            }
+            // Non-Shotgun gap and zone runs
+            foreach (int airg in RedDobe.SituationsToAddNonShotgunGapZoneRuns.ToList())
+            {
+                _plylCopy = new List<Madden.TeamPlaybook.PLYL>(_gapNonShotgun);
+                AddPlaysToGameplan(airg, _plylCopy, 4, true);
+                _plylCopy = new List<Madden.TeamPlaybook.PLYL>(_zoneNonShotgun);
+                AddPlaysToGameplan(airg, _plylCopy, 6, true);
+            }
+            // Shotgun gap and zone runs
+            foreach (int airg in RedDobe.SituationsToAddShotgunGapZoneRuns.ToList())
+            {
+                _plylCopy = new List<Madden.TeamPlaybook.PLYL>(_gapShotgun);
+                AddPlaysToGameplan(airg, _plylCopy, 4, true);
+                _plylCopy = new List<Madden.TeamPlaybook.PLYL>(_zoneShotgun);
+                AddPlaysToGameplan(airg, _plylCopy, 6, true);
+            }
+            //shotgun passes
+            foreach (int airg in RedDobe.SituationsToAddShotgunPasses.ToList())
+            {
+                _plylCopy = new List<Madden.TeamPlaybook.PLYL>(_passShotgun);
+                AddPlaysToGameplan(airg, _plylCopy, 20, true);
+            }
+            // Non shotgun passes
+            foreach (int airg in RedDobe.SituationsToAddNonShotgunPasses.ToList())
+            {
+                _plylCopy = new List<Madden.TeamPlaybook.PLYL>(_passNonShotgun);
+                AddPlaysToGameplan(airg, _plylCopy, 10, true);
+            }
+            // All Plays
+            List<Madden.TeamPlaybook.PBAI> _pbai;
+
+            foreach (int airg in RedDobe.SituationsToAddAllPlays.ToList())
+            {
+                _pbai = PBAI.Where(p => p.AIGR == airg).ToList();
+                PBAI.RemoveAll(p => _pbai.Contains(p));
+                _plylCopy = new List<Madden.TeamPlaybook.PLYL>(_plyl);
+                AddPlaysToGameplan(airg, _plylCopy, 500, false);
+            }
+
+            // Count the number records to see if we need to trim down PBAI to get under the 2000 play cap, removing entries from situations that aren't used very often
+            int PBAIRecordCount = PBAI.Count();
+            Console.WriteLine("AI Play calling records after adding entries: " + PBAIRecordCount);
+
+            // Add up the depth of all pass plays in this PB
+            double TotalRouteDepth = Plays.Where(p => (Gameplan.Pass.Contains(p.PLYL.PLYT) || Gameplan.RPO.Contains(p.PLYL.PLYT) ||
+            Gameplan.Screen.Contains(p.PLYL.PLYT) || p.PLYL.PLYT == 4)).Sum(p => p.AverageRouteDepth);
+            int NumPassPlays = Plays.Count(p => Gameplan.Pass.Contains(p.PLYL.PLYT));
+            int NumPlayActionPlays = Plays.Count(p => p.PLYL.PLYT == 4);
+            int NumScreenPlays = Plays.Count(p => Gameplan.Screen.Contains(p.PLYL.PLYT));
+            int NumWRTEScreenPlays = Plays.Count(p => Gameplan.Screen.Contains(p.PLYL.PLYT) && p.PLYL.vpos != 1);
+            int NumRPOPlays = Plays.Count(p => Gameplan.RPO.Contains(p.PLYL.PLYT));
+            int NumRunPlays = Plays.Count(p => Gameplan.Run.Contains(p.PLYL.PLYT));
+            // Need to get number of jet passes separately since they don't have a route depth value and figure out the new average depth with those passes
+            int NumJetPasses = Plays.Count(p => p.PLYL.PLYT == 208);
+            int NumTrickPasses = Plays.Count(p => p.PLYL.PLYT == 157 || p.PLYL.PLYT == 158);
+            int TotPassPlays = NumPassPlays + NumPlayActionPlays + NumScreenPlays + NumRPOPlays + NumTrickPasses;
+            // FOR INFORMATIONAL PURPOSES ONLY
+            Console.WriteLine("Num Reg Pass Plays: " + NumPassPlays);
+            Console.WriteLine("Num PlayAction Pass Plays: " + NumPlayActionPlays);
+            Console.WriteLine("Num Jet Pass Plays: " + NumJetPasses);
+            Console.WriteLine("Num Trick Pass Plays: " + NumTrickPasses);
+            Console.WriteLine("Num Screen Plays: " + NumScreenPlays);
+            Console.WriteLine("Num RPO Plays: " + NumRPOPlays);
+            Console.WriteLine("Total Pass Plays: " + TotPassPlays);
+            Console.WriteLine("Total Run Plays: " + NumRunPlays);
+            Console.WriteLine("Avg Pass Depth including jet passes: " + Math.Round(TotalRouteDepth / TotPassPlays, 2));
+
+            // Vars to target when revamping this entire gameplan
+            double GameplanTargetRunPercentage = RedDobe.GetTeamRunPercentage(filePath); // This will be the run percent that we are trying to target for this gameplan ~ .5%
+            double GameplanTargetPassDepth = RedDobe.GetTeamPassDepth(filePath); // This will be the run percent that we are trying to target for this gameplan ~ .5%
+            double NFLAverageRunPercentage = 39.67; // THis is the 2023 nfl average of run plays called (QB scrambles are counted as passes)
+            double NFLAveragePassDepth = 7.75; // THis is the 2023 nfl average pass depth
+            // Variance above or below the nfl average run percentage (for adjusting each situation)
+            double GameplanRunPercentageVariance = (GameplanTargetRunPercentage - NFLAverageRunPercentage) / NFLAverageRunPercentage;
+            if (GameplanRunPercentageVariance > 0)
+            {
+                GameplanRunPercentageVariance *= 1; // needs to be increased for higher than average gameplans to account for all of the 100% passing downs
+            }
+            // Variance above or below the nfl average pass depth (for adjusting each situation)
+            double GameplanPassDepthVariance = (GameplanTargetPassDepth - NFLAveragePassDepth) / NFLAveragePassDepth;
+
+            // Vars for cumilative PB totals for this gameplan
+            double TotalPassWeight = 0; // The sum of all of the prct for pass plays
+            double TotalWeightedRouteDepth = 0; // play route depth times pass weight
+            double TotalAvgRouteDepth = 0; // Sum of (SitExpectedPassPlays * SitAvgRouteDepth) - divid this by TotalExpectedPassPlays to get the gameplan's average route depth
+            double TotalRunWeight = 0; // The sum of all of the prct for run plays
+            double TotalScreenWeight = 0; //For tracking the total wieght of all screens
+            double TotalRPOWeight = 0;//For tracking the total wieght of all RPOs
+            double TotalWeight = 0; // The sum of all of the prct for all plays
+            double TotalRunPercentage = 0; // Total expected runs / total expected plays
+            double TotalGapRunPercentage = 0; // Total expected gap runs / total expected runs
+            double TotalZoneRunPercentage = 0; // Total expected zone runs / total expected runs
+            double TotalShotgunPercentage = 0; // Total shotgun pass plays / total expected plays
+            double TotalScreenPassPercentage = 0; // Total expected screen plays / total expected pass plays
+            double TotalWRTEScreenPercentage = 0; // Total expected WR/TE screen plays / total expected screen plays
+            double TotalRPOPercentage = 0; // Total expected RPO's / total expected plays
+            double TotalPlayActionPercentage = 0; // Total expected Play Action passes / total expected plays
+            double TotalExpectedRunPlays = 0; // Expected number of run plays
+            double TotalExpectedGapRunPlays = 0; // Expected number of gap run plays
+            double TotalExpectedZoneRunPlays = 0; // Expected number of zone run plays
+            double TotalExpectedPassPlays = 0; // Expected number of pass plays
+            double TotalExpectedRPOPlays = 0; // expected number of RPO plays
+            double TotalExpectedShotgunPlays = 0; // Expected number of shotgun pass plays
+            double TotalExpectedScreenPlays = 0; // expected number of screen pass play
+            double TotalExpectedWRTEScreenPlays = 0; // expected number of WR and TE screens
+            double TotalExpectedPlayActionPlays = 0; // expected number of playaction passes
+            double TotalExpectedPlays = 0; // Expected total number of runs and passes
+
+            var groupedPBAI = from s in PBAI
+                              group s by s.AIGR;
+
+            //iterate each Situation group        
+            foreach (var Situation in groupedPBAI)
+            {
+                if (RedDobe.SituationExpectedNumPlays[Situation.Key] == 0) // Skip if no plays are expected for this situation
+                    continue;
+                string SituationName = SituationOff[Situation.Key];
+                Console.WriteLine("Situation ID: {0}", Situation.Key + " Name: " + SituationName); //Each group has a key 
+                // Target Values
+                var SitTendency = RedDobe.GetTeamSituationTendency(filePath, Situation.Key);
+                // This will be the run percent that we are trying to target for this situation ~ 5%
+                double SitTargetRunPercentage = Math.Min(Math.Max(RedDobe.GetSituationRunPercentage(Situation.Key) * (1 + GameplanRunPercentageVariance), 0), 100);
+                // THis will be the target pass depth that we are tying to target for this situation ~ 10%
+                double SitTargetRouteDepth = Math.Min(Math.Max(RedDobe.GetSituationRouteDepth(Situation.Key) * (1 + GameplanPassDepthVariance), 0), 100);
+                double SitTargetShotgunPercentage = SitTendency.Shotgun; // The percent of all plays that should be shotgun formation ~ 10%
+                double SitTargetScreenPercentage = SitTendency.Screen; // The percent of all PASS plays that should be screens ~ 10%
+                double SitTargetWRTEScreenPercentage = 58; // The percent of SCREEN plays that should be WR or TE screens ~ 20%
+                if (SitTargetScreenPercentage == 0)
+                {
+                    SitTargetWRTEScreenPercentage = 0;
+                }
+                double SitTargetRPOPercentage = SitTendency.RPO; // The percent of ALL plays called that should be RPOs ~ 10%
+                double SitTargetPlayActionPercentage = SitTendency.PA; // The percentage of all plays called that should be Play action passes ~10%
+                double SitTargetGapRunPercentage = SitTendency.Gap; // The percentage of all RUN plays called that should be gap runs ~10%
+                double SitTargetZoneRunPercentage = SitTendency.Zone; // The percentage of all RUN plays called that should be zone runs ~10%
+
+                // vars for this situation
+                double SitPassWeight = 0;
+                double SitWeightedRouteDepth = 0;
+                double SitAvgRouteDepth = 0;
+                double SitRunWeight = 0;
+                double SitGapRunWeight = 0; // The sum of all of the prct for gap run plays
+                double SitZoneRunWeight = 0; // The sum of all of the prct for zone run plays
+                double SitShotgunWeight = 0; // The sum of all of the prct for shotgun plays
+                double SitScreenWeight = 0; //For tracking the total wieght of all screens in this situation
+                double SitWRTEScreenWeight = 0;
+                double SitRPOWeight = 0;//For tracking the total wieght of all RPOs in this situation
+                double SitPlayActionWeight = 0;
+                double SitWeight = 0;
+                double SitRunPercentage = 0;
+                double SitGapRunPercentage = 0; // Sit expected gap runs / total expected runs
+                double SitZoneRunPercentage = 0; // Sit expected zone runs / total expected runs
+                double SitShotgunPercentage = 0;
+                double SitScreenPercentage = 0;
+                double SitWRTEScreenPercentage = 0; // Used the track the percent of all Screen passes that are WR or TE screens
+                double SitRPOPercentage = 0;
+                double SitPlayActionPercentage = 0;
+                double SitRouteDepth = 0;
+                double SitExpectedRunPlays = 0;
+                double SitExpectedGapRunPlays = 0; // Expected number of gap run plays
+                double SitExpectedZoneRunPlays = 0; // Expected number of zone run plays
+                double SitExpectedPassPlays = 0;
+                double SitExpectedRPOPlays = 0;
+                double SitExpectedShotgunPlays = 0; // Expected number of shotgun plays
+                double SitExpectedScreenPlays = 0;
+                double SitExpectedWRTEScreenPlays = 0;
+                double SitExpectedPlayActionPlays = 0;
+                double SitExpectedTotPlays = 0;
+
+                bool SituationComplete = false; // Stop loop and adjusting situation when this is true
+                bool ShotgunsComplete = false; // Stop adjusting shotgun passes when true
+                bool ScreensComplete = false; // Stop adjusting screens when true
+                bool WRTEScreensComplete = false; // Stop adjusting WR and TE screens when true
+                bool RPOsComplete = false; // Stop adjusting RPOs when true
+                bool RouteDepthComplete = false; // Sopt adjusting Route depth when true
+                bool RunPercentComplete = false; // stop adjusting run/pass percentage when true
+                bool GapRunsComplete = false; // Stop adjusting gap runs when true
+                bool ZoneRunsComplete = false; // Stop adjusting zone runs when true
+                bool PlayActionPercentComplete = false; // stop adjusting Play action percentage when true
+                double ScreenPercentageAdjustment = 0; // How much the situation screen ratio is off from the target
+                double WRTEScreenPercentageAdjustment = 0; // How much the situation WR TE screen ratio is off from the target
+                double RPOPercentageAdjustment = 0; // How much the situation RPO ratio is off from the target
+                double RouteDepthAdjustment = 0; // How much the situation average route depth is off from the target
+                double RunPercentAdjustment = 0; // How much the situation run percent is off from the target
+                double PlayActionPercentAdjustment = 0; // How much the situation Play action percent is off from the target
+                double ShotgunPercentAdjustment = 0; // How much the situation Shotgun pass percent is off from the target
+                double GapRunPercentAdjustment = 0; // How much the situation gap run percent is off from the target
+                double ZoneRunPercentAdjustment = 0; // How much the situation zone run percent is off from the target
+                // The following situation tendency adjustments will be ignored when these are set to true
+                bool IgnoreSomeTendencies = false;
+                bool IgnoreRouteDepth = false;
+
+                if (RedDobe.SituationsToIgnore.Contains(Situation.Key))
+                {
+                    IgnoreSomeTendencies = true;
+                }
+
+                if (RedDobe.SituationsToIgnoreRouteDepth.Contains(Situation.Key))
+                {
+                    IgnoreRouteDepth = true;
+                }
+                double AcceptableDistanceToTarget = 2.50;
+                double AcceptableDistanceRouteDepth = .50;
+                double AcceptableDistanceToRunPercentTarget = 1.25;
+                double RPORunPercent = 0;
+                int x = 1; // counter for do while loop
+                // Start looping until we get the target values
+                do
+                {
+                    // 1/2 of RPO is added to the run weight, RPO's are a mixture of zone and gap runs and need to be subtracted from the target
+                    // Otherwise it would impossible to acheive the target gap and zone run percentages
+                    RPORunPercent = SitTargetRPOPercentage / 4 / SitTargetRunPercentage * 100;
+                    SitTargetGapRunPercentage = Math.Max(SitTendency.Gap - RPORunPercent, 0);
+                    SitTargetZoneRunPercentage = Math.Max(SitTendency.Zone - RPORunPercent, 0);
+                    // Vars for this situation, Reset totals to 0 before we restart the loop and try reaching our target value again
+                    SitPassWeight = SitWeightedRouteDepth = SitAvgRouteDepth = SitRunWeight = SitWeight = SitRunPercentage = SitGapRunPercentage =
+                        SitZoneRunPercentage = SitScreenPercentage = SitWRTEScreenPercentage = SitRPOPercentage = SitShotgunPercentage =
+                        SitPlayActionPercentage = SitRouteDepth = SitExpectedRunPlays = SitExpectedGapRunPlays = SitExpectedZoneRunPlays =
+                        SitExpectedPassPlays = SitExpectedRPOPlays = SitExpectedScreenPlays = SitExpectedShotgunPlays = SitShotgunWeight =
+                        SitExpectedWRTEScreenPlays = SitExpectedPlayActionPlays = SitExpectedTotPlays = SitScreenWeight =
+                        SitWRTEScreenWeight = SitRPOWeight = SitPlayActionWeight = SitGapRunWeight = SitZoneRunWeight = 0;
+
+                    // Let's collect all of the weighting for runs and passes along with everything else needed to make this work
+                    foreach (Madden.TeamPlaybook.PBAI s in Situation) // Each group has inner collection
+                    {
+                        // Find this play
+                        var ThisPlay = Plays.FirstOrDefault(p => s.PBPL == p.PBPL.pbpl);
+                        if (ThisPlay != null)
+                        {
+                            // Set all plays to be 10 weighting on first run - this allows better balancing
+                            if (x == 1)
+                            {
+                                s.prct = 50;
+                            }
+                            //Console.WriteLine("Playbook Play ID Found: {0}", s.PBPL);
+                            // Passes to include RPOs - 208 is a jet pass
+                            bool IsPass = Gameplan.Pass.Contains(s.PLYT) || s.PLYT == 104; // 104 is hail mary, they are in the 4th down gameplan sometimes
+                            bool IsPlayAction = s.PLYT == 4;
+                            bool IsShotgun = ThisPlay.SubFormation.SETL.FORM == 1 || ThisPlay.SubFormation.SETL.FORM == 103;
+                            bool IsScreen = Gameplan.Screen.Contains(s.PLYT);
+                            bool IsWRTEScreen = false;
+                            bool IsRun = Gameplan.Run.Contains(s.PLYT);
+                            bool IsGapRun = Gameplan.GapRun.Contains(s.PLYT);
+                            bool IsZoneRun = Gameplan.ZoneRun.Contains(s.PLYT);
+                            bool IsTrickPass = s.PLYT == 157 || s.PLYT == 158;
+
+                            if (IsScreen)
+                            {
+                                if (ThisPlay.PLYL.vpos != 1)
+                                {
+                                    IsWRTEScreen = true;
+                                }
+                            }
+                            bool IsJetPass = s.PLYT == 208;
+                            bool IsRPO = Gameplan.RPO.Contains(s.PLYT);
+                            int WeightAdjustment = 0;
+
+                            // First clear out all plays that are not in the gameplan unless the situation ignores certain tendencies
+                            if (!IgnoreSomeTendencies)
+                            {
+                                if ((IsShotgun && SitTargetShotgunPercentage < AcceptableDistanceToTarget) ||
+                                    (!IsShotgun && SitTargetShotgunPercentage > 100 - AcceptableDistanceToTarget))
+                                {
+                                    WeightAdjustment = -200;
+                                }
+                                if (IsRPO && SitTargetRPOPercentage < AcceptableDistanceToTarget)
+                                {
+                                    WeightAdjustment = -200;
+                                }
+                                if (IsScreen && SitTargetScreenPercentage < AcceptableDistanceToTarget)
+                                {
+                                    WeightAdjustment = -200;
+                                }
+                                if (IsPlayAction && SitTargetPlayActionPercentage < AcceptableDistanceToTarget)
+                                {
+                                    WeightAdjustment = -200;
+                                }
+                                if (IsRun)
+                                {
+                                    if (!IsGapRun && !IsZoneRun && SitTargetGapRunPercentage +
+                                        SitTargetZoneRunPercentage >
+                                        100 - AcceptableDistanceToTarget) // for other runs that need to be removed
+                                    {
+                                        WeightAdjustment = -200;
+                                    }
+                                    if ((IsZoneRun && SitTargetZoneRunPercentage < AcceptableDistanceToTarget) ||
+                                        (!IsZoneRun && SitTargetZoneRunPercentage > 100 - AcceptableDistanceToTarget))
+                                    {
+                                        WeightAdjustment = -200;
+                                    }
+                                    else if ((IsGapRun && SitTargetGapRunPercentage < AcceptableDistanceToTarget)
+                                        || (!IsGapRun && SitTargetGapRunPercentage > 100 - AcceptableDistanceToTarget))
+                                    {
+                                        WeightAdjustment = -200;
+                                    }
+                                }
+                            }
+                            if ((IsRun && SitTargetRunPercentage < AcceptableDistanceToRunPercentTarget) ||
+                                (!IsRun && SitTargetRunPercentage > 100 - AcceptableDistanceToRunPercentTarget))
+                            {
+                                WeightAdjustment = -200;
+                            }
+
+                            //Adjust all play weighting
+                            if (x > 1 && !ShotgunsComplete) // Need to process this first so that the weight is adjusted since shotguns can be runs and passes
+                            {
+                                if (IsShotgun)
+                                {
+                                    WeightAdjustment += RedDobe.GetWeightAdjustment(ShotgunPercentAdjustment);
+                                }
+                                else // Need to adjust all other plays when Shotgun percent is below or above the target
+                                {
+                                    WeightAdjustment += RedDobe.GetWeightAdjustment(-ShotgunPercentAdjustment);
+                                }
+                            }
+                            if ((x > 1 && x <= 31 && !RunPercentComplete) || (x > 1 && !RunPercentComplete))
+                            { // Weighting adjustments done after first loop
+                                if (IsRun)
+                                {
+                                    WeightAdjustment += RedDobe.GetWeightAdjustment(RunPercentAdjustment);
+                                }
+                                else if (!IsRPO) // Any passes need to be adjusted the other way when run percent is not met
+                                {
+                                    // Weighting adjustments done after first loop
+                                    WeightAdjustment += RedDobe.GetWeightAdjustment(-RunPercentAdjustment);
+                                }
+                            }
+                            if ((x > 31 && x <= 61 && !RPOsComplete) || (x > 1 && !RPOsComplete))
+                            {
+                                if (IsRPO)
+                                {
+                                    // Weighting adjustments done after first loop
+                                    WeightAdjustment += RedDobe.GetWeightAdjustment(RPOPercentageAdjustment);
+                                }
+                                else
+                                {
+                                    WeightAdjustment += RedDobe.GetWeightAdjustment(-RPOPercentageAdjustment);
+                                }
+                            }
+
+                            if ((x > 121 && x <= 151 && !ScreensComplete) || (x > 1 && !ScreensComplete))
+                            {
+                                if (IsScreen)
+                                {
+                                    // Weighting adjustments done after first loop
+                                    WeightAdjustment += RedDobe.GetWeightAdjustment(ScreenPercentageAdjustment);
+                                }
+                                else if (IsPass || IsJetPass || IsPlayAction || IsTrickPass) // Since screen is a percent of pass
+                                {
+                                    WeightAdjustment += RedDobe.GetWeightAdjustment(-ScreenPercentageAdjustment);
+                                }
+                            }
+                            if ((x > 121 && x <= 151 && !WRTEScreensComplete) || (x > 1 && !WRTEScreensComplete)) // for handling WR or TE screens
+                            {
+                                if (IsWRTEScreen)
+                                {
+                                    WeightAdjustment += RedDobe.GetWeightAdjustment(WRTEScreenPercentageAdjustment);
+                                }
+                                else if (IsScreen) // Since these are a percent of all screens
+                                {
+                                    WeightAdjustment += RedDobe.GetWeightAdjustment(-WRTEScreenPercentageAdjustment);
+                                }
+                            }
+
+                            if ((x > 91 && x <= 121 && !PlayActionPercentComplete) || (x > 1 && !PlayActionPercentComplete))
+                            {
+                                if (IsPlayAction)
+                                {
+                                    // Weighting adjustments done after first loop
+                                    WeightAdjustment += RedDobe.GetWeightAdjustment(PlayActionPercentAdjustment);
+                                }
+                                else if (IsPass || IsJetPass || IsScreen || IsTrickPass)
+                                {
+                                    WeightAdjustment += RedDobe.GetWeightAdjustment(-PlayActionPercentAdjustment);
+                                }
+                            }
+                            if ((x > 61 && x <= 91 && !RouteDepthComplete) || (x > 1 && !RouteDepthComplete))
+                            {
+                                if (IsJetPass)
+                                {
+                                    // Weighting adjustments done after first loop
+                                    WeightAdjustment += RedDobe.GetWeightAdjustment(-RouteDepthAdjustment);
+                                }
+                                else if ((IsPass || IsPlayAction || IsTrickPass) && !IsRPO && !IsScreen)
+                                {
+                                    // Weighting adjustments done after first loop, don't want to adjust screens or RPOs here, they are already handled
+                                    double LastSitRouteDepth = SitTargetRouteDepth - RouteDepthAdjustment;
+                                    if ((RouteDepthAdjustment > 0 && LastSitRouteDepth < ThisPlay.AverageRouteDepth) ||
+                                               (RouteDepthAdjustment < 0 && LastSitRouteDepth >= ThisPlay.AverageRouteDepth))
+                                    {
+                                        WeightAdjustment += RedDobe.GetWeightAdjustment(1);
+                                    }
+                                    else if ((RouteDepthAdjustment > 0 && LastSitRouteDepth - 5 < ThisPlay.AverageRouteDepth) ||
+                                               (RouteDepthAdjustment < 0 && LastSitRouteDepth + 5 >= ThisPlay.AverageRouteDepth))
+                                    {
+                                        // do nothing
+                                    }
+                                    else
+                                    {
+                                        WeightAdjustment += RedDobe.GetWeightAdjustment(-1);
+                                    }
+                                }
+                            }
+                            if (((IsRun || IsRPO) && x > 1 && x <= 31) || ((IsRun || IsRPO) && x > 1))
+                            {
+                                if (IsGapRun)
+                                {
+                                    if (!GapRunsComplete)
+                                    {
+                                        WeightAdjustment += RedDobe.GetWeightAdjustment(GapRunPercentAdjustment);
+                                    }
+                                }
+                                else if (IsZoneRun)
+                                {
+                                    if (!ZoneRunsComplete)
+                                    {
+                                        WeightAdjustment += RedDobe.GetWeightAdjustment(ZoneRunPercentAdjustment);
+                                    }
+                                } // Need to adjust all other run plays and rpo's when gap or run percent are below or above the target
+                                else
+                                {
+                                    if (!ZoneRunsComplete && !GapRunsComplete && (GapRunPercentAdjustment > 0 && ZoneRunPercentAdjustment > 0))
+                                    {
+                                        WeightAdjustment += RedDobe.GetWeightAdjustment(-1);
+                                    }
+                                    else if (!ZoneRunsComplete && GapRunsComplete && ZoneRunPercentAdjustment > 0)
+                                    {
+                                        WeightAdjustment += RedDobe.GetWeightAdjustment(-1);
+                                    }
+                                    else if (ZoneRunsComplete && !GapRunsComplete && GapRunPercentAdjustment > 0)
+                                    {
+                                        WeightAdjustment += RedDobe.GetWeightAdjustment(-1);
+                                    }
+                                }
+                            }
+                            s.prct = Math.Max(Math.Min(s.prct + WeightAdjustment, 99), 0);
+                            // Now add the new adjusted weighting to the Sit Vars
+                            if (IsPass || IsScreen || IsRPO || IsJetPass || IsPlayAction || IsTrickPass)
+                            {
+                                if (IsRPO)
+                                {
+                                    // Assume RPO is a 50% chance to be a run or pass
+                                    SitRPOWeight += s.prct;
+                                    SitPassWeight += (double)s.prct / 2.0;
+                                    SitWeightedRouteDepth += ThisPlay.AverageRouteDepth * (double)s.prct / 2.0;
+                                    SitRunWeight += (double)s.prct / 2.0;
+                                    SitRouteDepth += ThisPlay.AverageRouteDepth;
+                                }
+                                else if (IsJetPass)
+                                {
+                                    SitRouteDepth += -2.0; // Assign a depth to jet pass since they don't have one
+                                    SitPassWeight += (double)s.prct;
+                                    SitWeightedRouteDepth += -2.0 * (double)s.prct;
+                                }
+                                else // this is just a screen or pass or playaction
+                                {
+                                    if (IsScreen)
+                                    {
+                                        if (IsWRTEScreen)
+                                        {
+                                            SitWRTEScreenWeight += (double)s.prct;
+                                        }
+                                        SitScreenWeight += (double)s.prct;
+                                    }
+                                    if (IsPlayAction)
+                                    {
+                                        SitPlayActionWeight += (double)s.prct;
+                                    }
+                                    SitRouteDepth += ThisPlay.AverageRouteDepth;
+                                    SitPassWeight += (double)s.prct;
+                                    SitWeightedRouteDepth += ThisPlay.AverageRouteDepth * (double)s.prct;
+                                }
+                                SitWeight += (double)s.prct;
+                            }
+
+                            // Runs     
+                            if (IsRun)
+                            {
+                                if (IsGapRun)
+                                {
+                                    SitGapRunWeight += (double)s.prct;
+                                }
+                                else if (IsZoneRun)
+                                {
+                                    SitZoneRunWeight += (double)s.prct;
+                                } // Need to adjust all other run plays when gap or run percent are below or above the target                            
+                                SitRunWeight += (double)s.prct;
+                                SitWeight += (double)s.prct;
+                            }
+                            if (IsShotgun) // add to shotgun weight at the end since the weight can be adjusted by playtype
+                            {
+                                SitShotgunWeight += (double)s.prct;
+                            }
+
+                        }
+                        else
+                        {
+                            Console.WriteLine("Could Not Find Playbook Play ID: {0}", s.PBPL);
+                        }
+                    }
+                    //Console.WriteLine("Summary for Situation ID: {0}", Situation.Key + " Name: " + SituationName); //Each group has a key 
+                    //Console.WriteLine("Sit Pass Weight: {0}", SitPassWeight);
+                    //Console.WriteLine("Sit Route Depth: {0}", SitWeightedRouteDepth);
+                    //Console.WriteLine("Average Route Depth: {0}", Math.Round(SitAvgRouteDepth, 2));
+                    //Console.WriteLine("Sit Run Weight: {0}", SitRunWeight);
+                    //Console.WriteLine("Sit Screen Weight: {0}", SitScreenWeight);
+                    //Console.WriteLine("Sit RPO Weight: {0}", SitRPOWeight);
+
+                    if (SitPassWeight > 0)
+                    {
+                        SitAvgRouteDepth = SitWeightedRouteDepth / SitPassWeight;
+                    }
+                    SitExpectedRunPlays = RedDobe.SituationExpectedNumPlays[Situation.Key] * SitRunWeight / SitWeight;
+                    SitExpectedPassPlays = RedDobe.SituationExpectedNumPlays[Situation.Key] * SitPassWeight / SitWeight;
+                    SitExpectedTotPlays = SitExpectedRunPlays + SitExpectedPassPlays;
+                    SitExpectedGapRunPlays = RedDobe.SituationExpectedNumPlays[Situation.Key] * SitGapRunWeight / SitWeight;
+                    SitExpectedZoneRunPlays = RedDobe.SituationExpectedNumPlays[Situation.Key] * SitZoneRunWeight / SitWeight;
+                    SitExpectedRPOPlays = RedDobe.SituationExpectedNumPlays[Situation.Key] * SitRPOWeight / SitWeight;
+                    SitExpectedShotgunPlays = RedDobe.SituationExpectedNumPlays[Situation.Key] * SitShotgunWeight / SitWeight;
+                    SitExpectedScreenPlays = RedDobe.SituationExpectedNumPlays[Situation.Key] * SitScreenWeight / SitWeight;
+                    SitExpectedWRTEScreenPlays = RedDobe.SituationExpectedNumPlays[Situation.Key] * SitWRTEScreenWeight / SitWeight;
+                    SitExpectedPlayActionPlays = RedDobe.SituationExpectedNumPlays[Situation.Key] * SitPlayActionWeight / SitWeight;
+                    SitRunPercentage = SitRunWeight / SitWeight * 100.0;
+                    SitShotgunPercentage = SitShotgunWeight / SitWeight * 100.0;
+                    if (SitPassWeight > 0)
+                    {
+                        SitScreenPercentage = SitScreenWeight / SitPassWeight * 100.0;
+                    }
+
+                    if (SitScreenWeight > 0)
+                    {
+                        SitWRTEScreenPercentage = SitWRTEScreenWeight / SitScreenWeight * 100.0;
+                    }
+
+                    if (SitRunWeight > 0)
+                    {
+                        SitGapRunPercentage = SitGapRunWeight / SitRunWeight * 100.0;
+                        SitZoneRunPercentage = SitZoneRunWeight / SitRunWeight * 100.0;
+                    }
+
+                    SitRPOPercentage = SitRPOWeight / SitWeight * 100.0;
+
+                    SitPlayActionPercentage = SitPlayActionWeight / SitWeight * 100;
+                    //Console.WriteLine("Sit expected num of runs: {0}", Math.Round(SitExpectedRunPlays, 1));
+                    //Console.WriteLine("Sit expected num of passes: {0}", Math.Round(SitExpectedPassPlays, 2));
+                    //Console.WriteLine("Sit Run/Pass Ratio: {0}", Math.Round(SitRunPercentage, 1));
+                    //Console.WriteLine("Sit Screen/Pass Ratio: {0}", Math.Round(SitScreenPercentage, 1));
+                    //Console.WriteLine("Sit RPO Ratio: {0}", Math.Round(SitRPOPercentage, 1));
+
+
+                    // Final checks to see the target values are met before repeating another loop
+                    if (SitScreenPercentage < SitTargetScreenPercentage - AcceptableDistanceToTarget ||
+                        SitScreenPercentage > SitTargetScreenPercentage + AcceptableDistanceToTarget)
+                    {
+                        ScreenPercentageAdjustment = SitTargetScreenPercentage - SitScreenPercentage;
+                        ScreensComplete = false;
+                    }
+                    else
+                    {
+                        ScreensComplete = true;
+                        ScreenPercentageAdjustment = 0;
+                    }
+
+                    if (SitShotgunPercentage < SitTargetShotgunPercentage - AcceptableDistanceToTarget ||
+                        SitShotgunPercentage > SitTargetShotgunPercentage + AcceptableDistanceToTarget)
+                    {
+                        ShotgunPercentAdjustment = SitTargetShotgunPercentage - SitShotgunPercentage;
+                        ShotgunsComplete = false;
+                    }
+                    else
+                    {
+                        ShotgunsComplete = true;
+                        ShotgunPercentAdjustment = 0;
+                    }
+
+                    if (NumWRTEScreenPlays > 0 && (SitWRTEScreenPercentage < SitTargetWRTEScreenPercentage - AcceptableDistanceToTarget ||
+                        SitWRTEScreenPercentage > SitTargetWRTEScreenPercentage + AcceptableDistanceToTarget))
+                    {
+                        WRTEScreenPercentageAdjustment = SitTargetWRTEScreenPercentage - SitWRTEScreenPercentage;
+                        WRTEScreensComplete = false;
+                    }
+                    else
+                    {
+                        WRTEScreensComplete = true;
+                        WRTEScreenPercentageAdjustment = 0;
+                    }
+
+                    if (SitRPOPercentage < SitTargetRPOPercentage - AcceptableDistanceToTarget ||
+                        SitRPOPercentage > SitTargetRPOPercentage + AcceptableDistanceToTarget)
+                    {
+                        RPOPercentageAdjustment = SitTargetRPOPercentage - SitRPOPercentage;
+                        RPOsComplete = false;
+                    }
+                    else
+                    {
+                        RPOsComplete = true;
+                        RPOPercentageAdjustment = 0;
+                    }
+
+                    if (SitTargetRunPercentage < 100 && SitAvgRouteDepth < SitTargetRouteDepth - AcceptableDistanceRouteDepth ||
+                        SitAvgRouteDepth > SitTargetRouteDepth + AcceptableDistanceRouteDepth)
+                    {
+                        RouteDepthAdjustment = SitTargetRouteDepth - SitAvgRouteDepth;
+                        RouteDepthComplete = false;
+                    }
+                    else
+                    {
+                        RouteDepthComplete = true;
+                        RouteDepthAdjustment = 0;
+                    }
+
+                    if (SitPlayActionPercentage < SitTargetPlayActionPercentage - AcceptableDistanceToTarget ||
+                        SitPlayActionPercentage > SitTargetPlayActionPercentage + AcceptableDistanceToTarget)
+                    {
+                        PlayActionPercentAdjustment = SitTargetPlayActionPercentage - SitPlayActionPercentage;
+                        PlayActionPercentComplete = false;
+                    }
+                    else
+                    {
+                        PlayActionPercentComplete = true;
+                        PlayActionPercentAdjustment = 0;
+                    }
+
+                    if (SitRunPercentage < SitTargetRunPercentage - AcceptableDistanceToRunPercentTarget ||
+                        SitRunPercentage > SitTargetRunPercentage + AcceptableDistanceToRunPercentTarget)
+                    {
+                        RunPercentAdjustment = SitTargetRunPercentage - SitRunPercentage;
+                        RunPercentComplete = false;
+                    }
+                    else
+                    {
+                        RunPercentComplete = true;
+                        RunPercentAdjustment = 0;
+                    }
+
+                    if (SitGapRunPercentage < SitTargetGapRunPercentage - AcceptableDistanceToTarget ||
+                        SitGapRunPercentage > SitTargetGapRunPercentage + AcceptableDistanceToTarget)
+                    {
+                        GapRunPercentAdjustment = SitTargetGapRunPercentage - SitGapRunPercentage;
+                        GapRunsComplete = false;
+                    }
+                    else
+                    {
+                        GapRunsComplete = true;
+                        GapRunPercentAdjustment = 0;
+                    }
+
+                    if (SitZoneRunPercentage < SitTargetZoneRunPercentage - AcceptableDistanceToTarget ||
+                        SitZoneRunPercentage > SitTargetZoneRunPercentage + AcceptableDistanceToTarget)
+                    {
+                        ZoneRunPercentAdjustment = SitTargetZoneRunPercentage - SitZoneRunPercentage;
+                        ZoneRunsComplete = false;
+                    }
+                    else
+                    {
+                        ZoneRunsComplete = true;
+                        ZoneRunPercentAdjustment = 0;
+                    }
+
+                    // Final override to ignore certain tendencies for situations that we don't want to adjust those tendencies
+                    if (IgnoreSomeTendencies)
+                    {
+                        ShotgunsComplete = ScreensComplete = WRTEScreensComplete = RPOsComplete = PlayActionPercentComplete =
+                            GapRunsComplete = ZoneRunsComplete = true;
+                        ShotgunPercentAdjustment = ScreenPercentageAdjustment = WRTEScreenPercentageAdjustment = RPOPercentageAdjustment
+                            = PlayActionPercentAdjustment = GapRunPercentAdjustment = ZoneRunPercentAdjustment = 0;
+                    }
+                    if (IgnoreRouteDepth)
+                    {
+                        RouteDepthComplete = true;
+                        RouteDepthAdjustment = 0;
+                    }
+
+                    if (ShotgunsComplete && ScreensComplete && WRTEScreensComplete && RPOsComplete && RouteDepthComplete && PlayActionPercentComplete &&
+                        RunPercentComplete && GapRunsComplete && ZoneRunsComplete)
+                    {
+                        SituationComplete = true;
+                    }
+                    x++;
+                } while (!SituationComplete & x < 200);
+
+                Console.WriteLine("SUMMARY FOR SITUATION ID: {0}", Situation.Key + " NAME: " + SituationName); //Each group has a key 
+                Console.WriteLine("Sit Pass Weight: {0}", SitPassWeight);
+                Console.WriteLine("Sit Run Weight: {0}", SitRunWeight);
+                Console.WriteLine("Sit Shotgun Weight: {0}", SitShotgunWeight);
+                Console.WriteLine("Sit Screen Weight: {0}", SitScreenWeight);
+                Console.WriteLine("Sit WR/TE Screen Weight: {0}", SitWRTEScreenWeight);
+                Console.WriteLine("Sit RPO Weight: {0}", SitRPOWeight);
+                Console.WriteLine("Sit Play Action Weight: {0}", SitPlayActionWeight);
+                Console.WriteLine("Sit Route Depth: {0}", Math.Round(SitWeightedRouteDepth, 1));
+
+                Console.WriteLine("Situation Target Average Route Depth: {0}", Math.Round(SitTargetRouteDepth, 2));
+                Console.WriteLine("Sit Actual Average Route Depth: {0}", Math.Round(SitAvgRouteDepth, 2));
+
+                Console.WriteLine("Situation Target Run Percentage: {0}", Math.Round(SitTargetRunPercentage, 2));
+                Console.WriteLine("Sit Actual Run Percentage: {0}", Math.Round(SitRunPercentage, 1));
+
+                Console.WriteLine("Situation Target Gap Run Percentage: {0}", Math.Round(SitTargetGapRunPercentage, 2));
+                Console.WriteLine("Sit Actual Gap Run Percentage: {0}", Math.Round(SitGapRunPercentage, 1));
+
+                Console.WriteLine("Situation Target Zone Run Percentage: {0}", Math.Round(SitTargetZoneRunPercentage, 2));
+                Console.WriteLine("Sit Actual Zone Run Percentage: {0}", Math.Round(SitZoneRunPercentage, 1));
+
+                Console.WriteLine("Situation Target Shotgun Percentage: {0}", Math.Round(SitTargetShotgunPercentage, 2));
+                Console.WriteLine("Sit Actual Shotgun Percentage: {0}", Math.Round(SitShotgunPercentage, 1));
+
+                Console.WriteLine("Situation Target Screen Percentage: {0}", Math.Round(SitTargetScreenPercentage, 2));
+                Console.WriteLine("Sit Actual Screen Percentage: {0}", Math.Round(SitScreenPercentage, 1));
+
+                Console.WriteLine("Situation Target WR/TE Screen Percentage of all Screens: {0}", Math.Round(SitTargetWRTEScreenPercentage, 2));
+                Console.WriteLine("Sit actual WR TE Screen Percentage of all screens: {0}", Math.Round(SitWRTEScreenPercentage, 1));
+
+                Console.WriteLine("Situation Target RPO Percentage: {0}", Math.Round(SitTargetRPOPercentage, 2));
+                Console.WriteLine("Sit actual RPO Percentage: {0}", Math.Round(SitRPOPercentage, 1));
+
+                Console.WriteLine("Situation Target Play Action Percentage: {0}", Math.Round(SitTargetPlayActionPercentage, 2));
+                Console.WriteLine("Sit actual Playaction Percentage: {0}", Math.Round(SitPlayActionPercentage, 1));
+
+                Console.WriteLine("Sit expected num of runs: {0}", Math.Round(SitExpectedRunPlays, 2));
+                Console.WriteLine("Sit expected num of passes: {0}", Math.Round(SitExpectedPassPlays, 2));
+
+                // Add to cumilative PB values before moving on to next situation
+                TotalPassWeight += SitPassWeight;
+                TotalWeightedRouteDepth += SitWeightedRouteDepth;
+                TotalAvgRouteDepth += SitExpectedPassPlays * SitAvgRouteDepth;
+                TotalRunWeight += SitRunWeight;
+                TotalWeight += SitWeight;
+                TotalScreenWeight += SitScreenWeight;
+                TotalRPOWeight += SitRPOWeight;
+                TotalExpectedRunPlays += SitExpectedRunPlays;
+                TotalExpectedGapRunPlays += SitExpectedGapRunPlays;
+                TotalExpectedZoneRunPlays += SitExpectedZoneRunPlays;
+                TotalExpectedPassPlays += SitExpectedPassPlays;
+                TotalExpectedPlays = TotalExpectedRunPlays + TotalExpectedPassPlays;
+                TotalExpectedShotgunPlays += SitExpectedShotgunPlays;
+                TotalExpectedScreenPlays += SitExpectedScreenPlays;
+                TotalExpectedWRTEScreenPlays += SitExpectedWRTEScreenPlays;
+                TotalExpectedRPOPlays += SitExpectedRPOPlays;
+                TotalExpectedPlayActionPlays += SitExpectedPlayActionPlays;
+                TotalRunPercentage = Math.Round(TotalExpectedRunPlays / TotalExpectedPlays * 100.0, 1);
+                TotalGapRunPercentage = Math.Round(TotalExpectedGapRunPlays / TotalExpectedRunPlays * 100.0, 1);
+                TotalZoneRunPercentage = Math.Round(TotalExpectedZoneRunPlays / TotalExpectedRunPlays * 100.0, 1);
+                TotalShotgunPercentage = Math.Round(TotalExpectedShotgunPlays / TotalExpectedPlays * 100.0, 1);
+                TotalScreenPassPercentage = Math.Round(TotalExpectedScreenPlays / TotalExpectedPassPlays * 100.0, 1);
+                TotalWRTEScreenPercentage = Math.Round(TotalExpectedWRTEScreenPlays / TotalExpectedScreenPlays * 100.0, 1);
+                TotalRPOPercentage = Math.Round(TotalExpectedRPOPlays / TotalExpectedPlays * 100.0, 1);
+                TotalPlayActionPercentage = Math.Round(TotalExpectedPlayActionPlays / TotalExpectedPlays * 100.0, 1);
+
+                Console.WriteLine("expected run percentage of gameplan: {0}", TotalRunPercentage);
+                Console.WriteLine("expected gap run percentage of run plays in gameplan: {0}", TotalGapRunPercentage);
+                Console.WriteLine("expected zone run percentage of run plays in gameplan: {0}", TotalZoneRunPercentage);
+                Console.WriteLine("average route depth of entire gameplan: {0}", Math.Round(TotalAvgRouteDepth / TotalExpectedPassPlays, 2));
+                Console.WriteLine("expected shotgun percentage of plays in gameplan: {0}", TotalShotgunPercentage);
+                Console.WriteLine("expected screen pass percentage of pass plays in gameplan: {0}", TotalScreenPassPercentage);
+                Console.WriteLine("expected WR TE screen percentage of screen passes in gameplan: {0}", TotalWRTEScreenPercentage);
+                Console.WriteLine("expected RPO percentage of gameplan: {0}", TotalRPOPercentage);
+                Console.WriteLine("expected Playaction percentage of gameplan: {0}", TotalPlayActionPercentage);
+
+                Console.WriteLine("total expected run plays in gameplan: {0}", Math.Round(TotalExpectedRunPlays, 2));
+                Console.WriteLine("total expected pass plays in gameplan: {0}", Math.Round(TotalExpectedPassPlays, 2));
+                Console.WriteLine("total expected plays in gameplan: {0}", Math.Round(TotalExpectedPlays, 2));
+                Console.WriteLine("total expected shotgun plays in gameplan: {0}", Math.Round(TotalExpectedShotgunPlays, 2));
+                Console.WriteLine("total expected screen plays in gameplan: {0}", Math.Round(TotalExpectedScreenPlays, 2));
+                Console.WriteLine("total expected WR/TE screen plays in gameplan: {0}", Math.Round(TotalExpectedWRTEScreenPlays, 2));
+                Console.WriteLine("total expected RPO plays in gameplan: {0}", Math.Round(TotalExpectedRPOPlays, 2));
+                Console.WriteLine("total expected PlayAction plays in gameplan: {0}", Math.Round(TotalExpectedPlayActionPlays, 2));
+                Console.WriteLine("total expected gap run plays in gameplan: {0}", Math.Round(TotalExpectedGapRunPlays, 2));
+                Console.WriteLine("total expected zone run plays in gameplan: {0}", Math.Round(TotalExpectedZoneRunPlays, 2));
+            }
+            // remove the entries with a 0 weight, this should get us below 2000
+            PBAIRecordCount = PBAI.Where(p => p.prct == 0).Count();
+            _pbai = PBAI.Where(p => p.prct == 0).ToList();
+            PBAI.RemoveAll(p => _pbai.Contains(p));
+
+            Console.WriteLine("AI Play calling records with 0 weight: " + PBAIRecordCount);
+            Console.WriteLine("AI Play calling records remaining: " + PBAI.Count());
+            if (PBAI.Count() > 2000)
+            {
+                // Remove any situation entries that we don't 
+                _pbai = PBAI.Where(p => RedDobe.SituationsToTrim.Contains(p.AIGR)).ToList();
+                PBAI.RemoveAll(p => _pbai.Contains(p));
+                Console.WriteLine("AI Play calling records in the situations to remove: " + _pbai.Count());
+                Console.WriteLine("AI Play calling records remaining: " + PBAI.Count());
+
+                if (PBAI.Count() > 2000)
+                {
+                    int NumRecordsToRemove = PBAI.Count() - 2000;
+                    Console.WriteLine("Trimming more entries: " + NumRecordsToRemove);
+                    // Remove 1 prct entries first
+                    _pbai = PBAI.Where(p => ((Gameplan.KeySituations1.Contains(p.AIGR) || Gameplan.KeySituations2.Contains(p.AIGR)) ||
+                    RedDobe.SituationsToAddAllPlays.Contains(p.AIGR)) && p.prct == 1).ToList();
+                    // Add 2 prct entries to the list so that they get removed last
+                    _pbai.AddRange(PBAI.Where(p => ((Gameplan.KeySituations1.Contains(p.AIGR) || Gameplan.KeySituations2.Contains(p.AIGR)) ||
+                    RedDobe.SituationsToAddAllPlays.Contains(p.AIGR)) && p.prct == 2).ToList());
+
+                    foreach (Madden.TeamPlaybook.PBAI pbai in _pbai)
+                    {
+                        if (NumRecordsToRemove > 0)
+                        {
+                            PBAI.Remove(pbai);
+                        }
+                        else
+                            break;
+                        NumRecordsToRemove--;
+                    }
+                    Console.WriteLine("AI Play calling records remaining after final removal: " + PBAI.Count());
+                }
+            }
+
+            PBAI = Madden.TeamPlaybook.PBAI.Sort(PBAI);
+            for (int i = 0; i < PBAI.Count(); i++)
+            {
+                PBAI[i].rec = i;
+            }
+
+            foreach (PlayVM _play in Plays)
+            {
+                _play.GetSituations();
             }
         }
 

@@ -247,16 +247,13 @@ namespace MaddenTeamPlaybookEditor.ViewModels
                 psal.val1 = (int)(point.X * .5667);
                 psal.val2 = (int)(point.Y * -.375);
             }
-            else
-            {
-                //float xRatio = (float)(point.X * .0875) / this.SETG.x___;
-                //float yRatio = (float)(point.Y * -.1) / this.SETG.y___;
-                //this.SETP.fmtx = (int)(this.SETP.fmtx * xRatio);
-                //this.SETP.fmty = (int)(this.SETP.fmty * yRatio);
-                //this.SETP.artx = (int)(this.SETP.artx * xRatio);
-                //this.SETP.arty = (int)(this.SETP.arty * yRatio);
-                this.XY = point;
-            }
+            //float xRatio = (float)(point.X * .0875) / this.SETG.x___;
+            //float yRatio = (float)(point.Y * -.1) / this.SETG.y___;
+            //this.SETP.fmtx = (int)(this.SETP.fmtx * xRatio);
+            //this.SETP.fmty = (int)(this.SETP.fmty * yRatio);
+            //this.SETP.artx = (int)(this.SETP.artx * xRatio);
+            //this.SETP.arty = (int)(this.SETP.arty * yRatio);
+            this.XY = point;
         }
 
         public void UpdateAlignment()

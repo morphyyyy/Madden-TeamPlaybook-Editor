@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MaddenTeamPlaybookEditor.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using TDBAccess;
@@ -17,7 +18,22 @@ namespace Madden.TeamPlaybook
         public int Flag { get; set; }
         public int vpos { get; set; }
         public int prct { get; set; }
-        public string Name { get; set; }
+        public string Name
+        {
+            get
+            {
+                return MaddenTeamPlaybookEditor.ViewModels.TeamPlaybook.Gameplan.Offense.Contains(PLYT) ?
+                    MaddenTeamPlaybookEditor.ViewModels.TeamPlaybook.SituationOff.FirstOrDefault(x => x.Key == AIGR).Value :
+                    MaddenTeamPlaybookEditor.ViewModels.TeamPlaybook.SituationDef.FirstOrDefault(x => x.Key == AIGR).Value;
+            }
+        }
+        public string Type
+        { 
+            get
+            {
+                return MaddenTeamPlaybookEditor.ViewModels.TeamPlaybook.PlayType.FirstOrDefault(x => x.Key == PLYT).Value;
+            }
+        }
 
         public override string ToString()
         {

@@ -64,8 +64,30 @@ namespace MaddenTeamPlaybookEditor.ViewModels
 
         public SubFormationVM SubFormation { get; set; }
 
-        public PBPL PBPL { get; set; }
-        public PLYL PLYL { get; set; }
+        private PBPL _PBPL { get; set; }
+        public PBPL PBPL
+        {
+            get { return _PBPL; }
+            set
+            {
+                if (_PBPL == value)
+                    return;
+                _PBPL = value;
+                OnPropertyChanged("PBPL");
+            }
+        }
+        private PLYL _PLYL { get; set; }
+        public PLYL PLYL
+        {
+            get { return _PLYL; }
+            set
+            {
+                if (_PLYL == value)
+                    return;
+                _PLYL = value;
+                OnPropertyChanged("PLYL");
+            }
+        }
         public PLPD PLPD { get; set; }
         public PLRD PLRD { get; set; }
         public List<PBAI> Situations { get; set; }
@@ -133,8 +155,14 @@ namespace MaddenTeamPlaybookEditor.ViewModels
             UpdatePlay();
             GetPlayers();
 
-            try { PlayType = TeamPlaybook.PlayType[PLYL.PLYT]; }
-            catch { PlayType = ""; }
+            try 
+            { 
+                PlayType = TeamPlaybook.PlayType[PLYL.PLYT]; 
+            }
+            catch 
+            { 
+                PlayType = "";
+            }
 
             PlayArtFilePath = "pack://siteoforigin:,,,/playart/File" + pbpl.PLYL.ToString().PadLeft(5, '0') + ".PNG";
         }
@@ -208,6 +236,41 @@ namespace MaddenTeamPlaybookEditor.ViewModels
             foreach (PlayerVM player in Players)
             {
                 player.UpdatePlayer();
+            }
+        }
+
+        public void UpdatePLYL()
+        {
+            if (PBPL != null) PBPL.PLYL = PLYL.plyl;
+            if (PLPD != null) PLPD.PLYL = PLYL.plyl;
+            if (PLRD != null) PLRD.PLYL = PLYL.plyl;
+            if (PLYS != null)
+            {
+                foreach (PLYS play in PLYS)
+                {
+                    play.PLYL = PLYL.plyl;
+                }
+            }
+            if (PLCM != null)
+            {
+                foreach (PLCM play in PLCM)
+                {
+                    play.PLYL = PLYL.plyl;
+                }
+            }
+            if (PPCT != null)
+            {
+                foreach (PPCT play in PPCT)
+                {
+                    play.plyl = PLYL.plyl;
+                }
+            }
+            if (SRFT != null)
+            {
+                foreach (SRFT play in SRFT)
+                {
+                    play.PLYL = PLYL.plyl;
+                }
             }
         }
 

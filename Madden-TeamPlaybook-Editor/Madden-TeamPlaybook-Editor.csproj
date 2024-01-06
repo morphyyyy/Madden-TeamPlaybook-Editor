@@ -125,6 +125,7 @@
     <Compile Include="Classes\CustomPlaybook\ViewModels\PlayViewModel.cs" />
     <Compile Include="Classes\CustomPlaybook\ViewModels\SubFormationViewModel.cs" />
     <Compile Include="Classes\DraggableAdorner.cs" />
+    <Compile Include="Classes\TeamPlaybook\RedDobe.cs" />
     <Compile Include="Classes\TeamPlaybook\Tables\FORM.cs" />
     <Compile Include="Classes\TeamPlaybook\Tables\PBCC.cs" />
     <Compile Include="Classes\TeamPlaybook\Tables\PBAU.cs" />
@@ -214,6 +215,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Styles\FormationTabItemStyle.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\ComboBoxStyle.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
