@@ -62,6 +62,13 @@ namespace MaddenTeamPlaybookEditor.User_Controls
             dataGrid.Items.Filter = Filter;
         }
 
+        private void dataSourceChanged(object sender, System.Windows.Data.DataTransferEventArgs e)
+        {
+            Type type = Data?.GetType().GetProperty("Item").PropertyType;
+            cbxFilter.ItemsSource = type?.GetProperties().Select(o => o.Name);
+            dataGrid.Items.Filter = Filter;
+        }
+
         private void tbxValueChanged(object sender, TextChangedEventArgs e)
         {
             dataGrid.Items.Filter = Filter;
@@ -69,13 +76,6 @@ namespace MaddenTeamPlaybookEditor.User_Controls
 
         private void cbxValueChanged(object sender, SelectionChangedEventArgs e)
         {
-            dataGrid.Items.Filter = Filter;
-        }
-
-        private void dataSourceChanged(object sender, System.Windows.Data.DataTransferEventArgs e)
-        {
-            Type type = Data?.GetType().GetProperty("Item").PropertyType;
-            cbxFilter.ItemsSource = type?.GetProperties().Select(o => o.Name);
             dataGrid.Items.Filter = Filter;
         }
     }

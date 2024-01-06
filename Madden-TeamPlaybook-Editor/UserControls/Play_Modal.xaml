@@ -410,29 +410,29 @@
                                     <RowDefinition />
                                 </Grid.RowDefinitions>
                                 <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="0" Grid.Row="0" Text="rec"/>
-                                <TextBox IsEnabled="False" Grid.Column="0" Grid.Row="1" Text="{Binding PLYL.rec, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                <TextBox IsEnabled="False" Grid.Column="0" Grid.Row="1" Text="{Binding PLYL.rec, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextChanged="plylChanged"/>
                                 <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="1" Grid.Row="0" Text="SETL"/>
-                                <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding PLYL.SETL, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding PLYL.SETL, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextChanged="plylChanged"/>
                                 <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="2" Grid.Row="0" Text="plyl"/>
-                                <TextBox Grid.Column="2" Grid.Row="1" Text="{Binding PLYL.plyl, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                <TextBox Grid.Column="2" Grid.Row="1" Text="{Binding PLYL.plyl, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextChanged="plylChanged"/>
                                 <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="3" Grid.Row="0" Text="SRMM"/>
-                                <TextBox Grid.Column="3" Grid.Row="1" Text="{Binding PLYL.SRMM, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                <TextBox Grid.Column="3" Grid.Row="1" Text="{Binding PLYL.SRMM, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextChanged="plylChanged"/>
                                 <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="4" Grid.Row="0" Text="SITT"/>
-                                <TextBox Grid.Column="4" Grid.Row="1" Text="{Binding PLYL.SITT, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                <TextBox Grid.Column="4" Grid.Row="1" Text="{Binding PLYL.SITT, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextChanged="plylChanged"/>
                                 <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="5" Grid.Row="0" Text="PLYT"/>
-                                <TextBox Grid.Column="5" Grid.Row="1" Text="{Binding PLYL.PLYT, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                <TextBox Grid.Column="5" Grid.Row="1" Text="{Binding PLYL.PLYT, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextChanged="plylChanged"/>
                                 <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="6" Grid.Row="0" Text="PLF_"/>
-                                <TextBox Grid.Column="6" Grid.Row="1" Text="{Binding PLYL.PLF_, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                <TextBox Grid.Column="6" Grid.Row="1" Text="{Binding PLYL.PLF_, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextChanged="plylChanged"/>
                                 <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="7" Grid.Row="0" Text="name"/>
-                                <TextBox Grid.Column="7" Grid.Row="1" Text="{Binding PLYL.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                <TextBox Grid.Column="7" Grid.Row="1" Text="{Binding PLYL.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextChanged="plylChanged"/>
                                 <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="8" Grid.Row="0" Text="risk"/>
-                                <TextBox Grid.Column="8" Grid.Row="1" Text="{Binding PLYL.risk, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                <TextBox Grid.Column="8" Grid.Row="1" Text="{Binding PLYL.risk, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextChanged="plylChanged"/>
                                 <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="9" Grid.Row="0" Text="motn"/>
-                                <TextBox Grid.Column="9" Grid.Row="1" Text="{Binding PLYL.motn, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                <TextBox Grid.Column="9" Grid.Row="1" Text="{Binding PLYL.motn, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextChanged="plylChanged"/>
                                 <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="10" Grid.Row="0" Text="phlp"/>
-                                <TextBox Grid.Column="10" Grid.Row="1" Text="{Binding PLYL.phlp, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                <TextBox Grid.Column="10" Grid.Row="1" Text="{Binding PLYL.phlp, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextChanged="plylChanged"/>
                                 <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="11" Grid.Row="0" Text="vpos"/>
-                                <TextBox Grid.Column="11" Grid.Row="1" Text="{Binding PLYL.vpos, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                <TextBox Grid.Column="11" Grid.Row="1" Text="{Binding PLYL.vpos, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextChanged="plylChanged"/>
                             </Grid>
                         </TabItem>
                         <TabItem Header="PLPD">

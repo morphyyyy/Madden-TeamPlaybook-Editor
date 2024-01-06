@@ -56,10 +56,8 @@ namespace MaddenTeamPlaybookEditor.User_Controls
 
         private void dgdPSALupdated(object sender, EventArgs e)
         {
-            PlayerVM player = play.Players.Where(p => p.IsSelected).FirstOrDefault();
-            Console.WriteLine(player.PSALpath);
-            player.UpdatePlayer();
-            Console.WriteLine(player.PSALpath);
+            PlayerVM player = play.Players.FirstOrDefault(p => p.IsSelected);
+            player?.UpdatePlayer();
             iclPSALs.Items.Refresh();
         }
 
@@ -191,6 +189,12 @@ namespace MaddenTeamPlaybookEditor.User_Controls
             {
                 enc.Save(stm);
             }
+        }
+
+        private void plylChanged(object sender, TextChangedEventArgs e)
+        {
+            play.UpdatePLYL();
+            tabPlay.Items.Refresh();
         }
     }
 }

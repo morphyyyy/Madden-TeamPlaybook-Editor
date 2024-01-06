@@ -220,6 +220,15 @@ namespace MaddenTeamPlaybookEditor
         {
             wdwPlaybookEditor.Title = "Madden Team Playbook Editor - " + Path.GetFileName(Playbook.filePath);
             tclCustomPlaybookTables.DataContext = Playbook;
+            foreach (PIDX pidx in Playbook.PIDX.GroupBy(x => x.PLYT).Select(y => y.First()))
+            {
+                string Type =
+                    Playbook.PBFM.FirstOrDefault(form => form.pbfm == pidx.PBFM).FTYP < 11 ?
+                    "Offense" :
+                    "Defense";
+
+                Console.WriteLine(pidx.PLYT.ToString() + ", " + Type);
+            }
         }
 
         #endregion
@@ -1002,10 +1011,6 @@ namespace MaddenTeamPlaybookEditor
                     }
                 }
             }
-        }
-
-        private void btnRedDobeRevampGameplan_Click(object sender, RoutedEventArgs e)
-        {
         }
 
         private void lvwSituations_SelectionChanged(object sender, SelectionChangedEventArgs e)
