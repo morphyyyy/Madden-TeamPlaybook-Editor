@@ -435,6 +435,7 @@
                                 <TextBox Grid.Column="11" Grid.Row="1" Text="{Binding PLYL.vpos, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextChanged="plylChanged"/>
                             </Grid>
                         </TabItem>
+
                         <TabItem Header="PLPD">
                             <DockPanel>
                                 <Grid 

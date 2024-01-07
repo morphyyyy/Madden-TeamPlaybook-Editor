@@ -220,15 +220,6 @@ namespace MaddenTeamPlaybookEditor
         {
             wdwPlaybookEditor.Title = "Madden Team Playbook Editor - " + Path.GetFileName(Playbook.filePath);
             tclCustomPlaybookTables.DataContext = Playbook;
-            foreach (PIDX pidx in Playbook.PIDX.GroupBy(x => x.PLYT).Select(y => y.First()))
-            {
-                string Type =
-                    Playbook.PBFM.FirstOrDefault(form => form.pbfm == pidx.PBFM).FTYP < 11 ?
-                    "Offense" :
-                    "Defense";
-
-                Console.WriteLine(pidx.PLYT.ToString() + ", " + Type);
-            }
         }
 
         #endregion
@@ -490,50 +481,6 @@ namespace MaddenTeamPlaybookEditor
 
         #endregion
 
-        #region Search
-
-        private void searchTDB(object sender, RoutedEventArgs e)
-        {
-            int id = 0;
-            try
-            {
-                TabItem tab = tclTables.Items[14] as TabItem;
-                FilterableTable tbl = tab.Content as FilterableTable;
-                Madden.TeamPlaybook.PSAL PSAL = tbl.dataGrid.SelectedItem as Madden.TeamPlaybook.PSAL;
-                id = PSAL.psal;
-            }
-            catch
-            {
-                MessageBox.Show("Select a PSAL in the tables");
-                return;
-            }
-
-            List<PlayVM> Plays = new List<PlayVM>();
-            foreach (FormationVM formation in TeamPlaybook.Formations)
-            {
-                foreach (SubFormationVM subFormation in formation.SubFormations)
-                {
-                    foreach (PlayVM play in subFormation.Plays)
-                    {
-                        foreach (Madden.TeamPlaybook.PLYS assignment in play.PLYS)
-                        {
-                            if (assignment.PSAL == id)
-                            {
-                                Plays.Add(play);
-                                break;
-                            }
-                        }
-                    }
-                }
-            }
-            foreach (PlayVM play in Plays)
-            {
-                Console.WriteLine(String.Format("{0,-20} {1,-20} {2,-20}", play.SubFormation.Formation.PBFM.name, play.SubFormation.PBST.name, play.PBPL.name));
-            }
-        }
-
-        #endregion
-
         #region Set Generic Audibles
 
         private void setGenericAudibles(object sender, RoutedEventArgs e)
@@ -762,8 +709,6 @@ namespace MaddenTeamPlaybookEditor
                 if (e.LeftButton == MouseButtonState.Pressed && !(e.OriginalSource is TextBox))
                 {
                     Point currentPosition = e.GetPosition(tvwPlaybook);
-                    Console.WriteLine(currentPosition);
-                    Console.WriteLine(_lastMouseDown);
 
                     if ((Math.Abs(currentPosition.X - _lastMouseDown.X) > 10.0) || (Math.Abs(currentPosition.Y - _lastMouseDown.Y) > 10.0))
                     {

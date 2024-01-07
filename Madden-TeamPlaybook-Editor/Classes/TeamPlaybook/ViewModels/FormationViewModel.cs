@@ -354,18 +354,18 @@ namespace MaddenTeamPlaybookEditor.ViewModels
 
         public void AddSubFormation(MaddenCustomPlaybookEditor.CustomPlaybookSubFormation SubFormation, int ord = 0)
         {
-            if (Playbook.PBST.Where(set => set.SETL == SubFormation.PGPL[0].SETL).FirstOrDefault() == null)
+            if (Playbook.PBST.FirstOrDefault(set => set.SETL == SubFormation.PGPL[0].SETL) == null)
             {
                 #region PBST
 
-                if (Playbook.PBST.Where(set => set.pbst == SubFormation.PGPL[0].PBST).FirstOrDefault() != null)
+                if (Playbook.PBST.FirstOrDefault(set => set.pbst == SubFormation.PGPL[0].PBST) != null)
                 {
-                    SubFormation.PGPL[0].PBST = TeamPlaybook.NextAvailableID((from pbst in Playbook.PBST select pbst.pbst).ToList());
+                    SubFormation.PGPL[0].PBST = Playbook.PBST.Select(pbst => pbst.pbst).Max() + 1;
                 }
 
-                if (Playbook.SETL.Where(set => set.setl == SubFormation.PGPL[0].SETL).FirstOrDefault() != null)
+                if (Playbook.SETL.FirstOrDefault(set => set.setl == SubFormation.PGPL[0].SETL) != null)
                 {
-                    SubFormation.PGPL[0].SETL = TeamPlaybook.NextAvailableID((from setl in Playbook.SETL select setl.setl).ToList());
+                    SubFormation.PGPL[0].SETL = Playbook.SETL.Select(setl => setl.setl).Max() + 1;
                 }
 
                 if (ord == 0)
@@ -408,9 +408,9 @@ namespace MaddenTeamPlaybookEditor.ViewModels
 
                 #region SPKF
 
-                if (Playbook.PBST.Where(set => set.pbst == SubFormation.PGPL[0].PBST).FirstOrDefault() != null)
+                if (Playbook.PBST.FirstOrDefault(set => set.pbst == SubFormation.PGPL[0].PBST) != null)
                 {
-                    SubFormation.PGPL[0].PBST = TeamPlaybook.NextAvailableID((from pbst in Playbook.PBST select pbst.pbst).ToList());
+                    SubFormation.PGPL[0].PBST = Playbook.PBST.Select(pbst => pbst.pbst).Max() + 1;
                 }
 
                 for (int i = 0; i < SubFormation.SPKF.Count; i++)
@@ -491,7 +491,7 @@ namespace MaddenTeamPlaybookEditor.ViewModels
 
                     if (Playbook.SETG.Count > 0)
                     {
-                        setgID = TeamPlaybook.NextAvailableID((from setg in Playbook.SETG select setg.setg).ToList());
+                        setgID = Playbook.SETG.Select(setg => setg.setg).Max() + 1;
                     }
                     else
                     {
