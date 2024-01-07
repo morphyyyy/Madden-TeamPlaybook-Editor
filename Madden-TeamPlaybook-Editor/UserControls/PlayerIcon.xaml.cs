@@ -108,7 +108,7 @@ namespace MaddenTeamPlaybookEditor.User_Controls
                 isDragging = true;
                 var draggableControl = sender as UserControl;
                 DependencyObject parent = VisualTreeHelper.GetParent(sender as DependencyObject);
-                Console.WriteLine(Canvas.GetLeft(sender as UIElement) + "," + Canvas.GetTop(sender as UIElement));
+                //Console.WriteLine(Canvas.GetLeft(sender as UIElement) + "," + Canvas.GetTop(sender as UIElement));
                 mousePosition = e.GetPosition((UIElement)Parent);
                 draggableControl.CaptureMouse();
                 PlayerIcons = UIHelper.FindChild<ItemsControl>(UIHelper.FindVisualParent<PlayModal>(this), "iclPSALs");

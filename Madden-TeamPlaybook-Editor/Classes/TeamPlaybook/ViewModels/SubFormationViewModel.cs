@@ -369,17 +369,18 @@ namespace MaddenTeamPlaybookEditor.ViewModels
         {
             #region PLYL
 
-            Play.PLYL.plyl = TeamPlaybook.NextAvailableID((from plyl in Formation.Playbook.PLYL select plyl.plyl).ToList(), false, 0, 29900);
+            int? newPLYLid = TeamPlaybook.NextAvailableID(Formation.Playbook.PLYL.Select(plyl => plyl.plyl).ToList(), 29900, 32767) ?? TeamPlaybook.NextAvailableID(Formation.Playbook.PLYL.Select(plyl => plyl.plyl).ToList(), 1, 32767);
 
-            if (Play.PLYL.plyl > 32768)
+            if (newPLYLid == null)
             {
-                Play.PLYL.plyl = TeamPlaybook.NextAvailableID((from plyl in Formation.Playbook.PLYL select plyl.plyl).ToList(), true, 0, 1);
                 MessageBox.Show(
-                    "PLYL index is over the max allowed of 32768 and no index ids are available above 299000 either, which is the highest number the default game uses!\n\nInserting instead to" + Play.PLYL.plyl + ".",
-                    "PLYL Indexing",
+                    "The maximum number of plays has been reached!",
+                    "Maximum Plays Reached",
                     MessageBoxButton.OK,
                     MessageBoxImage.Exclamation);
+                return;
             }
+            Play.PLYL.plyl = newPLYLid ?? 0;
 
             if (Play.PLPD != null)
             {
@@ -434,7 +435,7 @@ namespace MaddenTeamPlaybookEditor.ViewModels
 
             if (Formation.Playbook.PBPL.Where(play => play.pbpl == Play.PBPL.pbpl).FirstOrDefault() != null)
             {
-                Play.PBPL.pbpl = TeamPlaybook.NextAvailableID((from pbpl in Formation.Playbook.PBPL select pbpl.pbpl).ToList());
+                Play.PBPL.pbpl = (from pbpl in Formation.Playbook.PBPL select pbpl.pbpl).Max() + 1;
                 Play.PBPL.PLYL = Play.PLYL.plyl;
                 foreach (PBAI situation in Play.Situations)
                 {
@@ -514,7 +515,7 @@ namespace MaddenTeamPlaybookEditor.ViewModels
 
                 if (PSALexists == Madden.TeamPlaybook.PSAL.DoesPSALExist.Yes)
                 {
-                    int nextAvailablePSALID = TeamPlaybook.NextAvailableID((from _psal in Formation.Playbook.PSAL select _psal.psal).ToList());
+                    int nextAvailablePSALID = Formation.Playbook.PSAL.Select(psal => psal.psal).Max() + 1;
                     MessageBox.Show(
                         "Existing PSAL: " +
                         PSAL[0].psal +
@@ -549,7 +550,7 @@ namespace MaddenTeamPlaybookEditor.ViewModels
                 }
                 else if (!ARTL.IsIdentical(player.ARTL))
                 {
-                    int nextAvailableARTLID = TeamPlaybook.NextAvailableID((from _artl in Formation.Playbook.ARTL select _artl.artl).ToList());
+                    int nextAvailableARTLID = Formation.Playbook.ARTL.Select(artl => artl.artl).Max() + 1;
                     int oldARTLID = player.ARTL.artl;
 
                     player.ARTL.artl = nextAvailableARTLID;
@@ -692,17 +693,18 @@ namespace MaddenTeamPlaybookEditor.ViewModels
         {
             #region PLYL
 
-            Play.PBPL[0].PLYL = TeamPlaybook.NextAvailableID((from plyl in Formation.Playbook.PLYL select plyl.plyl).ToList(), false, 0, 29900);
+            int? newPLYLid = TeamPlaybook.NextAvailableID(Formation.Playbook.PLYL.Select(plyl => plyl.plyl).ToList(), 29900, 32767) ?? TeamPlaybook.NextAvailableID(Formation.Playbook.PLYL.Select(plyl => plyl.plyl).ToList(), 1, 32767);
 
-            if (Play.PBPL[0].PLYL > 32768)
+            if (newPLYLid == null)
             {
-                Play.PBPL[0].PLYL = TeamPlaybook.NextAvailableID((from plyl in Formation.Playbook.PLYL select plyl.plyl).ToList(), true, 0, 1);
                 MessageBox.Show(
-                    "PLYL index is over the max allowed of 32768 and no index ids are available above 299000 either, which is the highest number the default game uses!\n\nInserting instead to " + Play.PBPL[0].PLYL + ".",
-                    "PLYL Indexing",
+                    "The maximum number of plays has been reached!",
+                    "Maximum Plays Reached",
                     MessageBoxButton.OK,
                     MessageBoxImage.Exclamation);
+                return;
             }
+            Play.PBPL[0].PLYL = newPLYLid ?? 0;
 
             if (Play.PLPD.Count > 0)
             {
@@ -763,7 +765,7 @@ namespace MaddenTeamPlaybookEditor.ViewModels
 
             #region PBPL
 
-            int pbplID = TeamPlaybook.NextAvailableID((from pbpl in Formation.Playbook.PBPL select pbpl.pbpl).ToList());
+            int pbplID = Formation.Playbook.PBPL.Select(pbpl => pbpl.pbpl).Max() + 1;
 
             if (ord == 0)
             {
@@ -925,7 +927,7 @@ namespace MaddenTeamPlaybookEditor.ViewModels
 
                 if (PSALexists == Madden.TeamPlaybook.PSAL.DoesPSALExist.Yes)
                 {
-                    int nextAvailablePSALID = TeamPlaybook.NextAvailableID((from psal in Formation.Playbook.PSAL select psal.psal).ToList());
+                    int nextAvailablePSALID = Formation.Playbook.PSAL.Select(psal => psal.psal).Max() + 1;
                     MessageBox.Show(
                         "Existing PSAL: " +
                         Play.PLYS[poso].PSAL +
@@ -1008,7 +1010,7 @@ namespace MaddenTeamPlaybookEditor.ViewModels
                 }
                 else if (!ARTL.IsIdentical(Play.ARTL[i]))
                 {
-                    int nextAvailableARTLID = TeamPlaybook.NextAvailableID((from artl in Formation.Playbook.ARTL select artl.artl).ToList());
+                    int nextAvailableARTLID = Formation.Playbook.ARTL.Select(artl => artl.artl).Max() + 1;
                     Play.PLYS[i].ARTL = nextAvailableARTLID;
 
                     ARTL CPBartl = new ARTL

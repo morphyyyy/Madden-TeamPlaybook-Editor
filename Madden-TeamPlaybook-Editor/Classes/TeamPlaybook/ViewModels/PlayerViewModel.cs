@@ -84,7 +84,7 @@ namespace MaddenTeamPlaybookEditor.ViewModels
                             this.Play.SubFormation.CurrentAlignment.SETG[this.Play.SubFormation.CurrentAlignment.SETG.FindIndex(setp => setp.SETP == this.SETG.SETP)] = new SETG
                             {
                                 rec = this.Play.SubFormation.Formation.Playbook.SETG.Max(x => x.rec) + 1,
-                                setg = TeamPlaybook.NextAvailableID(this.Play.SubFormation.Formation.Playbook.SETG.Select(setg => setg.setg).ToList(), false, 0, this.SETG.setg),
+                                setg = this.Play.SubFormation.Formation.Playbook.SETG.Select(setg => setg.setg).Max() + 1,
                                 SETP = this.SETG.SETP,
                                 SGF_ = this.SETG.SGF_,
                                 SF__ = this.SETG.SF__,
