@@ -162,7 +162,7 @@ namespace MaddenTeamPlaybookEditor.ViewModels
             IsVisible = false;
             IsExpanded = false;
             PBST = pbst;
-            SETL = _Formation.Playbook.SETL.Where(set => set.setl == PBST.SETL).FirstOrDefault();
+            SETL = _Formation.Playbook.SETL.FirstOrDefault(set => set.setl == PBST.SETL);
             Plays = new ObservableCollection<PlayVM>();
             Packages = new List<Package>();
             CurrentPackage = new List<SETP>();
@@ -190,26 +190,26 @@ namespace MaddenTeamPlaybookEditor.ViewModels
             {
                 Formation.Playbook.PBPL[Plays[i].PBPL.rec].ord_--;
             }
-            PBPL dbPBPL = Formation.Playbook.PBPL.Where(play => play.rec == Play.PBPL.rec).FirstOrDefault();
+            PBPL dbPBPL = Formation.Playbook.PBPL.FirstOrDefault(play => play.rec == Play.PBPL.rec);
             Formation.Playbook.PBPL.RemoveAt(Formation.Playbook.PBPL.IndexOf(dbPBPL));
 
             #endregion
 
-            dbPBPL = Formation.Playbook.PBPL.Where(play => play.PLYL == Play.PBPL.PLYL).FirstOrDefault();
+            dbPBPL = Formation.Playbook.PBPL.FirstOrDefault(play => play.PLYL == Play.PBPL.PLYL);
             if (dbPBPL == null)
             {
-                Formation.Playbook.PLYL.RemoveAt(Formation.Playbook.PLYL.IndexOf(Formation.Playbook.PLYL.Where(play => play.rec == Play.PLYL.rec).FirstOrDefault()));
+                Formation.Playbook.PLYL.RemoveAt(Formation.Playbook.PLYL.IndexOf(Formation.Playbook.PLYL.FirstOrDefault(play => play.rec == Play.PLYL.rec)));
 
                 #region PLPD/PLRD
 
                 if (Play.PLPD != null)
                 {
-                    Formation.Playbook.PLPD.RemoveAt(Formation.Playbook.PLPD.IndexOf(Formation.Playbook.PLPD.Where(play => play.rec == Play.PLPD.rec).FirstOrDefault()));
+                    Formation.Playbook.PLPD.RemoveAt(Formation.Playbook.PLPD.IndexOf(Formation.Playbook.PLPD.FirstOrDefault(play => play.rec == Play.PLPD.rec)));
                 }
 
                 if (Play.PLRD != null)
                 {
-                    Formation.Playbook.PLRD.RemoveAt(Formation.Playbook.PLRD.IndexOf(Formation.Playbook.PLRD.Where(play => play.rec == Play.PLRD.rec).FirstOrDefault()));
+                    Formation.Playbook.PLRD.RemoveAt(Formation.Playbook.PLRD.IndexOf(Formation.Playbook.PLRD.FirstOrDefault(play => play.rec == Play.PLRD.rec)));
                 }
 
                 #endregion
@@ -218,7 +218,7 @@ namespace MaddenTeamPlaybookEditor.ViewModels
 
                 for (int i = Play.PLYS.Count - 1; i >= 0; i--)
                 {
-                    Formation.Playbook.PLYS.RemoveAt(Formation.Playbook.PLYS.IndexOf(Formation.Playbook.PLYS.Where(play => play.rec == Play.PLYS[i].rec).FirstOrDefault()));
+                    Formation.Playbook.PLYS.RemoveAt(Formation.Playbook.PLYS.IndexOf(Formation.Playbook.PLYS.FirstOrDefault(play => play.rec == Play.PLYS[i].rec)));
                 }
 
                 #endregion
@@ -239,7 +239,7 @@ namespace MaddenTeamPlaybookEditor.ViewModels
                 {
                     if (!Formation.Playbook.IsUsing(psals[p]))
                     {
-                        PSAL psal = Formation.Playbook.PSAL.Where(play => play.rec == psals[p].rec).FirstOrDefault();
+                        PSAL psal = Formation.Playbook.PSAL.FirstOrDefault(play => play.rec == psals[p].rec);
                         Formation.Playbook.PSAL.Remove(psal);
                     }
                 }
@@ -248,7 +248,7 @@ namespace MaddenTeamPlaybookEditor.ViewModels
                 {
                     if (!Formation.Playbook.IsUsing(playart[p]))
                     {
-                        Madden.TeamPlaybook.ARTL artl = Formation.Playbook.ARTL.Where(play => play.rec == playart[p].rec).FirstOrDefault();
+                        Madden.TeamPlaybook.ARTL artl = Formation.Playbook.ARTL.FirstOrDefault(play => play.rec == playart[p].rec);
                         Formation.Playbook.ARTL.Remove(artl);
                     }
                 }
@@ -262,7 +262,7 @@ namespace MaddenTeamPlaybookEditor.ViewModels
                 {
                     try
                     {
-                        Formation.Playbook.PBAI.RemoveAt(Formation.Playbook.PBAI.IndexOf(Formation.Playbook.PBAI.Where(play => play.rec == Play.Situations[i].rec).FirstOrDefault()));
+                        Formation.Playbook.PBAI.RemoveAt(Formation.Playbook.PBAI.IndexOf(Formation.Playbook.PBAI.FirstOrDefault(play => play.rec == Play.Situations[i].rec)));
                     }
                     catch (Exception)
                     {
@@ -276,7 +276,7 @@ namespace MaddenTeamPlaybookEditor.ViewModels
                 Play.Audibles.OrderBy(s => s.rec);
                 for (int i = Play.Audibles.Count - 1; i >= 0; i--)
                 {
-                    Formation.Playbook.PBAU.RemoveAt(Formation.Playbook.PBAU.IndexOf(Formation.Playbook.PBAU.Where(play => play.rec == Play.Audibles[i].rec).FirstOrDefault()));
+                    Formation.Playbook.PBAU.RemoveAt(Formation.Playbook.PBAU.IndexOf(Formation.Playbook.PBAU.FirstOrDefault(play => play.rec == Play.Audibles[i].rec)));
                 }
 
                 #endregion
@@ -288,7 +288,7 @@ namespace MaddenTeamPlaybookEditor.ViewModels
                     Play.PBCC.OrderBy(s => s.rec);
                     for (int i = 0; i < Play.PBCC.Count; i++)
                     {
-                        Formation.Playbook.PBCC.RemoveAt(Formation.Playbook.PBCC.IndexOf(Formation.Playbook.PBCC.Where(play => play.rec == Play.PBCC[i].rec).FirstOrDefault()));
+                        Formation.Playbook.PBCC.RemoveAt(Formation.Playbook.PBCC.IndexOf(Formation.Playbook.PBCC.FirstOrDefault(play => play.rec == Play.PBCC[i].rec)));
                     }
                 }
 
@@ -299,7 +299,7 @@ namespace MaddenTeamPlaybookEditor.ViewModels
                 Play.PLCM.OrderBy(s => s.rec);
                 for (int i = Play.PLCM.Count - 1; i >= 0; i--)
                 {
-                    Formation.Playbook.PLCM.RemoveAt(Formation.Playbook.PLCM.IndexOf(Formation.Playbook.PLCM.Where(play => play.rec == Play.PLCM[i].rec).FirstOrDefault()));
+                    Formation.Playbook.PLCM.RemoveAt(Formation.Playbook.PLCM.IndexOf(Formation.Playbook.PLCM.FirstOrDefault(play => play.rec == Play.PLCM[i].rec)));
                 }
 
                 #endregion
@@ -309,7 +309,7 @@ namespace MaddenTeamPlaybookEditor.ViewModels
                 Play.PPCT.OrderBy(s => s.rec);
                 for (int i = Play.PPCT.Count - 1; i >= 0; i--)
                 {
-                    Formation.Playbook.PPCT.RemoveAt(Formation.Playbook.PPCT.IndexOf(Formation.Playbook.PPCT.Where(play => play.rec == Play.PPCT[i].rec).FirstOrDefault()));
+                    Formation.Playbook.PPCT.RemoveAt(Formation.Playbook.PPCT.IndexOf(Formation.Playbook.PPCT.FirstOrDefault(play => play.rec == Play.PPCT[i].rec)));
                 }
 
                 #endregion
@@ -321,7 +321,7 @@ namespace MaddenTeamPlaybookEditor.ViewModels
                     Play.SDEF.OrderBy(s => s.rec);
                     for (int i = 0; i < Play.SDEF.Count; i++)
                     {
-                        Formation.Playbook.SDEF.RemoveAt(Formation.Playbook.SDEF.IndexOf(Formation.Playbook.SDEF.Where(play => play.rec == Play.SDEF[i].rec).FirstOrDefault()));
+                        Formation.Playbook.SDEF.RemoveAt(Formation.Playbook.SDEF.IndexOf(Formation.Playbook.SDEF.FirstOrDefault(play => play.rec == Play.SDEF[i].rec)));
                     }
                 }
 
@@ -334,7 +334,7 @@ namespace MaddenTeamPlaybookEditor.ViewModels
                     Play.SRFT.OrderBy(s => s.rec);
                     for (int i = 0; i < Play.SRFT.Count; i++)
                     {
-                        Formation.Playbook.SRFT.RemoveAt(Formation.Playbook.SRFT.IndexOf(Formation.Playbook.SRFT.Where(play => play.rec == Play.SRFT[i].rec).FirstOrDefault()));
+                        Formation.Playbook.SRFT.RemoveAt(Formation.Playbook.SRFT.IndexOf(Formation.Playbook.SRFT.FirstOrDefault(play => play.rec == Play.SRFT[i].rec)));
                     }
                 }
 
@@ -346,10 +346,10 @@ namespace MaddenTeamPlaybookEditor.ViewModels
             try
             {
                 //Check if Play has a hidden Sub-Formation and remove it
-                SETL SETL = Formation.Playbook.SETL.Where(set => set.setl == Play.PLYL.SETL).FirstOrDefault();
-                if (Formation.Playbook.PBST.Where(set => set.SETL == SETL.setl).FirstOrDefault() == null)
+                SETL SETL = Formation.Playbook.SETL.FirstOrDefault(set => set.setl == Play.PLYL.SETL);
+                if (Formation.Playbook.PBST.FirstOrDefault(set => set.SETL == SETL.setl) == null)
                 {
-                    Formation.RemoveHiddenSubFormation(Formation.Playbook.SETL.Where(set => set.setl == Play.PLYL.SETL).FirstOrDefault());
+                    Formation.RemoveHiddenSubFormation(Formation.Playbook.SETL.FirstOrDefault(set => set.setl == Play.PLYL.SETL));
                 }
             }
             catch
@@ -369,18 +369,22 @@ namespace MaddenTeamPlaybookEditor.ViewModels
         {
             #region PLYL
 
-            int? newPLYLid = TeamPlaybook.NextAvailableID(Formation.Playbook.PLYL.Select(plyl => plyl.plyl).ToList(), 29900, 32767) ?? TeamPlaybook.NextAvailableID(Formation.Playbook.PLYL.Select(plyl => plyl.plyl).ToList(), 1, 32767);
-
-            if (newPLYLid == null)
+            if (Formation.Playbook.PLYL.Exists(play => play.plyl == Play.PLYL.plyl))
             {
-                MessageBox.Show(
-                    "The maximum number of plays has been reached!",
-                    "Maximum Plays Reached",
-                    MessageBoxButton.OK,
-                    MessageBoxImage.Exclamation);
-                return;
+                int? newPLYLid =
+                    TeamPlaybook.NextAvailableID(Formation.Playbook.PLYL.Select(plyl => plyl.plyl).ToList(), 29900, 32767) ?? 
+                    TeamPlaybook.NextAvailableID(Formation.Playbook.PLYL.Select(plyl => plyl.plyl).ToList(), 1, 32767);
+                if (newPLYLid == null)
+                {
+                    MessageBox.Show(
+                        "The maximum number of plays has been reached! Play not added",
+                        "Maximum Plays Reached",
+                        MessageBoxButton.OK,
+                        MessageBoxImage.Exclamation);
+                    return;
+                }
+                Play.PLYL.plyl = newPLYLid ?? 0;
             }
-            Play.PLYL.plyl = newPLYLid ?? 0;
 
             if (Play.PLPD != null)
             {
@@ -433,19 +437,17 @@ namespace MaddenTeamPlaybookEditor.ViewModels
                 }
             }
 
-            if (Formation.Playbook.PBPL.Where(play => play.pbpl == Play.PBPL.pbpl).FirstOrDefault() != null)
+            Play.PBPL.pbpl = Formation.Playbook.PBPL.Exists(play => play.pbpl == Play.PBPL.pbpl) ? Formation.Playbook.PBPL.Select(pbpl => pbpl.pbpl).Max() + 1 : Play.PBPL.pbpl;
+            Play.PBPL.PLYL = Play.PLYL.plyl;
+            foreach (PBAI situation in Play.Situations)
             {
-                Play.PBPL.pbpl = (from pbpl in Formation.Playbook.PBPL select pbpl.pbpl).Max() + 1;
-                Play.PBPL.PLYL = Play.PLYL.plyl;
-                foreach (PBAI situation in Play.Situations)
-                {
-                    situation.PBPL = Play.PBPL.pbpl;
-                }
-                foreach (PBAU audible in Play.Audibles)
-                {
-                    audible.PBPL = Play.PBPL.pbpl;
-                }
+                situation.PBPL = Play.PBPL.pbpl;
             }
+            foreach (PBAU audible in Play.Audibles)
+            {
+                audible.PBPL = Play.PBPL.pbpl;
+            }
+
             Play.PBPL.Flag = 0;
             Formation.Playbook.PBPL.Add(Play.PBPL);
             Formation.Playbook.PBPL[Formation.Playbook.PBPL.Count - 1].rec = Formation.Playbook.PBPL.Count - 1;
@@ -658,9 +660,9 @@ namespace MaddenTeamPlaybookEditor.ViewModels
 
             #region Hidden Formation Check
 
-            SETL PBhiddenSETL = Formation.Playbook.SETL.Where(subFormation => subFormation.setl == Play.PLYL.SETL).FirstOrDefault();
-            SETL PlayhiddenSETL = Play.SubFormation.Formation.Playbook.SETL.Where(subFormation => subFormation.setl == Play.PLYL.SETL).FirstOrDefault();
-            FORM hiddenFORM = Formation.Playbook.FORM.Where(formation => formation.form == PlayhiddenSETL.FORM).FirstOrDefault();
+            SETL PBhiddenSETL = Formation.Playbook.SETL.FirstOrDefault(subFormation => subFormation.setl == Play.PLYL.SETL);
+            SETL PlayhiddenSETL = Play.SubFormation.Formation.Playbook.SETL.FirstOrDefault(subFormation => subFormation.setl == Play.PLYL.SETL);
+            FORM hiddenFORM = Formation.Playbook.FORM.FirstOrDefault(formation => formation.form == PlayhiddenSETL.FORM);
 
             //Check for Hidden Sub-Formation
             if (PBhiddenSETL == null)
@@ -671,7 +673,7 @@ namespace MaddenTeamPlaybookEditor.ViewModels
             //Check for Hidden Formation
             if (hiddenFORM == null)
             {
-                Formation.Playbook.FORM.Add(Play.SubFormation.Formation.Playbook.FORM.Where(formation => formation.form == PlayhiddenSETL.FORM).FirstOrDefault());
+                Formation.Playbook.FORM.Add(Play.SubFormation.Formation.Playbook.FORM.FirstOrDefault(formation => formation.form == PlayhiddenSETL.FORM));
             }
 
             #endregion
@@ -693,18 +695,22 @@ namespace MaddenTeamPlaybookEditor.ViewModels
         {
             #region PLYL
 
-            int? newPLYLid = TeamPlaybook.NextAvailableID(Formation.Playbook.PLYL.Select(plyl => plyl.plyl).ToList(), 29900, 32767) ?? TeamPlaybook.NextAvailableID(Formation.Playbook.PLYL.Select(plyl => plyl.plyl).ToList(), 1, 32767);
-
-            if (newPLYLid == null)
+            if (Formation.Playbook.PLYL.Exists(play => play.plyl == Play.PBPL[0].PLYL))
             {
-                MessageBox.Show(
-                    "The maximum number of plays has been reached!",
-                    "Maximum Plays Reached",
-                    MessageBoxButton.OK,
-                    MessageBoxImage.Exclamation);
-                return;
+                int? newPLYLid =
+                    TeamPlaybook.NextAvailableID(Formation.Playbook.PLYL.Select(plyl => plyl.plyl).ToList(), 29900, 32767) ??
+                    TeamPlaybook.NextAvailableID(Formation.Playbook.PLYL.Select(plyl => plyl.plyl).ToList(), 1, 32767);
+                if (newPLYLid == null)
+                {
+                    MessageBox.Show(
+                        "The maximum number of plays has been reached! Play not added",
+                        "Maximum Plays Reached",
+                        MessageBoxButton.OK,
+                        MessageBoxImage.Exclamation);
+                    return;
+                }
+                Play.PBPL[0].PLYL = newPLYLid ?? 0;
             }
-            Play.PBPL[0].PLYL = newPLYLid ?? 0;
 
             if (Play.PLPD.Count > 0)
             {
@@ -979,7 +985,7 @@ namespace MaddenTeamPlaybookEditor.ViewModels
 
             for (int i = 0; i < Play.ARTL.Count; i++)
             {
-                ARTL ARTL = Formation.Playbook.ARTL.Where(artl => artl.artl == Play.ARTL[i].artl).FirstOrDefault();
+                ARTL ARTL = Formation.Playbook.ARTL.FirstOrDefault(artl => artl.artl == Play.ARTL[i].artl);
 
                 if (ARTL == null)
                 {
@@ -1467,8 +1473,8 @@ namespace MaddenTeamPlaybookEditor.ViewModels
             foreach (SETP player in Formation.Playbook.SETP.Where(player => player.SETL == PBST.SETL))
             {
                 CurrentPackage.Add(player);
-                player.DPos = Package.SPKG.Where(poso => poso.poso == player.poso).FirstOrDefault().DPos;
-                player.EPos = Package.SPKG.Where(poso => poso.poso == player.poso).FirstOrDefault().EPos;
+                player.DPos = Package.SPKG.FirstOrDefault(poso => poso.poso == player.poso).DPos;
+                player.EPos = Package.SPKG.FirstOrDefault(poso => poso.poso == player.poso).EPos;
             }
             CurrentPackage.OrderBy(player => player.poso);
         }
@@ -1504,12 +1510,12 @@ namespace MaddenTeamPlaybookEditor.ViewModels
 
         public void GetAlignment()
         {
-            CurrentAlignment = Alignments.Where(poso => poso.SGFM.name == "Norm").FirstOrDefault();
+            CurrentAlignment = Alignments.FirstOrDefault(poso => poso.SGFM.name == "Norm");
         }
 
         public void GetAlignment(Alignment alignment)
         {
-            CurrentAlignment = Alignments.Where(poso => poso.SGFM.name == "Norm").FirstOrDefault();
+            CurrentAlignment = Alignments.FirstOrDefault(poso => poso.SGFM.name == "Norm");
             if (alignment.SGFM.name == "Norm") return;
             CurrentAlignment.SGFM = alignment.SGFM;
             for (int i = alignment.SETG.Count - 1; i >= 0; i--)
@@ -1542,7 +1548,7 @@ namespace MaddenTeamPlaybookEditor.ViewModels
                 }
                 else
                 {
-                    foreach (SETG setg in Alignments.Where(_alignment => _alignment.SGFM.name == "Norm").FirstOrDefault().SETG)
+                    foreach (SETG setg in Alignments.FirstOrDefault(_alignment => _alignment.SGFM.name == "Norm").SETG)
                     {
                         if (!alignment.SETG.Exists(poso => poso.SETP == setg.SETP))
                         {
@@ -1561,7 +1567,7 @@ namespace MaddenTeamPlaybookEditor.ViewModels
             {
                 for (int i = 0; i <= 10; i++)
                 {
-                    int poso = CurrentPackage.Where(_poso => _poso.setp == CurrentAlignment.SETG[i].SETP).FirstOrDefault().poso;
+                    int poso = CurrentPackage.FirstOrDefault(_poso => _poso.setp == CurrentAlignment.SETG[i].SETP).poso;
                     Players.Add(new PlayerVM
                     (
                         new PLYS

@@ -10,14 +10,29 @@ namespace Madden.TeamPlaybook
     public class SETP
     {
         public int rec { get; set; }
+        /// <summary>
+        /// SET.setl
+        /// </summary>
         public int SETL { get; set; }
+        /// <summary>
+        /// SETG.SETP
+        /// </summary>
         public int setp { get; set; }
         public int SGT_ { get; set; }
         public int arti { get; set; }
         public int tabo { get; set; }
+        /// <summary>
+        /// SPKG.poso
+        /// </summary>
         public int poso { get; set; }
         public int flas { get; set; }
+        /// <summary>
+        /// SPKG.DPos
+        /// </summary>
         public int DPos { get; set; }
+        /// <summary>
+        /// SPKG.EPos
+        /// </summary>
         public int EPos { get; set; }
         public int fmtx { get; set; }
         public int artx { get; set; }

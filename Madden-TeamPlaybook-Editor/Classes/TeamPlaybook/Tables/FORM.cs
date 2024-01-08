@@ -9,8 +9,17 @@ namespace Madden.TeamPlaybook
     public class FORM
     {
         public int rec { get; set; }
+        /// <summary>
+        /// SETL.FORM
+        /// </summary>
         public int form { get; set; }
+        /// <summary>
+        /// PBFM.FTYP, PBAU.FTYP
+        /// </summary>
         public int FTYP { get; set; }
+        /// <summary>
+        /// PBFM.name
+        /// </summary>
         public string name { get; set; }
 
         public override string ToString()
@@ -45,7 +54,7 @@ namespace Madden.TeamPlaybook
 
             for (int i = 0; i < TableProps.RecordCount; i++)
             {
-                string _name = new string((char)0, (tableFields.Where(field => field.Name == TDB.StrReverse("name")).FirstOrDefault().Size / 8) + 1);
+                string _name = new string((char)0, (tableFields.FirstOrDefault(field => field.Name == TDB.StrReverse("name")).Size / 8) + 1);
 
                 TDB.TDBFieldGetValueAsString(DBIndex, TDB.StrReverse("FORM"), TDB.StrReverse("name"), i, ref _name);
                 _name = _name.Replace(",", "");

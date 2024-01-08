@@ -96,7 +96,7 @@ namespace MaddenCustomPlaybookEditor.ViewModels
                 PLYL = pbpl.PLYL
             };
             SubFormation = _SubFormation;
-            Madden.CustomPlaybook.PIDX _PIDX = SubFormation.Formation.Playbook.PIDX.Where(play => play.PLYL == pbpl.PLYL).FirstOrDefault();
+            Madden.CustomPlaybook.PIDX _PIDX = SubFormation.Formation.Playbook.PIDX.FirstOrDefault(play => play.PLYL == pbpl.PLYL);
             PLYL = new PLYL
             {
                 rec = _PIDX.rec,
@@ -117,7 +117,7 @@ namespace MaddenCustomPlaybookEditor.ViewModels
                 PLYL = new PLYL();
                 MessageBox.Show(SubFormation.Formation.FORM.name + " - " + SubFormation.SETL.name + " - " + PBPL.name, "Missing PLYL!!!");
             }
-            Madden.CustomPlaybook.PLPD _PLPD = SubFormation.Formation.Playbook.PLPD.Where(play => play.PLYL == pbpl.PLYL).FirstOrDefault();
+            Madden.CustomPlaybook.PLPD _PLPD = SubFormation.Formation.Playbook.PLPD.FirstOrDefault(play => play.PLYL == pbpl.PLYL);
             if (_PLPD != null)
             {
                 PLPD = new Madden.TeamPlaybook.PLPD
@@ -177,7 +177,7 @@ namespace MaddenCustomPlaybookEditor.ViewModels
             {
                 PLPD = new Madden.TeamPlaybook.PLPD();
             }
-            Madden.CustomPlaybook.PLRD _PLRD = SubFormation.Formation.Playbook.PLRD.Where(play => play.PLYL == pbpl.PLYL).FirstOrDefault();
+            Madden.CustomPlaybook.PLRD _PLRD = SubFormation.Formation.Playbook.PLRD.FirstOrDefault(play => play.PLYL == pbpl.PLYL);
             if (_PLRD != null)
             {
                 PLRD = new Madden.TeamPlaybook.PLRD

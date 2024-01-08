@@ -9,6 +9,9 @@ namespace Madden.TeamPlaybook
     public class PLRD
     {
         public int rec { get; set; }
+        /// <summary>
+        /// PLYL.plyl
+        /// </summary>
         public int PLYL { get; set; }
         public int hole { get; set; }
 

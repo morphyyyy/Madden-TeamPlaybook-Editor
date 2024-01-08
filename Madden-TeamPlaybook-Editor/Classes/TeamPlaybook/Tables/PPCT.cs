@@ -9,8 +9,14 @@ namespace Madden.TeamPlaybook
     public class PPCT
     {
         public int rec { get; set; }
+        /// <summary>
+        /// PLYL.plyl
+        /// </summary>
         public int plyl { get; set; }
         public int conp { get; set; }
+        /// <summary>
+        /// PLYS.poso
+        /// </summary>
         public int recr { get; set; }
 
         public override string ToString()

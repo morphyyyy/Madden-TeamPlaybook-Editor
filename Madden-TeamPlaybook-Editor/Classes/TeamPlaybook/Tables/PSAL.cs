@@ -7,22 +7,18 @@ using TDBAccess;
 namespace Madden.TeamPlaybook
 {
     [Serializable]
-    public class PSAL : INotifyPropertyChanged
+    public class PSAL
     {
-        private int _rec { get; set; }
-        public int rec { get { return _rec; } set { if (_rec == value) return; _rec = value; OnPropertyChanged("rec"); } }
-        private int _val1 { get; set; }
-        public int val1 { get { return _val1; } set { if (_val1 == value) return; _val1 = value; OnPropertyChanged("rec"); } }
-        private int _val2 { get; set; }
-        public int val2 { get { return _val2; } set { if (_val2 == value) return; _val2 = value; OnPropertyChanged("rec"); } }
-        private int _val3 { get; set; }
-        public int val3 { get { return _val3; } set { if (_val3 == value) return; _val3 = value; OnPropertyChanged("rec"); } }
-        private int _psal { get; set; }
-        public int psal { get { return _psal; } set { if (_psal == value) return; _psal = value; OnPropertyChanged("rec"); } }
-        private int _code { get; set; }
-        public int code { get { return _code; } set { if (_code == value) return; _code = value; OnPropertyChanged("rec"); } }
-        private int _step { get; set; }
-        public int step { get { return _step; } set { if (_step == value) return; _step = value; OnPropertyChanged("rec"); } }
+        public int rec { get; set; }
+        public int val1 { get; set; }
+        public int val2 { get; set; }
+        public int val3 { get; set; }
+        /// <summary>
+        /// PLYS.PSAL
+        /// </summary>
+        public int psal { get; set; }
+        public int code { get; set; }
+        public int step { get; set; }
         public static double AngleRatio = 0.35556;
 
         public override string ToString()
@@ -144,21 +140,5 @@ namespace Madden.TeamPlaybook
                 ((val3 == _psal.val3) ? 1 : 0)
                 );
         }
-
-        #region INotifyPropertyChanged Members
-
-        [field: NonSerializedAttribute()]
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        protected virtual void OnPropertyChanged(string propertyName)
-        {
-            if (this.PropertyChanged != null)
-            {
-                this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-            }
-        }
-
-        #endregion // INotifyPropertyChanged Members
-
     }
 }

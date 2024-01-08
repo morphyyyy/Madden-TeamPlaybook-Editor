@@ -10,13 +10,25 @@ namespace Madden.TeamPlaybook
     public class SETL
     {
         public int rec { get; set; }
+        /// <summary>
+        /// PBAI.setl
+        /// </summary>
         public int setl { get; set; }
+        /// <summary>
+        /// FORM.form
+        /// </summary>
         public int FORM { get; set; }
         public int MOTN { get; set; }
         public int CLAS { get; set; }
         public int SETT { get; set; }
+        /// <summary>
+        /// PLYL.SITT
+        /// </summary>
         public int SITT { get; set; }
         public int SLF_ { get; set; }
+        /// <summary>
+        /// PBST.name
+        /// </summary>
         public string name { get; set; }
         public int poso { get; set; }
 
@@ -58,7 +70,7 @@ namespace Madden.TeamPlaybook
 
             for (int i = 0; i < TableProps.RecordCount; i++)
             {
-                string _name = new string((char)0, (tableFields.Where(field => field.Name == TDB.StrReverse("name")).FirstOrDefault().Size / 8) + 1);
+                string _name = new string((char)0, (tableFields.FirstOrDefault(field => field.Name == TDB.StrReverse("name")).Size / 8) + 1);
 
                 TDB.TDBFieldGetValueAsString(DBIndex, TDB.StrReverse("SETL"), TDB.StrReverse("name"), i, ref _name);
                 _name = _name.Replace(",", "");

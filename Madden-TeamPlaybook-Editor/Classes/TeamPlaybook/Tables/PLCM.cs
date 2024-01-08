@@ -25,6 +25,9 @@ namespace Madden.TeamPlaybook
         public int per5 { get; set; }
         public int dir5 { get; set; }
         public int ply5 { get; set; }
+        /// <summary>
+        /// PLYL.plyl
+        /// </summary>
         public int PLYL { get; set; }
 
         public override string ToString()

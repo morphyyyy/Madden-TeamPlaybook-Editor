@@ -156,7 +156,7 @@ namespace MaddenTeamPlaybookEditor.ViewModels
         public PlayerVM(PLYS plys, PlayVM _Play)
         {
             Play = _Play;
-            PLYS = Play.PLYS.Where(player => player.poso == plys.poso).FirstOrDefault();
+            PLYS = Play.PLYS.FirstOrDefault(player => player.poso == plys.poso);
             UpdatePlayer();
         }
 
@@ -178,18 +178,18 @@ namespace MaddenTeamPlaybookEditor.ViewModels
             RouteDepth = TeamPlaybook.RouteType
                 .Where(p => p.Value[0] == "RR")
                 .Select(p => p.Key)
-                .Contains(PLYS.PLRR)
-                ?Math.Abs(Points.Min(p => p.Y)) - XY.Y
-                :0;
+                .Contains(PLYS.PLRR) ?
+                Math.Abs(Points.Min(p => p.Y)) - XY.Y :
+                0;
         }
 
         public void GetAssignment()
         {
-            SETP = Play.SubFormation.CurrentPackage.Where(set => set.poso == PLYS.poso).FirstOrDefault();
-            SETG = Play.SubFormation.CurrentAlignment.SETG.Where(set => set.SETP == SETP.setp).FirstOrDefault();
-            SRFT = Play.SRFT.Where(assignment => assignment.PLYR == PLYS.poso).FirstOrDefault();
-            EPos = TeamPlaybook.Positions[Play.SubFormation.CurrentPackage.Where(poso => poso.poso == PLYS.poso).FirstOrDefault().EPos];
-            DPos = Play.SubFormation.CurrentPackage.Where(poso => poso.poso == PLYS.poso).FirstOrDefault().DPos.ToString();
+            SETP = Play.SubFormation.CurrentPackage.FirstOrDefault(set => set.poso == PLYS.poso);
+            SETG = Play.SubFormation.CurrentAlignment.SETG.FirstOrDefault(set => set.SETP == SETP.setp);
+            SRFT = Play.SRFT.FirstOrDefault(assignment => assignment.PLYR == PLYS.poso);
+            EPos = TeamPlaybook.Positions[Play.SubFormation.CurrentPackage.FirstOrDefault(poso => poso.poso == PLYS.poso).EPos];
+            DPos = Play.SubFormation.CurrentPackage.FirstOrDefault(poso => poso.poso == PLYS.poso).DPos.ToString();
             XY = new Point { X = SETG.x___ * 11.4286, Y = SETG.y___ * -10 };
         }
 
@@ -217,19 +217,19 @@ namespace MaddenTeamPlaybookEditor.ViewModels
             switch (PLYS.poso)
             {
                 case 1:
-                    progression = Play.PLPD.progressions.Where(progression => progression.rcv == 1).FirstOrDefault();
+                    progression = Play.PLPD.progressions.FirstOrDefault(progression => progression.rcv == 1);
                     break;
                 case 2:
-                    progression = Play.PLPD.progressions.Where(progression => progression.rcv == 2).FirstOrDefault();
+                    progression = Play.PLPD.progressions.FirstOrDefault(progression => progression.rcv == 2);
                     break;
                 case 3:
-                    progression = Play.PLPD.progressions.Where(progression => progression.rcv == 3).FirstOrDefault();
+                    progression = Play.PLPD.progressions.FirstOrDefault(progression => progression.rcv == 3);
                     break;
                 case 4:
-                    progression = Play.PLPD.progressions.Where(progression => progression.rcv == 4).FirstOrDefault();
+                    progression = Play.PLPD.progressions.FirstOrDefault(progression => progression.rcv == 4);
                     break;
                 case 5:
-                    progression = Play.PLPD.progressions.Where(progression => progression.rcv == 5).FirstOrDefault();
+                    progression = Play.PLPD.progressions.FirstOrDefault(progression => progression.rcv == 5);
                     break;
                 default:
                     break;
@@ -239,7 +239,7 @@ namespace MaddenTeamPlaybookEditor.ViewModels
 
         public void UpdateXY(Point point)
         {
-            PSAL psal = this.PSAL.Where(step => step.code == 48).LastOrDefault();
+            PSAL psal = this.PSAL.LastOrDefault(step => step.code == 48);
             if (psal != null)
             {
                 //X to val1 = 51/90 = .5667
@@ -289,7 +289,7 @@ namespace MaddenTeamPlaybookEditor.ViewModels
 
             #region Icon
 
-            switch (Play.SubFormation.CurrentPackage.Where(set => set.poso == PLYS.poso).FirstOrDefault().arti)
+            switch (Play.SubFormation.CurrentPackage.FirstOrDefault(set => set.poso == PLYS.poso).arti)
             {
                 case 0://X
                     FormattedText X = new FormattedText(
@@ -498,13 +498,13 @@ namespace MaddenTeamPlaybookEditor.ViewModels
 
             if (Play.SubFormation.Formation.Playbook.DCHT != null)
             {
-                int _epos = Play.SubFormation.CurrentPackage.Where(poso => poso.poso == PLYS.poso).FirstOrDefault().EPos;
-                DCHT = Play.SubFormation.Formation.Playbook.DCHT.Where(player => player.PPOS == SETP.EPos && player.ddep == SETP.DPos - 1).FirstOrDefault();
+                int _epos = Play.SubFormation.CurrentPackage.FirstOrDefault(poso => poso.poso == PLYS.poso).EPos;
+                DCHT = Play.SubFormation.Formation.Playbook.DCHT.FirstOrDefault(player => player.PPOS == SETP.EPos && player.ddep == SETP.DPos - 1);
                 if (DCHT != null)
                 {
-                    Number = Play.SubFormation.Formation.Playbook.PLAY.Where(player => player.PGID == DCHT.PGID).FirstOrDefault().PJEN;
-                    FirstName = Play.SubFormation.Formation.Playbook.PLAY.Where(player => player.PGID == DCHT.PGID).FirstOrDefault().PFNA;
-                    LastName = Play.SubFormation.Formation.Playbook.PLAY.Where(player => player.PGID == DCHT.PGID).FirstOrDefault().PLNA;
+                    Number = Play.SubFormation.Formation.Playbook.PLAY.FirstOrDefault(player => player.PGID == DCHT.PGID).PJEN;
+                    FirstName = Play.SubFormation.Formation.Playbook.PLAY.FirstOrDefault(player => player.PGID == DCHT.PGID).PFNA;
+                    LastName = Play.SubFormation.Formation.Playbook.PLAY.FirstOrDefault(player => player.PGID == DCHT.PGID).PLNA;
                 }
             }
         }
@@ -1781,7 +1781,7 @@ namespace MaddenTeamPlaybookEditor.ViewModels
                     _isSelected = value;
                     foreach (PlayVM play in Play.SubFormation.Plays)
                     {
-                        play.Players.Where(poso => poso.PLYS.poso == PLYS.poso).FirstOrDefault().IsSelected = value;
+                        play.Players.FirstOrDefault(poso => poso.PLYS.poso == PLYS.poso).IsSelected = value;
                     }
                     this.OnPropertyChanged("IsSelected");
                 }

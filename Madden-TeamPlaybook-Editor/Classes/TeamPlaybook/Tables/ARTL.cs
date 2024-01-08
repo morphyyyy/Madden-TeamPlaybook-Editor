@@ -20,6 +20,9 @@ namespace Madden.TeamPlaybook
         }
 
         public int rec { get; set; }
+        /// <summary>
+        /// PLYS.ARTL
+        /// </summary>
         public int artl { get; set; }
         public int acnt { get; set; }
 

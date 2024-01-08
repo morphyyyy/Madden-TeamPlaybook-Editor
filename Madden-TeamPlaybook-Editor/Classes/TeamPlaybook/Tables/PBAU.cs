@@ -9,7 +9,13 @@ namespace Madden.TeamPlaybook
     public class PBAU
     {
         public int rec { get; set; }
+        /// <summary>
+        /// PBPL.pbpl
+        /// </summary>
         public int PBPL { get; set; }
+        /// <summary>
+        /// FORM.FTYP, PBFM.FTYP
+        /// </summary>
         public int FTYP { get; set; }
         public int pbau { get; set; }
 

@@ -10,6 +10,9 @@ namespace Madden.TeamPlaybook
     public class PLPD
     {
         public int rec { get; set; }
+        /// <summary>
+        /// PLYL.plyl
+        /// </summary>
         public int PLYL { get; set; }
 
         public List<Progression> progressions { get; set; }
@@ -151,6 +154,7 @@ namespace Madden.TeamPlaybook
         public int com { get; set; }
         public int con { get; set; }
         public int per { get; set; }
+        //PLYS.poso
         public int rcv { get; set; }
         public int icx { get; set; }
         public int icy { get; set; }
