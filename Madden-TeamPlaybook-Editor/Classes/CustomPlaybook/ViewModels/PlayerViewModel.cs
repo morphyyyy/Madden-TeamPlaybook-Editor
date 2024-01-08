@@ -53,15 +53,15 @@ namespace MaddenCustomPlaybookEditor.ViewModels
         public PlayerVM(Madden.CustomPlaybook.PLYS plys, PlayVM _Play)
         {
             Play = _Play;
-            PLYS = Play.PLYS.Where(player => player.poso == plys.poso).FirstOrDefault();
+            PLYS = Play.PLYS.FirstOrDefault(player => player.poso == plys.poso);
             GetAssignment();
             GetARTL();
             GetPSAL();
             GetRouteCap();
             GetAttributes();
-            //if (PSAL.Where(step => step.code == 47).FirstOrDefault() != null && EPos == "FS")
+            //if (PSAL.FirstOrDefault(step => step.code == 47) != null && EPos == "FS")
             //{
-            //    if (PSAL.Where(step => step.code == 47).FirstOrDefault().val2 < 30)
+            //    if (PSAL.FirstOrDefault(step => step.code == 47).val2 < 30)
             //    {
             //        Console.WriteLine(Play.SubFormation.Formation.PBFM[0].name + " " + Play.SubFormation.PBST[0].name + " - " + Play.PBPL.name);
             //    }
@@ -70,8 +70,8 @@ namespace MaddenCustomPlaybookEditor.ViewModels
 
         public void GetAssignment()
         {
-            SETP = Play.SubFormation.CurrentPackage.Where(set => set.poso == PLYS.poso).FirstOrDefault();
-            Madden.CustomPlaybook.SETG _SETG = Play.SubFormation.CurrentAlignment.SETG.Where(set => set.SETP == SETP.setp).FirstOrDefault();
+            SETP = Play.SubFormation.CurrentPackage.FirstOrDefault(set => set.poso == PLYS.poso);
+            Madden.CustomPlaybook.SETG _SETG = Play.SubFormation.CurrentAlignment.SETG.FirstOrDefault(set => set.SETP == SETP.setp);
             SETG = new Madden.TeamPlaybook.SETG
             {
                 rec = _SETG.rec,
@@ -88,9 +88,9 @@ namespace MaddenCustomPlaybookEditor.ViewModels
                 x___ = _SETG.x___,
                 y___ = _SETG.y___
             };
-            SRFT = Play.SRFT.Where(assignment => assignment.PLYR == PLYS.poso).FirstOrDefault();
-            EPos = CustomPlaybook.Positions[Play.SubFormation.CurrentPackage.Where(poso => poso.poso == PLYS.poso).FirstOrDefault().EPos];
-            DPos = Play.SubFormation.CurrentPackage.Where(poso => poso.poso == PLYS.poso).FirstOrDefault().DPos.ToString();
+            SRFT = Play.SRFT.FirstOrDefault(assignment => assignment.PLYR == PLYS.poso);
+            EPos = CustomPlaybook.Positions[Play.SubFormation.CurrentPackage.FirstOrDefault(poso => poso.poso == PLYS.poso).EPos];
+            DPos = Play.SubFormation.CurrentPackage.FirstOrDefault(poso => poso.poso == PLYS.poso).DPos.ToString();
             XY = new Point { X = SETG.x___ * 11.4286, Y = SETG.y___ * -10 };
         }
 
@@ -146,7 +146,7 @@ namespace MaddenCustomPlaybookEditor.ViewModels
 
         public void UpdateXY(Point point)
         {
-            Madden.TeamPlaybook.PSAL psal = this.PSAL.Where(step => step.code == 48).LastOrDefault();
+            Madden.TeamPlaybook.PSAL psal = this.PSAL.LastOrDefault(step => step.code == 48);
             if (psal != null)
             {
                 //X to val1 = 51/90 = .5667
@@ -158,8 +158,8 @@ namespace MaddenCustomPlaybookEditor.ViewModels
             {
                 this.SETG.x___ = (float)(point.X * .0875);
                 this.SETG.y___ = (float)(point.Y * -.1);
-                this.Play.SubFormation.CurrentAlignment.SETG.Where(set => set.rec == this.SETG.rec).LastOrDefault().x___ = this.SETG.x___;
-                this.Play.SubFormation.CurrentAlignment.SETG.Where(set => set.rec == this.SETG.rec).LastOrDefault().y___ = this.SETG.y___;
+                this.Play.SubFormation.CurrentAlignment.SETG.LastOrDefault(set => set.rec == this.SETG.rec).x___ = this.SETG.x___;
+                this.Play.SubFormation.CurrentAlignment.SETG.LastOrDefault(set => set.rec == this.SETG.rec).y___ = this.SETG.y___;
                 XY = new Point { X = SETG.x___ * 11.4286, Y = SETG.y___ * -10 };
             }
         }
@@ -348,7 +348,7 @@ namespace MaddenCustomPlaybookEditor.ViewModels
 
             #region Icon
 
-            switch (Play.SubFormation.CurrentPackage.Where(set => set.poso == PLYS.poso).FirstOrDefault().arti)
+            switch (Play.SubFormation.CurrentPackage.FirstOrDefault(set => set.poso == PLYS.poso).arti)
             {
                 case 0://X
                     FormattedText X = new FormattedText(

@@ -46,11 +46,11 @@ namespace MaddenTeamPlaybookEditor.ViewModels
             PBST _PBST = new PBST();
             if (_PlaybookSource == null)
             {
-                _PBST = _Playbook.PBST.Where(set => set.PBFM == pbfm.pbfm).FirstOrDefault();
+                _PBST = _Playbook.PBST.FirstOrDefault(set => set.PBFM == pbfm.pbfm);
             }
             else
             {
-                _PBST = _PlaybookSource.PBST.Where(set => set.PBFM == pbfm.pbfm).FirstOrDefault();
+                _PBST = _PlaybookSource.PBST.FirstOrDefault(set => set.PBFM == pbfm.pbfm);
             }
             SETL SETL = new SETL();
             try
@@ -59,11 +59,11 @@ namespace MaddenTeamPlaybookEditor.ViewModels
                 {
                     if (_PlaybookSource == null)
                     {
-                        SETL = _Playbook.SETL.Where(set => set.setl == _PBST.SETL).FirstOrDefault();
+                        SETL = _Playbook.SETL.FirstOrDefault(set => set.setl == _PBST.SETL);
                     }
                     else
                     {
-                        SETL = _PlaybookSource.SETL.Where(set => set.setl == _PBST.SETL).FirstOrDefault();
+                        SETL = _PlaybookSource.SETL.FirstOrDefault(set => set.setl == _PBST.SETL);
                     }
                 }
             }
@@ -71,7 +71,7 @@ namespace MaddenTeamPlaybookEditor.ViewModels
             {
 
             }
-            FORM = _Playbook.FORM.Where(form => form.form == SETL.FORM).FirstOrDefault();
+            FORM = _Playbook.FORM.FirstOrDefault(form => form.form == SETL.FORM);
             SubFormations = new ObservableCollection<SubFormationVM>();
             GetSubFormations();
         }
@@ -97,7 +97,7 @@ namespace MaddenTeamPlaybookEditor.ViewModels
             {
                 Playbook.PBST[SubFormations[i].PBST.rec].ord_--;
             }
-            Playbook.PBST.RemoveAt(Playbook.PBST.IndexOf(Playbook.PBST.Where(set => set.rec == SubFormation.PBST.rec).FirstOrDefault()));
+            Playbook.PBST.RemoveAt(Playbook.PBST.IndexOf(Playbook.PBST.FirstOrDefault(set => set.rec == SubFormation.PBST.rec)));
 
             #endregion
 
@@ -105,7 +105,7 @@ namespace MaddenTeamPlaybookEditor.ViewModels
 
             try
             {
-                Playbook.SETL.RemoveAt(Playbook.SETL.IndexOf(Playbook.SETL.Where(set => set.rec == SubFormation.SETL.rec).FirstOrDefault()));
+                Playbook.SETL.RemoveAt(Playbook.SETL.IndexOf(Playbook.SETL.FirstOrDefault(set => set.rec == SubFormation.SETL.rec)));
             }
             catch
             {
@@ -125,10 +125,10 @@ namespace MaddenTeamPlaybookEditor.ViewModels
             List<SPKG> SPKG = new List<SPKG>();
             for (int i = SubFormation.Packages.Count - 1; i >= 0; i--)
             {
-                SPKF.Add(Playbook.SPKF.Where(sub => sub.rec == SubFormation.Packages[i].SPKF.rec).FirstOrDefault());
+                SPKF.Add(Playbook.SPKF.FirstOrDefault(sub => sub.rec == SubFormation.Packages[i].SPKF.rec));
                 for (int n = SubFormation.Packages[i].SPKG.Count - 1; n >= 0; n--)
                 {
-                    SPKG.Add(Playbook.SPKG.Where(sub => sub.rec == SubFormation.Packages[i].SPKG[n].rec).FirstOrDefault());
+                    SPKG.Add(Playbook.SPKG.FirstOrDefault(sub => sub.rec == SubFormation.Packages[i].SPKG[n].rec));
                 }
             }
 
@@ -152,10 +152,10 @@ namespace MaddenTeamPlaybookEditor.ViewModels
             List<SETG> SETG = new List<SETG>();
             for (int i = SubFormation.Alignments.Count - 1; i >= 0; i--)
             {
-                SGFM.Add(Playbook.SGFM.Where(sub => sub.rec == SubFormation.Alignments[i].SGFM.rec).FirstOrDefault());
+                SGFM.Add(Playbook.SGFM.FirstOrDefault(sub => sub.rec == SubFormation.Alignments[i].SGFM.rec));
                 for (int n = SubFormation.Alignments[i].SETG.Count - 1; n >= 0; n--)
                 {
-                    SETG.Add(Playbook.SETG.Where(sub => sub.rec == SubFormation.Alignments[i].SETG[n].rec).FirstOrDefault());
+                    SETG.Add(Playbook.SETG.FirstOrDefault(sub => sub.rec == SubFormation.Alignments[i].SETG[n].rec));
                 }
             }
 
@@ -178,7 +178,7 @@ namespace MaddenTeamPlaybookEditor.ViewModels
 
         public void RemoveHiddenSubFormation(SETL SubFormation)
         {
-            Playbook.SETL.RemoveAt(Playbook.SETL.IndexOf(Playbook.SETL.Where(set => set.rec == SubFormation.rec).FirstOrDefault()));
+            Playbook.SETL.RemoveAt(Playbook.SETL.IndexOf(Playbook.SETL.FirstOrDefault(set => set.rec == SubFormation.rec)));
 
             #region Package
 
@@ -235,7 +235,7 @@ namespace MaddenTeamPlaybookEditor.ViewModels
             try
             {
                 //Check if Sub-Formation has a hidden Formation and remove it
-                FORM FORM = Playbook.FORM.Where(form => form.form == SubFormation.FORM).FirstOrDefault();
+                FORM FORM = Playbook.FORM.FirstOrDefault(form => form.form == SubFormation.FORM);
                 Playbook.FORM.Remove(FORM);
             }
             catch
@@ -251,7 +251,7 @@ namespace MaddenTeamPlaybookEditor.ViewModels
 
         public void AddSubFormation(SubFormationVM SubFormation, int ord = 0, bool dbOnly = false)
         {
-            if (Playbook.PBST.Where(set => set.SETL == SubFormation.PBST.SETL).FirstOrDefault() == null)
+            if (Playbook.PBST.FirstOrDefault(set => set.SETL == SubFormation.PBST.SETL) == null)
             {
                 #region Order
 
@@ -339,8 +339,8 @@ namespace MaddenTeamPlaybookEditor.ViewModels
 
                 foreach (PlayVM play in SubFormation.Plays)
                 {
-                    FormationVM Formation = Playbook.Formations.Where(formation => formation.PBFM.pbfm == SubFormation.PBST.PBFM).FirstOrDefault();
-                    SubFormationVM newSubFormation = Formation.SubFormations.Where(subFormation => subFormation.PBST.pbst == SubFormation.PBST.pbst).FirstOrDefault();
+                    FormationVM Formation = Playbook.Formations.FirstOrDefault(formation => formation.PBFM.pbfm == SubFormation.PBST.PBFM);
+                    SubFormationVM newSubFormation = Formation.SubFormations.FirstOrDefault(subFormation => subFormation.PBST.pbst == SubFormation.PBST.pbst);
                     newSubFormation.AddPlay(play, dbOnly: false);
                 }
 

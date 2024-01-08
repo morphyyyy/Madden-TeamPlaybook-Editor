@@ -10,10 +10,22 @@ namespace Madden.TeamPlaybook
     public class PLYS
     {
         public int rec { get; set; }
+        /// <summary>
+        /// PSAL.psal
+        /// </summary>
         public int PSAL { get; set; }
-        public int ARTL { get; set; }  
+        /// <summary>
+        /// ARTL.artl
+        /// </summary>
+        public int ARTL { get; set; }
+        /// <summary>
+        /// PLYL.plyl
+        /// </summary>
         public int PLYL { get; set; }
         public int PLRR { get; set; }
+        /// <summary>
+        /// PPCT.recv, PLPD.PRogression.rcv, SRFT.PLYR
+        /// </summary>
         public int poso { get; set; }
 
         public override string ToString()

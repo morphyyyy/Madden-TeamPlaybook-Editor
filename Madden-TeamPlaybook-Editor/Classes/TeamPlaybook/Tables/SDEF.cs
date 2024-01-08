@@ -11,6 +11,9 @@ namespace Madden.TeamPlaybook
     {
         public int rec { get; set; }
         public int ATCA { get; set; }
+        /// <summary>
+        /// PLYL.plyl
+        /// </summary>
         public int PLYL { get; set; }
         public int DFLP { get; set; }
         public int STRP { get; set; }

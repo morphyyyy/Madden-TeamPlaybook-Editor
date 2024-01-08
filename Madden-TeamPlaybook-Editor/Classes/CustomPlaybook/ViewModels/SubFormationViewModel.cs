@@ -344,8 +344,8 @@ namespace MaddenCustomPlaybookEditor.ViewModels
                     SGT_ = player.SGT_,
                     tabo = player.tabo
                 });
-                player.DPos = Package.SPKG.Where(poso => poso.poso == player.poso).FirstOrDefault().DPos;
-                player.EPos = Package.SPKG.Where(poso => poso.poso == player.poso).FirstOrDefault().EPos;
+                player.DPos = Package.SPKG.FirstOrDefault(poso => poso.poso == player.poso).DPos;
+                player.EPos = Package.SPKG.FirstOrDefault(poso => poso.poso == player.poso).EPos;
             }
             CurrentPackage = CurrentPackage.OrderBy(player => player.poso).ToList();
         }
@@ -377,12 +377,12 @@ namespace MaddenCustomPlaybookEditor.ViewModels
 
         public void GetAlignment()
         {
-            CurrentAlignment = Alignments.Where(poso => poso.SGFM.name == "Norm").FirstOrDefault();
+            CurrentAlignment = Alignments.FirstOrDefault(poso => poso.SGFM.name == "Norm");
         }
 
         public void GetAlignment(Alignment alignment)
         {
-            CurrentAlignment = Alignments.Where(poso => poso.SGFM.name == "Norm").FirstOrDefault();
+            CurrentAlignment = Alignments.FirstOrDefault(poso => poso.SGFM.name == "Norm");
             for (int i = alignment.SETG.Count; i == 0; i--)
             {
                 int index = CurrentAlignment.SETG.FindIndex(player => player.SETP == alignment.SETG[i].SETP);

@@ -47,8 +47,8 @@ namespace Madden.Team
 
             for (int i = 0; i < TableProps.RecordCount; i++)
             {
-                string firstName = new string((char)0, (tableFields.Where(field => field.Name == TDB.StrReverse("PLAY")).FirstOrDefault().Size / 8) + 1);
-                string lastName = new string((char)0, (tableFields.Where(field => field.Name == TDB.StrReverse("PLAY")).FirstOrDefault().Size / 8) + 1);
+                string firstName = new string((char)0, (tableFields.FirstOrDefault(field => field.Name == TDB.StrReverse("PLAY")).Size / 8) + 1);
+                string lastName = new string((char)0, (tableFields.FirstOrDefault(field => field.Name == TDB.StrReverse("PLAY")).Size / 8) + 1);
 
                 TDB.TDBFieldGetValueAsString(DBIndex, TDB.StrReverse("PLAY"), TDB.StrReverse("PFNA"), i, ref firstName);
                 TDB.TDBFieldGetValueAsString(DBIndex, TDB.StrReverse("PLAY"), TDB.StrReverse("PLNA"), i, ref lastName);

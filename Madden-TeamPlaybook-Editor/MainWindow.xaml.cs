@@ -549,7 +549,7 @@ namespace MaddenTeamPlaybookEditor
                 xpdPlayModal.Visibility = Visibility.Visible;
                 for (int i = 0; i < lvwSituations.Items.Count; i++)
                 {
-                    Madden.TeamPlaybook.PBAI _pbai = uclPlayModal.play.Situations.Where(p => p.AIGR == ((Madden.TeamPlaybook.PBAI)lvwSituations.Items[i]).AIGR).FirstOrDefault();
+                    Madden.TeamPlaybook.PBAI _pbai = uclPlayModal.play.Situations.FirstOrDefault(p => p.AIGR == ((Madden.TeamPlaybook.PBAI)lvwSituations.Items[i]).AIGR);
                     if (_pbai != null)
                     {
                         ((Madden.TeamPlaybook.PBAI)lvwSituations.Items[i]).prct = _pbai.prct;
@@ -563,7 +563,7 @@ namespace MaddenTeamPlaybookEditor
                 //lvwSituations.SelectedItems.Clear();
                 //foreach (Madden.TeamPlaybook.PBAI situation in uclPlayModal.play.Situations)
                 //{
-                //    lvwSituations.SelectedItems.Add(TeamPlaybook.Situations.Where(p => p.Key == situation.AIGR).FirstOrDefault());
+                //    lvwSituations.SelectedItems.Add(TeamPlaybook.Situations.FirstOrDefault(p => p.Key == situation.AIGR));
                 //    Console.WriteLine(situation);
                 //}
             }
@@ -589,7 +589,7 @@ namespace MaddenTeamPlaybookEditor
 
         private void tvwPSALs_Selected(object sender, RoutedEventArgs e)
         {
-            PlayerVM _player = uclPlayModal.play != null ? uclPlayModal.play.Players.Where(p => p.IsSelected).FirstOrDefault() : null;
+            PlayerVM _player = uclPlayModal.play != null ? uclPlayModal.play.Players.FirstOrDefault(p => p.IsSelected) : null;
             if (tvwPSALs.SelectedItem is PlayVM && _player != null)
             {
                 _player.PLYS.PSAL = ((PlayVM)tvwPSALs.SelectedItem).Players[0].PLYS.PSAL;
@@ -998,7 +998,7 @@ namespace MaddenTeamPlaybookEditor
         //    List<PlayVM> _plays = ((TeamPlaybook)tvwPlaybook.DataContext).Plays.Where(p => p.IsExpanded || p.IsSelected).ToList();
         //    for (int i = 0; i < _plays.Count; i++)
         //    {
-        //        Madden.TeamPlaybook.PBAI _pbai = _plays[i].Situations.Where(p => p.AIGR == ((Madden.TeamPlaybook.PBAI)lvwSituations.SelectedItem).AIGR).FirstOrDefault();
+        //        Madden.TeamPlaybook.PBAI _pbai = _plays[i].Situations.FirstOrDefault(p => p.AIGR == ((Madden.TeamPlaybook.PBAI)lvwSituations.SelectedItem).AIGR);
         //        if (_pbai != null)
         //        {
         //            _pbai.prct = ((Madden.TeamPlaybook.PBAI)lvwSituations.SelectedItem).prct;

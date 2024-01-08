@@ -10,9 +10,21 @@ namespace Madden.TeamPlaybook
     public class SPKG
     {
         public int rec { get; set; }
+        /// <summary>
+        /// SPKF.SPF_
+        /// < summary>
         public int SPF_ { get; set; }
+        /// <summary>
+        /// SETP.poso
+        /// </summary>
         public int poso { get; set; }
+        /// <summary>
+        /// SETP.DPos
+        /// </summary>
         public int DPos { get; set; }
+        /// <summary>
+        /// SETP.EPos
+        /// </summary>
         public int EPos { get; set; }
 
         public override string ToString()

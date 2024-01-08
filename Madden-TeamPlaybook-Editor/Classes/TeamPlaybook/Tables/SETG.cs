@@ -11,7 +11,13 @@ namespace Madden.TeamPlaybook
     {
         public int rec { get; set; }
         public int setg { get; set; }
+        /// <summary>
+        /// SETP.setp
+        /// </summary>
         public int SETP { get; set; }
+        /// <summary>
+        /// SGFM.SGF_
+        /// </summary>
         public int SGF_ { get; set; }
         public int SF__ { get; set; }
         public float x___ { get; set; }

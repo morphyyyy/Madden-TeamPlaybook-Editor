@@ -10,7 +10,13 @@ namespace Madden.TeamPlaybook
     public class SPKF
     {
         public int rec { get; set; }
+        /// <summary>
+        /// SETL.setl
+        /// </summary>
         public int SETL { get; set; }
+        /// <summary>
+        /// SPKG.SPF_
+        /// < summary>
         public int SPF_ { get; set; }
         public string name { get; set; }
 
@@ -46,7 +52,7 @@ namespace Madden.TeamPlaybook
 
             for (int i = 0; i < TableProps.RecordCount; i++)
             {
-                string _name = new string((char)0, (tableFields.Where(field => field.Name == TDB.StrReverse("name")).FirstOrDefault().Size / 8) + 1);
+                string _name = new string((char)0, (tableFields.FirstOrDefault(field => field.Name == TDB.StrReverse("name")).Size / 8) + 1);
 
                 TDB.TDBFieldGetValueAsString(DBIndex, TDB.StrReverse("SPKF"), TDB.StrReverse("name"), i, ref _name);
                 _name = _name.Replace(",", "");

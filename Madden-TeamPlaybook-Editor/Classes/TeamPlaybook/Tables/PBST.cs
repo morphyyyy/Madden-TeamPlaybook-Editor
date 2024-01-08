@@ -9,11 +9,23 @@ namespace Madden.TeamPlaybook
     public class PBST
     {
         public int rec { get; set; }
+        /// <summary>
+        /// SETL.setl
+        /// </summary>
         public int SETL { get; set; }
+        /// <summary>
+        /// PBFM.pbfm
+        /// </summary>
         public int PBFM { get; set; }
-        public int pbst { get; set; }
+        /// <summary>
+        /// PBPL.pbst
+        /// </summary>
+        public int pbst { get; set; }       
         public int SPF_ { get; set; }
         public int ord_ { get; set; }
+        /// <summary>
+        /// SETL.name
+        /// </summary>
         public string name { get; set; }
 
         public override string ToString()
@@ -51,7 +63,7 @@ namespace Madden.TeamPlaybook
 
             for (int i = 0; i < TableProps.RecordCount; i++)
             {
-                string _name = new string((char)0, (tableFields.Where(field => field.Name == TDB.StrReverse("name")).FirstOrDefault().Size / 8) + 1);
+                string _name = new string((char)0, (tableFields.FirstOrDefault(field => field.Name == TDB.StrReverse("name")).Size / 8) + 1);
 
                 TDB.TDBFieldGetValueAsString(DBIndex, TDB.StrReverse("PBST"), TDB.StrReverse("name"), i, ref _name);
                 _name = _name.Replace(",", "");

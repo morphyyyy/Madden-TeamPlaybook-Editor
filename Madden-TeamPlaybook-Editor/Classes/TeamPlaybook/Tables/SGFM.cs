@@ -10,7 +10,13 @@ namespace Madden.TeamPlaybook
     public class SGFM
     {
         public int rec { get; set; }
+        /// <summary>
+        /// SETL.setl
+        /// </summary>
         public int SETL { get; set; }
+        /// <summary>
+        /// SETG.SGF_
+        /// </summary>
         public int SGF_ { get; set; }
         public string name { get; set; }
         public int dflt { get; set; }
@@ -60,7 +66,7 @@ namespace Madden.TeamPlaybook
 
             for (int i = 0; i < TableProps.RecordCount; i++)
             {
-                string _name = new string((char)0, (tableFields.Where(field => field.Name == TDB.StrReverse("name")).FirstOrDefault().Size / 8) + 1);
+                string _name = new string((char)0, (tableFields.FirstOrDefault(field => field.Name == TDB.StrReverse("name")).Size / 8) + 1);
 
                 TDB.TDBFieldGetValueAsString(DBIndex, TableProps.Name, TDB.StrReverse("name"), i, ref _name);
                 _name = _name.Replace(",", "");

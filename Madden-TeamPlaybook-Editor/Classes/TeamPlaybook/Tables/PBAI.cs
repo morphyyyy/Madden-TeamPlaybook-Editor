@@ -10,12 +10,27 @@ namespace Madden.TeamPlaybook
     public class PBAI
     {
         public int rec { get; set; }
+        /// <summary>
+        /// PBPL.pbpl
+        /// </summary>
         public int PBPL { get; set; }
+        /// <summary>
+        /// SETL.setl
+        /// </summary>
         public int SETL { get; set; }
         public int AIGR { get; set; }
         public int PLYT { get; set; }
+        /// <summary>
+        /// PLYL.PLF_
+        /// </summary>
         public int PLF_ { get; set; }
+        /// <summary>
+        /// PBPL.Flag
+        /// </summary>
         public int Flag { get; set; }
+        /// <summary>
+        /// PLYL.vpos
+        /// </summary>
         public int vpos { get; set; }
         public int prct { get; set; }
         public string Name

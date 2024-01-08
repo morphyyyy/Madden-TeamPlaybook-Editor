@@ -18,7 +18,13 @@ namespace Madden.TeamPlaybook
         public int CC07 { get; set; }
         public int CC08 { get; set; }
         public int CC09 { get; set; }
+        /// <summary>
+        /// PBPL.pbpl
+        /// </summary>
         public int PBPL { get; set; }
+        /// <summary>
+        /// PLYL.PLYT
+        /// </summary>
         public int PTYP { get; set; }
 
         public override string ToString()

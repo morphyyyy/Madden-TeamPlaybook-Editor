@@ -13,8 +13,14 @@ namespace Madden.TeamPlaybook
         public int SIDE { get; set; }
         public int YOFF { get; set; }
         public int TECH { get; set; }
+        /// <summary>
+        /// PLYL.plyl
+        /// </summary>
         public int PLYL { get; set; }
         public int STAN { get; set; }
+        /// <summary>
+        /// PLYS.poso
+        /// </summary>
         public int PLYR { get; set; }
         public int PRIS { get; set; }
         public int GAPS { get; set; }

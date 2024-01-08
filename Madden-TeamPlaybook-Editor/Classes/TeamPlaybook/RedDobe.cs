@@ -962,28 +962,28 @@ namespace MaddenTeamPlaybookEditor.ViewModels
 
         public static double GetTeamRunPercentage(string filePath)
         {
-            return TeamRunPercentage.Where(p => Path.GetFileName(filePath).Contains(p.Key)).FirstOrDefault().Value;
+            return TeamRunPercentage.FirstOrDefault(p => Path.GetFileName(filePath).Contains(p.Key)).Value;
         }
 
         public static double GetTeamPassDepth(string filePath)
         {
-            return TeamAverageThrowDepth.Where(p => Path.GetFileName(filePath).Contains(p.Key)).FirstOrDefault().Value;
+            return TeamAverageThrowDepth.FirstOrDefault(p => Path.GetFileName(filePath).Contains(p.Key)).Value;
         }
 
         public static double GetSituationRunPercentage(int SituationID)
         {
-            return SituationTargetRunPercentage.Where(p => p.Key == SituationID).FirstOrDefault().Value;
+            return SituationTargetRunPercentage.FirstOrDefault(p => p.Key == SituationID).Value;
         }
 
         public static double GetSituationRouteDepth(int SituationID)
         {
-            return SituationTargetPassDepth.Where(p => p.Key == SituationID).FirstOrDefault().Value;
+            return SituationTargetPassDepth.FirstOrDefault(p => p.Key == SituationID).Value;
         }
 
         public static Tendency GetTeamSituationTendency(string filePath, int SituationID)
         {
-            return TeamTendencies.Where(p => Path.GetFileName(filePath).Contains(p.Key)).FirstOrDefault().Value.Where(p => p.Key == SituationID).FirstOrDefault().Value ??
-                 TeamTendencies.Where(p => Path.GetFileName(filePath).Contains(p.Key)).FirstOrDefault().Value.Where(p => p.Key == 100).FirstOrDefault().Value;
+            return TeamTendencies.FirstOrDefault(p => Path.GetFileName(filePath).Contains(p.Key)).Value.FirstOrDefault(p => p.Key == SituationID).Value ??
+                 TeamTendencies.FirstOrDefault(p => Path.GetFileName(filePath).Contains(p.Key)).Value.FirstOrDefault(p => p.Key == 100).Value;
         }
 
         public static bool IsDivisible(int x, int n)

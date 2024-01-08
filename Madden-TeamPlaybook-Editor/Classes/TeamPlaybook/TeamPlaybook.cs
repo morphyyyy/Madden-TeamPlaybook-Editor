@@ -468,7 +468,8 @@ namespace MaddenTeamPlaybookEditor.ViewModels
 
             public static readonly List<int> Offense = new List<int>
             {
-                1, 2, 3, 4, 5, 6, 11, 13, 14, 15, 16, 17, 18, 19, 21, 22, 23, 24, 25, 37, 38, 100, 101, 102, 103, 104, 105, 106, 107, 151, 152, 153, 154, 155, 157, 159, 161, 163, 165, 169, 172, 195, 196, 197, 198, 201, 202, 203, 204, 205, 207, 208, 209
+                1, 2, 3, 4, 5, 6, 11, 13, 14, 15, 16, 17, 18, 19, 21, 22, 23, 24, 25, 37, 38, 100, 101, 102, 103, 104, 105, 106, 107, 151, 152, 153, 154, 155,
+                157, 159, 161, 163, 165, 169, 172, 195, 196, 197, 198, 201, 202, 203, 204, 205, 207, 208, 209
             };
 
             public static readonly List<int> Defense = new List<int>
@@ -1107,13 +1108,13 @@ namespace MaddenTeamPlaybookEditor.ViewModels
             int ftyp = Formation.PBFM.FTYP;
             foreach (Madden.TeamPlaybook.PBFM formation in PBFM.Where(form => form.FTYP == ftyp).Cast<Madden.TeamPlaybook.PBFM>().ToList())
             {
-                PBFM[PBFM.IndexOf(PBFM.Where(form => form.rec == formation.rec).FirstOrDefault())].ord_--;
+                PBFM[PBFM.IndexOf(PBFM.FirstOrDefault(form => form.rec == formation.rec))].ord_--;
             }
-            PBFM.RemoveAt(PBFM.IndexOf(PBFM.Where(form => form.rec == Formation.PBFM.rec).FirstOrDefault()));
+            PBFM.RemoveAt(PBFM.IndexOf(PBFM.FirstOrDefault(form => form.rec == Formation.PBFM.rec)));
 
             try
             {
-                FORM.RemoveAt(FORM.IndexOf(FORM.Where(form => form.rec == Formation.FORM.rec).FirstOrDefault()));
+                FORM.RemoveAt(FORM.IndexOf(FORM.FirstOrDefault(form => form.rec == Formation.FORM.rec)));
             }
             catch
             {
@@ -1125,7 +1126,7 @@ namespace MaddenTeamPlaybookEditor.ViewModels
 
         public void AddFormation(FormationVM Formation, int ord = 0, bool dbOnly = false)
         {
-            FORM existingFORM = FORM.Where(formation => formation.form == Formation.FORM.form).FirstOrDefault();
+            FORM existingFORM = FORM.FirstOrDefault(formation => formation.form == Formation.FORM.form);
             if (existingFORM == null)
             {
                 int ftyp = Formation.PBFM.FTYP;
@@ -1133,7 +1134,7 @@ namespace MaddenTeamPlaybookEditor.ViewModels
                 {
                     if (formation.ord_ >= ord)
                     {
-                        PBFM[PBFM.IndexOf(PBFM.Where(form => form.rec == formation.rec).FirstOrDefault())].ord_++;
+                        PBFM[PBFM.IndexOf(PBFM.FirstOrDefault(form => form.rec == formation.rec))].ord_++;
                     }
                 }
 
@@ -1159,7 +1160,7 @@ namespace MaddenTeamPlaybookEditor.ViewModels
 
                 foreach (SubFormationVM subFormation in Formation.SubFormations)
                 {
-                    FormationVM newFormation = Formations.Where(formation => formation.PBFM.pbfm == Formation.PBFM.pbfm).FirstOrDefault();
+                    FormationVM newFormation = Formations.FirstOrDefault(formation => formation.PBFM.pbfm == Formation.PBFM.pbfm);
                     newFormation.AddSubFormation(subFormation, dbOnly: false);
                     newFormation.SubFormations[newFormation.SubFormations.Count - 1].IsVisible = false;
                 }
@@ -1167,7 +1168,7 @@ namespace MaddenTeamPlaybookEditor.ViewModels
                 //{
                 //    foreach (SubFormationVM subFormation in Formation.SubFormations)
                 //    {
-                //        FormationVM existingFormation = Formations.Where(formation => formation.FORM.form == Formation.FORM.form).FirstOrDefault();
+                //        FormationVM existingFormation = Formations.FirstOrDefault(formation => formation.FORM.form == Formation.FORM.form);
                 //        subFormation.Formation.PBFM.pbfm = existingFormation.PBFM.pbfm;
                 //        existingFormation.AddSubFormation(subFormation, dbOnly: false);
                 //    }
@@ -1181,7 +1182,7 @@ namespace MaddenTeamPlaybookEditor.ViewModels
 
         public void AddFormation(MaddenCustomPlaybookEditor.CustomPlaybookFormation Formation, int ord = 0)
         {
-            FORM existingFORM = FORM.Where(formation => formation.form == Formation.CPFM.FORM).FirstOrDefault();
+            FORM existingFORM = FORM.FirstOrDefault(formation => formation.form == Formation.CPFM.FORM);
             if (existingFORM == null)
             {
                 #region PBFM
@@ -1278,7 +1279,7 @@ namespace MaddenTeamPlaybookEditor.ViewModels
 
         public void AddFormation(MaddenCustomPlaybookEditor.ViewModels.FormationVM Formation, int ord = 0)
         {
-            //FORM existingFORM = FORM.Where(formation => formation.form == Formation.CPFM.FORM).FirstOrDefault();
+            //FORM existingFORM = FORM.FirstOrDefault(formation => formation.form == Formation.CPFM.FORM);
         }
 
         public void GetTables()
@@ -1357,7 +1358,7 @@ namespace MaddenTeamPlaybookEditor.ViewModels
                     {
                         PlayerVM player = new PlayerVM
                         {
-                            PLYS = PLYS.Where(plys => plys.PSAL == _route.PSAL).FirstOrDefault(),
+                            PLYS = PLYS.FirstOrDefault(plys => plys.PSAL == _route.PSAL),
                             SETG = new Madden.TeamPlaybook.SETG
                             {
                                 x___ = 0,
@@ -1370,7 +1371,7 @@ namespace MaddenTeamPlaybookEditor.ViewModels
                                 artx = 90,
                                 arty = 80
                             },
-                            ARTL = ARTL.Where(_psal => _psal.artl == PLYS.Where(plys => plys.PSAL == _route.PSAL).FirstOrDefault().ARTL).FirstOrDefault(),
+                            ARTL = ARTL.FirstOrDefault(_psal => _psal.artl == PLYS.FirstOrDefault(plys => plys.PSAL == _route.PSAL).ARTL),
                             artlColor = ARTLColor.Undefined,
                             PSAL = PSAL.Where(_psal => _psal.psal == _route.PSAL).OrderBy(s => s.step).ToList(),
                             Icon = new EllipseGeometry(new Point(0, 0), 4, 4).GetFlattenedPathGeometry(),
@@ -1464,12 +1465,12 @@ namespace MaddenTeamPlaybookEditor.ViewModels
                     PBAI.Add(new Madden.TeamPlaybook.PBAI
                     {
                         rec = PBAI.Select(p => p.rec).Max() + 1,
-                        PBPL = PBPL.Where(p => p.PLYL == play.plyl).FirstOrDefault().pbpl,
+                        PBPL = PBPL.FirstOrDefault(p => p.PLYL == play.plyl).pbpl,
                         SETL = play.SETL,
                         AIGR = airg,
                         PLYT = play.PLYT,
                         PLF_ = play.PLF_,
-                        Flag = PBPL.Where(p => p.PLYL == play.plyl).FirstOrDefault().Flag,
+                        Flag = PBPL.FirstOrDefault(p => p.PLYL == play.plyl).Flag,
                         vpos = play.vpos,
                         prct = 10
                     });
@@ -1490,12 +1491,12 @@ namespace MaddenTeamPlaybookEditor.ViewModels
                     PBAI.Add(new Madden.TeamPlaybook.PBAI
                     {
                         rec = PBAI.Select(p => p.rec).Max() + 1,
-                        PBPL = PBPL.Where(p => p.PLYL == play.plyl).FirstOrDefault().pbpl,
+                        PBPL = PBPL.FirstOrDefault(p => p.PLYL == play.plyl).pbpl,
                         SETL = play.SETL,
                         AIGR = airg,
                         PLYT = play.PLYT,
                         PLF_ = play.PLF_,
-                        Flag = PBPL.Where(p => p.PLYL == play.plyl).FirstOrDefault().Flag,
+                        Flag = PBPL.FirstOrDefault(p => p.PLYL == play.plyl).Flag,
                         vpos = play.vpos,
                         prct = 10
                     });
@@ -1654,12 +1655,12 @@ namespace MaddenTeamPlaybookEditor.ViewModels
                 PBAI.Add(new Madden.TeamPlaybook.PBAI
                 {
                     rec = PBAI.Select(p => p.rec).Max() + 1,
-                    PBPL = PBPL.Where(p => p.PLYL == _plyl[idx].plyl).FirstOrDefault().pbpl,
+                    PBPL = PBPL.FirstOrDefault(p => p.PLYL == _plyl[idx].plyl).pbpl,
                     SETL = _plyl[idx].SETL,
                     AIGR = airg,
                     PLYT = _plyl[idx].PLYT,
                     PLF_ = _plyl[idx].PLF_,
-                    Flag = PBPL.Where(p => p.PLYL == _plyl[idx].plyl).FirstOrDefault().Flag,
+                    Flag = PBPL.FirstOrDefault(p => p.PLYL == _plyl[idx].plyl).Flag,
                     vpos = _plyl[idx].vpos,
                     prct = 10
                 });

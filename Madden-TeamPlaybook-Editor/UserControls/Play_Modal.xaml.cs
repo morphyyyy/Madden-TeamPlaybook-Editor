@@ -36,13 +36,13 @@ namespace MaddenTeamPlaybookEditor.User_Controls
 
         private void iclIcons_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            tabPlayer.DataContext = play.Players.Where(player => player.IsSelected).FirstOrDefault();
+            tabPlayer.DataContext = play.Players.FirstOrDefault(player => player.IsSelected);
             tabPlayControls.SelectedIndex = 1;
         }
 
         private void iclPSALs_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            tabPlayer.DataContext = play.Players.Where(player => player.IsSelected).FirstOrDefault();
+            tabPlayer.DataContext = play.Players.FirstOrDefault(player => player.IsSelected);
             tabPlayControls.SelectedIndex = 1;
         }
 
@@ -63,7 +63,7 @@ namespace MaddenTeamPlaybookEditor.User_Controls
 
         private void txtPlayerUpdated(object sender, TextChangedEventArgs e)
         {
-            PlayerVM player = play.Players.Where(p => p.IsSelected).FirstOrDefault();
+            PlayerVM player = play.Players.FirstOrDefault(p => p.IsSelected);
             player.UpdatePlayer();
             player.Play.UpdatePlay();
             MainWindow window = UIHelper.FindVisualParent<MainWindow>(this);

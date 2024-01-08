@@ -10,16 +10,37 @@ namespace Madden.TeamPlaybook
     public class PLYL
     {
         public int rec { get; set; }
+        /// <summary>
+        /// SETL.setl
+        /// </summary>
         public int SETL { get; set; }
+        /// <summary>
+        /// PBPL.PLYL, PLPD.PLYL, PLRD.PLYL, PLYS.PLYL, PLCM.PLYL, PPCT.plyl, SDEF.plyl, SRFT.PLYL
+        /// </summary>
         public int plyl { get; set; }
         public int SRMM { get; set; }
+        /// <summary>
+        /// SETL.SITT
+        /// </summary>
         public int SITT { get; set; }
+        /// <summary>
+        /// PBCC.PTYP
+        /// </summary>
         public int PLYT { get; set; }
+        /// <summary>
+        /// PBAI.PLF_
+        /// </summary>
         public int PLF_ { get; set; }
+        /// <summary>
+        /// PBPL.name
+        /// </summary>
         public string name { get; set; }
         public int risk { get; set; }
         public int motn { get; set; }
         public int phlp { get; set; }
+        /// <summary>
+        /// PBAI.vpos
+        /// </summary>
         public int vpos { get; set; }
 
         public override string ToString()
@@ -62,7 +83,7 @@ namespace Madden.TeamPlaybook
 
             for (int i = 0; i < TableProps.RecordCount; i++)
             {
-                string _name = new string((char)0, (tableFields.Where(field => field.Name == TDB.StrReverse("name")).FirstOrDefault().Size / 8) + 1);
+                string _name = new string((char)0, (tableFields.FirstOrDefault(field => field.Name == TDB.StrReverse("name")).Size / 8) + 1);
 
                 TDB.TDBFieldGetValueAsString(DBIndex, TDB.StrReverse("PLYL"), TDB.StrReverse("name"), i, ref _name);
                 _name = _name.Replace(",", "");

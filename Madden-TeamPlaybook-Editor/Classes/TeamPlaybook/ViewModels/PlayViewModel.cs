@@ -146,7 +146,7 @@ namespace MaddenTeamPlaybookEditor.ViewModels
             IsExpanded = false;
             PBPL = pbpl;
             SubFormation = _SubFormation;
-            PLYL = SubFormation.Formation.Playbook.PLYL.Where(play => play.plyl == pbpl.PLYL).FirstOrDefault();
+            PLYL = SubFormation.Formation.Playbook.PLYL.FirstOrDefault(play => play.plyl == pbpl.PLYL);
             if (PLYL == null)
             {
                 PLYL = new PLYL();
@@ -169,8 +169,8 @@ namespace MaddenTeamPlaybookEditor.ViewModels
 
         public void UpdatePlay()
         {
-            PLPD = SubFormation.Formation.Playbook.PLPD.Where(play => play.PLYL == PBPL.PLYL).FirstOrDefault();
-            PLRD = SubFormation.Formation.Playbook.PLRD.Where(play => play.PLYL == PBPL.PLYL).FirstOrDefault();
+            PLPD = SubFormation.Formation.Playbook.PLPD.FirstOrDefault(play => play.PLYL == PBPL.PLYL);
+            PLRD = SubFormation.Formation.Playbook.PLRD.FirstOrDefault(play => play.PLYL == PBPL.PLYL);
             GetAudibles();
             GetSituations();
             GetPBAU();
@@ -183,7 +183,7 @@ namespace MaddenTeamPlaybookEditor.ViewModels
 
         public void AddHiddenSubFormation(PlayVM Play, TeamPlaybook Playbook)
         {
-            SETL SETL = Play.SubFormation.Formation.Playbook.SETL.Where(set => set.setl == Play.PLYL.SETL).FirstOrDefault();
+            SETL SETL = Play.SubFormation.Formation.Playbook.SETL.FirstOrDefault(set => set.setl == Play.PLYL.SETL);
             Playbook.SETL.Add(SETL);
 
             List<SETP> SETP = Play.SubFormation.Formation.Playbook.SETP.Where(player => player.SETL == Play.PLYL.SETL).Cast<SETP>().ToList();
