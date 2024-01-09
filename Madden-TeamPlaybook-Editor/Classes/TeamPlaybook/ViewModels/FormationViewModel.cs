@@ -37,41 +37,13 @@ namespace MaddenTeamPlaybookEditor.ViewModels
 
         }
 
-        public FormationVM(PBFM pbfm, TeamPlaybook _Playbook, TeamPlaybook _PlaybookSource = null)
+        public FormationVM(PBFM pbfm, FORM form, TeamPlaybook _Playbook, TeamPlaybook _PlaybookSource = null)
         {
             IsVisible = true;
             IsExpanded = false;
             Playbook = _Playbook;
             PBFM = pbfm;
-            PBST _PBST = new PBST();
-            if (_PlaybookSource == null)
-            {
-                _PBST = _Playbook.PBST.FirstOrDefault(set => set.PBFM == pbfm.pbfm);
-            }
-            else
-            {
-                _PBST = _PlaybookSource.PBST.FirstOrDefault(set => set.PBFM == pbfm.pbfm);
-            }
-            SETL SETL = new SETL();
-            try
-            {
-                if (_PBST.SETL != 0)
-                {
-                    if (_PlaybookSource == null)
-                    {
-                        SETL = _Playbook.SETL.FirstOrDefault(set => set.setl == _PBST.SETL);
-                    }
-                    else
-                    {
-                        SETL = _PlaybookSource.SETL.FirstOrDefault(set => set.setl == _PBST.SETL);
-                    }
-                }
-            }
-            catch
-            {
-
-            }
-            FORM = _Playbook.FORM.FirstOrDefault(form => form.form == SETL.FORM);
+            FORM = form;
             SubFormations = new ObservableCollection<SubFormationVM>();
             GetSubFormations();
         }

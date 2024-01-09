@@ -60,6 +60,30 @@ namespace MaddenTeamPlaybookEditor.ViewModels
         [Serializable]
         public class Alignment : INotifyPropertyChanged
         {
+            public static readonly Dictionary<string, string> Motion = new Dictionary<string, string>
+            {
+                {"Norm", "Normal"},
+                {"M1ri", "Motion 1 Right"},
+                {"M1le", "Motion 1 Left"},
+                {"M2ri", "Motion 1 Right"},
+                {"M2le", "Motion 1 Left"},
+                {"M3ri", "Motion 1 Right"},
+                {"M3le", "Motion 1 Left"},
+                {"M4ri", "Motion 1 Right"},
+                {"M4le", "Motion 1 Left"},
+                {"M5ri", "Motion 1 Right"},
+                {"M5le", "Motion 1 Left"},
+                {"SM1r", "Motion 1 Right"},
+                {"SM1l", "Motion 1 Left"},
+                {"SM2r", "Motion 2 Right"},
+                {"SM2l", "Motion 2 Left"},
+                {"SM3r", "Motion 3 Right"},
+                {"SM3l", "Motion 3 Left"},
+                {"SM4r", "Motion 4 Right"},
+                {"SM4l", "Motion 4 Left"},
+                {"SM5r", "Motion 5 Right"},
+                {"SM5l", "Motion 5 Left"},
+            };
             public SGFM SGFM { get; set; }
             public List<SETG> SETG { get; set; }
 
@@ -172,7 +196,7 @@ namespace MaddenTeamPlaybookEditor.ViewModels
             CurrentPackage = BasePackage;
             GetPackages();
             GetAlignments();
-            GetAlignment();
+            //GetAlignment("Norm");
             GetPlayers();
             GetSubCount();
             GetPlays();
@@ -1508,37 +1532,46 @@ namespace MaddenTeamPlaybookEditor.ViewModels
             }
         }
 
-        public void GetAlignment()
+        public void GetAlignment(string alignment)
         {
-            CurrentAlignment = Alignments.FirstOrDefault(poso => poso.SGFM.name == "Norm");
-        }
-
-        public void GetAlignment(Alignment alignment)
-        {
-            CurrentAlignment = Alignments.FirstOrDefault(poso => poso.SGFM.name == "Norm");
-            if (alignment.SGFM.name == "Norm") return;
-            CurrentAlignment.SGFM = alignment.SGFM;
-            for (int i = alignment.SETG.Count - 1; i >= 0; i--)
+            Alignment DefaultAlignment = Alignments.FirstOrDefault(a => a.SGFM.dflt == 1);
+            Alignment _targetAlignment = Alignments.FirstOrDefault(a => a.SGFM.name == alignment);
+            if (_targetAlignment.SGFM.dflt == 1)
             {
-                int index = CurrentAlignment.SETG.FindIndex(player => player.SETP == alignment.SETG[i].SETP);
-                CurrentAlignment.SETG[index] = alignment.SETG[i];
+                CurrentAlignment = new Alignment(DefaultAlignment.SGFM, DefaultAlignment.SETG);
+                return;
+            }
+            else
+            {
+                foreach (SETG _setg in CurrentAlignment.SETG)
+                {
+                    CurrentAlignment.SETG[CurrentAlignment.SETG.FindIndex(s => s.SETP == _setg.SETP)] = _setg;
+                }
             }
         }
 
         public void GetAlignments()
         {
             Alignments.Clear();
-            List<SGFM> sets = Formation.Playbook.SGFM.Where(alignment => alignment.SETL == PBST.SETL).ToList();
-            foreach (SGFM set in sets)
+            List<SGFM> alignments = Formation.Playbook.SGFM.Where(a => a.SETL == PBST.SETL).ToList();
+            if (alignments == null || alignments.Count == 0) return;
+            foreach (string key in Alignment.Motion.Keys)
             {
-                List<SETG> SETG = Formation.Playbook.SETG.Where(alignment => alignment.SGF_ == set.SGF_).ToList();
-                SETG.OrderBy(alignment => alignment.setg);
-                Alignments.Add(new Alignment(set, SETG));
+                SGFM alignment = alignments?.FirstOrDefault(m => m.name == key) ?? 
+                    new SGFM { 
+                        name = key, 
+                        dflt = 0, 
+                        SETL = PBST.SETL, 
+                        SGF_ = Formation.Playbook.SGFM.Select(m => m.SGF_).Max() + 1 };
+                List<SETG> SETG = Formation.Playbook.SETG.Where(a => a.SGF_ == alignment?.SGF_).ToList();
+                SETG.OrderBy(a => a.setg);
+                Alignments.Add(new Alignment(alignment, SETG));
             }
-            Alignments = Alignments.OrderBy(alignment => alignment.SGFM.SGF_).ToList();
+            Alignments = Alignments.OrderByDescending(alignment => alignment.SGFM.dflt).ThenBy(alignment => alignment.SGFM.name).ToList();
+
             foreach (Alignment alignment in Alignments)
             {
-                if (alignment.SGFM.name == "Norm")
+                if (alignment.SGFM.dflt == 1)
                 {
                     if (alignment.SETG.Count < 11)
                     {
@@ -1548,7 +1581,7 @@ namespace MaddenTeamPlaybookEditor.ViewModels
                 }
                 else
                 {
-                    foreach (SETG setg in Alignments.FirstOrDefault(_alignment => _alignment.SGFM.name == "Norm").SETG)
+                    foreach (SETG setg in Alignments.FirstOrDefault(_alignment => _alignment.SGFM.dflt == 1).SETG)
                     {
                         if (!alignment.SETG.Exists(poso => poso.SETP == setg.SETP))
                         {
@@ -1565,7 +1598,7 @@ namespace MaddenTeamPlaybookEditor.ViewModels
             Players = new ObservableCollection<PlayerVM>();
             if (CurrentAlignment != null)
             {
-                for (int i = 0; i <= 10; i++)
+                for (int i = 0; i < CurrentAlignment.SETG.Count; i++)
                 {
                     int poso = CurrentPackage.FirstOrDefault(_poso => _poso.setp == CurrentAlignment.SETG[i].SETP).poso;
                     Players.Add(new PlayerVM
