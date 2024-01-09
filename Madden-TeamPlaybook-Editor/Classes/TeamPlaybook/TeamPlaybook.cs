@@ -1155,7 +1155,7 @@ namespace MaddenTeamPlaybookEditor.ViewModels
 
                 if (!dbOnly)
                 {
-                    Formations.Insert(ord - 1, new FormationVM(PBFM[PBFM.Count - 1], this, Formation.Playbook));
+                    Formations.Insert(ord - 1, new FormationVM(Formation.PBFM, Formation.FORM, this, Formation.Playbook));
                 }
 
                 foreach (SubFormationVM subFormation in Formation.SubFormations)
@@ -1217,23 +1217,25 @@ namespace MaddenTeamPlaybookEditor.ViewModels
 
                 #region FORM
 
-                FORM.Add(new FORM
+                Madden.TeamPlaybook.FORM CPBform = new FORM
                 {
                     rec = FORM.Count,
                     form = Formation.CPFM.FORM,
                     FTYP = Formation.CPFM.FTYP,
                     name = Formation.CPFM.name
-                });
+                };
+
+                FORM.Add(CPBform);
 
                 #endregion
 
                 #region Add Formation
 
-                FormationVM formation = new FormationVM(CPBpbfm, this);
+                FormationVM formation = new FormationVM(CPBpbfm, CPBform, this);
 
                 int count = 0;
-
-                for (int i = 0; i < Formation.SubFormations.Count; i = Formation.SubFormations.Count > 64 ? i + 2 : i++)
+                int step = Formation.SubFormations.Count > 64 ? 2 : 1;
+                for (int i = 0; i < Formation.SubFormations.Count; i = i + step)
                 {
                     Formation.SubFormations[i].PGPL[0].ord_ = count;
                     if (Formation.SubFormations.Count > 64)
@@ -1424,7 +1426,28 @@ namespace MaddenTeamPlaybookEditor.ViewModels
 
             foreach (Madden.TeamPlaybook.PBFM formation in PBFM)
             {
-                Formations.Add(new FormationVM(formation, this));
+                Madden.TeamPlaybook.PBST _pbst = PBST.FirstOrDefault(s => s.PBFM == formation.pbfm);
+                Madden.TeamPlaybook.SETL _setl = SETL.FirstOrDefault(s => s.setl == _pbst.SETL);
+                Madden.TeamPlaybook.FORM _form;
+                if (FORM.Exists(f => f.form == _setl?.FORM))
+                {
+                    _form = FORM.FirstOrDefault(f => f.form == _setl.FORM);
+                }
+                else
+                {
+                    _form = new Madden.TeamPlaybook.FORM
+                    {
+                        rec = FORM.Select(f => f.rec).Max() + 1,
+                        FTYP = formation.FTYP,
+                        form = FORM.Select(f => f.form).Max() + 1,
+                        name = formation.name
+                    };
+                    if (_setl != null)
+                    {
+                        FORM.Add(_form);
+                    }
+                }
+                Formations.Add(new FormationVM(formation, _form, this));
             }
         }
 

@@ -102,7 +102,7 @@
             <Line.Stroke>
                 <SolidColorBrush>
                     <SolidColorBrush.Color>
-                        <Color A="80" R="160" G="160" B="0"/>
+                        <Color A="144" R="204" G="128" B="40"/>
                     </SolidColorBrush.Color>
                 </SolidColorBrush>
             </Line.Stroke>
@@ -435,7 +435,6 @@
                                 <TextBox Grid.Column="11" Grid.Row="1" Text="{Binding PLYL.vpos, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextChanged="plylChanged"/>
                             </Grid>
                         </TabItem>
-
                         <TabItem Header="PLPD">
                             <DockPanel>
                                 <Grid 
