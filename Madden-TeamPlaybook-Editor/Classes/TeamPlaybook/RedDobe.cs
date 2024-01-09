@@ -747,7 +747,7 @@ namespace MaddenTeamPlaybookEditor.ViewModels
                 {31,6.22}, // "4th & Short"},
                 {32,7.80}, // "4th & Medium"},
                 {33,13.80}, // "4th & Long"},
-                {41,20.11}, // "4rd & Extra Long"},
+                {41,19.11}, // "4rd & Extra Long"},
                 {25,6.06}, // "Red Zone Fringe"},
                 {26,6.89}, //"Red Zone 16 to 20"},
                 {27,7.63}, // "Red Zone 11 to 15"},
