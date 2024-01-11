@@ -1532,21 +1532,27 @@ namespace MaddenTeamPlaybookEditor.ViewModels
             }
         }
 
-        public void GetAlignment(string alignment)
+        public void GetAlignment(SGFM alignment)
         {
-            Alignment DefaultAlignment = Alignments.FirstOrDefault(a => a.SGFM.dflt == 1);
-            Alignment _targetAlignment = Alignments.FirstOrDefault(a => a.SGFM.name == alignment);
-            if (_targetAlignment.SGFM.dflt == 1)
+            Alignment DefaultAlignment = Alignments.FirstOrDefault(a => a.SGFM.name == "Norm");
+            if (DefaultAlignment.SETG.Count < 11)
             {
-                CurrentAlignment = new Alignment(DefaultAlignment.SGFM, DefaultAlignment.SETG);
+                MessageBox.Show("Default SETG Missing for " + PBST.name);
+            }
+            if (alignment.name == "Norm")
+            {
+                CurrentAlignment = DefaultAlignment;
                 return;
             }
             else
             {
-                foreach (SETG _setg in CurrentAlignment.SETG)
+                Alignment targetAlignment = Alignments.FirstOrDefault(a => a.SGFM.name == alignment.name);
+                CurrentAlignment = new Alignment(targetAlignment?.SGFM, new List<SETG>(targetAlignment?.SETG?.ToList()));
+                foreach (SETG _setg in DefaultAlignment.SETG.Where(s => !CurrentAlignment.SETG.Contains(s)))
                 {
-                    CurrentAlignment.SETG[CurrentAlignment.SETG.FindIndex(s => s.SETP == _setg.SETP)] = _setg;
+                    CurrentAlignment.SETG.Add(_setg);
                 }
+                CurrentAlignment.SETG = CurrentAlignment.SETG.OrderBy(s => s.SETP).ToList();
             }
         }
 
@@ -1564,33 +1570,12 @@ namespace MaddenTeamPlaybookEditor.ViewModels
                         SETL = PBST.SETL, 
                         SGF_ = Formation.Playbook.SGFM.Select(m => m.SGF_).Max() + 1 };
                 List<SETG> SETG = Formation.Playbook.SETG.Where(a => a.SGF_ == alignment?.SGF_).ToList();
-                SETG.OrderBy(a => a.setg);
+                SETG.OrderBy(a => a.SETP);
                 Alignments.Add(new Alignment(alignment, SETG));
             }
             Alignments = Alignments.OrderByDescending(alignment => alignment.SGFM.dflt).ThenBy(alignment => alignment.SGFM.name).ToList();
 
-            foreach (Alignment alignment in Alignments)
-            {
-                if (alignment.SGFM.dflt == 1)
-                {
-                    if (alignment.SETG.Count < 11)
-                    {
-                        MessageBox.Show("SETG Missing for " + PBST.name);
-                    }
-                    CurrentAlignment = alignment;
-                }
-                else
-                {
-                    foreach (SETG setg in Alignments.FirstOrDefault(_alignment => _alignment.SGFM.dflt == 1).SETG)
-                    {
-                        if (!alignment.SETG.Exists(poso => poso.SETP == setg.SETP))
-                        {
-                            alignment.SETG.Add(setg);
-                        }
-                    }
-                    alignment.SETG = alignment.SETG.OrderBy(_alignment => _alignment.SETP).ToList();
-                }
-            }
+            GetAlignment(Alignments.FirstOrDefault(a => a.SGFM.name == "Norm")?.SGFM);
         }
 
         public void GetPlayers()
@@ -1600,7 +1585,7 @@ namespace MaddenTeamPlaybookEditor.ViewModels
             {
                 for (int i = 0; i < CurrentAlignment.SETG.Count; i++)
                 {
-                    int poso = CurrentPackage.FirstOrDefault(_poso => _poso.setp == CurrentAlignment.SETG[i].SETP).poso;
+                    int poso = CurrentPackage.FirstOrDefault(p => p.setp == CurrentAlignment.SETG[i].SETP).poso;
                     Players.Add(new PlayerVM
                     (
                         new PLYS

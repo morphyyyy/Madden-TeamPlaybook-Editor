@@ -115,7 +115,7 @@
             <Line.Stroke>
                 <SolidColorBrush>
                     <SolidColorBrush.Color>
-                        <Color A="80" R="160" G="160" B="0"/>
+                        <Color A="144" R="204" G="128" B="40"/>
                     </SolidColorBrush.Color>
                 </SolidColorBrush>
             </Line.Stroke>
@@ -303,25 +303,35 @@
                                 <TextBlock x:Name="tabAlignment" Text="{Binding SGFM.name}"/>
                             </DataTemplate>
                         </TabControl.ItemTemplate>
-                        <TabControl.ContentTemplate>
+                        <!--<TabControl.ContentTemplate>
                             <DataTemplate/>
-                        </TabControl.ContentTemplate>
+                        </TabControl.ContentTemplate>-->
                         <TabControl.ItemContainerStyle>
                             <Style TargetType="{x:Type TabItem}" BasedOn="{StaticResource FormationTabItem}"></Style>
                         </TabControl.ItemContainerStyle>
                     </TabControl>
                 </TabItem>
                 <TabItem Header="Packages">
-                    <ComboBox 
-                        x:Name="tabPackages"
+                    <TabControl
+                        x:Name="tabPackages" 
+                        ItemsSource="{Binding Packages}"
                         Background="Transparent" 
                         BorderBrush="Transparent" 
-                        DockPanel.Dock="Top"
-                        VerticalAlignment="Top"
+                        VerticalAlignment="Bottom"
                         HorizontalAlignment="Center"
-                        ItemsSource="{Binding Packages}"
-                        DisplayMemberPath="SPKF.name">
-                    </ComboBox>
+                        SelectionChanged="tabAlignments_SelectionChanged">
+                        <TabControl.ItemTemplate>
+                            <DataTemplate DataType="{x:Type TeamPlaybookViewModels:SubFormationVM}">
+                                <TextBlock x:Name="tabAlignment" Text="{Binding SPKF.name}"/>
+                            </DataTemplate>
+                        </TabControl.ItemTemplate>
+                        <!--<TabControl.ContentTemplate>
+                            <DataTemplate/>
+                        </TabControl.ContentTemplate>-->
+                        <TabControl.ItemContainerStyle>
+                            <Style TargetType="{x:Type TabItem}" BasedOn="{StaticResource FormationTabItem}"></Style>
+                        </TabControl.ItemContainerStyle>
+                    </TabControl>
                 </TabItem>
             </TabControl>
 

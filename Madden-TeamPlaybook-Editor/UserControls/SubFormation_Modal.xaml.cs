@@ -29,10 +29,16 @@ namespace MaddenTeamPlaybookEditor.User_Controls
 
         private void tabAlignments_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (((Alignment)((TabControl)sender).SelectedItem) != null)
+            TabControl tabControl = sender as TabControl;
+            if (tabControl.SelectedItem == null) return;
+            if (tabControl.SelectedItem is Alignment)
             {
-                this.subFormation.CurrentAlignment = this.subFormation.Alignments.FirstOrDefault(alignment => alignment == ((Alignment)((TabControl)sender).SelectedItem));
+                this.subFormation.GetAlignment(((Alignment)((TabControl)sender).SelectedItem).SGFM);
                 this.subFormation.GetPlayers();
+            }
+            else if (tabControl.SelectedItem is Package)
+            { 
+
             }
         }
     }
