@@ -11,6 +11,7 @@ using System.Windows.Media;
 using System.Globalization;
 using MaddenTeamPlaybookEditor.User_Controls;
 using System.Windows.Markup;
+using static MaddenTeamPlaybookEditor.ViewModels.SubFormationVM;
 
 namespace MaddenTeamPlaybookEditor.ViewModels
 {
@@ -224,48 +225,42 @@ namespace MaddenTeamPlaybookEditor.ViewModels
             //this.SETP.artx = (int)(this.SETP.artx * xRatio);
             //this.SETP.arty = (int)(this.SETP.arty * yRatio);
             this.XY = point;
-            if (this.Play != null)
+            if (this.SETG.SGF_ != this.Play?.SubFormation?.CurrentAlignment?.SGFM?.SGF_)
             {
-                if (this.Play.SubFormation.CurrentAlignment != null)
+                if (!Play.SubFormation.Formation.Playbook.SGFM.Contains(this.Play.SubFormation.CurrentAlignment.SGFM))
                 {
-                    if (this.SETG.SGF_ != this.Play.SubFormation.CurrentAlignment.SGFM.SGF_)
-                    {
-                        int index = this.Play.SubFormation.CurrentAlignment.SETG.FindIndex(setp => setp.SETP == this.SETG.SETP);
-                        if (!Play.SubFormation.Formation.Playbook.SGFM.Contains(this.Play.SubFormation.CurrentAlignment.SGFM))
-                        {
-                            this.Play.SubFormation.CurrentAlignment.SGFM.SGF_ = Play.SubFormation.Formation.Playbook.SGFM.Max(m => m.SGF_) + 1;
-                            this.Play.SubFormation.CurrentAlignment.SGFM.rec = Play.SubFormation.Formation.Playbook.SGFM.Max(m => m.rec) + 1;
-                            Play.SubFormation.Formation.Playbook.SGFM.Add(this.Play.SubFormation.CurrentAlignment.SGFM);
-                        }
-                        if (this.SETG.SGF_ != this.Play.SubFormation.CurrentAlignment.SGFM.SGF_)
-                        {
-                            SETG newSETG = new SETG
-                            {
-                                rec = this.Play.SubFormation.Formation.Playbook.SETG.Max(x => x.rec) + 1,
-                                setg = this.Play.SubFormation.Formation.Playbook.SETG.Max(setg => setg.setg) + 1,
-                                SETP = this.SETG.SETP,
-                                SGF_ = this.Play.SubFormation.CurrentAlignment.SGFM.SGF_,
-                                SF__ = this.SETG.SF__,
-                                x___ = (float)(_XY.X * .0875),
-                                y___ = (float)(_XY.Y * -.1),
-                                fx__ = this.SETG.fx__,
-                                fy__ = this.SETG.fy__,
-                                anm_ = this.SETG.anm_,
-                                dir_ = this.SETG.dir_,
-                                fanm = this.SETG.fanm,
-                                fdir = this.SETG.fdir
-                            };
-                            SETG = newSETG;
-                            this.Play.SubFormation.CurrentAlignment.SETG[index] = newSETG;
-                            Play.SubFormation.Formation.Playbook.SETG.Add(newSETG);
-                        }
-                    }
-                    else
-                    {
-                        this.SETG.x___ = (float)(_XY.X * .0875);
-                        this.SETG.y___ = (float)(_XY.Y * -.1);
-                    }
+                    this.Play.SubFormation.CurrentAlignment.SGFM.SGF_ = Play.SubFormation.Formation.Playbook.SGFM.Max(m => m.SGF_) + 1;
+                    this.Play.SubFormation.CurrentAlignment.SGFM.rec = Play.SubFormation.Formation.Playbook.SGFM.Max(m => m.rec) + 1;
+                    Play.SubFormation.Formation.Playbook.SGFM.Add(this.Play.SubFormation.CurrentAlignment.SGFM);
                 }
+                SETG newSETG = new SETG
+                {
+                    rec = this.Play.SubFormation.Formation.Playbook.SETG.Max(x => x.rec) + 1,
+                    setg = this.Play.SubFormation.Formation.Playbook.SETG.Max(setg => setg.setg) + 1,
+                    SETP = this.SETG.SETP,
+                    SGF_ = this.Play.SubFormation.CurrentAlignment.SGFM.SGF_,
+                    SF__ = this.SETG.SF__,
+                    x___ = (float)(_XY.X * .0875),
+                    y___ = (float)(_XY.Y * -.1),
+                    fx__ = this.SETG.fx__,
+                    fy__ = this.SETG.fy__,
+                    anm_ = this.SETG.anm_,
+                    dir_ = this.SETG.dir_,
+                    fanm = this.SETG.fanm,
+                    fdir = this.SETG.fdir
+                };
+                SETG = newSETG;
+                int poso = this.Play.SubFormation.CurrentAlignment.SETG.FindIndex(setp => setp.SETP == this.SETG.SETP);
+                this.Play.SubFormation.CurrentAlignment.SETG[poso] = newSETG;
+                Alignment alignment = this.Play.SubFormation.Alignments.FirstOrDefault(a => a.SGFM == this.Play?.SubFormation?.CurrentAlignment?.SGFM);
+                alignment.SETG.Add(SETG);
+                alignment.SETG = alignment.SETG.OrderBy(s => s.SETP).ToList();
+                Play.SubFormation.Formation.Playbook.SETG.Add(newSETG);
+            }
+            else
+            {
+                this.SETG.x___ = (float)(_XY.X * .0875);
+                this.SETG.y___ = (float)(_XY.Y * -.1);
             }
         }
 

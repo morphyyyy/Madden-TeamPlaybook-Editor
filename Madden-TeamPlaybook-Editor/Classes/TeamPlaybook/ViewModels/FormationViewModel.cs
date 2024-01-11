@@ -8,6 +8,7 @@ using System.Windows;
 using Madden.TeamPlaybook;
 using MaddenCustomPlaybookEditor.ViewModels;
 using MaddenTeamPlaybookEditor.User_Controls;
+using static MaddenTeamPlaybookEditor.ViewModels.SubFormationVM;
 
 namespace MaddenTeamPlaybookEditor.ViewModels
 {
@@ -120,27 +121,13 @@ namespace MaddenTeamPlaybookEditor.ViewModels
 
             #region Alignments
 
-            List<SGFM> SGFM = new List<SGFM>();
-            List<SETG> SETG = new List<SETG>();
-            for (int i = SubFormation.Alignments.Count - 1; i >= 0; i--)
+            foreach (Alignment alignment in SubFormation.Alignments)
             {
-                SGFM.Add(Playbook.SGFM.FirstOrDefault(sub => sub.rec == SubFormation.Alignments[i].SGFM.rec));
-                for (int n = SubFormation.Alignments[i].SETG.Count - 1; n >= 0; n--)
+                Playbook.SGFM.Remove(alignment.SGFM);
+                foreach (SETG setg in alignment.SETG)
                 {
-                    SETG.Add(Playbook.SETG.FirstOrDefault(sub => sub.rec == SubFormation.Alignments[i].SETG[n].rec));
+                    Playbook.SETG.Remove(setg);
                 }
-            }
-
-            SGFM = new List<SGFM>(SGFM.OrderBy(s => s.rec).ToList());
-            for (int i = SGFM.Count - 1; i >= 0; i--)
-            {
-                Playbook.SGFM.RemoveAt(Playbook.SGFM.IndexOf(SGFM[i]));
-            }
-
-            SETG = new List<SETG>(SETG.OrderBy(s => s.rec).ToList());
-            for (int i = SETG.Count - 1; i >= 0; i--)
-            {
-                Playbook.SETG.Remove(Playbook.SETG.FirstOrDefault(s => s.rec == SETG[i].rec));
             }
 
             #endregion
@@ -182,22 +169,13 @@ namespace MaddenTeamPlaybookEditor.ViewModels
 
             #region Alignment
 
-            List<SGFM> SGFM = Playbook.SGFM.Where(alignment => alignment.SETL == SubFormation.setl).Cast<SGFM>().OrderBy(s => s.rec).ToList();
-            List<SETG> SETG = new List<SETG>();
-            foreach (SGFM alignment in SGFM)
+            foreach (SGFM alignment in Playbook.SGFM.Where(alignment => alignment.SETL == SubFormation.setl))
             {
-                SETG.AddRange(Playbook.SETG.Where(a => a.SGF_ == alignment.SGF_).Cast<SETG>().ToList());
-            }
-            SETG = SETG.OrderBy(s => s.rec).Cast<SETG>().ToList();
-
-            for (int i = SGFM.Count - 1; i >= 0; i--)
-            {
-                Playbook.SGFM.RemoveAt(Playbook.SGFM.IndexOf(SGFM[i]));
-            }
-
-            for (int i = SETG.Count - 1; i >= 0; i--)
-            {
-                Playbook.SETG.RemoveAt(Playbook.SETG.IndexOf(SETG[i]));
+                Playbook.SGFM.Remove(alignment);
+                foreach (SETG setg in Playbook.SETG.Where(a => a.SGF_ == alignment.SGF_).ToList())
+                {
+                    Playbook.SETG.Remove(setg);
+                }
             }
 
             #endregion

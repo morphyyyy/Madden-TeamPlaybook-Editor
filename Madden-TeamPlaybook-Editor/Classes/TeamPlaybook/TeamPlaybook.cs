@@ -1104,23 +1104,12 @@ namespace MaddenTeamPlaybookEditor.ViewModels
             {
                 Formation.RemoveSubFormation(Formation.SubFormations[i]);
             }
-
-            int ftyp = Formation.PBFM.FTYP;
-            foreach (Madden.TeamPlaybook.PBFM formation in PBFM.Where(form => form.FTYP == ftyp).Cast<Madden.TeamPlaybook.PBFM>().ToList())
+            foreach (Madden.TeamPlaybook.PBFM pbfm in PBFM.Where(form => form.FTYP == Formation.PBFM?.FTYP && form.ord_ > Formation.PBFM.ord_))
             {
-                PBFM[PBFM.IndexOf(PBFM.FirstOrDefault(form => form.rec == formation.rec))].ord_--;
+                pbfm.ord_--;
             }
-            PBFM.RemoveAt(PBFM.IndexOf(PBFM.FirstOrDefault(form => form.rec == Formation.PBFM.rec)));
-
-            try
-            {
-                FORM.RemoveAt(FORM.IndexOf(FORM.FirstOrDefault(form => form.rec == Formation.FORM.rec)));
-            }
-            catch
-            {
-
-            }
-
+            PBFM.Remove(Formation.PBFM);
+            FORM.Remove(Formation.FORM);
             Formations.Remove(Formation);
         }
 
