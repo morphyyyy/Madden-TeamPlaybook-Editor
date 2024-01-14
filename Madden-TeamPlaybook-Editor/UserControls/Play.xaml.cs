@@ -53,7 +53,7 @@ namespace MaddenTeamPlaybookEditor.User_Controls
                 // Save document
                 string filename = dlg.FileName;
 
-                SaveCanvasToFile(play.ToARTLCanvas(1), 96, filename);
+                SaveCanvasToFile(play.ToCanvas(1, false), 96, filename);
             }
         }
 

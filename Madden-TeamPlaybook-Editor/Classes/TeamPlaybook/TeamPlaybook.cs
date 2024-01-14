@@ -1092,9 +1092,9 @@ namespace MaddenTeamPlaybookEditor.ViewModels
             filePath = filepath;
             GetTables();
             ReIndexTables();
-            BuildPlaybook();
             GetType();
-            BuildSituations();
+            GetSituations();
+            BuildPlaybook();
             GetTendencies();
         }
 
@@ -1450,7 +1450,7 @@ namespace MaddenTeamPlaybookEditor.ViewModels
                 "";
         }
 
-        public void BuildSituations()
+        public void GetSituations()
         {
             if (Type == "Offense")
             {

@@ -6,6 +6,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
+using System.Windows.Media;
 using Madden.Team;
 using Madden.TeamPlaybook;
 using MaddenTeamPlaybookEditor.User_Controls;
@@ -323,10 +324,29 @@ namespace MaddenTeamPlaybookEditor.ViewModels
             {
                 Situations.Clear();
             }
-            foreach (PBAI pbai in SubFormation.Formation.Playbook.PBAI.Where(situation => situation.PBPL == PBPL.pbpl))
+            foreach (PBAI pbai in SubFormation.Formation.Playbook.PBAI.Where(s => s.PBPL == PBPL.pbpl))
             {
                 Situations.Add(pbai);
             }
+
+            List<int> situations = SubFormation.Formation.Playbook.Situations.Where(s => !Situations.Exists(k => k.AIGR == s.Key)).Select(s => s.Key).ToList();
+
+            foreach (int key in situations)
+            {
+                Situations.Add(new PBAI
+                {
+                    AIGR = key,
+                    Flag = PBPL.Flag,
+                    PBPL = PBPL.pbpl,
+                    PLF_ = PLYL.PLF_,
+                    PLYT = PLYL.PLYT,
+                    prct = 0,
+                    rec = SubFormation.Formation.Playbook.PBAI.Select(p => p.rec).Max() + 1,
+                    SETL = PLYL.SETL,
+                    vpos = PLYL.vpos
+                });
+            }
+            Situations = Situations.OrderBy(s => s.Name).ToList();
         }
 
         public void GetPBAU()
@@ -393,59 +413,67 @@ namespace MaddenTeamPlaybookEditor.ViewModels
             }
         } 
 
-        public Canvas ToPlayArtCanvas(int Scale)
+        public Canvas ToCanvas(int Scale, bool PSALView)
         {
-            Canvas cvsSave = new Canvas { Height = 750 * Scale, Width = 533 * Scale };
+            Canvas cvsSave = new Canvas { Width = 512 * Scale, Height = 512 * Scale};
             foreach (PlayerVM player in PlayerPlayartView)
             {
-                Playart playart = new Playart { Player = player, PSALView = true, Scale = 2 * Scale, AbsolutePositioning = true };
-                Canvas.SetLeft(playart, (SubFormation.Formation.Playbook.LOS.X + player.XY.X) * Scale);
-                Canvas.SetTop(playart, (SubFormation.Formation.Playbook.LOS.Y + player.XY.Y) * Scale);
+                Playart playart = new Playart { Player = player, PSALView = PSALView, Scale = PSALView ? 2 : 1 * Scale, AbsolutePositioning = true };
+                Canvas.SetLeft(playart, PSALView ? (SubFormation.Formation.Playbook.LOS.X + player.XY.X) : player.SETP.artx * Scale);
+                Canvas.SetTop(playart, PSALView ? (450 + player.XY.Y) : player.SETP.arty * Scale);
                 cvsSave.Children.Add(playart);
             }
             foreach (PlayerVM player in PlayerPlayartView)
             {
-                PlayerIcon playart = new PlayerIcon { Player = player, ShowPosition = false, Scale = 2 * Scale, AbsolutePositioning = true };
-                Canvas.SetLeft(playart, (SubFormation.Formation.Playbook.LOS.X + player.XY.X) * Scale);
-                Canvas.SetTop(playart, (SubFormation.Formation.Playbook.LOS.Y + player.XY.Y) * Scale);
+                PlayerIcon playart = new PlayerIcon { Player = player, ShowPosition = false, Scale = PSALView ? 2 : 1 * Scale, AbsolutePositioning = true };
+                Canvas.SetLeft(playart, PSALView ? (SubFormation.Formation.Playbook.LOS.X + player.XY.X) : player.SETP.artx * Scale);
+                Canvas.SetTop(playart, PSALView ? (450 + player.XY.Y) : player.SETP.arty * Scale);
                 cvsSave.Children.Add(playart);
             }
-
-            var size = new Size(533 * Scale, 750 * Scale);
+            TransformGroup tg = new TransformGroup();
+            double scale = PSALView ? .9 : 460.8 / 180;
+            tg.Children.Add(new ScaleTransform(scale, scale));
+            Point offset = PSALView ? new Point(533 * .05, 533 * .05) : new Point(9.0 * scale, 40.0 * scale);
+            tg.Children.Add(new TranslateTransform(offset.X, offset.Y));
+            cvsSave.RenderTransform = tg;
+            Size size = new Size(cvsSave.Width, cvsSave.Height);
             cvsSave.Measure(size);
             cvsSave.Arrange(new Rect(size));
             cvsSave.UpdateLayout();
-
-            return cvsSave;
-        }
-
-        public Canvas ToARTLCanvas(int Scale)
-        {
-            Canvas cvsSave = new Canvas { Height = 120 * Scale, Width = 180 * Scale };
-            foreach (PlayerVM player in PlayerPlayartView)
-            {
-                Playart playart = new Playart { Player = player, PSALView = false, Scale = 1 * Scale, AbsolutePositioning = true };
-                Canvas.SetLeft(playart, player.SETP.artx * Scale);
-                Canvas.SetTop(playart, player.SETP.arty * Scale);
-                cvsSave.Children.Add(playart);
-            }
-            foreach (PlayerVM player in PlayerPlayartView)
-            {
-                PlayerIcon playart = new PlayerIcon { Player = player, ShowPosition = false, Scale = 1 * Scale, AbsolutePositioning = true };
-                Canvas.SetLeft(playart, player.SETP.artx * Scale);
-                Canvas.SetTop(playart, player.SETP.arty * Scale);
-                cvsSave.Children.Add(playart);
-            }
-
-            var size = new Size(180 * Scale, 120 * Scale);
-            cvsSave.Measure(size);
-            cvsSave.Arrange(new Rect(size));
-            cvsSave.UpdateLayout();
+            //Window window = new Window
+            //{
+            //    Title = "PSAL Editor",
+            //    Content = cvsSave,
+            //    Background = Brushes.Black,
+            //    SizeToContent = SizeToContent.WidthAndHeight,
+            //    ResizeMode = ResizeMode.NoResize
+            //};
+            //window.ShowDialog();
 
             return cvsSave;
         }
 
         #endregion
+
+        public void AddPLPD()
+        {
+            if (PLPD == null)
+            {
+                SubFormation.Formation.Playbook.PLPD.Add(new PLPD
+                {
+                    rec = SubFormation.Formation.Playbook.PLPD.Select(p => p.rec).Max() + 1,
+                    PLYL = PLYL.plyl,
+                    progressions = new List<Progression>
+                    {
+                        new Progression(),
+                        new Progression(),
+                        new Progression(),
+                        new Progression(),
+                        new Progression()
+                    }
+                });
+            }
+        }
 
         #region Audibles
 

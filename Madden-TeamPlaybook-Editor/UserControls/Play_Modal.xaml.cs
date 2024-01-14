@@ -37,27 +37,16 @@ namespace MaddenTeamPlaybookEditor.User_Controls
         private void iclIcons_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             tabPlayer.DataContext = play.Players.FirstOrDefault(player => player.IsSelected);
-            tabPlayControls.SelectedIndex = 1;
         }
 
         private void iclPSALs_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             tabPlayer.DataContext = play.Players.FirstOrDefault(player => player.IsSelected);
-            tabPlayControls.SelectedIndex = 1;
-        }
-
-        private void bdrField_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
-        {
-            if (e.LeftButton == System.Windows.Input.MouseButtonState.Pressed)
-            {
-                tabPlayControls.SelectedIndex = 0;
-            }
         }
 
         private void dgdPSALupdated(object sender, EventArgs e)
         {
-            PlayerVM player = play.Players.FirstOrDefault(p => p.IsSelected);
-            player?.UpdatePlayer();
+            play?.Players?.FirstOrDefault(p => p.IsSelected)?.UpdatePlayer();
             iclPSALs.Items.Refresh();
         }
 
@@ -167,7 +156,7 @@ namespace MaddenTeamPlaybookEditor.User_Controls
                 // Save document
                 string filename = dlg.FileName;
 
-                SaveCanvasToFile(play.ToPlayArtCanvas(1), 96, filename);
+                SaveCanvasToFile(play.ToCanvas(1, true), 96, filename);
             }
         }
 
@@ -193,8 +182,24 @@ namespace MaddenTeamPlaybookEditor.User_Controls
 
         private void plylChanged(object sender, TextChangedEventArgs e)
         {
+            //cbxPLYL_SRMM.Items.Refresh();
             play.UpdatePLYL();
-            tabPlay.Items.Refresh();
+        }
+
+        private void plylChanged(object sender, SelectionChangedEventArgs e)
+        {
+            play.UpdatePLYL();
+        }
+
+        private void addPLPD(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            play.AddPLPD();
+            play.UpdatePlay();
+        }
+
+        private void deletePLPD(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+
         }
     }
 }

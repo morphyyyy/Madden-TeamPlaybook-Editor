@@ -70,20 +70,13 @@ namespace MaddenTeamPlaybookEditor.ViewModels
             {
                 Playbook.PBST[SubFormations[i].PBST.rec].ord_--;
             }
-            Playbook.PBST.RemoveAt(Playbook.PBST.IndexOf(Playbook.PBST.FirstOrDefault(set => set.rec == SubFormation.PBST.rec)));
+            Playbook.PBST.Remove(SubFormation.PBST);
 
             #endregion
 
             #region Database
 
-            try
-            {
-                Playbook.SETL.RemoveAt(Playbook.SETL.IndexOf(Playbook.SETL.FirstOrDefault(set => set.rec == SubFormation.SETL.rec)));
-            }
-            catch
-            {
-
-            }
+            Playbook.SETL.Remove(SubFormation.SETL);
 
             #endregion
 
@@ -91,30 +84,16 @@ namespace MaddenTeamPlaybookEditor.ViewModels
 
             for (int i = SubFormation.BasePackage.Count - 1; i >= 0; i--)
             {
-                Playbook.SETP.RemoveAt(Playbook.SETP.IndexOf(SubFormation.BasePackage[i]));
+                Playbook.SETP.Remove(SubFormation.BasePackage[i]);
             }
 
-            List<SPKF> SPKF = new List<SPKF>();
-            List<SPKG> SPKG = new List<SPKG>();
-            for (int i = SubFormation.Packages.Count - 1; i >= 0; i--)
+            foreach (Package package in SubFormation.Packages)
             {
-                SPKF.Add(Playbook.SPKF.FirstOrDefault(sub => sub.rec == SubFormation.Packages[i].SPKF.rec));
-                for (int n = SubFormation.Packages[i].SPKG.Count - 1; n >= 0; n--)
+                Playbook.SPKF.Remove(package.SPKF);
+                foreach (SPKG spkg in package.SPKG)
                 {
-                    SPKG.Add(Playbook.SPKG.FirstOrDefault(sub => sub.rec == SubFormation.Packages[i].SPKG[n].rec));
+                    Playbook.SPKG.Remove(spkg);
                 }
-            }
-
-            SPKF = new List<SPKF>(SPKF.OrderBy(s => s.rec).ToList());
-            for (int i = SPKF.Count - 1; i >= 0; i--)
-            {
-                Playbook.SPKF.RemoveAt(Playbook.SPKF.IndexOf(SPKF[i]));
-            }
-
-            SPKG = new List<SPKG>(SPKG.OrderBy(s => s.rec).ToList());
-            for (int i = SPKG.Count - 1; i >= 0; i--)
-            {
-                Playbook.SPKG.RemoveAt(Playbook.SPKG.IndexOf(SPKG[i]));
             }
 
             #endregion
