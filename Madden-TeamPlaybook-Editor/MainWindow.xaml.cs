@@ -126,8 +126,8 @@ namespace MaddenTeamPlaybookEditor
                 {
                     TeamPlaybook = new TeamPlaybook(filePath);
                     BindPlaybook(TeamPlaybook);
-                    xpdTeamPlaybook.Visibility = Visibility.Visible;
-                    xpdCustomPlaybook.Visibility = Visibility.Collapsed;
+                    tclTeamPlaybook.Visibility = Visibility.Visible;
+                    tclCustomPlaybook.Visibility = Visibility.Collapsed;
                     tvwPlaybook.Items.Refresh();
                     tvwPlaybook.UpdateLayout();
                     int sum = TeamPlaybook.PBAI.Sum(x => x.prct);
@@ -144,8 +144,8 @@ namespace MaddenTeamPlaybookEditor
 
                     CustomPlaybook = new MaddenCustomPlaybookEditor.ViewModels.CustomPlaybook(filePath);
                     BindPlaybook(CustomPlaybook);
-                    xpdCustomPlaybook.Visibility = Visibility.Visible;
-                    xpdTeamPlaybook.Visibility = Visibility.Collapsed;
+                    tclCustomPlaybook.Visibility = Visibility.Visible;
+                    tclTeamPlaybook.Visibility = Visibility.Collapsed;
 
                     //Window codePopup = new Window { Title = "Create Playbook", Height = 200, Width = 300, SizeToContent = SizeToContent.WidthAndHeight };
                     //ComboBox listUnit = new ComboBox { DisplayMemberPath = "Key", SelectedValuePath = "Value", ItemsSource = new List<KeyValuePair<string, string>> { new KeyValuePair<string, string>("Offense", "Madden_"), new KeyValuePair<string, string>("Defense", "Madden_Def_") } };
@@ -207,7 +207,7 @@ namespace MaddenTeamPlaybookEditor
             lvwPlaysByRouteDepth.DataContext = TeamPlaybook.Plays;
             lvwPlaysByRouteDepth.Items.Filter = PlayListFilter;
             tclTables.DataContext = Playbook;
-            tvwPSALs.DataContext = Playbook.GetPSALlist();
+            //tvwPSALs.DataContext = Playbook.GetPSALlist();
             //tabPlaybook.DataContext = Playbook;
         }
 
@@ -219,7 +219,7 @@ namespace MaddenTeamPlaybookEditor
         public void BindPlaybook(MaddenCustomPlaybookEditor.ViewModels.CustomPlaybook Playbook)
         {
             wdwPlaybookEditor.Title = "Madden Team Playbook Editor - " + Path.GetFileName(Playbook.filePath);
-            tclCustomPlaybookTables.DataContext = Playbook;
+            tclCustomPlaybook.DataContext = Playbook;
         }
 
         #endregion
@@ -374,6 +374,7 @@ namespace MaddenTeamPlaybookEditor
             {
                 TeamPlaybook.RemoveFormation(TeamPlaybook.Formations[i]);
             }
+            tclTables.Items.Refresh();
         }
 
         private void deleteAllSubFormations(object sender, RoutedEventArgs e)
@@ -538,16 +539,16 @@ namespace MaddenTeamPlaybookEditor
             {
                 uclSubFormationModal.subFormation = (SubFormationVM)((TreeView)sender).SelectedItem;
                 uclSubFormationModal.DataContext = (SubFormationVM)((TreeView)sender).SelectedItem;
-                xpdPlayModal.Visibility = Visibility.Collapsed;
-                xpdSubFormationModal.Visibility = Visibility.Visible;
+                uclPlayModal.Visibility = Visibility.Collapsed;
+                uclSubFormationModal.Visibility = Visibility.Visible;
             }
 
             if (((TreeView)sender).SelectedItem is MaddenTeamPlaybookEditor.ViewModels.PlayVM)
             {
                 uclPlayModal.play = (PlayVM)((TreeView)sender).SelectedItem;
                 uclPlayModal.DataContext = (PlayVM)((TreeView)sender).SelectedItem;
-                xpdSubFormationModal.Visibility = Visibility.Collapsed;
-                xpdPlayModal.Visibility = Visibility.Visible;
+                uclSubFormationModal.Visibility = Visibility.Collapsed;
+                uclPlayModal.Visibility = Visibility.Visible;
                 for (int i = 0; i < lvwSituations.Items.Count; i++)
                 {
                     Madden.TeamPlaybook.PBAI _pbai = uclPlayModal.play.Situations.FirstOrDefault(p => p.AIGR == ((Madden.TeamPlaybook.PBAI)lvwSituations.Items[i]).AIGR);
@@ -590,23 +591,27 @@ namespace MaddenTeamPlaybookEditor
 
         private void tvwPSALs_Selected(object sender, RoutedEventArgs e)
         {
-            PlayerVM _player = uclPlayModal.play != null ? uclPlayModal.play.Players.FirstOrDefault(p => p.IsSelected) : null;
-            if (tvwPSALs.SelectedItem is PlayVM && _player != null)
-            {
-                _player.PLYS.PSAL = ((PlayVM)tvwPSALs.SelectedItem).Players[0].PLYS.PSAL;
-                _player.PLYS.ARTL = ((PlayVM)tvwPSALs.SelectedItem).Players[0].PLYS.ARTL;
-                _player.PLYS.PLRR = ((PlayVM)tvwPSALs.SelectedItem).Players[0].PLYS.PLRR;
-                _player.UpdatePlayer();
-                _player.Play.UpdatePlay();
-                UserControl _play = UIHelper.FindChild<UserControl>(tvwPlaybook, "uclPlay", uclPlayModal.play);
-                ItemsControl playart = UIHelper.FindChild<ItemsControl>(_play, "iclPlayarts");
-                if (playart != null)
-                {
-                    playart.Items.Refresh();
-                }
-                uclPlayModal.iclPSALs.Items.Refresh();
-                uclPlayModal.tabPlayer.Items.Refresh();
-            }
+            //Working Code
+            //PlayerVM _player = uclPlayModal.play != null ? uclPlayModal.play.Players.FirstOrDefault(p => p.IsSelected) : null;
+            //if (tvwPSALs.SelectedItem is PlayVM && _player != null)
+            //{
+            //    _player.PLYS.PSAL = ((PlayVM)tvwPSALs.SelectedItem).Players[0].PLYS.PSAL;
+            //    _player.PLYS.ARTL = ((PlayVM)tvwPSALs.SelectedItem).Players[0].PLYS.ARTL;
+            //    _player.PLYS.PLRR = ((PlayVM)tvwPSALs.SelectedItem).Players[0].PLYS.PLRR;
+            //    _player.UpdatePlayer();
+            //    _player.Play.UpdatePlay();
+            //    UserControl _play = UIHelper.FindChild<UserControl>(tvwPlaybook, "uclPlay", uclPlayModal.play);
+            //    ItemsControl playart = UIHelper.FindChild<ItemsControl>(_play, "iclPlayarts");
+            //    if (playart != null)
+            //    {
+            //        playart.Items.Refresh();
+            //    }
+            //    uclPlayModal.iclPSALs.Items.Refresh();
+            //    uclPlayModal.tabPlayer.Items.Refresh();
+            //}
+
+
+            //Old Code
             //TreeViewItem tvi = e.OriginalSource as TreeViewItem;
 
             //if (tvi == null || e.Handled) return;
@@ -824,7 +829,7 @@ namespace MaddenTeamPlaybookEditor
         {
             //Check whether the target item is meeting your condition
             bool _isEqual = false;
-            if (_sourceItem.DataContext.GetType() == _targetItem.DataContext.GetType())
+            if (_sourceItem?.DataContext?.GetType() == _targetItem?.DataContext?.GetType())
             {
                 _isEqual = true;
                 if (_sourceItem.DataContext is FormationVM)
@@ -1168,7 +1173,7 @@ namespace MaddenTeamPlaybookEditor
                 {
                     // Save document
                     string filename = Path.GetDirectoryName(dlg.FileName) + "\\" + TeamPlaybook.Plays[n].PLYL.plyl.ToString() + Path.GetExtension(dlg.FileName);
-                    SaveCanvasToFile(TeamPlaybook.Plays[n].ToPlayArtCanvas(1), 96, filename);
+                    SaveCanvasToFile(TeamPlaybook.Plays[n].ToCanvas(1, false), 96, filename);
                     //progressBar.Value = n / (TeamPlaybook.Plays.Count - 1);
                 }
                 //progressBar.Value = 0;
@@ -1193,7 +1198,7 @@ namespace MaddenTeamPlaybookEditor
                 {
                     // Save document
                     string filename = Path.GetDirectoryName(dlg.FileName) + "\\" + TeamPlaybook.Plays[n].PLYL.plyl.ToString() + Path.GetExtension(dlg.FileName);
-                    SaveCanvasToFile(TeamPlaybook.Plays[n].ToARTLCanvas(1), 96, filename);
+                    SaveCanvasToFile(TeamPlaybook.Plays[n].ToCanvas(1, false), 96, filename);
                     //progressBar.Value = n / (TeamPlaybook.Plays.Count - 1);
                 }
                 //progressBar.Value = 0;

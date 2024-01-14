@@ -59,9 +59,8 @@ namespace MaddenTeamPlaybookEditor.User_Controls
                 dc.DrawGeometry(playerIconBrush, iconPen, Player.Icon);
                 if (ShowPosition)
                 {
-                    string label = Player.DCHT == null ? Player.EPos + (Int32.Parse(Player.DPos) > 1 ? " " + Player.DPos : "") : Player.Number.ToString();
                     FormattedText EPos = new FormattedText(
-                        label,
+                        Player.Label,
                         CultureInfo.GetCultureInfo("en-us"),
                         FlowDirection.LeftToRight,
                         new Typeface(new FontFamily("Tahoma"), FontStyles.Normal, FontWeights.Black, FontStretches.Normal),

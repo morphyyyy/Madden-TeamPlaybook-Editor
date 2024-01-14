@@ -99,6 +99,13 @@ namespace MaddenTeamPlaybookEditor.ViewModels
         public DCHT DCHT { get; set; }
         public PLAY Player { get; set; }
 
+        public string Label
+        {
+            get
+            {
+                return DCHT == null ? EPos + (Int32.Parse(DPos) > 1 ? " " + DPos : "") : Number.ToString();
+            }
+        }
         public string DPos { get; set; }
         public string EPos { get; set; }
         public string FirstName { get; set; }

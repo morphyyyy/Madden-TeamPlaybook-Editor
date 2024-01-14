@@ -91,133 +91,158 @@
                 />
     </UserControl.Resources>
 
-    <Canvas x:Name="cvsField" Height="950" Width="533">
+    <DockPanel>
 
-        <Border 
-            Name="bdrField"
-            Background="{StaticResource FieldBrush}"
-            CornerRadius="10"
-            Width="533"
-            Height="950"
-            />
+        <Canvas x:Name="cvsField" DockPanel.Dock="Left" Height="950" Width="533">
 
-        <Line X1="0" Y1="599.5" X2="533" Y2="599.5" StrokeThickness="5">
-            <Line.Stroke>
-                <SolidColorBrush>
-                    <SolidColorBrush.Color>
-                        <Color A="96" R="0" G="0" B="0"/>
-                    </SolidColorBrush.Color>
-                </SolidColorBrush>
-            </Line.Stroke>
-        </Line>
+            <Border 
+                Name="bdrField"
+                Background="{StaticResource FieldBrush}"
+                CornerRadius="10"
+                Width="533"
+                Height="950"
+                />
 
-        <Line X1="0" Y1="499.5" X2="533" Y2="499.5" StrokeThickness="5">
-            <Line.Stroke>
-                <SolidColorBrush>
-                    <SolidColorBrush.Color>
-                        <Color A="144" R="204" G="128" B="40"/>
-                    </SolidColorBrush.Color>
-                </SolidColorBrush>
-            </Line.Stroke>
-        </Line>
+            <Line X1="0" Y1="599.5" X2="533" Y2="599.5" StrokeThickness="5">
+                <Line.Stroke>
+                    <SolidColorBrush>
+                        <SolidColorBrush.Color>
+                            <Color A="96" R="0" G="0" B="0"/>
+                        </SolidColorBrush.Color>
+                    </SolidColorBrush>
+                </Line.Stroke>
+            </Line>
 
-        <ItemsControl 
-            IsEnabled="True"
-            x:Name="iclIcons"
-            ItemsSource="{Binding PlayerPlayartView, Mode=TwoWay}"
-            Canvas.Left="266.5"
-            Canvas.Top="600">
-            <ItemsControl.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <Canvas x:Name="cvsPlayers"/>
-                </ItemsPanelTemplate>
-            </ItemsControl.ItemsPanel>
-            <ItemsControl.ItemTemplate>
-                <DataTemplate>
-                    <Canvas>
-                        <UserControls:PlayerIcon
-                            x:Name="clnIcon"
-                            Player="{Binding}"
-                            Scale="2"
-                            ShowPosition="True"
-                            AbsolutePositioning="True"
-                            Draggable="True"/>
-                    </Canvas>
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
-            <ItemsControl.ItemContainerStyle>
-                <Style>
-                    <Setter 
-                        Property="Canvas.Left" 
-                        Value="{Binding XY.X}"/>
-                    <Setter 
-                        Property="Canvas.Top" 
-                        Value="{Binding XY.Y}"/>
-                    <Style.Triggers>
+            <Line X1="0" Y1="499.5" X2="533" Y2="499.5" StrokeThickness="5">
+                <Line.Stroke>
+                    <SolidColorBrush>
+                        <SolidColorBrush.Color>
+                            <Color A="144" R="204" G="128" B="40"/>
+                        </SolidColorBrush.Color>
+                    </SolidColorBrush>
+                </Line.Stroke>
+            </Line>
 
-                        <Trigger Property="UserControls:PlayerIcon.IsMouseOver" Value="True">
-                            <Setter Property="UserControls:PlayerIcon.Effect">
-                                <Setter.Value>
-                                    <DropShadowEffect ShadowDepth="0" Color="White" Opacity="1" BlurRadius="20"/>
-                                </Setter.Value>
-                            </Setter>
-                            <Setter Property="UserControls:PlayerIcon.RenderTransform">
-                                <Setter.Value>
-                                    <ScaleTransform ScaleX="2" ScaleY="2"/>
-                                </Setter.Value>
-                            </Setter>
-                        </Trigger>
+            <ItemsControl 
+                IsEnabled="True"
+                x:Name="iclIcons"
+                ItemsSource="{Binding PlayerPlayartView, Mode=TwoWay}"
+                Canvas.Left="266.5"
+                Canvas.Top="600">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <Canvas x:Name="cvsPlayers"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Canvas>
+                            <UserControls:PlayerIcon
+                                x:Name="clnIcon"
+                                Player="{Binding}"
+                                Scale="2"
+                                ShowPosition="True"
+                                AbsolutePositioning="True"
+                                Draggable="True"/>
+                        </Canvas>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+                <ItemsControl.ItemContainerStyle>
+                    <Style>
+                        <Setter 
+                            Property="Canvas.Left" 
+                            Value="{Binding XY.X}"/>
+                        <Setter 
+                            Property="Canvas.Top" 
+                            Value="{Binding XY.Y}"/>
+                        <Style.Triggers>
 
-                        <!--<Trigger Property="Canvas.IsMouseOver" Value="True">
-                            <Trigger.EnterActions>
-                                <BeginStoryboard>
-                                    <Storyboard>
-                                        <DoubleAnimation
-                                            Storyboard.TargetProperty="(Canvas).(RenderTransform).(ScaleTransform.ScaleX)"
-                                            From="1" To="2" Duration="0:0:0.2"/>
-                                        <DoubleAnimation
-                                            Storyboard.TargetProperty="(Canvas).(RenderTransform).(ScaleTransform.ScaleY)"
-                                            From="1" To="2" Duration="0:0:0.2"/>
-                                    </Storyboard>
-                                </BeginStoryboard>
-                            </Trigger.EnterActions>
-                        </Trigger>
+                            <Trigger Property="UserControls:PlayerIcon.IsMouseOver" Value="True">
+                                <Setter Property="UserControls:PlayerIcon.Effect">
+                                    <Setter.Value>
+                                        <DropShadowEffect ShadowDepth="0" Color="White" Opacity="1" BlurRadius="20"/>
+                                    </Setter.Value>
+                                </Setter>
+                                <Setter Property="UserControls:PlayerIcon.RenderTransform">
+                                    <Setter.Value>
+                                        <ScaleTransform ScaleX="2" ScaleY="2"/>
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+
+                            <!--<Trigger Property="Canvas.IsMouseOver" Value="True">
+                                <Trigger.EnterActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimation
+                                                Storyboard.TargetProperty="(Canvas).(RenderTransform).(ScaleTransform.ScaleX)"
+                                                From="1" To="2" Duration="0:0:0.2"/>
+                                            <DoubleAnimation
+                                                Storyboard.TargetProperty="(Canvas).(RenderTransform).(ScaleTransform.ScaleY)"
+                                                From="1" To="2" Duration="0:0:0.2"/>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </Trigger.EnterActions>
+                            </Trigger>
                         
-                        <Trigger Property="Canvas.IsMouseOver" Value="False">
-                            <Trigger.EnterActions>
-                                <BeginStoryboard>
-                                    <Storyboard>
-                                        <DoubleAnimation
-                                            Storyboard.TargetProperty="(Canvas).(RenderTransform).(ScaleTransform.ScaleX)"
-                                            From="2" To="1" Duration="0:0:0.2"/>
-                                        <DoubleAnimation
-                                            Storyboard.TargetProperty="(Canvas).(RenderTransform).(ScaleTransform.ScaleY)"
-                                            From="2" To="1" Duration="0:0:0.2"/>
-                                    </Storyboard>
-                                </BeginStoryboard>
-                            </Trigger.EnterActions>
-                        </Trigger>-->
+                            <Trigger Property="Canvas.IsMouseOver" Value="False">
+                                <Trigger.EnterActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimation
+                                                Storyboard.TargetProperty="(Canvas).(RenderTransform).(ScaleTransform.ScaleX)"
+                                                From="2" To="1" Duration="0:0:0.2"/>
+                                            <DoubleAnimation
+                                                Storyboard.TargetProperty="(Canvas).(RenderTransform).(ScaleTransform.ScaleY)"
+                                                From="2" To="1" Duration="0:0:0.2"/>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </Trigger.EnterActions>
+                            </Trigger>-->
 
-                    </Style.Triggers>
-                </Style>
-            </ItemsControl.ItemContainerStyle>
-        </ItemsControl>
+                        </Style.Triggers>
+                    </Style>
+                </ItemsControl.ItemContainerStyle>
+            </ItemsControl>
+
+            <!--<DockPanel VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="0,0,0,0" x:Name="ReferenceInfo" Canvas.Left="0" Canvas.Top="0" Width="{Binding ActualWidth, ElementName=cvsField}" Height="{Binding ActualHeight, ElementName=cvsField}">
+                <TabControl
+                    x:Name="tabAlignments" 
+                    ItemsSource="{Binding Alignments}"
+                    Background="Transparent" 
+                    BorderBrush="Transparent" 
+                    VerticalAlignment="Bottom"
+                    HorizontalAlignment="Center"
+                    SelectionChanged="tabAlignments_SelectionChanged">
+                    <TabControl.ItemTemplate>
+                        <DataTemplate DataType="{x:Type TeamPlaybookViewModels:SubFormationVM}">
+                            <TextBlock x:Name="tabAlignment" Text="{Binding SGFM.name}"/>
+                        </DataTemplate>
+                    </TabControl.ItemTemplate>
+                    <TabControl.ContentTemplate>
+                        <DataTemplate/>
+                    </TabControl.ContentTemplate>
+                    <TabControl.ItemContainerStyle>
+                        <Style TargetType="{x:Type TabItem}" BasedOn="{StaticResource FormationTabItem}"></Style>
+                    </TabControl.ItemContainerStyle>
+                </TabControl>
+            </DockPanel>-->
+    
+        </Canvas>
 
         <DockPanel 
-            Margin="0,0,0,0" 
-            Canvas.Left="0" 
-            Canvas.Top="0" 
-            Height="800" 
-            Width="533"
+            DockPanel.Dock="Left"
+            Width="575"
+            Margin="5"
             LastChildFill="False">
 
             <TabControl 
-                x:Name="tabPlayer"
-                Background="Transparent" 
-                BorderBrush="Transparent" 
-                DockPanel.Dock="Top"
-                VerticalAlignment="Top"
-                HorizontalAlignment="Stretch">
+                    x:Name="tabPlayer"
+                    Background="Transparent" 
+                    BorderBrush="Transparent" 
+                    DockPanel.Dock="Top"
+                    VerticalAlignment="Top"
+                    HorizontalAlignment="Stretch">
                 <TabItem Header="PBST">
                     <Grid HorizontalAlignment="Center">
                         <Grid.ColumnDefinitions>
@@ -291,21 +316,21 @@
                 </TabItem>
                 <TabItem Header="Alignments">
                     <TabControl
-                        x:Name="tabAlignments" 
-                        ItemsSource="{Binding Alignments}"
-                        Background="Transparent" 
-                        BorderBrush="Transparent" 
-                        VerticalAlignment="Bottom"
-                        HorizontalAlignment="Center"
-                        SelectionChanged="tabAlignments_SelectionChanged">
+                            x:Name="tabAlignments" 
+                            ItemsSource="{Binding Alignments}"
+                            Background="Transparent" 
+                            BorderBrush="Transparent" 
+                            VerticalAlignment="Bottom"
+                            HorizontalAlignment="Center"
+                            SelectionChanged="tabAlignments_SelectionChanged">
                         <TabControl.ItemTemplate>
                             <DataTemplate DataType="{x:Type TeamPlaybookViewModels:SubFormationVM}">
                                 <TextBlock x:Name="tabAlignment" Text="{Binding SGFM.name}"/>
                             </DataTemplate>
                         </TabControl.ItemTemplate>
                         <!--<TabControl.ContentTemplate>
-                            <DataTemplate/>
-                        </TabControl.ContentTemplate>-->
+                                <DataTemplate/>
+                            </TabControl.ContentTemplate>-->
                         <TabControl.ItemContainerStyle>
                             <Style TargetType="{x:Type TabItem}" BasedOn="{StaticResource FormationTabItem}"></Style>
                         </TabControl.ItemContainerStyle>
@@ -313,21 +338,21 @@
                 </TabItem>
                 <TabItem Header="Packages">
                     <TabControl
-                        x:Name="tabPackages" 
-                        ItemsSource="{Binding Packages}"
-                        Background="Transparent" 
-                        BorderBrush="Transparent" 
-                        VerticalAlignment="Bottom"
-                        HorizontalAlignment="Center"
-                        SelectionChanged="tabAlignments_SelectionChanged">
+                            x:Name="tabPackages" 
+                            ItemsSource="{Binding Packages}"
+                            Background="Transparent" 
+                            BorderBrush="Transparent" 
+                            VerticalAlignment="Bottom"
+                            HorizontalAlignment="Center"
+                            SelectionChanged="tabAlignments_SelectionChanged">
                         <TabControl.ItemTemplate>
                             <DataTemplate DataType="{x:Type TeamPlaybookViewModels:SubFormationVM}">
                                 <TextBlock x:Name="tabAlignment" Text="{Binding SPKF.name}"/>
                             </DataTemplate>
                         </TabControl.ItemTemplate>
                         <!--<TabControl.ContentTemplate>
-                            <DataTemplate/>
-                        </TabControl.ContentTemplate>-->
+                                <DataTemplate/>
+                            </TabControl.ContentTemplate>-->
                         <TabControl.ItemContainerStyle>
                             <Style TargetType="{x:Type TabItem}" BasedOn="{StaticResource FormationTabItem}"></Style>
                         </TabControl.ItemContainerStyle>
@@ -337,29 +362,6 @@
 
         </DockPanel>
 
-        <!--<DockPanel VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="0,0,0,0" x:Name="ReferenceInfo" Canvas.Left="0" Canvas.Top="0" Width="{Binding ActualWidth, ElementName=cvsField}" Height="{Binding ActualHeight, ElementName=cvsField}">
-            <TabControl
-                x:Name="tabAlignments" 
-                ItemsSource="{Binding Alignments}"
-                Background="Transparent" 
-                BorderBrush="Transparent" 
-                VerticalAlignment="Bottom"
-                HorizontalAlignment="Center"
-                SelectionChanged="tabAlignments_SelectionChanged">
-                <TabControl.ItemTemplate>
-                    <DataTemplate DataType="{x:Type TeamPlaybookViewModels:SubFormationVM}">
-                        <TextBlock x:Name="tabAlignment" Text="{Binding SGFM.name}"/>
-                    </DataTemplate>
-                </TabControl.ItemTemplate>
-                <TabControl.ContentTemplate>
-                    <DataTemplate/>
-                </TabControl.ContentTemplate>
-                <TabControl.ItemContainerStyle>
-                    <Style TargetType="{x:Type TabItem}" BasedOn="{StaticResource FormationTabItem}"></Style>
-                </TabControl.ItemContainerStyle>
-            </TabControl>
-        </DockPanel>-->
-    
-    </Canvas>
-    
+    </DockPanel>
+
 </UserControl>

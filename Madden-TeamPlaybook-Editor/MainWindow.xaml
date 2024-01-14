@@ -13,13 +13,12 @@
     x:Class="MaddenTeamPlaybookEditor.MainWindow"
     Title="Madden Team Playbook Editor" 
     WindowStartupLocation="CenterScreen"
-    Icon="/Resources/Playbook_Editor.ico" 
-    UseLayoutRounding="True" 
+    Icon="/Resources/Playbook_Editor.ico"
     WindowStyle="ThreeDBorderWindow" 
     ScrollViewer.HorizontalScrollBarVisibility="Visible"
-    WindowState="Normal"
-    SizeToContent="WidthAndHeight"
-    >
+    Width="1920"
+    Height="1080"
+    WindowState="Maximized">
 
     <Window.Background>
         <ImageBrush 
@@ -52,13 +51,19 @@
             <Setter Property="Background" Value="Transparent"/>
             <Setter Property="BorderBrush" Value="Transparent"/>
             <Setter Property="Foreground" Value="Black"/>
-            <Setter Property="Margin" Value="5"/>
         </Style>
+        <ImageBrush 
+                x:Key="FieldBrush"
+                ImageSource="./Resources/full_field.jpg"
+                RenderOptions.BitmapScalingMode="Fant"
+                Stretch="UniformToFill"
+                AlignmentY="Top"
+                />
     </Window.Resources>
 
-    <DockPanel Width="Auto" Height="Auto" HorizontalAlignment="Stretch">
+    <DockPanel>
 
-        <Menu DockPanel.Dock="Top" IsMainMenu="True">
+        <Menu IsMainMenu="True" DockPanel.Dock="Top">
             <MenuItem Header="_File">
                 <MenuItem Header="Open" Click="mnuOpen_Click"/>
                 <Separator />
@@ -89,15 +94,18 @@
                     Table Definitions
                 </Hyperlink>
             </MenuItem>
+            
         </Menu>
 
-        <Expander x:Name="xpdTeamPlaybook"
-            Foreground="LightGray"
-            Header="Team Playbook"
-            ExpandDirection="Down"
-            IsExpanded="True">
+        <Grid Margin="5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
 
-            <!--<TabControl x:Name="tabPlaybook" ItemsSource="{Binding Formations}" Background="Transparent" BorderBrush="Transparent"  VerticalAlignment="Top" HorizontalAlignment="Left">
+            <Grid Grid.Column="0" Margin="5" Width="600">
+
+                <!--<TabControl x:Name="tabPlaybook" ItemsSource="{Binding Formations}" Background="Transparent" BorderBrush="Transparent"  VerticalAlignment="Top" HorizontalAlignment="Left">
                 <TabControl.ItemTemplate>
                     <DataTemplate DataType="{x:Type TeamPlaybookViewModels:FormationVM}">
                         <UserControls:Formation x:Name="tabFormation" formation="{Binding}"/>
@@ -141,119 +149,118 @@
                 </TabControl.ItemContainerStyle>
             </TabControl>-->
 
-            <TabControl>
+                <TabControl x:Name="tclTeamPlaybook">
 
-                <TabItem Header="Playbook">
-                    
-                    <TreeView x:Name="tvwPlaybook"
-                        Margin="5"
-                        Background="{x:Null}"
-                        BorderBrush="{x:Null}"
-                        Foreground="{x:Null}"
-                        DockPanel.Dock="Top"
-                        SelectedItemChanged="tvwPlaybook_SelectedItemChanged"
-                        TreeViewItem.Selected="tvwPlaybook_Selected"
-                        MouseDoubleClick="tvwPlaybook_DoubleClick"
-                        AllowDrop="True"
-                        ItemsSource="{Binding Formations}"
-                        Width="600"
-                        ScrollViewer.VerticalScrollBarVisibility="Hidden"
-                        ScrollViewer.HorizontalScrollBarVisibility="Hidden">
+                    <TabItem Header="Playbook">
 
-                        <TreeView.CommandBindings>
-                            <CommandBinding Command="ApplicationCommands.Copy" Executed="CopyToClipboard" />
-                            <CommandBinding Command="ApplicationCommands.Paste" Executed="PasteFromClipboard" />
-                            <CommandBinding Command="ApplicationCommands.Delete" Executed="Delete" />
-                        </TreeView.CommandBindings>
+                        <TreeView x:Name="tvwPlaybook"
+                            Width="600"
+                            Background="{x:Null}"
+                            BorderBrush="{x:Null}"
+                            Foreground="{x:Null}"
+                            DockPanel.Dock="Top"
+                            SelectedItemChanged="tvwPlaybook_SelectedItemChanged"
+                            TreeViewItem.Selected="tvwPlaybook_Selected"
+                            MouseDoubleClick="tvwPlaybook_DoubleClick"
+                            AllowDrop="True"
+                            ItemsSource="{Binding Formations}"
+                            ScrollViewer.VerticalScrollBarVisibility="Hidden"
+                            ScrollViewer.HorizontalScrollBarVisibility="Hidden">
 
-                        <TreeView.Resources>
+                            <TreeView.CommandBindings>
+                                <CommandBinding Command="ApplicationCommands.Copy" Executed="CopyToClipboard" />
+                                <CommandBinding Command="ApplicationCommands.Paste" Executed="PasteFromClipboard" />
+                                <CommandBinding Command="ApplicationCommands.Delete" Executed="Delete" />
+                            </TreeView.CommandBindings>
 
-                            <ResourceDictionary>
+                            <TreeView.Resources>
 
-                                <HierarchicalDataTemplate DataType="{x:Type TeamPlaybookViewModels:FormationVM}" ItemsSource="{Binding SubFormations}">
+                                <ResourceDictionary>
 
-                                    <HierarchicalDataTemplate.ItemContainerStyle>
-                                        <Style TargetType="TreeViewItem" BasedOn="{StaticResource SubFormationTreeViewItem}">
-                                            <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}" />
-                                            <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay}" />
-                                            <Style.Triggers>
-                                                <DataTrigger Binding="{Binding IsVisible}" Value="True">
-                                                    <Setter Property="Visibility" Value="Visible" />
-                                                </DataTrigger>
-                                                <DataTrigger Binding="{Binding IsVisible}" Value="False">
-                                                    <Setter Property="Visibility" Value="Collapsed" />
-                                                </DataTrigger>
-                                            </Style.Triggers>
-                                        </Style>
-                                    </HierarchicalDataTemplate.ItemContainerStyle>
+                                    <HierarchicalDataTemplate DataType="{x:Type TeamPlaybookViewModels:FormationVM}" ItemsSource="{Binding SubFormations}">
 
-                                    <UserControls:Formation x:Name="uclFormation" formation="{Binding}" IsEnabled="True" DockPanel.Dock="Left"/>
+                                        <HierarchicalDataTemplate.ItemContainerStyle>
+                                            <Style TargetType="TreeViewItem" BasedOn="{StaticResource SubFormationTreeViewItem}">
+                                                <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}" />
+                                                <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay}" />
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding IsVisible}" Value="True">
+                                                        <Setter Property="Visibility" Value="Visible" />
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{Binding IsVisible}" Value="False">
+                                                        <Setter Property="Visibility" Value="Collapsed" />
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </HierarchicalDataTemplate.ItemContainerStyle>
 
-                                </HierarchicalDataTemplate>
+                                        <UserControls:Formation x:Name="uclFormation" formation="{Binding}" IsEnabled="True" DockPanel.Dock="Left"/>
 
-                                <HierarchicalDataTemplate DataType="{x:Type TeamPlaybookViewModels:SubFormationVM}" ItemsSource="{Binding Plays}">
+                                    </HierarchicalDataTemplate>
 
-                                    <HierarchicalDataTemplate.ItemContainerStyle>
-                                        <Style TargetType="TreeViewItem" BasedOn="{StaticResource PlayTreeViewItem}">
-                                            <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}" />
-                                            <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay}" />
-                                            <Style.Triggers>
-                                                <DataTrigger Binding="{Binding IsVisible}" Value="True">
-                                                    <Setter Property="Visibility" Value="Visible" />
-                                                </DataTrigger>
-                                                <DataTrigger Binding="{Binding IsVisible}" Value="False">
-                                                    <Setter Property="Visibility" Value="Collapsed" />
-                                                </DataTrigger>
-                                            </Style.Triggers>
-                                        </Style>
-                                    </HierarchicalDataTemplate.ItemContainerStyle>
+                                    <HierarchicalDataTemplate DataType="{x:Type TeamPlaybookViewModels:SubFormationVM}" ItemsSource="{Binding Plays}">
 
-                                    <UserControls:SubFormation x:Name="uclSubFormation" subFormation="{Binding}" showPackage="True"/>
+                                        <HierarchicalDataTemplate.ItemContainerStyle>
+                                            <Style TargetType="TreeViewItem" BasedOn="{StaticResource PlayTreeViewItem}">
+                                                <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}" />
+                                                <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay}" />
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding IsVisible}" Value="True">
+                                                        <Setter Property="Visibility" Value="Visible" />
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{Binding IsVisible}" Value="False">
+                                                        <Setter Property="Visibility" Value="Collapsed" />
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </HierarchicalDataTemplate.ItemContainerStyle>
 
-                                </HierarchicalDataTemplate>
+                                        <UserControls:SubFormation x:Name="uclSubFormation" subFormation="{Binding}" showPackage="True"/>
 
-                                <HierarchicalDataTemplate DataType="{x:Type TeamPlaybookViewModels:PlayVM}">
+                                    </HierarchicalDataTemplate>
 
-                                    <DockPanel>
+                                    <HierarchicalDataTemplate DataType="{x:Type TeamPlaybookViewModels:PlayVM}">
 
-                                        <UserControls:Play x:Name="uclPlay"
-                                                           play="{Binding}" 
-                                                           showAudibles="True" 
-                                                           DockPanel.Dock="Top"/>
+                                        <DockPanel>
 
-                                        <StackPanel x:Name="pnlAudibles"
+                                            <UserControls:Play x:Name="uclPlay"
+                                                            play="{Binding}" 
+                                                            showAudibles="True" 
+                                                            DockPanel.Dock="Top"/>
+
+                                            <StackPanel x:Name="pnlAudibles"
                                                     Orientation="Horizontal" 
                                                     HorizontalAlignment="Center" 
                                                     VerticalAlignment="Bottom" 
                                                     DockPanel.Dock="Top">
 
-                                            <ToggleButton x:Name="AudibleQuick" ToolTip="Short Pass (X)" Height="18" IsChecked="{Binding isShortAudible}" >
-                                                <ToggleButton.Style>
-                                                    <Style TargetType="{x:Type ToggleButton}" BasedOn="{StaticResource AudibleQuick}"/>
-                                                </ToggleButton.Style>
-                                            </ToggleButton>
+                                                <ToggleButton x:Name="AudibleQuick" ToolTip="Short Pass (X)" Height="18" IsChecked="{Binding isShortAudible}" >
+                                                    <ToggleButton.Style>
+                                                        <Style TargetType="{x:Type ToggleButton}" BasedOn="{StaticResource AudibleQuick}"/>
+                                                    </ToggleButton.Style>
+                                                </ToggleButton>
 
-                                            <ToggleButton x:Name="AudibleRun" ToolTip="Run (Y/Triangle)" Height="18" IsChecked="{Binding isRunAudible}" >
-                                                <ToggleButton.Style>
-                                                    <Style TargetType="{x:Type ToggleButton}" BasedOn="{StaticResource AudibleRun}"/>
-                                                </ToggleButton.Style>
-                                            </ToggleButton>
+                                                <ToggleButton x:Name="AudibleRun" ToolTip="Run (Y/Triangle)" Height="18" IsChecked="{Binding isRunAudible}" >
+                                                    <ToggleButton.Style>
+                                                        <Style TargetType="{x:Type ToggleButton}" BasedOn="{StaticResource AudibleRun}"/>
+                                                    </ToggleButton.Style>
+                                                </ToggleButton>
 
-                                            <ToggleButton x:Name="AudibleDeep" ToolTip="Deep Pass (LB/L1)" Height="18" IsChecked="{Binding isDeepAudible}" >
-                                                <ToggleButton.Style>
-                                                    <Style TargetType="{x:Type ToggleButton}" BasedOn="{StaticResource AudibleDeep}"/>
-                                                </ToggleButton.Style>
-                                            </ToggleButton>
+                                                <ToggleButton x:Name="AudibleDeep" ToolTip="Deep Pass (LB/L1)" Height="18" IsChecked="{Binding isDeepAudible}" >
+                                                    <ToggleButton.Style>
+                                                        <Style TargetType="{x:Type ToggleButton}" BasedOn="{StaticResource AudibleDeep}"/>
+                                                    </ToggleButton.Style>
+                                                </ToggleButton>
 
-                                            <ToggleButton x:Name="AudibleFake" ToolTip="Play Action (RB/R1)" Height="18" IsChecked="{Binding isFakeAudible}" >
-                                                <ToggleButton.Style>
-                                                    <Style TargetType="{x:Type ToggleButton}" BasedOn="{StaticResource AudibleFake}"/>
-                                                </ToggleButton.Style>
-                                            </ToggleButton>
+                                                <ToggleButton x:Name="AudibleFake" ToolTip="Play Action (RB/R1)" Height="18" IsChecked="{Binding isFakeAudible}" >
+                                                    <ToggleButton.Style>
+                                                        <Style TargetType="{x:Type ToggleButton}" BasedOn="{StaticResource AudibleFake}"/>
+                                                    </ToggleButton.Style>
+                                                </ToggleButton>
 
-                                        </StackPanel>
+                                            </StackPanel>
 
-                                        <TextBlock 
+                                            <TextBlock 
                                             Text="{Binding PBPL.name}"
                                             DockPanel.Dock="Top" 
                                             FontFamily="DK Crayon Crumble" 
@@ -263,85 +270,85 @@
                                             Background="Transparent" 
                                             Foreground="LightGray" 
                                             />
-                                        
-                                    </DockPanel>
-                                
-                                </HierarchicalDataTemplate>
 
-                            </ResourceDictionary>
+                                        </DockPanel>
 
-                        </TreeView.Resources>
+                                    </HierarchicalDataTemplate>
 
-                        <TreeView.ItemContainerStyle>
-                            <Style TargetType="{x:Type TreeViewItem}" BasedOn="{StaticResource FormationTreeViewItem}">
+                                </ResourceDictionary>
 
-                                <EventSetter Event="DragOver"  Handler="treeView_DragOver"/>
-                                <EventSetter Event="Drop" Handler="treeView_Drop"/>
-                                <EventSetter Event="MouseMove" Handler="treeView_MouseMove"/>
-                                <EventSetter Event="MouseDown" Handler="treeView_MouseDown"/>
-                                <!--<EventSetter Event="MouseUp" Handler="treeView_MouseUp"/>
+                            </TreeView.Resources>
+
+                            <TreeView.ItemContainerStyle>
+                                <Style TargetType="{x:Type TreeViewItem}" BasedOn="{StaticResource FormationTreeViewItem}">
+
+                                    <EventSetter Event="DragOver"  Handler="treeView_DragOver"/>
+                                    <EventSetter Event="Drop" Handler="treeView_Drop"/>
+                                    <EventSetter Event="MouseMove" Handler="treeView_MouseMove"/>
+                                    <EventSetter Event="MouseDown" Handler="treeView_MouseDown"/>
+                                    <!--<EventSetter Event="MouseUp" Handler="treeView_MouseUp"/>
                         <EventSetter Event="PreviewGiveFeedback" Handler="treeView_PreviewGiveFeedback"/>-->
 
-                                <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}" />
-                                <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay}" />
+                                    <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}" />
+                                    <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay}" />
 
-                                <Style.Triggers>
-                                    <DataTrigger Binding="{Binding IsVisible}" Value="True">
-                                        <Setter Property="Visibility" Value="Visible" />
-                                    </DataTrigger>
-                                    <DataTrigger Binding="{Binding IsVisible}" Value="False">
-                                        <Setter Property="Visibility" Value="Collapsed" />
-                                    </DataTrigger>
-                                </Style.Triggers>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding IsVisible}" Value="True">
+                                            <Setter Property="Visibility" Value="Visible" />
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding IsVisible}" Value="False">
+                                            <Setter Property="Visibility" Value="Collapsed" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
 
-                            </Style>
-                        </TreeView.ItemContainerStyle>
+                                </Style>
+                            </TreeView.ItemContainerStyle>
 
-                    </TreeView>
-                    
-                </TabItem>
+                        </TreeView>
 
-                <TabItem Header="Gameplan">
+                    </TabItem>
 
-                    <DockPanel VerticalAlignment="Top" Margin="5,1" Width="600">
+                    <TabItem Header="Gameplan">
 
-                        <DockPanel DockPanel.Dock="Top" Margin="5,1">
-                    
-                            <ComboBox
-                                x:Name="cbxPLYT"
-                                ItemsSource="{Binding}"
-                                SelectedValuePath="Key" 
-                                DisplayMemberPath="Value"
-                                Margin="5,1"
-                                BorderBrush="Transparent"
-                                BorderThickness="0"
-                                SelectionChanged="cbxPLYT_SelectionChanged"
-                                ScrollViewer.CanContentScroll="False"
-                                ScrollViewer.VerticalScrollBarVisibility="Hidden"
-                                ScrollViewer.HorizontalScrollBarVisibility="Hidden"
-                                IsEditable="True"
-                                Text="Select Plays by Type"/>
+                        <DockPanel VerticalAlignment="Top" Width="600">
 
-                            <ComboBox 
-                                x:Name="lvwSituations" 
-                                ItemsSource="{Binding}" 
-                                Margin="5,1"
-                                ScrollViewer.CanContentScroll="False"
-                                ScrollViewer.VerticalScrollBarVisibility="Hidden"
-                                ScrollViewer.HorizontalScrollBarVisibility="Hidden"
-                                BorderBrush="Transparent"
-                                MouseUp="lvwSituations_MouseUp"
-                                SelectionChanged="lvwSituations_SelectionChanged">
-                                <ComboBox.ItemTemplate>
-                                    <DataTemplate>
-                                        <UserControls:Situation situation="{Binding}"/>
-                                    </DataTemplate>
-                                </ComboBox.ItemTemplate>
-                            </ComboBox>
+                            <DockPanel DockPanel.Dock="Top" Margin="5,1">
 
-                        </DockPanel>
+                                <ComboBox
+                                    x:Name="cbxPLYT"
+                                    ItemsSource="{Binding}"
+                                    SelectedValuePath="Key" 
+                                    DisplayMemberPath="Value"
+                                    Margin="5,1"
+                                    BorderBrush="Transparent"
+                                    BorderThickness="0"
+                                    SelectionChanged="cbxPLYT_SelectionChanged"
+                                    ScrollViewer.CanContentScroll="False"
+                                    ScrollViewer.VerticalScrollBarVisibility="Hidden"
+                                    ScrollViewer.HorizontalScrollBarVisibility="Hidden"
+                                    IsEditable="True"
+                                    Text="Select Plays by Type"/>
 
-                        <TreeView 
+                                <ComboBox 
+                                    x:Name="lvwSituations" 
+                                    ItemsSource="{Binding}" 
+                                    Margin="5,1"
+                                    ScrollViewer.CanContentScroll="False"
+                                    ScrollViewer.VerticalScrollBarVisibility="Hidden"
+                                    ScrollViewer.HorizontalScrollBarVisibility="Hidden"
+                                    BorderBrush="Transparent"
+                                    MouseUp="lvwSituations_MouseUp"
+                                    SelectionChanged="lvwSituations_SelectionChanged">
+                                    <ComboBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <UserControls:Situation situation="{Binding}"/>
+                                        </DataTemplate>
+                                    </ComboBox.ItemTemplate>
+                                </ComboBox>
+
+                            </DockPanel>
+
+                            <TreeView 
                             x:Name="lvwPlaysByRouteDepth" 
                             ItemsSource="{Binding}"
                             Background="Transparent"
@@ -351,11 +358,11 @@
                             Width="600"
                             Height="875"
                             DockPanel.Dock="Top">
-                            <TreeView.ItemTemplate>
-                                <DataTemplate>
-                                    <DockPanel>
+                                <TreeView.ItemTemplate>
+                                    <DataTemplate>
+                                        <DockPanel>
 
-                                        <TextBlock 
+                                            <TextBlock 
                                             DockPanel.Dock="Top"
                                             FontFamily="DK Crayon Crumble" 
                                             FontSize="14"
@@ -363,36 +370,36 @@
                                             TextAlignment="Center" 
                                             Background="Transparent" 
                                             Foreground="LightGray">
-                                            <TextBlock.Text>
-                                                <MultiBinding StringFormat="{}{0}&#x0a;{1}&#x0a;{2}">
-                                                    <Binding Path="SubFormation.Formation.PBFM.name" />         
-                                                    <Binding Path="SubFormation.PBST.name" />
-                                                    <Binding Path="PBPL.name" />
-                                                </MultiBinding>
-                                            </TextBlock.Text>
-                                        </TextBlock>
+                                                <TextBlock.Text>
+                                                    <MultiBinding StringFormat="{}{0}&#x0a;{1}&#x0a;{2}">
+                                                        <Binding Path="SubFormation.Formation.PBFM.name" />
+                                                        <Binding Path="SubFormation.PBST.name" />
+                                                        <Binding Path="PBPL.name" />
+                                                    </MultiBinding>
+                                                </TextBlock.Text>
+                                            </TextBlock>
 
-                                        <UserControls:Play play="{Binding}" DockPanel.Dock="Top"/>
+                                            <UserControls:Play play="{Binding}" DockPanel.Dock="Top"/>
 
-                                    </DockPanel>
-                                </DataTemplate>
-                            </TreeView.ItemTemplate>
-                            <TreeView.ItemsPanel>
-                                <ItemsPanelTemplate>
-                                    <classes:UniformGridOrientations VerticalAlignment="Top" Orientation="Horizontal" VerticalOrientation="Top" FlowDirection="LeftToRight" IsItemsHost="True" Columns="3"/>
-                                </ItemsPanelTemplate>
-                            </TreeView.ItemsPanel>
-                            <TreeView.ItemContainerStyle>
-                                <Style TargetType="{x:Type TreeViewItem}" BasedOn="{StaticResource PlayTreeViewItem}">
-                                    <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}" />
-                                    <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay}" />
-                                </Style>
-                            </TreeView.ItemContainerStyle>
-                        </TreeView>
-                
-                        <!--<Canvas x:Name="cvsGameplanPercent" Height="600" Width="600" DockPanel.Dock="Left"/>-->
+                                        </DockPanel>
+                                    </DataTemplate>
+                                </TreeView.ItemTemplate>
+                                <TreeView.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <classes:UniformGridOrientations VerticalAlignment="Top" Orientation="Horizontal" VerticalOrientation="Top" FlowDirection="LeftToRight" IsItemsHost="True" Columns="3"/>
+                                    </ItemsPanelTemplate>
+                                </TreeView.ItemsPanel>
+                                <TreeView.ItemContainerStyle>
+                                    <Style TargetType="{x:Type TreeViewItem}" BasedOn="{StaticResource PlayTreeViewItem}">
+                                        <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}" />
+                                        <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay}" />
+                                    </Style>
+                                </TreeView.ItemContainerStyle>
+                            </TreeView>
 
-                        <!--<ListView 
+                            <!--<Canvas x:Name="cvsGameplanPercent" Height="600" Width="600" DockPanel.Dock="Left"/>-->
+
+                            <!--<ListView 
                             x:Name="iclGameplanPercent" 
                             VerticalAlignment="Center"
                             ScrollViewer.CanContentScroll="False"
@@ -436,247 +443,229 @@
                                 </DataTemplate>
                             </ListView.ItemTemplate>
                         </ListView>-->
+
+                        </DockPanel>
+
+                    </TabItem>
+
+                    <TabItem Header="Tables">
+                        
+                        <TabControl 
+                            x:Name="tclTables"
+                            Width="600">
+
+                            <TabItem Header="PBFM">
+                                <UserControls:FilterableTable Data="{Binding PBFM, Mode=TwoWay}"/>
+                            </TabItem>
+
+                            <TabItem Header="FORM">
+                                <UserControls:FilterableTable Data="{Binding FORM, Mode=TwoWay}"/>
+                            </TabItem>
+
+                            <TabItem Header="PBST">
+                                <UserControls:FilterableTable Data="{Binding PBST, Mode=TwoWay}"/>
+                            </TabItem>
+
+                            <TabItem Header="SETL">
+                                <UserControls:FilterableTable Data="{Binding SETL, Mode=TwoWay}"/>
+                            </TabItem>
+
+                            <TabItem Header="SETP">
+                                <UserControls:FilterableTable Data="{Binding SETP, Mode=TwoWay}"/>
+                            </TabItem>
+
+                            <TabItem Header="SPKF">
+                                <UserControls:FilterableTable Data="{Binding SPKF, Mode=TwoWay}"/>
+                            </TabItem>
+
+                            <TabItem Header="SPKG">
+                                <UserControls:FilterableTable Data="{Binding SPKG, Mode=TwoWay}"/>
+                            </TabItem>
+
+                            <TabItem Header="SGFM">
+                                <UserControls:FilterableTable Data="{Binding SGFM, Mode=TwoWay}"/>
+                            </TabItem>
+
+                            <TabItem Header="SETG">
+                                <UserControls:FilterableTable Data="{Binding SETG, Mode=TwoWay}"/>
+                            </TabItem>
+
+                            <TabItem Header="PBPL">
+                                <UserControls:FilterableTable Data="{Binding PBPL, Mode=TwoWay}"/>
+                            </TabItem>
+
+                            <TabItem Header="PLYL">
+                                <UserControls:FilterableTable Data="{Binding PLYL, Mode=TwoWay}"/>
+                            </TabItem>
+
+                            <TabItem Header="PLPD">
+                                <UserControls:FilterableTable Data="{Binding PLPD, Mode=TwoWay}"/>
+                            </TabItem>
+
+                            <TabItem Header="PLRD">
+                                <UserControls:FilterableTable Data="{Binding PLRD, Mode=TwoWay}"/>
+                            </TabItem>
+
+                            <TabItem Header="PLYS">
+                                <UserControls:FilterableTable Data="{Binding PLYS, Mode=TwoWay}"/>
+                            </TabItem>
+
+                            <TabItem Header="PSAL">
+                                <UserControls:FilterableTable x:Name="uclPSALTable" Data="{Binding PSAL, Mode=TwoWay}"/>
+                            </TabItem>
+
+                            <TabItem Header="ARTL">
+                                <UserControls:FilterableTable Data="{Binding ARTL, Mode=TwoWay}"/>
+                            </TabItem>
+
+                            <TabItem Header="PBAI">
+                                <UserControls:FilterableTable x:Name="uclPBAITable" Data="{Binding PBAI, Mode=TwoWay}"/>
+                            </TabItem>
+
+                            <TabItem Header="PBAU">
+                                <UserControls:FilterableTable Data="{Binding PBAU, Mode=TwoWay}"/>
+                            </TabItem>
+
+                            <TabItem Header="PBCC">
+                                <UserControls:FilterableTable Data="{Binding PBCC, Mode=TwoWay}"/>
+                            </TabItem>
+
+                            <TabItem Header="PLCM">
+                                <UserControls:FilterableTable Data="{Binding PLCM, Mode=TwoWay}"/>
+                            </TabItem>
+
+                            <TabItem Header="PPCT">
+                                <UserControls:FilterableTable Data="{Binding PPCT, Mode=TwoWay}"/>
+                            </TabItem>
+
+                            <TabItem Header="SDEF">
+                                <UserControls:FilterableTable Data="{Binding SDEF, Mode=TwoWay}"/>
+                            </TabItem>
+
+                            <TabItem Header="SRFT">
+                                <UserControls:FilterableTable Data="{Binding SRFT, Mode=TwoWay}"/>
+                            </TabItem>
+
+                        </TabControl>
+                        
+                    </TabItem>
+
+                </TabControl>
+
+                <TabControl x:Name="tclCustomPlaybook" Width="600" Visibility="Hidden">
+
+                    <TabItem Header="ARTO">
+                        <UserControls:FilterableTable Data="{Binding ARTO, Mode=TwoWay}"/>
+                    </TabItem>
+
+                    <TabItem Header="ARTD">
+                        <UserControls:FilterableTable Data="{Binding ARTD, Mode=TwoWay}"/>
+                    </TabItem>
+
+                    <TabItem Header="CPFM">
+                        <UserControls:FilterableTable Data="{Binding CPFM, Mode=TwoWay}"/>
+                    </TabItem>
+
+                    <TabItem Header="PBFI">
+                        <UserControls:FilterableTable Data="{Binding PBFI, Mode=TwoWay}"/>
+                    </TabItem>
+
+                    <TabItem Header="PBFM">
+                        <UserControls:FilterableTable Data="{Binding PBFM, Mode=TwoWay}"/>
+                    </TabItem>
+
+                    <TabItem Header="PBPL">
+                        <UserControls:FilterableTable Data="{Binding PBPL, Mode=TwoWay}"/>
+                    </TabItem>
+
+                    <TabItem Header="PBPN">
+                        <UserControls:FilterableTable Data="{Binding PBPN, Mode=TwoWay}"/>
+                    </TabItem>
+
+                    <TabItem Header="PIDX">
+                        <UserControls:FilterableTable Data="{Binding PIDX, Mode=TwoWay}"/>
+                    </TabItem>
+
+                    <TabItem Header="PLCM">
+                        <UserControls:FilterableTable Data="{Binding PLCM, Mode=TwoWay}"/>
+                    </TabItem>
+
+                    <TabItem Header="PLPD">
+                        <UserControls:FilterableTable Data="{Binding PLPD, Mode=TwoWay}"/>
+                    </TabItem>
+
+                    <TabItem Header="PLRD">
+                        <UserControls:FilterableTable Data="{Binding PLRD, Mode=TwoWay}"/>
+                    </TabItem>
+
+                    <TabItem Header="PLYS">
+                        <UserControls:FilterableTable Data="{Binding PLYS, Mode=TwoWay}"/>
+                    </TabItem>
+
+                    <TabItem Header="PPCT">
+                        <UserControls:FilterableTable Data="{Binding PPCT, Mode=TwoWay}"/>
+                    </TabItem>
+
+                    <TabItem Header="PSLO">
+                        <UserControls:FilterableTable Data="{Binding PSLO, Mode=TwoWay}"/>
+                    </TabItem>
+
+                    <TabItem Header="PSLD">
+                        <UserControls:FilterableTable Data="{Binding PSLD, Mode=TwoWay}"/>
+                    </TabItem>
+
+                    <TabItem Header="SDEF">
+                        <UserControls:FilterableTable Data="{Binding SDEF, Mode=TwoWay}"/>
+                    </TabItem>
+
+                    <TabItem Header="SETG">
+                        <UserControls:FilterableTable Data="{Binding SETG, Mode=TwoWay}"/>
+                    </TabItem>
+
+                    <TabItem Header="SETL">
+                        <UserControls:FilterableTable Data="{Binding SETL, Mode=TwoWay}"/>
+                    </TabItem>
+
+                    <TabItem Header="SETP">
+                        <UserControls:FilterableTable Data="{Binding SETP, Mode=TwoWay}"/>
+                    </TabItem>
+
+                    <TabItem Header="SGFF">
+                        <UserControls:FilterableTable Data="{Binding SGFF, Mode=TwoWay}"/>
+                    </TabItem>
+
+                    <TabItem Header="SPKF">
+                        <UserControls:FilterableTable Data="{Binding SPKF, Mode=TwoWay}"/>
+                    </TabItem>
+
+                    <TabItem Header="SPKG">
+                        <UserControls:FilterableTable Data="{Binding SPKG, Mode=TwoWay}"/>
+                    </TabItem>
+
+                    <TabItem Header="SRFT">
+                        <UserControls:FilterableTable Data="{Binding SRFT, Mode=TwoWay}"/>
+                    </TabItem>
+
+                    <TabItem Header="STID">
+                        <UserControls:FilterableTable Data="{Binding STID, Mode=TwoWay}"/>
+                    </TabItem>
+
+                </TabControl>
+
+            </Grid>
+
+            <Grid Grid.Column="1" Margin="20" VerticalAlignment="Top">
+                <Border 
+                    Name="bdrField"
+                    Background="{StaticResource FieldBrush}"
+                    CornerRadius="10"
+                    Width="533"
+                    Height="950"
+                    HorizontalAlignment="Left"/>
+                <UserControls:PlayModal x:Name="uclPlayModal"/>
+                <UserControls:SubFormationModal x:Name="uclSubFormationModal" Visibility="Hidden"/>
                 
-                    </DockPanel>
-                    
-                </TabItem>
-
-                <TabItem Header="Tables">
-                    <TabControl 
-                        x:Name="tclTables"
-                        Width="600">
-
-                        <TabItem Header="PBFM">
-                            <UserControls:FilterableTable Data="{Binding PBFM, Mode=TwoWay}"/>
-                        </TabItem>
-
-                        <TabItem Header="FORM">
-                            <UserControls:FilterableTable Data="{Binding FORM, Mode=TwoWay}"/>
-                        </TabItem>
-
-                        <TabItem Header="PBST">
-                            <UserControls:FilterableTable Data="{Binding PBST, Mode=TwoWay}"/>
-                        </TabItem>
-
-                        <TabItem Header="SETL">
-                            <UserControls:FilterableTable Data="{Binding SETL, Mode=TwoWay}"/>
-                        </TabItem>
-
-                        <TabItem Header="SETP">
-                            <UserControls:FilterableTable Data="{Binding SETP, Mode=TwoWay}"/>
-                        </TabItem>
-
-                        <TabItem Header="SPKF">
-                            <UserControls:FilterableTable Data="{Binding SPKF, Mode=TwoWay}"/>
-                        </TabItem>
-
-                        <TabItem Header="SPKG">
-                            <UserControls:FilterableTable Data="{Binding SPKG, Mode=TwoWay}"/>
-                        </TabItem>
-
-                        <TabItem Header="SGFM">
-                            <UserControls:FilterableTable Data="{Binding SGFM, Mode=TwoWay}"/>
-                        </TabItem>
-
-                        <TabItem Header="SETG">
-                            <UserControls:FilterableTable Data="{Binding SETG, Mode=TwoWay}"/>
-                        </TabItem>
-
-                        <TabItem Header="PBPL">
-                            <UserControls:FilterableTable Data="{Binding PBPL, Mode=TwoWay}"/>
-                        </TabItem>
-
-                        <TabItem Header="PLYL">
-                            <UserControls:FilterableTable Data="{Binding PLYL, Mode=TwoWay}"/>
-                        </TabItem>
-
-                        <TabItem Header="PLPD">
-                            <UserControls:FilterableTable Data="{Binding PLPD, Mode=TwoWay}"/>
-                        </TabItem>
-
-                        <TabItem Header="PLRD">
-                            <UserControls:FilterableTable Data="{Binding PLRD, Mode=TwoWay}"/>
-                        </TabItem>
-
-                        <TabItem Header="PLYS">
-                            <UserControls:FilterableTable Data="{Binding PLYS, Mode=TwoWay}"/>
-                        </TabItem>
-
-                        <TabItem Header="PSAL">
-                            <UserControls:FilterableTable x:Name="uclPSALTable" Data="{Binding PSAL, Mode=TwoWay}"/>
-                        </TabItem>
-
-                        <TabItem Header="ARTL">
-                            <UserControls:FilterableTable Data="{Binding ARTL, Mode=TwoWay}"/>
-                        </TabItem>
-
-                        <TabItem Header="PBAI">
-                            <UserControls:FilterableTable x:Name="uclPBAITable" Data="{Binding PBAI, Mode=TwoWay}"/>
-                        </TabItem>
-
-                        <TabItem Header="PBAU">
-                            <UserControls:FilterableTable Data="{Binding PBAU, Mode=TwoWay}"/>
-                        </TabItem>
-
-                        <TabItem Header="PBCC">
-                            <UserControls:FilterableTable Data="{Binding PBCC, Mode=TwoWay}"/>
-                        </TabItem>
-
-                        <TabItem Header="PLCM">
-                            <UserControls:FilterableTable Data="{Binding PLCM, Mode=TwoWay}"/>
-                        </TabItem>
-
-                        <TabItem Header="PPCT">
-                            <UserControls:FilterableTable Data="{Binding PPCT, Mode=TwoWay}"/>
-                        </TabItem>
-
-                        <TabItem Header="SDEF">
-                            <UserControls:FilterableTable Data="{Binding SDEF, Mode=TwoWay}"/>
-                        </TabItem>
-
-                        <TabItem Header="SRFT">
-                            <UserControls:FilterableTable Data="{Binding SRFT, Mode=TwoWay}"/>
-                        </TabItem>
-
-                    </TabControl>
-                </TabItem>
-
-            </TabControl>
-        
-        </Expander>
-
-        <Expander x:Name="xpdCustomPlaybook"
-                  Foreground="LightGray"
-                  Header="Custom Playbook"
-                  ExpandDirection="Down"
-                  IsExpanded="True"
-                  Visibility="Collapsed">
-
-            <TabControl 
-                x:Name="tclCustomPlaybookTables"
-                DockPanel.Dock="Top">
-
-                <TabItem Header="ARTO">
-                    <UserControls:FilterableTable Data="{Binding ARTO, Mode=TwoWay}"/>
-                </TabItem>
-
-                <TabItem Header="ARTD">
-                    <UserControls:FilterableTable Data="{Binding ARTD, Mode=TwoWay}"/>
-                </TabItem>
-
-                <TabItem Header="CPFM">
-                    <UserControls:FilterableTable Data="{Binding CPFM, Mode=TwoWay}"/>
-                </TabItem>
-
-                <TabItem Header="PBFI">
-                    <UserControls:FilterableTable Data="{Binding PBFI, Mode=TwoWay}"/>
-                </TabItem>
-
-                <TabItem Header="PBFM">
-                    <UserControls:FilterableTable Data="{Binding PBFM, Mode=TwoWay}"/>
-                </TabItem>
-
-                <TabItem Header="PBPL">
-                    <UserControls:FilterableTable Data="{Binding PBPL, Mode=TwoWay}"/>
-                </TabItem>
-
-                <TabItem Header="PBPN">
-                    <UserControls:FilterableTable Data="{Binding PBPN, Mode=TwoWay}"/>
-                </TabItem>
-
-                <TabItem Header="PIDX">
-                    <UserControls:FilterableTable Data="{Binding PIDX, Mode=TwoWay}"/>
-                </TabItem>
-
-                <TabItem Header="PLCM">
-                    <UserControls:FilterableTable Data="{Binding PLCM, Mode=TwoWay}"/>
-                </TabItem>
-
-                <TabItem Header="PLPD">
-                    <UserControls:FilterableTable Data="{Binding PLPD, Mode=TwoWay}"/>
-                </TabItem>
-
-                <TabItem Header="PLRD">
-                    <UserControls:FilterableTable Data="{Binding PLRD, Mode=TwoWay}"/>
-                </TabItem>
-
-                <TabItem Header="PLYS">
-                    <UserControls:FilterableTable Data="{Binding PLYS, Mode=TwoWay}"/>
-                </TabItem>
-
-                <TabItem Header="PPCT">
-                    <UserControls:FilterableTable Data="{Binding PPCT, Mode=TwoWay}"/>
-                </TabItem>
-
-                <TabItem Header="PSLO">
-                    <UserControls:FilterableTable Data="{Binding PSLO, Mode=TwoWay}"/>
-                </TabItem>
-
-                <TabItem Header="PSLD">
-                    <UserControls:FilterableTable Data="{Binding PSLD, Mode=TwoWay}"/>
-                </TabItem>
-
-                <TabItem Header="SDEF">
-                    <UserControls:FilterableTable Data="{Binding SDEF, Mode=TwoWay}"/>
-                </TabItem>
-
-                <TabItem Header="SETG">
-                    <UserControls:FilterableTable Data="{Binding SETG, Mode=TwoWay}"/>
-                </TabItem>
-
-                <TabItem Header="SETL">
-                    <UserControls:FilterableTable Data="{Binding SETL, Mode=TwoWay}"/>
-                </TabItem>
-
-                <TabItem Header="SETP">
-                    <UserControls:FilterableTable Data="{Binding SETP, Mode=TwoWay}"/>
-                </TabItem>
-
-                <TabItem Header="SGFF">
-                    <UserControls:FilterableTable Data="{Binding SGFF, Mode=TwoWay}"/>
-                </TabItem>
-
-                <TabItem Header="SPKF">
-                    <UserControls:FilterableTable Data="{Binding SPKF, Mode=TwoWay}"/>
-                </TabItem>
-
-                <TabItem Header="SPKG">
-                    <UserControls:FilterableTable Data="{Binding SPKG, Mode=TwoWay}"/>
-                </TabItem>
-
-                <TabItem Header="SRFT">
-                    <UserControls:FilterableTable Data="{Binding SRFT, Mode=TwoWay}"/>
-                </TabItem>
-
-                <TabItem Header="STID">
-                    <UserControls:FilterableTable Data="{Binding STID, Mode=TwoWay}"/>
-                </TabItem>
-
-            </TabControl>
-
-        </Expander>
-
-        <Expander x:Name="xpdSubFormationModal"
-                  Visibility="Visible"
-                  Foreground="LightGray"
-                  Header="Sub Formation"
-                  ExpandDirection="Down"
-                  IsExpanded="True">
-            <UserControls:SubFormationModal x:Name="uclSubFormationModal" VerticalAlignment="Top"/>
-        </Expander>
-
-        <Expander x:Name="xpdPlayModal"
-                  Visibility="Collapsed"
-                  Foreground="LightGray"
-                  Header="Play"
-                  ExpandDirection="Down"
-                  IsExpanded="True">
-
-            <StackPanel Width="Auto" Height="Auto" HorizontalAlignment="Stretch" Orientation="Horizontal">
-                
-                <UserControls:PlayModal x:Name="uclPlayModal" VerticalAlignment="Top"/>
-                
-                <TreeView x:Name="tvwPSALs"
+                <!--<TreeView x:Name="tvwPSALs"
                     Background="{x:Null}"
                     BorderBrush="{x:Null}"
                     Foreground="{x:Null}"
@@ -763,12 +752,12 @@
                         </Style>
                     </TreeView.ItemContainerStyle>
 
-                </TreeView>
+                </TreeView>-->
                 
-            </StackPanel>
-            
-        </Expander>
-                
+            </Grid>
+
+        </Grid>
+
     </DockPanel>
 
 </Window>
