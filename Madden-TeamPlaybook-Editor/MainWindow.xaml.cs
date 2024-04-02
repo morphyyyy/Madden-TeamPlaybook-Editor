@@ -1013,16 +1013,19 @@ namespace MaddenTeamPlaybookEditor
                 {
                     throw;
                 }
-                if (MessageBox.Show("Would you like to adjust the gameplan based on this team's 2023 Regular Season tendencies? This will shorten the average route depth to the league average and match the run/pass ratio per team.\n\nThe in game lua offense script will need to be modified so that every redzone situation uses the 16-20 situation, since this will combine all of those plays into the 16-20 Situation.", "Warning", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                if (TeamPlaybook.Type == "Offense")
                 {
-                    try
+                    if (MessageBox.Show("Would you like to adjust the gameplan based on this team's 2023 Regular Season tendencies? This will shorten the average route depth to the league average and match the run/pass ratio per team.\n\nThe in game lua offense script will need to be modified so that every redzone situation uses the 16-20 situation, since this will combine all of those plays into the 16-20 Situation.", "Warning", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                     {
-                        TeamPlaybook.RevampGameplanRedDobe();
-                        lvwSituations.Items.Refresh();
-                    }
-                    catch (Exception)
-                    {
-                        throw;
+                        try
+                        {
+                            TeamPlaybook.RevampGameplanRedDobe();
+                            lvwSituations.Items.Refresh();
+                        }
+                        catch (Exception)
+                        {
+                            throw;
+                        }
                     }
                 }
             }

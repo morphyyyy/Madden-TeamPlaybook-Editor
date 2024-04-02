@@ -686,71 +686,22 @@
                     <TabItem Header="Tables">
 
                         <TabControl 
-                            x:Name="tclTables"
-                            Width="600">
+                            x:Name="tclTables">
 
-                            <TabItem Header="PBFM">
-                                <UserControls:FilterableTable Data="{Binding PBFM, Mode=TwoWay}"/>
+                            <TabItem Header="ARTL">
+                                <UserControls:FilterableTable Data="{Binding ARTL, Mode=TwoWay}"/>
                             </TabItem>
 
                             <TabItem Header="FORM">
                                 <UserControls:FilterableTable Data="{Binding FORM, Mode=TwoWay}"/>
                             </TabItem>
 
+                            <TabItem Header="PBFM">
+                                <UserControls:FilterableTable Data="{Binding PBFM, Mode=TwoWay}"/>
+                            </TabItem>
+
                             <TabItem Header="PBST">
                                 <UserControls:FilterableTable Data="{Binding PBST, Mode=TwoWay}"/>
-                            </TabItem>
-
-                            <TabItem Header="SETL">
-                                <UserControls:FilterableTable Data="{Binding SETL, Mode=TwoWay}"/>
-                            </TabItem>
-
-                            <TabItem Header="SETP">
-                                <UserControls:FilterableTable Data="{Binding SETP, Mode=TwoWay}"/>
-                            </TabItem>
-
-                            <TabItem Header="SPKF">
-                                <UserControls:FilterableTable Data="{Binding SPKF, Mode=TwoWay}"/>
-                            </TabItem>
-
-                            <TabItem Header="SPKG">
-                                <UserControls:FilterableTable Data="{Binding SPKG, Mode=TwoWay}"/>
-                            </TabItem>
-
-                            <TabItem Header="SGFM">
-                                <UserControls:FilterableTable Data="{Binding SGFM, Mode=TwoWay}"/>
-                            </TabItem>
-
-                            <TabItem Header="SETG">
-                                <UserControls:FilterableTable Data="{Binding SETG, Mode=TwoWay}"/>
-                            </TabItem>
-
-                            <TabItem Header="PBPL">
-                                <UserControls:FilterableTable Data="{Binding PBPL, Mode=TwoWay}"/>
-                            </TabItem>
-
-                            <TabItem Header="PLYL">
-                                <UserControls:FilterableTable Data="{Binding PLYL, Mode=TwoWay}"/>
-                            </TabItem>
-
-                            <TabItem Header="PLPD">
-                                <UserControls:FilterableTable Data="{Binding PLPD, Mode=TwoWay}"/>
-                            </TabItem>
-
-                            <TabItem Header="PLRD">
-                                <UserControls:FilterableTable Data="{Binding PLRD, Mode=TwoWay}"/>
-                            </TabItem>
-
-                            <TabItem Header="PLYS">
-                                <UserControls:FilterableTable Data="{Binding PLYS, Mode=TwoWay}"/>
-                            </TabItem>
-
-                            <TabItem Header="PSAL">
-                                <UserControls:FilterableTable x:Name="uclPSALTable" Data="{Binding PSAL, Mode=TwoWay}"/>
-                            </TabItem>
-
-                            <TabItem Header="ARTL">
-                                <UserControls:FilterableTable Data="{Binding ARTL, Mode=TwoWay}"/>
                             </TabItem>
 
                             <TabItem Header="PBAI">
@@ -765,16 +716,64 @@
                                 <UserControls:FilterableTable Data="{Binding PBCC, Mode=TwoWay}"/>
                             </TabItem>
 
+                            <TabItem Header="PBPL">
+                                <UserControls:FilterableTable Data="{Binding PBPL, Mode=TwoWay}"/>
+                            </TabItem>
+
                             <TabItem Header="PLCM">
                                 <UserControls:FilterableTable Data="{Binding PLCM, Mode=TwoWay}"/>
+                            </TabItem>
+
+                            <TabItem Header="PLPD">
+                                <UserControls:FilterableTable Data="{Binding PLPD, Mode=TwoWay}"/>
+                            </TabItem>
+
+                            <TabItem Header="PLRD">
+                                <UserControls:FilterableTable Data="{Binding PLRD, Mode=TwoWay}"/>
+                            </TabItem>
+
+                            <TabItem Header="PLYL">
+                                <UserControls:FilterableTable Data="{Binding PLYL, Mode=TwoWay}"/>
+                            </TabItem>
+
+                            <TabItem Header="PLYS">
+                                <UserControls:FilterableTable Data="{Binding PLYS, Mode=TwoWay}"/>
                             </TabItem>
 
                             <TabItem Header="PPCT">
                                 <UserControls:FilterableTable Data="{Binding PPCT, Mode=TwoWay}"/>
                             </TabItem>
 
+                            <TabItem Header="PSAL">
+                                <UserControls:FilterableTable x:Name="uclPSALTable" Data="{Binding PSAL, Mode=TwoWay}"/>
+                            </TabItem>
+                            
                             <TabItem Header="SDEF">
                                 <UserControls:FilterableTable Data="{Binding SDEF, Mode=TwoWay}"/>
+                            </TabItem>
+
+                            <TabItem Header="SETG">
+                                <UserControls:FilterableTable Data="{Binding SETG, Mode=TwoWay}"/>
+                            </TabItem>
+
+                            <TabItem Header="SETL">
+                                <UserControls:FilterableTable Data="{Binding SETL, Mode=TwoWay}"/>
+                            </TabItem>
+
+                            <TabItem Header="SETP">
+                                <UserControls:FilterableTable Data="{Binding SETP, Mode=TwoWay}"/>
+                            </TabItem>
+
+                            <TabItem Header="SGFM">
+                                <UserControls:FilterableTable Data="{Binding SGFM, Mode=TwoWay}"/>
+                            </TabItem>
+                            
+                            <TabItem Header="SPKF">
+                                <UserControls:FilterableTable Data="{Binding SPKF, Mode=TwoWay}"/>
+                            </TabItem>
+
+                            <TabItem Header="SPKG">
+                                <UserControls:FilterableTable Data="{Binding SPKG, Mode=TwoWay}"/>
                             </TabItem>
 
                             <TabItem Header="SRFT">
