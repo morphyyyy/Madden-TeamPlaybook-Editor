@@ -19,7 +19,8 @@
     ScrollViewer.HorizontalScrollBarVisibility="Visible"
     Width="1920"
     Height="1080"
-    WindowState="Maximized">
+    WindowState="Maximized"
+    SnapsToDevicePixels="True">
 
     <Window.Background>
         <ImageBrush 
@@ -181,7 +182,9 @@
                                 AllowDrop="True"
                                 ItemsSource="{Binding Formations}"
                                 ScrollViewer.VerticalScrollBarVisibility="Hidden"
-                                ScrollViewer.HorizontalScrollBarVisibility="Hidden">
+                                ScrollViewer.HorizontalScrollBarVisibility="Hidden"
+                                VirtualizingPanel.IsVirtualizing="False"
+                                VirtualizingPanel.VirtualizationMode="Standard">
 
                                 <TreeView.CommandBindings>
                                     <CommandBinding Command="ApplicationCommands.Copy" Executed="CopyToClipboard" />
@@ -210,7 +213,10 @@
                                                 </Style>
                                             </HierarchicalDataTemplate.ItemContainerStyle>
 
-                                            <UserControls:Formation x:Name="uclFormation" formation="{Binding}" IsEnabled="True" DockPanel.Dock="Left"/>
+                                            <TextBlock 
+                                                Text="{Binding PBFM.name}" 
+                                                TextWrapping="Wrap" 
+                                                TextAlignment="Center"/>
 
                                         </HierarchicalDataTemplate>
 
@@ -277,15 +283,15 @@
                                                 </StackPanel>
 
                                                 <TextBlock 
-                                            Text="{Binding PBPL.name}"
-                                            DockPanel.Dock="Top" 
-                                            FontFamily="DK Crayon Crumble" 
-                                            FontSize="15"
-                                            TextWrapping="Wrap" 
-                                            TextAlignment="Center" 
-                                            Background="Transparent" 
-                                            Foreground="LightGray" 
-                                            />
+                                                    Text="{Binding PBPL.name}"
+                                                    DockPanel.Dock="Top" 
+                                                    FontFamily="DK Crayon Crumble" 
+                                                    FontSize="15"
+                                                    TextWrapping="Wrap" 
+                                                    TextAlignment="Center" 
+                                                    Background="Transparent" 
+                                                    Foreground="LightGray" 
+                                                    />
 
                                             </DockPanel>
 
@@ -303,7 +309,7 @@
                                         <EventSetter Event="MouseMove" Handler="treeView_MouseMove"/>
                                         <EventSetter Event="MouseDown" Handler="treeView_MouseDown"/>
                                         <!--<EventSetter Event="MouseUp" Handler="treeView_MouseUp"/>
-                        <EventSetter Event="PreviewGiveFeedback" Handler="treeView_PreviewGiveFeedback"/>-->
+                                        <EventSetter Event="PreviewGiveFeedback" Handler="treeView_PreviewGiveFeedback"/>-->
 
                                         <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}" />
                                         <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay}" />

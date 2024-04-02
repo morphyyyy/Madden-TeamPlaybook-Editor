@@ -6,6 +6,8 @@
 
         <Style.Resources>
 
+            <UniformGrid x:Key="ugdPlays" FlowDirection="LeftToRight" IsItemsHost="True" Margin="0,0" MaxWidth="592" Columns="3"/>
+
             <ImageBrush 
                 x:Key="SubFormationSelected"
                 ImageSource="../Resources/field_blank_resized.jpg"
@@ -44,20 +46,22 @@
                 <ControlTemplate TargetType="{x:Type TreeViewItem}">
                     <Grid Margin="2">
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto" MinHeight="50" />
+                            <RowDefinition Height="Auto"/>
                             <RowDefinition Height="Auto" />
-                            <RowDefinition Height="*" />
                         </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
                         <Border 
                             Name="BdrSubFormationDeSelected"
-                            Grid.Column="1"
+                            Grid.Row="0"
                             Background="{StaticResource SubFormationDeSelected}"
                             CornerRadius="3"    
                             Padding="5">
                         </Border>
                         <Border 
                             Name="BdrSubFormationHighlighted"
-                            Grid.Column="1"
+                            Grid.Row="0"
                             Background="{StaticResource SubFormationHighlighted}"
                             Opacity="0"
                             CornerRadius="8"    
@@ -65,7 +69,7 @@
                         </Border>
                         <Border 
                             Name="BdrSubFormationSelected"
-                            Grid.Column="1"
+                            Grid.Row="0"
                             Background="{StaticResource SubFormationSelected}"
                             Opacity="0"
                             CornerRadius="8"    
@@ -73,20 +77,27 @@
                         </Border>
                         <ContentPresenter 
                             x:Name="cprSubFormation"
-                            Grid.Column="1"
+                            Grid.Row="0"
                             HorizontalAlignment="Center"
                             VerticalAlignment="Center"
                             ContentSource="Header"
                             Margin="5"/>
                         <ItemsPresenter x:Name="ItemsHost"
-                                    Grid.Row="1"
-                                    Grid.Column="1">
+                                    Grid.Row="1">
                             <ItemsPresenter.LayoutTransform>
                                 <ScaleTransform ScaleY="1" />
                             </ItemsPresenter.LayoutTransform>
                         </ItemsPresenter>
                     </Grid>
                     <ControlTemplate.Triggers>
+
+                        <Trigger Property="IsExpanded" Value="true">
+                            <Setter Property="ItemsPanel" Value="{DynamicResource iptThreeColumns}"/>
+                        </Trigger>
+
+                        <Trigger Property="IsExpanded" Value="false">
+                            <Setter Property="ItemsPanel" Value="{DynamicResource iptOneColumn}"/>
+                        </Trigger>
 
                         <Trigger Property="IsSelected" Value="True">
 
@@ -248,13 +259,14 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-        
+
         <Setter Property="ItemsPanel">
             <Setter.Value>
                 <ItemsPanelTemplate>
-                    <UniformGrid FlowDirection="LeftToRight" IsItemsHost="True" Margin="0,0" Width="592" Columns="3"/>
+                    <UniformGrid FlowDirection="LeftToRight" IsItemsHost="True" Margin="0,0" MaxWidth="592" Columns="3"/>
                 </ItemsPanelTemplate>
             </Setter.Value>
         </Setter>
+
     </Style>
 </ResourceDictionary>

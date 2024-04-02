@@ -6,6 +6,12 @@
 
     <Application.Resources>
         <ResourceDictionary>
+            <Color x:Key="Primary"/>
+            <Color x:Key="Secondary"/>
+            <Color x:Key="Tertiary"/>
+            <Color x:Key="Quaternary"/>
+            <Color x:Key="Quinary"/>
+            <Color x:Key="Senary"/>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/Styles/FormationStyle.xaml" />
                 <ResourceDictionary Source="/Styles/FormationTabItemStyle.xaml" />

@@ -35,12 +35,10 @@
             <ContextMenu>
                 <TextBlock  
                     Background="Transparent" 
-                    Foreground="LightGreen"
                     Text="{Binding PBFM}"
                     />
                 <TextBlock  
                     Background="Transparent" 
-                    Foreground="LightGreen"
                     Text="{Binding FORM}"
                     />
             </ContextMenu>

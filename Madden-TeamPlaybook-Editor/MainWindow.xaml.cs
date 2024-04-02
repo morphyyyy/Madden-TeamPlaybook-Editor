@@ -1,4 +1,4 @@
-﻿using MaddenTeamPlaybookEditor.User_Controls;
+﻿    using MaddenTeamPlaybookEditor.User_Controls;
 using MaddenTeamPlaybookEditor.ViewModels;
 using Microsoft.Win32;
 using System;
@@ -202,19 +202,20 @@ namespace MaddenTeamPlaybookEditor
                 LinearGradientBrush myLinearGradientBrush = new LinearGradientBrush();
                 myLinearGradientBrush.StartPoint = new Point(1, 0.5);
                 myLinearGradientBrush.EndPoint = new Point(0, 0.5);
-                Color color1 = (Color)ColorConverter.ConvertFromString(this.TeamPlaybook.TeamColor.Value[0]);
-                myLinearGradientBrush.GradientStops.Add(new GradientStop(color1, 0.666));
-                Color color2 = (Color)ColorConverter.ConvertFromString(this.TeamPlaybook.TeamColor.Value[1]);
-                myLinearGradientBrush.GradientStops.Add(new GradientStop(color2, 1));
-                //Color color3;
-                //if (this.TeamPlaybook.TeamColor.Value.Count >= 4)
-                //{
-                //    color3 = (Color)ColorConverter.ConvertFromString(this.TeamPlaybook.TeamColor.Value[3]);
-                //}
-                //else
-                //{
-                //    color3 = (Color)ColorConverter.ConvertFromString(this.TeamPlaybook.TeamColor.Value[2]);
-                //}
+                List<Color> TeamColors = new List<Color>();
+                foreach (string hex in TeamPlaybook.TeamColor.Value)
+                {
+                    TeamColors.Add((Color)ColorConverter.ConvertFromString(hex));
+                }
+                myLinearGradientBrush.GradientStops.Add(new GradientStop(TeamColors[0], 0.666));
+                myLinearGradientBrush.GradientStops.Add(new GradientStop(TeamColors[1], 1));
+                Application.Current.Resources["Primary"] = TeamColors[0];
+                Application.Current.Resources["Secondary"] = TeamColors[1];
+                Application.Current.Resources["Tertiary"] = TeamColors[2];
+                Application.Current.Resources["Quaternary"] = TeamColors.Count() > 3 ? TeamColors[3] : Colors.Transparent;
+                Application.Current.Resources["Quinary"] = TeamColors.Count() > 4 ? TeamColors[4] : Colors.Transparent;
+                Application.Current.Resources["Senary"] = TeamColors.Count() > 5 ? TeamColors[5] : Colors.Transparent;
+
                 //myLinearGradientBrush.GradientStops.Add(new GradientStop(color3, 1.0));
 
                 //for (int i = 2; i < this.TeamPlaybook.TeamColor.Value.Count; i++)
@@ -224,7 +225,7 @@ namespace MaddenTeamPlaybookEditor
                 //    myLinearGradientBrush.GradientStops.Add(new GradientStop(color, stop));
                 //}
 
-                cvsTeamColors.Background = myLinearGradientBrush;
+                //cvsTeamColors.Background = myLinearGradientBrush;
 
                 //ImageBrush imageBrush = new ImageBrush();
                 //imageBrush.ImageSource = new BitmapImage(new Uri("pack://application:,,,/Resources/" + TeamPlaybook.TeamColor.Key + ".png"));
