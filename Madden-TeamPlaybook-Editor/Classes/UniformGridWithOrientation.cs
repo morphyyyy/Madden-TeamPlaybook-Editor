@@ -154,7 +154,7 @@ namespace MaddenTeamPlaybookEditor.Classes
                     {
                         element.Arrange(finalRect);
 #if INFOS
-                        //Console.WriteLine(index + " -> " + finalRect.SimpleString());
+                        Console.WriteLine(index + " -> " + finalRect.SimpleString());
                         index++;
 #endif
                         if (element.Visibility != Visibility.Collapsed)
@@ -179,7 +179,7 @@ namespace MaddenTeamPlaybookEditor.Classes
                     {
                         element.Arrange(finalRect);
 #if INFOS
-                        //Console.WriteLine(index + " -> " + finalRect.SimpleString());
+                        Console.WriteLine(index + " -> " + finalRect.SimpleString());
                         index++;
 #endif
 
@@ -202,7 +202,7 @@ namespace MaddenTeamPlaybookEditor.Classes
                     {
                         element.Arrange(finalRect);
 #if INFOS
-                        //Console.WriteLine(index + " -> " + finalRect.SimpleString());
+                        Console.WriteLine(index + " -> " + finalRect.SimpleString());
                         index++;
 #endif
                         if (element.Visibility != Visibility.Collapsed)

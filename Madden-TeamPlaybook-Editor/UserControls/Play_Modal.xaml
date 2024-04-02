@@ -495,30 +495,38 @@
                         </Grid.ColumnDefinitions>
                         <GroupBox Header="Play Flags" Grid.Column="0" DockPanel.Dock="Top" Margin="5">
                             <ScrollViewer ScrollViewer.VerticalScrollBarVisibility="Hidden" ScrollViewer.HorizontalScrollBarVisibility="Hidden">
-                                <StackPanel Orientation="Horizontal" Margin="5">
-                                        <StackPanel Margin="5">
+                                <StackPanel Orientation="Vertical" Margin="5">
+                                    <TextBlock Text="{Binding PLYL.PLF_, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition/>
+                                            <ColumnDefinition/>
+                                        </Grid.ColumnDefinitions>
+                                        <StackPanel Margin="5" Grid.Column="0">
                                             <CheckBox Content="Block And Release" IsChecked="{Binding BlockAndRelease, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                                             <CheckBox Content="Block Left" IsChecked="{Binding BlockLeft, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                                             <CheckBox Content="Block Right" IsChecked="{Binding BlockRight, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                                             <CheckBox Content="Can Flip" IsChecked="{Binding CanFlip, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                                            <CheckBox Content="Contain Left" IsChecked="{Binding ContainLeft, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                                            <CheckBox Content="Contain Right" IsChecked="{Binding ContainRight, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                                            <CheckBox Content="Cover 2 Defense" IsChecked="{Binding Cover2Defense, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                                            <CheckBox Content="Disable Lock On" IsChecked="{Binding DisableLockOn, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                                             <CheckBox Content="Complement Start" IsChecked="{Binding StartComplement, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                                             <CheckBox Content="Complement End" IsChecked="{Binding EndComplement, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                            <CheckBox Content="Contain Right" IsChecked="{Binding ContainRight, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                            <CheckBox Content="Contain Left" IsChecked="{Binding ContainLeft, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                            <CheckBox Content="Cover 2 Defense" IsChecked="{Binding Cover2Defense, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                            <CheckBox Content="Coverage Shell" IsChecked="{Binding CoverageShell, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                            <CheckBox Content="Disable Lock On" IsChecked="{Binding DisableLockOn, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                                             <CheckBox Content="Is Boosted" IsChecked="{Binding IsBoosted, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                                             <CheckBox Content="No Wide Align" IsChecked="{Binding NoWideAlign, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                            <CheckBox Content="No Playmaker" IsChecked="{Binding NoPlaymaker, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                                             <CheckBox Content="Option Stop" IsChecked="{Binding OptionStop, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                                            <CheckBox Content="Outside Run Stop" IsChecked="{Binding OutsideRunStop, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                                         </StackPanel>
-                                        <StackPanel Margin="5">
-                                            <CheckBox Content="Pass Left" IsChecked="{Binding PassLeft, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                                            <CheckBox Content="Pass Long" IsChecked="{Binding PassLong, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                                            <CheckBox Content="Pass Medium" IsChecked="{Binding PassMedium, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                                            <CheckBox Content="Pass Middle" IsChecked="{Binding PassMiddle, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                                            <CheckBox Content="Pass Right" IsChecked="{Binding PassRight, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                        <StackPanel Margin="5" Grid.Column="1">
+                                            <CheckBox Content="Outside Run Stop" IsChecked="{Binding OutsideRunStop, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                                             <CheckBox Content="Pass Short" IsChecked="{Binding PassShort, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                            <CheckBox Content="Pass Medium" IsChecked="{Binding PassMedium, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                            <CheckBox Content="Pass Long" IsChecked="{Binding PassLong, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                            <CheckBox Content="Pass Right" IsChecked="{Binding PassRight, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                            <CheckBox Content="Pass Left" IsChecked="{Binding PassLeft, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                            <CheckBox Content="Pass Middle" IsChecked="{Binding PassMiddle, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                                             <CheckBox Content="Punt Left" IsChecked="{Binding PuntLeft, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                                             <CheckBox Content="Punt Right" IsChecked="{Binding PuntRight, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                                             <CheckBox Content="Punt Sky" IsChecked="{Binding PuntSky, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
@@ -528,7 +536,8 @@
                                             <CheckBox Content="Run Right" IsChecked="{Binding RunRight, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                                             <CheckBox Content="Snap To Primary" IsChecked="{Binding SnapToVIP, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                                         </StackPanel>
-                                    </StackPanel>
+                                    </Grid>
+                                </StackPanel>
                             </ScrollViewer>                        
                         </GroupBox>
                         <GroupBox Header="PBAI" Grid.Column="1" DockPanel.Dock="Top" Margin="5">

@@ -599,15 +599,10 @@ namespace MaddenTeamPlaybookEditor.ViewModels
             _SnapToVIP =
             _StartComplement = false;
 
-            int _flag = PLYL.PLF_;
-
             foreach (KeyValuePair<int, string> key in PLYL.PlayListFlag.Reverse().Where(k => k.Key <= PLYL.PLF_))
             {
-                if (_flag >= key.Key)
-                {
-                    this.GetType()?.GetProperty(key.Value)?.SetValue(this, true);
-                    _flag -= key.Key;
-                }
+                this.GetType()?.GetProperty(key.Value)?.SetValue(this, true);
+                PLYL.PLF_ = PLYL.PLF_ - key.Key;
             }
         }
 
@@ -623,7 +618,7 @@ namespace MaddenTeamPlaybookEditor.ViewModels
                 this.PLYL.PLF_ += _BlockAndRelease ?
                     PLYL.PlayListFlag
                     .FirstOrDefault(k => String.Equals(k.Value, "BlockAndRelease", StringComparison.OrdinalIgnoreCase)).Key :
-                    -PLYL.PlayListFlag
+                    -1*PLYL.PlayListFlag
                     .FirstOrDefault(k => String.Equals(k.Value, "BlockAndRelease", StringComparison.OrdinalIgnoreCase)).Key;
                 OnPropertyChanged("BlockAndRelease");
             }
@@ -640,7 +635,7 @@ namespace MaddenTeamPlaybookEditor.ViewModels
                 this.PLYL.PLF_ += _BlockLeft ?
                     PLYL.PlayListFlag
                     .FirstOrDefault(k => String.Equals(k.Value, "BlockLeft", StringComparison.OrdinalIgnoreCase)).Key :
-                    -PLYL.PlayListFlag
+                    -1*PLYL.PlayListFlag
                     .FirstOrDefault(k => String.Equals(k.Value, "BlockLeft", StringComparison.OrdinalIgnoreCase)).Key;
                 OnPropertyChanged("BlockLeft");
             }
@@ -657,7 +652,7 @@ namespace MaddenTeamPlaybookEditor.ViewModels
                 this.PLYL.PLF_ += _BlockRight ?
                     PLYL.PlayListFlag
                     .FirstOrDefault(k => String.Equals(k.Value, "BlockRight", StringComparison.OrdinalIgnoreCase)).Key :
-                    -PLYL.PlayListFlag
+                    -1*PLYL.PlayListFlag
                     .FirstOrDefault(k => String.Equals(k.Value, "BlockRight", StringComparison.OrdinalIgnoreCase)).Key;
                 OnPropertyChanged("BlockRight");
             }
@@ -674,7 +669,7 @@ namespace MaddenTeamPlaybookEditor.ViewModels
                 this.PLYL.PLF_ += _CanFlip ?
                     PLYL.PlayListFlag
                     .FirstOrDefault(k => String.Equals(k.Value, "CanFlip", StringComparison.OrdinalIgnoreCase)).Key :
-                    -PLYL.PlayListFlag
+                    -1*PLYL.PlayListFlag
                     .FirstOrDefault(k => String.Equals(k.Value, "CanFlip", StringComparison.OrdinalIgnoreCase)).Key;
                 OnPropertyChanged("CanFlip");
             }
@@ -691,7 +686,7 @@ namespace MaddenTeamPlaybookEditor.ViewModels
                 this.PLYL.PLF_ += _ContainLeft ?
                     PLYL.PlayListFlag
                     .FirstOrDefault(k => String.Equals(k.Value, "ContainLeft", StringComparison.OrdinalIgnoreCase)).Key :
-                    -PLYL.PlayListFlag
+                    -1*PLYL.PlayListFlag
                     .FirstOrDefault(k => String.Equals(k.Value, "ContainLeft", StringComparison.OrdinalIgnoreCase)).Key;
                 OnPropertyChanged("ContainLeft");
             }
@@ -708,7 +703,7 @@ namespace MaddenTeamPlaybookEditor.ViewModels
                 this.PLYL.PLF_ += _ContainRight ?
                     PLYL.PlayListFlag
                     .FirstOrDefault(k => String.Equals(k.Value, "ContainRight", StringComparison.OrdinalIgnoreCase)).Key :
-                    -PLYL.PlayListFlag
+                    -1*PLYL.PlayListFlag
                     .FirstOrDefault(k => String.Equals(k.Value, "ContainRight", StringComparison.OrdinalIgnoreCase)).Key;
                 OnPropertyChanged("ContainRight");
             }
@@ -725,9 +720,26 @@ namespace MaddenTeamPlaybookEditor.ViewModels
                 this.PLYL.PLF_ += _Cover2Defense ?
                     PLYL.PlayListFlag
                     .FirstOrDefault(k => String.Equals(k.Value, "Cover2Defense", StringComparison.OrdinalIgnoreCase)).Key :
-                    -PLYL.PlayListFlag
+                    -1*PLYL.PlayListFlag
                     .FirstOrDefault(k => String.Equals(k.Value, "Cover2Defense", StringComparison.OrdinalIgnoreCase)).Key;
                 OnPropertyChanged("Cover2Defense");
+            }
+        }
+        private bool _CoverageShell;
+        public bool CoverageShell
+        {
+            get { return _CoverageShell; }
+            set
+            {
+                if (_CoverageShell == value)
+                    return;
+                _CoverageShell = value;
+                this.PLYL.PLF_ += _CoverageShell ?
+                    PLYL.PlayListFlag
+                    .FirstOrDefault(k => String.Equals(k.Value, "CoverageShell", StringComparison.OrdinalIgnoreCase)).Key :
+                    -1 * PLYL.PlayListFlag
+                    .FirstOrDefault(k => String.Equals(k.Value, "CoverageShell", StringComparison.OrdinalIgnoreCase)).Key;
+                OnPropertyChanged("CoverageShell");
             }
         }
         private bool _DisableLockOn;
@@ -742,7 +754,7 @@ namespace MaddenTeamPlaybookEditor.ViewModels
                 this.PLYL.PLF_ += _DisableLockOn ?
                     PLYL.PlayListFlag
                     .FirstOrDefault(k => String.Equals(k.Value, "DisableLockOn", StringComparison.OrdinalIgnoreCase)).Key :
-                    -PLYL.PlayListFlag
+                    -1*PLYL.PlayListFlag
                     .FirstOrDefault(k => String.Equals(k.Value, "DisableLockOn", StringComparison.OrdinalIgnoreCase)).Key;
                 OnPropertyChanged("DisableLockOn");
             }
@@ -759,7 +771,7 @@ namespace MaddenTeamPlaybookEditor.ViewModels
                 this.PLYL.PLF_ += _EndComplement ?
                     PLYL.PlayListFlag
                     .FirstOrDefault(k => String.Equals(k.Value, "EndComplement", StringComparison.OrdinalIgnoreCase)).Key :
-                    -PLYL.PlayListFlag
+                    -1*PLYL.PlayListFlag
                     .FirstOrDefault(k => String.Equals(k.Value, "EndComplement", StringComparison.OrdinalIgnoreCase)).Key;
                 OnPropertyChanged("EndComplement");
             }
@@ -776,9 +788,26 @@ namespace MaddenTeamPlaybookEditor.ViewModels
                 this.PLYL.PLF_ += _IsBoosted ?
                     PLYL.PlayListFlag
                     .FirstOrDefault(k => String.Equals(k.Value, "IsBoosted", StringComparison.OrdinalIgnoreCase)).Key :
-                    -PLYL.PlayListFlag
+                    -1*PLYL.PlayListFlag
                     .FirstOrDefault(k => String.Equals(k.Value, "IsBoosted", StringComparison.OrdinalIgnoreCase)).Key;
                 OnPropertyChanged("IsBoosted");
+            }
+        }
+        private bool _NoPlaymaker;
+        public bool NoPlaymaker
+        {
+            get { return _NoPlaymaker; }
+            set
+            {
+                if (_NoPlaymaker == value)
+                    return;
+                _NoPlaymaker = value;
+                this.PLYL.PLF_ += _NoPlaymaker ?
+                    PLYL.PlayListFlag
+                    .FirstOrDefault(k => String.Equals(k.Value, "NoPlaymaker", StringComparison.OrdinalIgnoreCase)).Key :
+                    -1 * PLYL.PlayListFlag
+                    .FirstOrDefault(k => String.Equals(k.Value, "NoPlaymaker", StringComparison.OrdinalIgnoreCase)).Key;
+                OnPropertyChanged("NoPlaymaker");
             }
         }
         private bool _NoWideAlign;
@@ -793,7 +822,7 @@ namespace MaddenTeamPlaybookEditor.ViewModels
                 this.PLYL.PLF_ += _NoWideAlign ?
                     PLYL.PlayListFlag
                     .FirstOrDefault(k => String.Equals(k.Value, "NoWideAlign", StringComparison.OrdinalIgnoreCase)).Key :
-                    -PLYL.PlayListFlag
+                    -1*PLYL.PlayListFlag
                     .FirstOrDefault(k => String.Equals(k.Value, "NoWideAlign", StringComparison.OrdinalIgnoreCase)).Key;
                 OnPropertyChanged("NoWideAlign");
             }
@@ -810,7 +839,7 @@ namespace MaddenTeamPlaybookEditor.ViewModels
                 this.PLYL.PLF_ += _OptionStop ?
                     PLYL.PlayListFlag
                     .FirstOrDefault(k => String.Equals(k.Value, "OptionStop", StringComparison.OrdinalIgnoreCase)).Key :
-                    -PLYL.PlayListFlag
+                    -1*PLYL.PlayListFlag
                     .FirstOrDefault(k => String.Equals(k.Value, "OptionStop", StringComparison.OrdinalIgnoreCase)).Key;
                 OnPropertyChanged("OptionStop");
             }
@@ -827,7 +856,7 @@ namespace MaddenTeamPlaybookEditor.ViewModels
                 this.PLYL.PLF_ += _OutsideRunStop ?
                     PLYL.PlayListFlag
                     .FirstOrDefault(k => String.Equals(k.Value, "OutsideRunStop", StringComparison.OrdinalIgnoreCase)).Key :
-                    -PLYL.PlayListFlag
+                    -1*PLYL.PlayListFlag
                     .FirstOrDefault(k => String.Equals(k.Value, "OutsideRunStop", StringComparison.OrdinalIgnoreCase)).Key;
                 OnPropertyChanged("OutsideRunStop");
             }
@@ -844,7 +873,7 @@ namespace MaddenTeamPlaybookEditor.ViewModels
                 this.PLYL.PLF_ += _PassLeft ?
                     PLYL.PlayListFlag
                     .FirstOrDefault(k => String.Equals(k.Value, "PassLeft", StringComparison.OrdinalIgnoreCase)).Key :
-                    -PLYL.PlayListFlag
+                    -1*PLYL.PlayListFlag
                     .FirstOrDefault(k => String.Equals(k.Value, "PassLeft", StringComparison.OrdinalIgnoreCase)).Key;
                 OnPropertyChanged("PassLeft");
             }
@@ -861,7 +890,7 @@ namespace MaddenTeamPlaybookEditor.ViewModels
                 this.PLYL.PLF_ += _PassLong ?
                     PLYL.PlayListFlag
                     .FirstOrDefault(k => String.Equals(k.Value, "PassLong", StringComparison.OrdinalIgnoreCase)).Key :
-                    -PLYL.PlayListFlag
+                    -1*PLYL.PlayListFlag
                     .FirstOrDefault(k => String.Equals(k.Value, "PassLong", StringComparison.OrdinalIgnoreCase)).Key;
                 OnPropertyChanged("PassLong");
             }
@@ -878,7 +907,7 @@ namespace MaddenTeamPlaybookEditor.ViewModels
                 this.PLYL.PLF_ += _PassMedium ?
                     PLYL.PlayListFlag
                     .FirstOrDefault(k => String.Equals(k.Value, "PassMedium", StringComparison.OrdinalIgnoreCase)).Key :
-                    -PLYL.PlayListFlag
+                    -1*PLYL.PlayListFlag
                     .FirstOrDefault(k => String.Equals(k.Value, "PassMedium", StringComparison.OrdinalIgnoreCase)).Key;
                 OnPropertyChanged("PassMedium");
             }
@@ -895,7 +924,7 @@ namespace MaddenTeamPlaybookEditor.ViewModels
                 this.PLYL.PLF_ += _PassMiddle ?
                     PLYL.PlayListFlag
                     .FirstOrDefault(k => String.Equals(k.Value, "PassMiddle", StringComparison.OrdinalIgnoreCase)).Key :
-                    -PLYL.PlayListFlag
+                    -1*PLYL.PlayListFlag
                     .FirstOrDefault(k => String.Equals(k.Value, "PassMiddle", StringComparison.OrdinalIgnoreCase)).Key;
                 OnPropertyChanged("PassMiddle");
             }
@@ -912,7 +941,7 @@ namespace MaddenTeamPlaybookEditor.ViewModels
                 this.PLYL.PLF_ += _PassRight ?
                     PLYL.PlayListFlag
                     .FirstOrDefault(k => String.Equals(k.Value, "PassRight", StringComparison.OrdinalIgnoreCase)).Key :
-                    -PLYL.PlayListFlag
+                    -1*PLYL.PlayListFlag
                     .FirstOrDefault(k => String.Equals(k.Value, "PassRight", StringComparison.OrdinalIgnoreCase)).Key;
                 OnPropertyChanged("PassRight");
             }
@@ -929,7 +958,7 @@ namespace MaddenTeamPlaybookEditor.ViewModels
                 this.PLYL.PLF_ += _PassShort ?
                     PLYL.PlayListFlag
                     .FirstOrDefault(k => String.Equals(k.Value, "PassShort", StringComparison.OrdinalIgnoreCase)).Key :
-                    -PLYL.PlayListFlag
+                    -1*PLYL.PlayListFlag
                     .FirstOrDefault(k => String.Equals(k.Value, "PassShort", StringComparison.OrdinalIgnoreCase)).Key;
                 OnPropertyChanged("PassShort");
             }
@@ -946,7 +975,7 @@ namespace MaddenTeamPlaybookEditor.ViewModels
                 this.PLYL.PLF_ += _PuntLeft ?
                     PLYL.PlayListFlag
                     .FirstOrDefault(k => String.Equals(k.Value, "PuntLeft", StringComparison.OrdinalIgnoreCase)).Key :
-                    -PLYL.PlayListFlag
+                    -1*PLYL.PlayListFlag
                     .FirstOrDefault(k => String.Equals(k.Value, "PuntLeft", StringComparison.OrdinalIgnoreCase)).Key;
                 OnPropertyChanged("PuntLeft");
             }
@@ -963,7 +992,7 @@ namespace MaddenTeamPlaybookEditor.ViewModels
                 this.PLYL.PLF_ += _PuntRight ?
                     PLYL.PlayListFlag
                     .FirstOrDefault(k => String.Equals(k.Value, "PuntRight", StringComparison.OrdinalIgnoreCase)).Key :
-                    -PLYL.PlayListFlag
+                    -1*PLYL.PlayListFlag
                     .FirstOrDefault(k => String.Equals(k.Value, "PuntRight", StringComparison.OrdinalIgnoreCase)).Key;
                 OnPropertyChanged("PuntRight");
             }
@@ -980,7 +1009,7 @@ namespace MaddenTeamPlaybookEditor.ViewModels
                 this.PLYL.PLF_ += _PuntSky ?
                     PLYL.PlayListFlag
                     .FirstOrDefault(k => String.Equals(k.Value, "PuntSky", StringComparison.OrdinalIgnoreCase)).Key :
-                    -PLYL.PlayListFlag
+                    -1*PLYL.PlayListFlag
                     .FirstOrDefault(k => String.Equals(k.Value, "PuntSky", StringComparison.OrdinalIgnoreCase)).Key;
                 OnPropertyChanged("PuntSky");
             }
@@ -997,7 +1026,7 @@ namespace MaddenTeamPlaybookEditor.ViewModels
                 this.PLYL.PLF_ += _QBScrambleStop ?
                     PLYL.PlayListFlag
                     .FirstOrDefault(k => String.Equals(k.Value, "QBScrambleStop", StringComparison.OrdinalIgnoreCase)).Key :
-                    -PLYL.PlayListFlag
+                    -1*PLYL.PlayListFlag
                     .FirstOrDefault(k => String.Equals(k.Value, "QBScrambleStop", StringComparison.OrdinalIgnoreCase)).Key;
                 OnPropertyChanged("QBScrambleStop");
             }
@@ -1014,7 +1043,7 @@ namespace MaddenTeamPlaybookEditor.ViewModels
                 this.PLYL.PLF_ += _RunLeft ?
                     PLYL.PlayListFlag
                     .FirstOrDefault(k => String.Equals(k.Value, "RunLeft", StringComparison.OrdinalIgnoreCase)).Key :
-                    -PLYL.PlayListFlag
+                    -1*PLYL.PlayListFlag
                     .FirstOrDefault(k => String.Equals(k.Value, "RunLeft", StringComparison.OrdinalIgnoreCase)).Key;
                 OnPropertyChanged("RunLeft");
             }
@@ -1031,7 +1060,7 @@ namespace MaddenTeamPlaybookEditor.ViewModels
                 this.PLYL.PLF_ += _RunMiddle ?
                     PLYL.PlayListFlag
                     .FirstOrDefault(k => String.Equals(k.Value, "RunMiddle", StringComparison.OrdinalIgnoreCase)).Key :
-                    -PLYL.PlayListFlag
+                    -1*PLYL.PlayListFlag
                     .FirstOrDefault(k => String.Equals(k.Value, "RunMiddle", StringComparison.OrdinalIgnoreCase)).Key;
                 OnPropertyChanged("RunMiddle");
             }
@@ -1048,7 +1077,7 @@ namespace MaddenTeamPlaybookEditor.ViewModels
                 this.PLYL.PLF_ += _RunRight ?
                     PLYL.PlayListFlag
                     .FirstOrDefault(k => String.Equals(k.Value, "RunRight", StringComparison.OrdinalIgnoreCase)).Key :
-                    -PLYL.PlayListFlag
+                    -1*PLYL.PlayListFlag
                     .FirstOrDefault(k => String.Equals(k.Value, "RunRight", StringComparison.OrdinalIgnoreCase)).Key;
                 OnPropertyChanged("RunRight");
             }
@@ -1065,7 +1094,7 @@ namespace MaddenTeamPlaybookEditor.ViewModels
                 this.PLYL.PLF_ += _SnapToVIP ?
                     PLYL.PlayListFlag
                     .FirstOrDefault(k => String.Equals(k.Value, "SnapToVIP", StringComparison.OrdinalIgnoreCase)).Key :
-                    -PLYL.PlayListFlag
+                    -1*PLYL.PlayListFlag
                     .FirstOrDefault(k => String.Equals(k.Value, "SnapToVIP", StringComparison.OrdinalIgnoreCase)).Key;
                 OnPropertyChanged("SnapToVIP");
             }
@@ -1082,7 +1111,7 @@ namespace MaddenTeamPlaybookEditor.ViewModels
                 this.PLYL.PLF_ += _StartComplement ?
                     PLYL.PlayListFlag
                     .FirstOrDefault(k => String.Equals(k.Value, "StartComplement", StringComparison.OrdinalIgnoreCase)).Key :
-                    -PLYL.PlayListFlag
+                    -1*PLYL.PlayListFlag
                     .FirstOrDefault(k => String.Equals(k.Value, "StartComplement", StringComparison.OrdinalIgnoreCase)).Key;
                 OnPropertyChanged("StartComplement");
             }
