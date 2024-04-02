@@ -1759,7 +1759,7 @@ namespace MaddenTeamPlaybookEditor.ViewModels
                 {
                     int threshold = 1;
                     _pbai = PBAI.Where(p => p.prct == threshold && PBAI.Select(n => n.AIGR > threshold) != null).ToList();
-                    if (MessageBox.Show("There are " + (2000 - PBAI.Count).ToString() + " too many PBAI records and the game will crash.\nWould you like to remove " + _pbai.Count + " records with a 1 prct?", "Warning", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                    if (MessageBox.Show("There are " + (2000 - PBAI.Count()).ToString() + " too many PBAI records and the game will crash.\nWould you like to remove " + _pbai.Count() + " records with a 1 prct?", "Warning", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                     {
                         PBAI.RemoveAll(p => _pbai.Contains(p));
                     }
@@ -1831,6 +1831,28 @@ namespace MaddenTeamPlaybookEditor.ViewModels
                 List<int> _setlList2 = new List<int> { 732, 1221, 1225, 834, 755, 1247, 764, 109, 1248, 756, 36, 183, 1119, 835, 1232 };
                 _pbai = PBAI.Where(p => (_setlList1.Contains(p.SETL) && p.AIGR == 5) || (_setlList2.Contains(p.SETL) && p.AIGR == 7));
                 PBAI.RemoveAll(p => _pbai.Contains(p));
+
+                if (PBAI.Count > 2000)
+                {
+                    int threshold = 1;
+                    _pbai = PBAI.Where(p => p.prct == threshold && PBAI.Select(n => n.AIGR > threshold) != null).ToList();
+                    if (MessageBox.Show("There are " + (2000 - PBAI.Count()).ToString() + " too many PBAI records and the game will crash.\nWould you like to remove " + _pbai.Count() + " records with a 1 prct?", "Warning", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                    {
+                        PBAI.RemoveAll(p => _pbai.Contains(p));
+                    }
+                }
+
+                PBAI = Madden.TeamPlaybook.PBAI.Sort(PBAI);
+                for (int i = 0; i < PBAI.Count(); i++)
+                {
+                    PBAI[i].rec = i;
+                    PBAI[i].prct = 10;
+                }
+
+                foreach (PlayVM _play in Plays)
+                {
+                    _play.GetSituations();
+                }
             }
         }
 
