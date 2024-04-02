@@ -8,6 +8,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:classes="clr-namespace:MaddenTeamPlaybookEditor.Classes"
+    xmlns:math="http://hexinnovation.com/math"
     mc:Ignorable="d" 
     x:Name="wdwPlaybookEditor"
     x:Class="MaddenTeamPlaybookEditor.MainWindow"
@@ -59,11 +60,20 @@
                 Stretch="UniformToFill"
                 AlignmentY="Top"
                 />
+        <math:MathConverter x:Key="Math" />
     </Window.Resources>
 
-    <DockPanel>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
 
-        <Menu IsMainMenu="True" DockPanel.Dock="Top">
+        <Canvas x:Name="cvsTeamColors" Background="Transparent" Grid.Row="1" Opacity=".15"/>
+
+        <Canvas x:Name="cvsTeamHelmet" Background="Transparent" Grid.Row="1" Margin="123,0,0,-20" Opacity=".333" Height="384" Width="384" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
+
+        <Menu IsMainMenu="True" Grid.Row="0">
             <MenuItem Header="_File">
                 <MenuItem Header="Open" Click="mnuOpen_Click"/>
                 <Separator />
@@ -94,16 +104,16 @@
                     Table Definitions
                 </Hyperlink>
             </MenuItem>
-            
+
         </Menu>
 
-        <Grid Margin="5">
+        <Grid Margin="5" Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
 
-            <Grid Grid.Column="0" Margin="5" Width="600">
+            <Grid Grid.Column="0" Margin="5">
 
                 <!--<TabControl x:Name="tabPlaybook" ItemsSource="{Binding Formations}" Background="Transparent" BorderBrush="Transparent"  VerticalAlignment="Top" HorizontalAlignment="Left">
                 <TabControl.ItemTemplate>
@@ -149,118 +159,124 @@
                 </TabControl.ItemContainerStyle>
             </TabControl>-->
 
-                <TabControl x:Name="tclTeamPlaybook">
+                <TabControl x:Name="tclTeamPlaybook" Grid.Row="0">
 
                     <TabItem Header="Playbook">
 
-                        <TreeView x:Name="tvwPlaybook"
-                            Width="600"
-                            Background="{x:Null}"
-                            BorderBrush="{x:Null}"
-                            Foreground="{x:Null}"
-                            DockPanel.Dock="Top"
-                            SelectedItemChanged="tvwPlaybook_SelectedItemChanged"
-                            TreeViewItem.Selected="tvwPlaybook_Selected"
-                            MouseDoubleClick="tvwPlaybook_DoubleClick"
-                            AllowDrop="True"
-                            ItemsSource="{Binding Formations}"
-                            ScrollViewer.VerticalScrollBarVisibility="Hidden"
-                            ScrollViewer.HorizontalScrollBarVisibility="Hidden">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
 
-                            <TreeView.CommandBindings>
-                                <CommandBinding Command="ApplicationCommands.Copy" Executed="CopyToClipboard" />
-                                <CommandBinding Command="ApplicationCommands.Paste" Executed="PasteFromClipboard" />
-                                <CommandBinding Command="ApplicationCommands.Delete" Executed="Delete" />
-                            </TreeView.CommandBindings>
+                            <TreeView x:Name="tvwPlaybook"
+                                Grid.Column="0"
+                                Width="600"
+                                Background="{x:Null}"
+                                BorderBrush="{x:Null}"
+                                Foreground="{x:Null}"
+                                SelectedItemChanged="tvwPlaybook_SelectedItemChanged"
+                                TreeViewItem.Selected="tvwPlaybook_Selected"
+                                MouseDoubleClick="tvwPlaybook_DoubleClick"
+                                AllowDrop="True"
+                                ItemsSource="{Binding Formations}"
+                                ScrollViewer.VerticalScrollBarVisibility="Hidden"
+                                ScrollViewer.HorizontalScrollBarVisibility="Hidden">
 
-                            <TreeView.Resources>
+                                <TreeView.CommandBindings>
+                                    <CommandBinding Command="ApplicationCommands.Copy" Executed="CopyToClipboard" />
+                                    <CommandBinding Command="ApplicationCommands.Paste" Executed="PasteFromClipboard" />
+                                    <CommandBinding Command="ApplicationCommands.Delete" Executed="Delete" />
+                                </TreeView.CommandBindings>
 
-                                <ResourceDictionary>
+                                <TreeView.Resources>
 
-                                    <HierarchicalDataTemplate DataType="{x:Type TeamPlaybookViewModels:FormationVM}" ItemsSource="{Binding SubFormations}">
+                                    <ResourceDictionary>
 
-                                        <HierarchicalDataTemplate.ItemContainerStyle>
-                                            <Style TargetType="TreeViewItem" BasedOn="{StaticResource SubFormationTreeViewItem}">
-                                                <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}" />
-                                                <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay}" />
-                                                <Style.Triggers>
-                                                    <DataTrigger Binding="{Binding IsVisible}" Value="True">
-                                                        <Setter Property="Visibility" Value="Visible" />
-                                                    </DataTrigger>
-                                                    <DataTrigger Binding="{Binding IsVisible}" Value="False">
-                                                        <Setter Property="Visibility" Value="Collapsed" />
-                                                    </DataTrigger>
-                                                </Style.Triggers>
-                                            </Style>
-                                        </HierarchicalDataTemplate.ItemContainerStyle>
+                                        <HierarchicalDataTemplate DataType="{x:Type TeamPlaybookViewModels:FormationVM}" ItemsSource="{Binding SubFormations}">
 
-                                        <UserControls:Formation x:Name="uclFormation" formation="{Binding}" IsEnabled="True" DockPanel.Dock="Left"/>
+                                            <HierarchicalDataTemplate.ItemContainerStyle>
+                                                <Style TargetType="TreeViewItem" BasedOn="{StaticResource SubFormationTreeViewItem}">
+                                                    <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}" />
+                                                    <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay}" />
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding IsVisible}" Value="True">
+                                                            <Setter Property="Visibility" Value="Visible" />
+                                                        </DataTrigger>
+                                                        <DataTrigger Binding="{Binding IsVisible}" Value="False">
+                                                            <Setter Property="Visibility" Value="Collapsed" />
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </HierarchicalDataTemplate.ItemContainerStyle>
 
-                                    </HierarchicalDataTemplate>
+                                            <UserControls:Formation x:Name="uclFormation" formation="{Binding}" IsEnabled="True" DockPanel.Dock="Left"/>
 
-                                    <HierarchicalDataTemplate DataType="{x:Type TeamPlaybookViewModels:SubFormationVM}" ItemsSource="{Binding Plays}">
+                                        </HierarchicalDataTemplate>
 
-                                        <HierarchicalDataTemplate.ItemContainerStyle>
-                                            <Style TargetType="TreeViewItem" BasedOn="{StaticResource PlayTreeViewItem}">
-                                                <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}" />
-                                                <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay}" />
-                                                <Style.Triggers>
-                                                    <DataTrigger Binding="{Binding IsVisible}" Value="True">
-                                                        <Setter Property="Visibility" Value="Visible" />
-                                                    </DataTrigger>
-                                                    <DataTrigger Binding="{Binding IsVisible}" Value="False">
-                                                        <Setter Property="Visibility" Value="Collapsed" />
-                                                    </DataTrigger>
-                                                </Style.Triggers>
-                                            </Style>
-                                        </HierarchicalDataTemplate.ItemContainerStyle>
+                                        <HierarchicalDataTemplate DataType="{x:Type TeamPlaybookViewModels:SubFormationVM}" ItemsSource="{Binding Plays}">
 
-                                        <UserControls:SubFormation x:Name="uclSubFormation" subFormation="{Binding}" showPackage="True"/>
+                                            <HierarchicalDataTemplate.ItemContainerStyle>
+                                                <Style TargetType="TreeViewItem" BasedOn="{StaticResource PlayTreeViewItem}">
+                                                    <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}" />
+                                                    <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay}" />
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding IsVisible}" Value="True">
+                                                            <Setter Property="Visibility" Value="Visible" />
+                                                        </DataTrigger>
+                                                        <DataTrigger Binding="{Binding IsVisible}" Value="False">
+                                                            <Setter Property="Visibility" Value="Collapsed" />
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </HierarchicalDataTemplate.ItemContainerStyle>
 
-                                    </HierarchicalDataTemplate>
+                                            <UserControls:SubFormation x:Name="uclSubFormation" subFormation="{Binding}" showPackage="True"/>
 
-                                    <HierarchicalDataTemplate DataType="{x:Type TeamPlaybookViewModels:PlayVM}">
+                                        </HierarchicalDataTemplate>
 
-                                        <DockPanel>
+                                        <HierarchicalDataTemplate DataType="{x:Type TeamPlaybookViewModels:PlayVM}">
 
-                                            <UserControls:Play x:Name="uclPlay"
+                                            <DockPanel>
+
+                                                <UserControls:Play x:Name="uclPlay"
                                                             play="{Binding}" 
                                                             showAudibles="True" 
                                                             DockPanel.Dock="Top"/>
 
-                                            <StackPanel x:Name="pnlAudibles"
+                                                <StackPanel x:Name="pnlAudibles"
                                                     Orientation="Horizontal" 
                                                     HorizontalAlignment="Center" 
                                                     VerticalAlignment="Bottom" 
                                                     DockPanel.Dock="Top">
 
-                                                <ToggleButton x:Name="AudibleQuick" ToolTip="Short Pass (X)" Height="18" IsChecked="{Binding isShortAudible}" >
-                                                    <ToggleButton.Style>
-                                                        <Style TargetType="{x:Type ToggleButton}" BasedOn="{StaticResource AudibleQuick}"/>
-                                                    </ToggleButton.Style>
-                                                </ToggleButton>
+                                                    <ToggleButton x:Name="AudibleQuick" ToolTip="Short Pass (X)" Height="18" IsChecked="{Binding isShortAudible}" >
+                                                        <ToggleButton.Style>
+                                                            <Style TargetType="{x:Type ToggleButton}" BasedOn="{StaticResource AudibleQuick}"/>
+                                                        </ToggleButton.Style>
+                                                    </ToggleButton>
 
-                                                <ToggleButton x:Name="AudibleRun" ToolTip="Run (Y/Triangle)" Height="18" IsChecked="{Binding isRunAudible}" >
-                                                    <ToggleButton.Style>
-                                                        <Style TargetType="{x:Type ToggleButton}" BasedOn="{StaticResource AudibleRun}"/>
-                                                    </ToggleButton.Style>
-                                                </ToggleButton>
+                                                    <ToggleButton x:Name="AudibleRun" ToolTip="Run (Y/Triangle)" Height="18" IsChecked="{Binding isRunAudible}" >
+                                                        <ToggleButton.Style>
+                                                            <Style TargetType="{x:Type ToggleButton}" BasedOn="{StaticResource AudibleRun}"/>
+                                                        </ToggleButton.Style>
+                                                    </ToggleButton>
 
-                                                <ToggleButton x:Name="AudibleDeep" ToolTip="Deep Pass (LB/L1)" Height="18" IsChecked="{Binding isDeepAudible}" >
-                                                    <ToggleButton.Style>
-                                                        <Style TargetType="{x:Type ToggleButton}" BasedOn="{StaticResource AudibleDeep}"/>
-                                                    </ToggleButton.Style>
-                                                </ToggleButton>
+                                                    <ToggleButton x:Name="AudibleDeep" ToolTip="Deep Pass (LB/L1)" Height="18" IsChecked="{Binding isDeepAudible}" >
+                                                        <ToggleButton.Style>
+                                                            <Style TargetType="{x:Type ToggleButton}" BasedOn="{StaticResource AudibleDeep}"/>
+                                                        </ToggleButton.Style>
+                                                    </ToggleButton>
 
-                                                <ToggleButton x:Name="AudibleFake" ToolTip="Play Action (RB/R1)" Height="18" IsChecked="{Binding isFakeAudible}" >
-                                                    <ToggleButton.Style>
-                                                        <Style TargetType="{x:Type ToggleButton}" BasedOn="{StaticResource AudibleFake}"/>
-                                                    </ToggleButton.Style>
-                                                </ToggleButton>
+                                                    <ToggleButton x:Name="AudibleFake" ToolTip="Play Action (RB/R1)" Height="18" IsChecked="{Binding isFakeAudible}" >
+                                                        <ToggleButton.Style>
+                                                            <Style TargetType="{x:Type ToggleButton}" BasedOn="{StaticResource AudibleFake}"/>
+                                                        </ToggleButton.Style>
+                                                    </ToggleButton>
 
-                                            </StackPanel>
+                                                </StackPanel>
 
-                                            <TextBlock 
+                                                <TextBlock 
                                             Text="{Binding PBPL.name}"
                                             DockPanel.Dock="Top" 
                                             FontFamily="DK Crayon Crumble" 
@@ -271,93 +287,296 @@
                                             Foreground="LightGray" 
                                             />
 
-                                        </DockPanel>
+                                            </DockPanel>
 
-                                    </HierarchicalDataTemplate>
+                                        </HierarchicalDataTemplate>
 
-                                </ResourceDictionary>
+                                    </ResourceDictionary>
 
-                            </TreeView.Resources>
+                                </TreeView.Resources>
 
-                            <TreeView.ItemContainerStyle>
-                                <Style TargetType="{x:Type TreeViewItem}" BasedOn="{StaticResource FormationTreeViewItem}">
+                                <TreeView.ItemContainerStyle>
+                                    <Style TargetType="{x:Type TreeViewItem}" BasedOn="{StaticResource FormationTreeViewItem}">
 
-                                    <EventSetter Event="DragOver"  Handler="treeView_DragOver"/>
-                                    <EventSetter Event="Drop" Handler="treeView_Drop"/>
-                                    <EventSetter Event="MouseMove" Handler="treeView_MouseMove"/>
-                                    <EventSetter Event="MouseDown" Handler="treeView_MouseDown"/>
-                                    <!--<EventSetter Event="MouseUp" Handler="treeView_MouseUp"/>
+                                        <EventSetter Event="DragOver"  Handler="treeView_DragOver"/>
+                                        <EventSetter Event="Drop" Handler="treeView_Drop"/>
+                                        <EventSetter Event="MouseMove" Handler="treeView_MouseMove"/>
+                                        <EventSetter Event="MouseDown" Handler="treeView_MouseDown"/>
+                                        <!--<EventSetter Event="MouseUp" Handler="treeView_MouseUp"/>
                         <EventSetter Event="PreviewGiveFeedback" Handler="treeView_PreviewGiveFeedback"/>-->
 
-                                    <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}" />
-                                    <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay}" />
+                                        <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}" />
+                                        <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay}" />
 
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding IsVisible}" Value="True">
-                                            <Setter Property="Visibility" Value="Visible" />
-                                        </DataTrigger>
-                                        <DataTrigger Binding="{Binding IsVisible}" Value="False">
-                                            <Setter Property="Visibility" Value="Collapsed" />
-                                        </DataTrigger>
-                                    </Style.Triggers>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding IsVisible}" Value="True">
+                                                <Setter Property="Visibility" Value="Visible" />
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding IsVisible}" Value="False">
+                                                <Setter Property="Visibility" Value="Collapsed" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
 
-                                </Style>
-                            </TreeView.ItemContainerStyle>
+                                    </Style>
+                                </TreeView.ItemContainerStyle>
 
-                        </TreeView>
+                            </TreeView>
+
+                            <Border Name="bdrField"
+                                Background="{StaticResource FieldBrush}"
+                                CornerRadius="10"
+                                Width="533"
+                                Height="950"
+                                HorizontalAlignment="Left"
+                                Grid.Column="1"/>
+
+                            <UserControls:PlayModal x:Name="uclPlayModal" Grid.Column="1"/>
+
+                            <UserControls:SubFormationModal x:Name="uclSubFormationModal" 
+                                Visibility="Hidden" 
+                                Grid.Column="1"/>
+
+                            <!--<TreeView x:Name="tvwPSALs"
+                                Background="{x:Null}"
+                                BorderBrush="{x:Null}"
+                                Foreground="{x:Null}"
+                                DockPanel.Dock="Top"
+                                TreeViewItem.Selected="tvwPSALs_Selected"
+                                AllowDrop="True"
+                                ItemsSource="{Binding}"
+                                MaxWidth="600"
+                                ScrollViewer.VerticalScrollBarVisibility="Hidden"
+                                ScrollViewer.HorizontalScrollBarVisibility="Hidden">
+
+                                <TreeView.Resources>
+
+                                    <ResourceDictionary>
+
+                                        <HierarchicalDataTemplate DataType="{x:Type TeamPlaybookViewModels:FormationVM}" ItemsSource="{Binding SubFormations}">
+
+                                            <HierarchicalDataTemplate.ItemContainerStyle>
+                                                <Style TargetType="TreeViewItem" BasedOn="{StaticResource SubFormationTreeViewItem}">
+                                                    <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}" />
+                                                    <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay}" />
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding IsVisible}" Value="True">
+                                                            <Setter Property="Visibility" Value="Visible" />
+                                                        </DataTrigger>
+                                                        <DataTrigger Binding="{Binding IsVisible}" Value="False">
+                                                            <Setter Property="Visibility" Value="Collapsed" />
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </HierarchicalDataTemplate.ItemContainerStyle>
+
+                                            <UserControls:Formation x:Name="uclFormation" formation="{Binding}"/>
+
+                                        </HierarchicalDataTemplate>
+
+                                        <HierarchicalDataTemplate DataType="{x:Type TeamPlaybookViewModels:SubFormationVM}" ItemsSource="{Binding Plays}">
+
+                                            <HierarchicalDataTemplate.ItemContainerStyle>
+                                                <Style TargetType="TreeViewItem" BasedOn="{StaticResource PlayTreeViewItem}">
+                                                    <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}" />
+                                                    <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay}" />
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding IsVisible}" Value="True">
+                                                            <Setter Property="Visibility" Value="Visible" />
+                                                        </DataTrigger>
+                                                        <DataTrigger Binding="{Binding IsVisible}" Value="False">
+                                                            <Setter Property="Visibility" Value="Collapsed" />
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </HierarchicalDataTemplate.ItemContainerStyle>
+
+                                            <UserControls:SubFormation x:Name="uclSubFormation" subFormation="{Binding}"/>
+
+                                        </HierarchicalDataTemplate>
+
+                                        <HierarchicalDataTemplate DataType="{x:Type TeamPlaybookViewModels:PlayVM}">
+
+                                            <UserControls:Play x:Name="uclPlay" play="{Binding}"/>
+
+                                        </HierarchicalDataTemplate>
+
+                                    </ResourceDictionary>
+
+                                </TreeView.Resources>
+
+                                <TreeView.ItemContainerStyle>
+                                    <Style TargetType="{x:Type TreeViewItem}" BasedOn="{StaticResource FormationTreeViewItem}">
+                                        <EventSetter Event="DragOver"  Handler="treeView_DragOver"/>
+                                        <EventSetter Event="Drop" Handler="treeView_Drop"/>
+                                        <EventSetter Event="MouseMove" Handler="treeView_MouseMove"/>
+                                        <EventSetter Event="MouseDown" Handler="treeView_MouseDown"/>
+                                        <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}" />
+                                        <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay}" />
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding IsVisible}" Value="True">
+                                                <Setter Property="Visibility" Value="Visible" />
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding IsVisible}" Value="False">
+                                                <Setter Property="Visibility" Value="Collapsed" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TreeView.ItemContainerStyle>
+
+                            </TreeView>-->
+
+                        </Grid>
 
                     </TabItem>
 
                     <TabItem Header="Gameplan">
 
-                        <DockPanel VerticalAlignment="Top" Width="600">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
 
-                            <DockPanel DockPanel.Dock="Top" Margin="5,1">
+                            <ListView x:Name="lvwSituations" 
+                                Grid.Column="0"
+                                ItemsSource="{Binding}" 
+                                SelectedValuePath="Key" 
+                                Margin="5,1"
+                                Background="Transparent"
+                                BorderBrush="Transparent"
+                                BorderThickness="0"
+                                SelectionChanged="lvwSituations_SelectionChanged"
+                                MouseUp="lvwSituations_MouseUp"
+                                ScrollViewer.CanContentScroll="True"
+                                ScrollViewer.VerticalScrollBarVisibility="Hidden"
+                                ScrollViewer.HorizontalScrollBarVisibility="Hidden">
+                                <ListView.ItemTemplate>
+                                    <DataTemplate DataType="{x:Type TeamPlaybookViewModels:SituationVM}">
+                                        <StackPanel Orientation="Horizontal" Margin="1">
 
-                                <ComboBox
-                                    x:Name="cbxPLYT"
-                                    ItemsSource="{Binding}"
-                                    SelectedValuePath="Key" 
-                                    DisplayMemberPath="Value"
-                                    Margin="5,1"
-                                    BorderBrush="Transparent"
-                                    BorderThickness="0"
-                                    SelectionChanged="cbxPLYT_SelectionChanged"
-                                    ScrollViewer.CanContentScroll="False"
-                                    ScrollViewer.VerticalScrollBarVisibility="Hidden"
-                                    ScrollViewer.HorizontalScrollBarVisibility="Hidden"
-                                    IsEditable="True"
-                                    Text="Select Plays by Type"/>
+                                            <TextBlock Text="{Binding Value}"
+                                                FontSize="14"
+                                                Foreground="LightGray"
+                                                VerticalAlignment="Center"/>
 
-                                <ComboBox 
-                                    x:Name="lvwSituations" 
-                                    ItemsSource="{Binding}" 
-                                    Margin="5,1"
-                                    ScrollViewer.CanContentScroll="False"
-                                    ScrollViewer.VerticalScrollBarVisibility="Hidden"
-                                    ScrollViewer.HorizontalScrollBarVisibility="Hidden"
-                                    BorderBrush="Transparent"
-                                    MouseUp="lvwSituations_MouseUp"
-                                    SelectionChanged="lvwSituations_SelectionChanged">
-                                    <ComboBox.ItemTemplate>
-                                        <DataTemplate>
-                                            <UserControls:Situation situation="{Binding}"/>
-                                        </DataTemplate>
-                                    </ComboBox.ItemTemplate>
-                                </ComboBox>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
 
-                            </DockPanel>
+                            <!--<ListView x:Name="cbxPLYT"
+                                Grid.Column="1"
+                                ItemsSource="{Binding}"
+                                SelectedValuePath="Key" 
+                                DisplayMemberPath="Value"
+                                Margin="5,1"
+                                BorderBrush="Transparent"
+                                BorderThickness="0"
+                                SelectionChanged="cbxPLYT_SelectionChanged"
+                                ScrollViewer.CanContentScroll="False"
+                                ScrollViewer.VerticalScrollBarVisibility="Hidden"
+                                ScrollViewer.HorizontalScrollBarVisibility="Hidden"/>-->
 
-                            <TreeView 
-                            x:Name="lvwPlaysByRouteDepth" 
-                            ItemsSource="{Binding}"
-                            Background="Transparent"
-                            BorderBrush="Transparent"
-                            ScrollViewer.VerticalScrollBarVisibility="Hidden"
-                            Margin="5,1"
-                            Width="600"
-                            Height="875"
-                            DockPanel.Dock="Top">
+                            <!--<TreeView x:Name="tvwPlayType"
+                                Grid.Column="1"
+                                Background="{x:Null}"
+                                BorderBrush="{x:Null}"
+                                Foreground="{x:Null}"
+                                DockPanel.Dock="Top"
+                                AllowDrop="False"
+                                ItemsSource="{Binding}"
+                                MaxWidth="600"
+                                ScrollViewer.VerticalScrollBarVisibility="Hidden"
+                                ScrollViewer.HorizontalScrollBarVisibility="Hidden">
+
+                                <TreeView.Resources>
+
+                                    <ResourceDictionary>
+
+                                        <HierarchicalDataTemplate DataType="{x:Type TeamPlaybookViewModels:FormationVM}" ItemsSource="{Binding SubFormations}">
+
+                                            <HierarchicalDataTemplate.ItemContainerStyle>
+                                                <Style TargetType="TreeViewItem" BasedOn="{StaticResource SubFormationTreeViewItem}">
+                                                    <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}" />
+                                                    <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay}" />
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding IsVisible}" Value="True">
+                                                            <Setter Property="Visibility" Value="Visible" />
+                                                        </DataTrigger>
+                                                        <DataTrigger Binding="{Binding IsVisible}" Value="False">
+                                                            <Setter Property="Visibility" Value="Collapsed" />
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </HierarchicalDataTemplate.ItemContainerStyle>
+
+                                            <UserControls:Formation x:Name="uclFormation" formation="{Binding}"/>
+
+                                        </HierarchicalDataTemplate>
+
+                                        <HierarchicalDataTemplate DataType="{x:Type TeamPlaybookViewModels:SubFormationVM}" ItemsSource="{Binding Plays}">
+
+                                            <HierarchicalDataTemplate.ItemContainerStyle>
+                                                <Style TargetType="TreeViewItem" BasedOn="{StaticResource PlayTreeViewItem}">
+                                                    <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}" />
+                                                    <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay}" />
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding IsVisible}" Value="True">
+                                                            <Setter Property="Visibility" Value="Visible" />
+                                                        </DataTrigger>
+                                                        <DataTrigger Binding="{Binding IsVisible}" Value="False">
+                                                            <Setter Property="Visibility" Value="Collapsed" />
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </HierarchicalDataTemplate.ItemContainerStyle>
+
+                                            <UserControls:SubFormation x:Name="uclSubFormation" subFormation="{Binding}"/>
+
+                                        </HierarchicalDataTemplate>
+
+                                        <HierarchicalDataTemplate DataType="{x:Type TeamPlaybookViewModels:PlayVM}">
+
+                                            <UserControls:Play x:Name="uclPlay" play="{Binding}"/>
+
+                                        </HierarchicalDataTemplate>
+
+                                    </ResourceDictionary>
+
+                                </TreeView.Resources>
+
+                                <TreeView.ItemContainerStyle>
+                                    <Style TargetType="{x:Type TreeViewItem}" BasedOn="{StaticResource FormationTreeViewItem}">
+                                        <EventSetter Event="DragOver"  Handler="treeView_DragOver"/>
+                                        <EventSetter Event="Drop" Handler="treeView_Drop"/>
+                                        <EventSetter Event="MouseMove" Handler="treeView_MouseMove"/>
+                                        <EventSetter Event="MouseDown" Handler="treeView_MouseDown"/>
+                                        <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}" />
+                                        <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay}" />
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding IsVisible}" Value="True">
+                                                <Setter Property="Visibility" Value="Visible" />
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding IsVisible}" Value="False">
+                                                <Setter Property="Visibility" Value="Collapsed" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TreeView.ItemContainerStyle>
+
+                            </TreeView>-->
+
+                            <TreeView x:Name="lvwPlaysBySituation" 
+                                ItemsSource="{Binding}"
+                                Background="Transparent"
+                                BorderBrush="Transparent"
+                                ScrollViewer.VerticalScrollBarVisibility="Hidden"
+                                Margin="5,1"
+                                Width="600"
+                                Grid.Column="2">
                                 <TreeView.ItemTemplate>
                                     <DataTemplate>
                                         <DockPanel>
@@ -371,7 +590,7 @@
                                             Background="Transparent" 
                                             Foreground="LightGray">
                                                 <TextBlock.Text>
-                                                    <MultiBinding StringFormat="{}{0}&#x0a;{1}&#x0a;{2}">
+                                                    <MultiBinding StringFormat="{}{0}&#32;{1}&#x0a;{2}">
                                                         <Binding Path="SubFormation.Formation.PBFM.name" />
                                                         <Binding Path="SubFormation.PBST.name" />
                                                         <Binding Path="PBPL.name" />
@@ -397,59 +616,75 @@
                                 </TreeView.ItemContainerStyle>
                             </TreeView>
 
-                            <!--<Canvas x:Name="cvsGameplanPercent" Height="600" Width="600" DockPanel.Dock="Left"/>-->
+                            <Canvas x:Name="cvsGameplanPercent"
+                                    Visibility="Collapsed"
+                                    Height="600" 
+                                    Width="600" 
+                                    Grid.Column="3"/>
 
-                            <!--<ListView 
-                            x:Name="iclGameplanPercent" 
-                            VerticalAlignment="Center"
-                            ScrollViewer.CanContentScroll="False"
-                            ScrollViewer.VerticalScrollBarVisibility="Hidden"
-                            Background="Transparent"
-                            BorderBrush="Transparent"
-                            SelectionChanged="iclGameplanPercent_SelectionChanged"
-                            DockPanel.Dock="Top">
-                            <ListView.ItemTemplate>
-                                <DataTemplate DataType="{x:Type TeamPlaybookViewModels:SituationVM}">
-                                    <StackPanel Orientation="Horizontal" Margin="1">
-                                        <Rectangle 
-                                            Width="10"
-                                            Height="10"
+                            <ListView  x:Name="iclGameplanPercent" 
+                                VerticalAlignment="Center"
+                                ScrollViewer.CanContentScroll="True"
+                                ScrollViewer.VerticalScrollBarVisibility="Hidden"
+                                ScrollViewer.HorizontalScrollBarVisibility="Hidden"
+                                Background="Transparent"
+                                BorderBrush="Transparent"
+                                SelectionChanged="iclGameplanPercent_SelectionChanged"
+                                Grid.Column="4">
+                                <ListView.ItemTemplate>
+                                    <DataTemplate DataType="{x:Type TeamPlaybookViewModels:SituationVM}">
+                                        <Grid Margin="1">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto"/>
+                                                <ColumnDefinition Width="Auto"/>
+                                            </Grid.ColumnDefinitions>
+
+                                            <Rectangle 
+                                            Width="{Binding Percentage, ConverterParameter=x*10, Converter={StaticResource Math}}"
+                                            Height="20"
                                             Fill="{Binding ColorBrush}"
                                             Margin="0,0,5,0"
-                                            VerticalAlignment="Center"/>
+                                            VerticalAlignment="Center"
+                                            HorizontalAlignment="Right"
+                                            Grid.Column="0"/>
 
-                                        <TextBlock Text="{Binding Title}"
-                                            FontSize="14"
-                                            Foreground="LightGray"
-                                            VerticalAlignment="Center"/>
+                                            <StackPanel Grid.Column="1" Orientation="Horizontal" Margin="1">
 
-                                        <TextBlock Text="{Binding Plays.Count, StringFormat=({0})}"
-                                            FontSize="14"
-                                            Foreground="LightGray"
-                                            Margin="5,0,0,0"
-                                            VerticalAlignment="Center"/>
+                                                <TextBlock Text="{Binding Title}"
+                                                FontSize="14"
+                                                Foreground="LightGray"
+                                                VerticalAlignment="Center"/>
 
-                                        <TextBlock Text="{Binding Percentage}"
-                                            Foreground="{Binding ColorBrush}"
-                                            FontSize="14"
-                                            Margin="5,0,0,0"
-                                            VerticalAlignment="Center"/>
+                                                <TextBlock Text="{Binding Plays.Count, StringFormat=({0})}"
+                                                FontSize="14"
+                                                Foreground="LightGray"
+                                                Margin="5,0,0,0"
+                                                VerticalAlignment="Center"/>
 
-                                        <TextBlock Text="%"
-                                            Foreground="{Binding ColorBrush}"
-                                            FontSize="14"
-                                            VerticalAlignment="Center"/>
-                                    </StackPanel>
-                                </DataTemplate>
-                            </ListView.ItemTemplate>
-                        </ListView>-->
+                                                <TextBlock Text="{Binding Percentage}"
+                                                Foreground="{Binding ColorBrush}"
+                                                FontSize="14"
+                                                Margin="5,0,0,0"
+                                                VerticalAlignment="Center"/>
 
-                        </DockPanel>
+                                                <TextBlock Text="%"
+                                                Foreground="{Binding ColorBrush}"
+                                                FontSize="14"
+                                                VerticalAlignment="Center"/>
+
+                                            </StackPanel>
+
+                                        </Grid>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
+
+                        </Grid>
 
                     </TabItem>
 
                     <TabItem Header="Tables">
-                        
+
                         <TabControl 
                             x:Name="tclTables"
                             Width="600">
@@ -547,12 +782,15 @@
                             </TabItem>
 
                         </TabControl>
-                        
+
                     </TabItem>
 
                 </TabControl>
 
-                <TabControl x:Name="tclCustomPlaybook" Width="600" Visibility="Hidden">
+                <TabControl x:Name="tclCustomPlaybook"
+                            Width="600" 
+                            Visibility="Hidden"
+                            Grid.Row="0">
 
                     <TabItem Header="ARTO">
                         <UserControls:FilterableTable Data="{Binding ARTO, Mode=TwoWay}"/>
@@ -651,113 +889,11 @@
                     </TabItem>
 
                 </TabControl>
-
-            </Grid>
-
-            <Grid Grid.Column="1" Margin="20" VerticalAlignment="Top">
-                <Border 
-                    Name="bdrField"
-                    Background="{StaticResource FieldBrush}"
-                    CornerRadius="10"
-                    Width="533"
-                    Height="950"
-                    HorizontalAlignment="Left"/>
-                <UserControls:PlayModal x:Name="uclPlayModal"/>
-                <UserControls:SubFormationModal x:Name="uclSubFormationModal" Visibility="Hidden"/>
-                
-                <!--<TreeView x:Name="tvwPSALs"
-                    Background="{x:Null}"
-                    BorderBrush="{x:Null}"
-                    Foreground="{x:Null}"
-                    DockPanel.Dock="Top"
-                    TreeViewItem.Selected="tvwPSALs_Selected"
-                    AllowDrop="True"
-                    ItemsSource="{Binding}"
-                    MaxWidth="600"
-                    ScrollViewer.VerticalScrollBarVisibility="Hidden"
-                    ScrollViewer.HorizontalScrollBarVisibility="Hidden">
-
-                    <TreeView.Resources>
-
-                        <ResourceDictionary>
-
-                            <HierarchicalDataTemplate DataType="{x:Type TeamPlaybookViewModels:FormationVM}" ItemsSource="{Binding SubFormations}">
-
-                                <HierarchicalDataTemplate.ItemContainerStyle>
-                                    <Style TargetType="TreeViewItem" BasedOn="{StaticResource SubFormationTreeViewItem}">
-                                        <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}" />
-                                        <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay}" />
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding IsVisible}" Value="True">
-                                                <Setter Property="Visibility" Value="Visible" />
-                                            </DataTrigger>
-                                            <DataTrigger Binding="{Binding IsVisible}" Value="False">
-                                                <Setter Property="Visibility" Value="Collapsed" />
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </HierarchicalDataTemplate.ItemContainerStyle>
-
-                                <UserControls:Formation x:Name="uclFormation" formation="{Binding}"/>
-
-                            </HierarchicalDataTemplate>
-
-                            <HierarchicalDataTemplate DataType="{x:Type TeamPlaybookViewModels:SubFormationVM}" ItemsSource="{Binding Plays}">
-
-                                <HierarchicalDataTemplate.ItemContainerStyle>
-                                    <Style TargetType="TreeViewItem" BasedOn="{StaticResource PlayTreeViewItem}">
-                                        <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}" />
-                                        <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay}" />
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding IsVisible}" Value="True">
-                                                <Setter Property="Visibility" Value="Visible" />
-                                            </DataTrigger>
-                                            <DataTrigger Binding="{Binding IsVisible}" Value="False">
-                                                <Setter Property="Visibility" Value="Collapsed" />
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </HierarchicalDataTemplate.ItemContainerStyle>
-
-                                <UserControls:SubFormation x:Name="uclSubFormation" subFormation="{Binding}"/>
-
-                            </HierarchicalDataTemplate>
-
-                            <HierarchicalDataTemplate DataType="{x:Type TeamPlaybookViewModels:PlayVM}">
-
-                                <UserControls:Play x:Name="uclPlay" play="{Binding}"/>
-
-                            </HierarchicalDataTemplate>
-
-                        </ResourceDictionary>
-
-                    </TreeView.Resources>
-
-                    <TreeView.ItemContainerStyle>
-                        <Style TargetType="{x:Type TreeViewItem}" BasedOn="{StaticResource FormationTreeViewItem}">
-                            <EventSetter Event="DragOver"  Handler="treeView_DragOver"/>
-                            <EventSetter Event="Drop" Handler="treeView_Drop"/>
-                            <EventSetter Event="MouseMove" Handler="treeView_MouseMove"/>
-                            <EventSetter Event="MouseDown" Handler="treeView_MouseDown"/>
-                            <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}" />
-                            <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay}" />
-                            <Style.Triggers>
-                                <DataTrigger Binding="{Binding IsVisible}" Value="True">
-                                    <Setter Property="Visibility" Value="Visible" />
-                                </DataTrigger>
-                                <DataTrigger Binding="{Binding IsVisible}" Value="False">
-                                    <Setter Property="Visibility" Value="Collapsed" />
-                                </DataTrigger>
-                            </Style.Triggers>
-                        </Style>
-                    </TreeView.ItemContainerStyle>
-
-                </TreeView>-->
-                
+            
             </Grid>
 
         </Grid>
 
-    </DockPanel>
+    </Grid>
 
 </Window>

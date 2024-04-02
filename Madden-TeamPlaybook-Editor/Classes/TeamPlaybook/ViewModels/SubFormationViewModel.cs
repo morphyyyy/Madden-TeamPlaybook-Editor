@@ -60,29 +60,44 @@ namespace MaddenTeamPlaybookEditor.ViewModels
         [Serializable]
         public class Alignment : INotifyPropertyChanged
         {
-            public static readonly Dictionary<string, string> Motion = new Dictionary<string, string>
+            public static readonly Dictionary<string, string> Motions = new Dictionary<string, string>
             {
                 {"Norm", "Normal"},
                 {"M1ri", "Motion 1 Right"},
                 {"M1le", "Motion 1 Left"},
-                {"M2ri", "Motion 1 Right"},
-                {"M2le", "Motion 1 Left"},
-                {"M3ri", "Motion 1 Right"},
-                {"M3le", "Motion 1 Left"},
-                {"M4ri", "Motion 1 Right"},
-                {"M4le", "Motion 1 Left"},
-                {"M5ri", "Motion 1 Right"},
-                {"M5le", "Motion 1 Left"},
-                {"SM1r", "Motion 1 Right"},
-                {"SM1l", "Motion 1 Left"},
-                {"SM2r", "Motion 2 Right"},
-                {"SM2l", "Motion 2 Left"},
-                {"SM3r", "Motion 3 Right"},
-                {"SM3l", "Motion 3 Left"},
-                {"SM4r", "Motion 4 Right"},
-                {"SM4l", "Motion 4 Left"},
-                {"SM5r", "Motion 5 Right"},
-                {"SM5l", "Motion 5 Left"},
+                {"M2ri", "Motion 2 Right"},
+                {"M2le", "Motion 2 Left"},
+                {"M3ri", "Motion 3 Right"},
+                {"M3le", "Motion 3 Left"},
+                {"M4ri", "Motion 4 Right"},
+                {"M4le", "Motion 4 Left"},
+                {"M5ri", "Motion 5 Right"},
+                {"M5le", "Motion 5 Left"},
+                {"SM1r", "Second Motion 1 Right"},
+                {"SM1l", "Second Motion 1 Left"},
+                {"SM2r", "Second Motion 2 Right"},
+                {"SM2l", "Second Motion 2 Left"},
+                {"SM3r", "Second Motion 3 Right"},
+                {"SM3l", "Second Motion 3 Left"},
+                {"SM4r", "Second Motion 4 Right"},
+                {"SM4l", "Second Motion 4 Left"},
+                {"SM5r", "Second Motion 5 Right"},
+                {"SM5l", "Second Motion 5 Left"}
+            };
+            public static readonly Dictionary<string, string> Alignments = new Dictionary<string, string>
+            {
+                {"Norm", "Normal"},
+                {"DL_R", "Defensive Line Right"},
+                {"DL_L", "Defensive Line Left"},
+                {"DL_P", "Defensive Line Pinch"},
+                {"DL_S", "Defensive Line Spread"},
+                {"LB_R", "Linebackers Right"},
+                {"LB_L", "Linebackers Left"},
+                {"LB_P", "Linebackers Right"},
+                {"LB_S", "Linebackers Left"},
+                {"Tigh", "Press Coverage"},
+                {"Loos", "Back Off Coverage"},
+                {"Blit", "Show Blitz"}
             };
             public SGFM SGFM { get; set; }
             public List<SETG> SETG { get; set; }
@@ -1475,7 +1490,8 @@ namespace MaddenTeamPlaybookEditor.ViewModels
             Alignments.Clear();
             List<SGFM> alignments = Formation.Playbook.SGFM.Where(a => a.SETL == PBST.SETL).ToList();
             if (alignments == null || alignments.Count == 0) return;
-            foreach (string key in Alignment.Motion.Keys)
+            List<string> MotionAlignments = Formation.Playbook.Type == "Offense" ? Alignment.Motions.Keys.ToList() : Alignment.Alignments.Keys.ToList();
+            foreach (string key in MotionAlignments)
             {
                 SGFM alignment = alignments?.FirstOrDefault(m => m.name == key) ?? 
                     new SGFM { 

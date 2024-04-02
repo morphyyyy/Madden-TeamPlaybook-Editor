@@ -1,13 +1,12 @@
-﻿using Madden.CustomPlaybook;
+﻿using Madden.TeamPlaybook;
 using MaddenTeamPlaybookEditor.ViewModels;
 using System;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using System.Xml.Linq;
 
 namespace MaddenTeamPlaybookEditor.User_Controls
 {
@@ -18,6 +17,7 @@ namespace MaddenTeamPlaybookEditor.User_Controls
         public PlayModal()
         {
             InitializeComponent();
+            ((INotifyCollectionChanged)lvwSituations.Items).CollectionChanged += lvwSituations_CollectionChanged;
         }
 
         public static DependencyProperty PlayProperty = DependencyProperty.Register("play", typeof(PlayVM), typeof(PlayModal));
@@ -31,6 +31,27 @@ namespace MaddenTeamPlaybookEditor.User_Controls
             set
             {
                 SetValue(PlayProperty, value);
+                lvwSituations.ItemsSource = play.SubFormation.Formation.Playbook.Situations
+                    .Select(s => play.Situations.Exists(p => p.AIGR == s.Key) ? play.Situations.FirstOrDefault(p => p.AIGR == s.Key) : new Madden.TeamPlaybook.PBAI
+                    {
+                        AIGR = s.Key ?? 0,
+                        Flag = play.PBPL.Flag,
+                        PBPL = play.PBPL.pbpl,
+                        PLF_ = play.PLYL.PLF_,
+                        PLYT = play.PLYL.PLYT,
+                        prct = 0,
+                        SETL = play.PLYL.SETL,
+                        vpos = play.PLYL.vpos
+                    });
+            }
+        }
+
+        private void lvwSituations_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            if (e.Action == NotifyCollectionChangedAction.Replace)
+            {
+                // scroll the new item into view   
+                lvwSituations.ScrollIntoView(e.NewItems[0]);
             }
         }
 
@@ -195,11 +216,6 @@ namespace MaddenTeamPlaybookEditor.User_Controls
         {
             play.AddPLPD();
             play.UpdatePlay();
-        }
-
-        private void deletePLPD(object sender, System.Windows.Input.MouseButtonEventArgs e)
-        {
-
         }
     }
 }

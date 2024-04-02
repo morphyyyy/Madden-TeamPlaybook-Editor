@@ -67,6 +67,39 @@ namespace Madden.TeamPlaybook
             {52, "Pin Pull"},
             {53, "Crack Toss"}
         };
+        public static readonly Dictionary<int, string> PlayListFlag = new Dictionary<int, string>
+        {
+            {1, "CanFlip"},
+            {2, "RunLeft"},
+            {4, "RunMiddle"},
+            {8, "RunRight"},
+            {16, "PassShort"},
+            {32, "PassMedium"},
+            {64, "PassLong"},
+            {128, "PassLeft"},
+            {256, "PassMiddle"},
+            {512, "PassRight"},
+            {1024, "QBScrambleStop"},
+            {2048, "NoPlaymaker"},
+            {4096, "DisableLockOn"},
+            {8192, "Cover2Defense"},
+            {16384, "PuntRight"},
+            {32768, "PuntLeft"},
+            {65536, "PuntSky"},
+            {131072, "SnapToVIP"},
+            {262144, "OptionStop"},
+            {524288, "ContainLeft"},
+            {1048576, "ContainRight"},
+            {2097152, "OutsideRunStop"},
+            {4194304, "BlockAndRelease"},
+            {8388608, "CoverageShell"},
+            {16777216, "BlockLeft"},
+            {33554432, "BlockRight"},
+            {67108864, "IsBoosted"},
+            {134217728, "StartComplement"},
+            {268435456, "EndComplement"},
+            {536870912, "NoWideAlign"}
+        };
 
         public int rec { get; set; }
         /// <summary>
