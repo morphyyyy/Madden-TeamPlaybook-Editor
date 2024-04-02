@@ -3,11 +3,12 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:TeamPlaybookViewModels="clr-namespace:MaddenTeamPlaybookEditor.ViewModels"
+    xmlns:classes="clr-namespace:MaddenTeamPlaybookEditor.Classes"
     xmlns:math="clr-namespace:HexInnovation;assembly=MathConverter.XamarinForms"
     xmlns:UserControls="clr-namespace:MaddenTeamPlaybookEditor.User_Controls"
     x:Name="uclSubFormationModal"
     AllowDrop="True"
-    >
+    Width="1285">
     
     <UserControl.Resources>
         <ItemsPanelTemplate x:Key="MenuItemPanelTemplate">
@@ -30,26 +31,30 @@
         </Style>
         <Style TargetType="{x:Type DataGrid}">
             <Setter Property="Background" Value="Transparent" />
-            <Setter Property="BorderBrush" Value="Transparent" />
+            <Setter Property="BorderBrush" Value="Gray"/>
+            <Setter Property="BorderThickness" Value="1"/>
             <Setter Property="RowBackground" Value="Transparent" />
-            <Setter Property="Foreground" Value="LightGreen"/>
-            <Setter Property="GridLinesVisibility" Value="None"/>
-            <Setter Property="CanUserAddRows" Value="True"/>
-            <Setter Property="CanUserDeleteRows" Value="True"/>
+            <Setter Property="Foreground" Value="LightGray"/>
+            <Setter Property="GridLinesVisibility" Value="All"/>
+            <Setter Property="HorizontalGridLinesBrush" Value="Gray"/>
+            <Setter Property="VerticalGridLinesBrush" Value="Gray"/>
+            <Setter Property="CanUserAddRows" Value="False"/>
+            <Setter Property="CanUserDeleteRows" Value="False"/>
+        </Style>
+        <Style TargetType="{x:Type DataGridCell}">
+            <Setter Property="Margin" Value="0,0,-1,-1"/>
         </Style>
         <Style TargetType="{x:Type TextBlock}">
             <Setter Property="Background" Value="Transparent" />
-            <Setter Property="Foreground" Value="LightGreen"/>
-            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Foreground" Value="LightGray"/>
         </Style>
         <Style TargetType="{x:Type TextBox}">
             <Setter Property="Background" Value="Transparent" />
-            <Setter Property="BorderBrush" Value="LightGreen" />
-            <Setter Property="Foreground" Value="LightGreen"/>
+            <Setter Property="BorderBrush" Value="Gray" />
+            <Setter Property="Foreground" Value="LightGray"/>
         </Style>
         <Style TargetType="{x:Type DataGridColumnHeader}">
             <Setter Property="Background" Value="Transparent" />
-            <Setter Property="FontWeight" Value="Bold" />
             <Setter Property="MinWidth" Value="30" />
             <Setter Property="IsEnabled" Value="False"/>
         </Style>
@@ -57,25 +62,60 @@
             <Setter Property="Background" Value="Transparent" />
             <Setter Property="IsEnabled" Value="False"/>
         </Style>
-        <Style TargetType="TabItem">
+        <Style TargetType="{x:Type Label}">
+            <Setter Property="Foreground" Value="Black" />
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Foreground" Value="LightGreen" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <Style TargetType="{x:Type GroupBox}">
+            <Setter Property="BorderBrush" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value=".333"/>
+            <Setter Property="Foreground" Value="LightGray"/>
+        </Style>
+        <Style TargetType="{x:Type ListViewItem}">
+            <Setter Property="HorizontalContentAlignment" Value="Left" />
+            <Setter Property="HorizontalAlignment" Value="Stretch" />
+            <Setter Property="Width" Value="Auto" />
+        </Style>
+        <Style TargetType="{x:Type ComboBox}">
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="BorderBrush" Value="Transparent" />
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="Foreground" Value="Black" />
+        </Style>
+        <Style TargetType="{x:Type ComboBoxItem}">
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="BorderBrush" Value="Transparent" />
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="Foreground" Value="Black" />
+        </Style>
+        <Style TargetType="{x:Type CheckBox}">
+            <Setter Property="Margin" Value="0,1" />
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="BorderBrush" Value="Gray"/>
+            <Setter Property="Foreground" Value="LightGray"/>
+            <Setter Property="BorderThickness" Value="1"/>
             <Setter Property="Template">
                 <Setter.Value>
-                    <ControlTemplate TargetType="TabItem">
-                        <Label Name="Panel">
-                            <ContentPresenter x:Name="ContentSite"
-                                                VerticalAlignment="Top"
-                                                HorizontalAlignment="Center"
-                                                ContentSource="Header"
-                                                Margin="5,0"/>
-                        </Label>
+                    <ControlTemplate TargetType="{x:Type CheckBox}">
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" >
+                            <Border BorderBrush="{TemplateBinding BorderBrush}" Background="{TemplateBinding Background}" BorderThickness="{TemplateBinding BorderThickness}" Width="15" Height="15">
+                                <Grid>
+                                    <Grid Background="{TemplateBinding Foreground}" Margin="1" Visibility="Collapsed" Name="nullBlock"/>
+                                    <Path Stretch="Uniform" Width="15" Height="10" Fill="{TemplateBinding Foreground}" Name="eliCheck" Data="F1 M 9.97498,1.22334L 4.6983,9.09834L 4.52164,9.09834L 0,5.19331L 1.27664,3.52165L 4.255,6.08833L 8.33331,1.52588e-005L 9.97498,1.22334 Z " Visibility="Collapsed"/>
+                                </Grid>
+                            </Border>
+                            <TextBlock Margin="2,0,0,0"  VerticalAlignment="Center" Foreground="{TemplateBinding Foreground}" Text="{TemplateBinding Content}"></TextBlock>
+                        </StackPanel>
                         <ControlTemplate.Triggers>
-                            <Trigger Property="IsSelected" Value="True">
-                                <Setter TargetName="Panel" Property="Background" Value="Transparent" />
-                                <Setter TargetName="Panel" Property="Foreground" Value="LightGreen" />
+                            <Trigger Property="IsChecked" Value="True">
+                                <Setter TargetName="eliCheck" Property="Visibility" Value="Visible"></Setter>
                             </Trigger>
-                            <Trigger Property="IsSelected" Value="False">
-                                <Setter TargetName="Panel" Property="Background" Value="Transparent" />
-                                <Setter TargetName="Panel" Property="Foreground" Value="Black" />
+                            <Trigger Property="IsChecked" Value="{x:Null}">
+                                <Setter TargetName="nullBlock" Property="Visibility" Value="Visible"></Setter>
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -91,9 +131,13 @@
                 />
     </UserControl.Resources>
 
-    <DockPanel>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
 
-        <Canvas x:Name="cvsField" DockPanel.Dock="Left" Height="950" Width="533">
+        <Canvas x:Name="cvsField" Grid.Column="0" Height="950" Width="533">
 
             <Border 
                 Name="bdrField"
@@ -230,114 +274,125 @@
     
         </Canvas>
 
-        <DockPanel 
-            DockPanel.Dock="Left"
-            Width="575"
-            Margin="5"
-            LastChildFill="False">
-
-            <TabControl 
-                    x:Name="tabPlayer"
-                    Background="Transparent" 
-                    BorderBrush="Transparent" 
-                    DockPanel.Dock="Top"
-                    VerticalAlignment="Top"
-                    HorizontalAlignment="Stretch">
-                <TabItem Header="PBST">
-                    <Grid HorizontalAlignment="Center">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="Auto"/>
-                        </Grid.ColumnDefinitions>
+        <Grid Margin="10" Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            
+            <GroupBox Header="Sub-Formation" x:Name="tabSubFormation" Grid.Row="0" Margin="5">
+                <DockPanel Margin="5" LastChildFill="False">
+                    <TextBox Margin="5"
+                        FontFamily="Tahoma" 
+                        FontSize="24"
+                        BorderThickness="0"
+                        FontWeight="Bold"
+                        Text="{Binding PBST.name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                        HorizontalAlignment="Stretch"
+                        HorizontalContentAlignment="Left"
+                        DockPanel.Dock="Top"/>
+                    <Grid DockPanel.Dock="Top">
                         <Grid.RowDefinitions>
-                            <RowDefinition />
-                            <RowDefinition />
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
-                        <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="0" Grid.Row="0" Text="rec"/>
-                        <TextBox IsEnabled="False" Grid.Column="0" Grid.Row="1" Text="{Binding PBST.rec, Mode=TwoWay}"/>
-                        <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="1" Grid.Row="0" Text="SETL"/>
-                        <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding PBST.SETL, Mode=TwoWay}"/>
-                        <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="2" Grid.Row="0" Text="PBFM"/>
-                        <TextBox Grid.Column="2" Grid.Row="1" Text="{Binding PBST.PBFM, Mode=TwoWay}"/>
-                        <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="3" Grid.Row="0" Text="pbst"/>
-                        <TextBox Grid.Column="3" Grid.Row="1" Text="{Binding PBST.pbst, Mode=TwoWay}"/>
-                        <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="4" Grid.Row="0" Text="SPF_"/>
-                        <TextBox Grid.Column="4" Grid.Row="1" Text="{Binding PBST.SPF_, Mode=TwoWay}"/>
-                        <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="5" Grid.Row="0" Text="ord_"/>
-                        <TextBox IsEnabled="False" Grid.Column="5" Grid.Row="1" Text="{Binding PBST.ord_, Mode=TwoWay}"/>
-                        <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="6" Grid.Row="0" Text="name"/>
-                        <TextBox Grid.Column="6" Grid.Row="1" Text="{Binding PBST.name, Mode=TwoWay}"/>
-                    </Grid>
-                </TabItem>
-                <TabItem Header="SETL">
-                    <Grid HorizontalAlignment="Center">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="Auto"/>
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition />
-                            <RowDefinition />
-                        </Grid.RowDefinitions>
-                        <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="0" Grid.Row="0" Text="rec"/>
-                        <TextBox IsEnabled="False" Grid.Column="0" Grid.Row="1" Text="{Binding SETL.rec, Mode=TwoWay}"/>
-                        <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="1" Grid.Row="0" Text="setl"/>
-                        <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding SETL.setl, Mode=TwoWay}"/>
-                        <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="2" Grid.Row="0" Text="FORM"/>
-                        <TextBox Grid.Column="2" Grid.Row="1" Text="{Binding SETL.FORM, Mode=TwoWay}"/>
-                        <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="3" Grid.Row="0" Text="MOTN"/>
-                        <TextBox Grid.Column="3" Grid.Row="1" Text="{Binding SETL.MOTN, Mode=TwoWay}"/>
-                        <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="4" Grid.Row="0" Text="CLAS"/>
-                        <TextBox Grid.Column="4" Grid.Row="1" Text="{Binding SETL.CLAS, Mode=TwoWay}"/>
-                        <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="5" Grid.Row="0" Text="SETT"/>
-                        <TextBox Grid.Column="5" Grid.Row="1" Text="{Binding SETL.SETT, Mode=TwoWay}"/>
-                        <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="6" Grid.Row="0" Text="SITT"/>
-                        <TextBox Grid.Column="6" Grid.Row="1" Text="{Binding SETL.SITT, Mode=TwoWay}"/>
-                        <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="7" Grid.Row="0" Text="SLF_"/>
-                        <TextBox Grid.Column="7" Grid.Row="1" Text="{Binding SETL.SLF_, Mode=TwoWay}"/>
-                        <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="8" Grid.Row="0" Text="name"/>
-                        <TextBox Grid.Column="8" Grid.Row="1" Text="{Binding SETL.name, Mode=TwoWay}"/>
-                        <TextBlock Margin="5,0" Foreground="LightGreen" Grid.Column="9" Grid.Row="0" Text="poso"/>
-                        <TextBox Grid.Column="9" Grid.Row="1" Text="{Binding SETL.poso, Mode=TwoWay}"/>
-                    </Grid>
-                </TabItem>
-                <TabItem Header="Alignments">
-                    <TabControl
-                            x:Name="tabAlignments" 
-                            ItemsSource="{Binding Alignments}"
-                            Background="Transparent" 
-                            BorderBrush="Transparent" 
-                            VerticalAlignment="Bottom"
-                            HorizontalAlignment="Center"
-                            SelectionChanged="tabAlignments_SelectionChanged">
-                        <TabControl.ItemTemplate>
-                            <DataTemplate DataType="{x:Type TeamPlaybookViewModels:SubFormationVM}">
-                                <TextBlock x:Name="tabAlignment" Text="{Binding SGFM.name}"/>
-                            </DataTemplate>
-                        </TabControl.ItemTemplate>
-                        <!--<TabControl.ContentTemplate>
-                                <DataTemplate/>
-                            </TabControl.ContentTemplate>-->
-                        <TabControl.ItemContainerStyle>
-                            <Style TargetType="{x:Type TabItem}" BasedOn="{StaticResource FormationTabItem}"></Style>
-                        </TabControl.ItemContainerStyle>
-                    </TabControl>
-                </TabItem>
-                <TabItem Header="Packages">
-                    <TabControl
+                        <GroupBox Header="PBST" Grid.Row="0" Margin="5">
+                            <Grid HorizontalAlignment="Center">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                </Grid.RowDefinitions>
+                                <TextBlock Grid.Column="0" Grid.Row="0" Text="rec"/>
+                                <TextBox Grid.Column="0" Grid.Row="1" Text="{Binding PBST.rec, Mode=TwoWay}"/>
+                                <TextBlock Grid.Column="1" Grid.Row="0" Text="SETL"/>
+                                <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding PBST.SETL, Mode=TwoWay}"/>
+                                <TextBlock Grid.Column="2" Grid.Row="0" Text="PBFM"/>
+                                <TextBox Grid.Column="2" Grid.Row="1" Text="{Binding PBST.PBFM, Mode=TwoWay}"/>
+                                <TextBlock Grid.Column="3" Grid.Row="0" Text="pbst"/>
+                                <TextBox Grid.Column="3" Grid.Row="1" Text="{Binding PBST.pbst, Mode=TwoWay}"/>
+                                <TextBlock Grid.Column="4" Grid.Row="0" Text="SPF_"/>
+                                <TextBox Grid.Column="4" Grid.Row="1" Text="{Binding PBST.SPF_, Mode=TwoWay}"/>
+                                <TextBlock Grid.Column="5" Grid.Row="0" Text="ord_"/>
+                                <TextBox Grid.Column="5" Grid.Row="1" Text="{Binding PBST.ord_, Mode=TwoWay}"/>
+                                <TextBlock Grid.Column="6" Grid.Row="0" Text="name"/>
+                                <TextBox Grid.Column="6" Grid.Row="1" Text="{Binding PBST.name, Mode=TwoWay}"/>
+                            </Grid>
+                        </GroupBox>
+                        <GroupBox Header="SETL" Grid.Row="1" Margin="5">
+                            <Grid HorizontalAlignment="Center">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                </Grid.RowDefinitions>
+                                <TextBlock Grid.Column="0" Grid.Row="0" Text="rec"/>
+                                <TextBox Grid.Column="0" Grid.Row="1" Text="{Binding SETL.rec, Mode=TwoWay}"/>
+                                <TextBlock Grid.Column="1" Grid.Row="0" Text="setl"/>
+                                <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding SETL.setl, Mode=TwoWay}"/>
+                                <TextBlock Grid.Column="2" Grid.Row="0" Text="FORM"/>
+                                <TextBox Grid.Column="2" Grid.Row="1" Text="{Binding SETL.FORM, Mode=TwoWay}"/>
+                                <TextBlock Grid.Column="3" Grid.Row="0" Text="MOTN"/>
+                                <TextBox Grid.Column="3" Grid.Row="1" Text="{Binding SETL.MOTN, Mode=TwoWay}"/>
+                                <TextBlock Grid.Column="4" Grid.Row="0" Text="CLAS"/>
+                                <TextBox Grid.Column="4" Grid.Row="1" Text="{Binding SETL.CLAS, Mode=TwoWay}"/>
+                                <TextBlock Grid.Column="5" Grid.Row="0" Text="SETT"/>
+                                <TextBox Grid.Column="5" Grid.Row="1" Text="{Binding SETL.SETT, Mode=TwoWay}"/>
+                                <TextBlock Grid.Column="6" Grid.Row="0" Text="SITT"/>
+                                <TextBox Grid.Column="6" Grid.Row="1" Text="{Binding SETL.SITT, Mode=TwoWay}"/>
+                                <TextBlock Grid.Column="7" Grid.Row="0" Text="SLF_"/>
+                                <TextBox Grid.Column="7" Grid.Row="1" Text="{Binding SETL.SLF_, Mode=TwoWay}"/>
+                                <TextBlock Grid.Column="8" Grid.Row="0" Text="name"/>
+                                <TextBox Grid.Column="8" Grid.Row="1" Text="{Binding SETL.name, Mode=TwoWay}"/>
+                                <TextBlock Grid.Column="9" Grid.Row="0" Text="poso"/>
+                                <TextBox Grid.Column="9" Grid.Row="1" Text="{Binding SETL.poso, Mode=TwoWay}"/>
+                            </Grid>
+                        </GroupBox>
+                        <GroupBox Header="Alignments" Grid.Row="2" Margin="5">
+                            <TabControl
+                                    x:Name="tabAlignments" 
+                                    ItemsSource="{Binding Alignments}"
+                                    Background="Transparent" 
+                                    BorderBrush="Transparent" 
+                                    VerticalAlignment="Bottom"
+                                    HorizontalAlignment="Center"
+                                    SelectionChanged="tabAlignments_SelectionChanged">
+                                <TabControl.ItemTemplate>
+                                    <DataTemplate DataType="{x:Type TeamPlaybookViewModels:SubFormationVM}">
+                                        <TextBlock x:Name="tabAlignment" Text="{Binding SGFM.name}"/>
+                                    </DataTemplate>
+                                </TabControl.ItemTemplate>
+                                <!--<TabControl.ContentTemplate>
+                                        <DataTemplate/>
+                                    </TabControl.ContentTemplate>-->
+                                <TabControl.ItemContainerStyle>
+                                    <Style TargetType="{x:Type TabItem}" BasedOn="{StaticResource FormationTabItem}"></Style>
+                                </TabControl.ItemContainerStyle>
+                            </TabControl>
+                        </GroupBox>
+                        <GroupBox Header="Alignments" Grid.Row="3" Margin="5">
+                            <TabControl
                             x:Name="tabPackages" 
                             ItemsSource="{Binding Packages}"
                             Background="Transparent" 
@@ -345,23 +400,36 @@
                             VerticalAlignment="Bottom"
                             HorizontalAlignment="Center"
                             SelectionChanged="tabAlignments_SelectionChanged">
-                        <TabControl.ItemTemplate>
-                            <DataTemplate DataType="{x:Type TeamPlaybookViewModels:SubFormationVM}">
-                                <TextBlock x:Name="tabAlignment" Text="{Binding SPKF.name}"/>
-                            </DataTemplate>
-                        </TabControl.ItemTemplate>
-                        <!--<TabControl.ContentTemplate>
+                                <TabControl.ItemTemplate>
+                                    <DataTemplate DataType="{x:Type TeamPlaybookViewModels:SubFormationVM}">
+                                        <TextBlock x:Name="tabAlignment" Text="{Binding SPKF.name}"/>
+                                    </DataTemplate>
+                                </TabControl.ItemTemplate>
+                                <!--<TabControl.ContentTemplate>
                                 <DataTemplate/>
                             </TabControl.ContentTemplate>-->
-                        <TabControl.ItemContainerStyle>
-                            <Style TargetType="{x:Type TabItem}" BasedOn="{StaticResource FormationTabItem}"></Style>
-                        </TabControl.ItemContainerStyle>
-                    </TabControl>
-                </TabItem>
-            </TabControl>
+                                <TabControl.ItemContainerStyle>
+                                    <Style TargetType="{x:Type TabItem}" BasedOn="{StaticResource FormationTabItem}"></Style>
+                                </TabControl.ItemContainerStyle>
+                            </TabControl>
+                        </GroupBox>
+                    </Grid>
+                </DockPanel>
+            </GroupBox>
 
-        </DockPanel>
+            <GroupBox Header="Player" x:Name="tabPlayer" Grid.Row="1" Margin="5">
+                <DockPanel Margin="5" LastChildFill="False">
+                    <TextBlock DockPanel.Dock="Top" Margin="5"
+                        FontFamily="Tahoma" 
+                        FontSize="24"
+                        FontWeight="Bold"
+                        Text="{Binding Label}" 
+                        HorizontalAlignment="Left"/>
+                </DockPanel>
+            </GroupBox>
+            
+        </Grid>
 
-    </DockPanel>
+    </Grid>
 
 </UserControl>

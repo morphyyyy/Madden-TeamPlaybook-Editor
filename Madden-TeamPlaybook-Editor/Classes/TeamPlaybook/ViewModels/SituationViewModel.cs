@@ -10,7 +10,7 @@ namespace MaddenTeamPlaybookEditor.ViewModels
     [Serializable]
     public class SituationVM
     {
-        public float Percentage { get; set; }
+        public double Percentage { get; set; }
         public string Title { get; set; }
         public int Weight{ get; set; }
         public Brush ColorBrush { get; set; }

@@ -14,7 +14,7 @@ namespace Madden.CustomPlaybook
         public int PLYL { get; set; }
         public int SRMM { get; set; }
         public int SITT { get; set; }
-        public int PLTY { get; set; }
+        public int PLYT { get; set; }
         public int PLF_ { get; set; }
         public string name { get; set; }
         public int risk { get; set; }
@@ -30,7 +30,7 @@ namespace Madden.CustomPlaybook
                 "   PLYL: " + PLYL +
                 "   SRMM: " + SRMM +
                 "   SITT: " + SITT +
-                "   PLTY: " + PLTY +
+                "   PLYT: " + PLYT +
                 "   PLF_: " + PLF_ +
                 "   name: " + name +
                 "   risk: " + risk +
@@ -76,7 +76,7 @@ namespace Madden.CustomPlaybook
                         SRMM = (int)(UInt32)TDB.TDBFieldGetValueAsInteger(DBIndex, TDB.StrReverse("PBPL"), TDB.StrReverse("SRMM"), i),
                         SITT = (int)(UInt32)TDB.TDBFieldGetValueAsInteger(DBIndex, TDB.StrReverse("PBPL"), TDB.StrReverse("SITT"), i),
                         PLYL = (int)(UInt32)TDB.TDBFieldGetValueAsInteger(DBIndex, TDB.StrReverse("PBPL"), TDB.StrReverse("PLYL"), i),
-                        PLTY = (int)(UInt32)TDB.TDBFieldGetValueAsInteger(DBIndex, TDB.StrReverse("PBPL"), TDB.StrReverse("PLTY"), i),
+                        PLYT = (int)(UInt32)TDB.TDBFieldGetValueAsInteger(DBIndex, TDB.StrReverse("PBPL"), TDB.StrReverse("PLYT"), i),
                         PLF_ = (int)(UInt32)TDB.TDBFieldGetValueAsInteger(DBIndex, TDB.StrReverse("PBPL"), TDB.StrReverse("PLF_"), i),
                         name = _name,
                         risk = (int)(UInt32)TDB.TDBFieldGetValueAsInteger(DBIndex, TDB.StrReverse("PBPL"), TDB.StrReverse("risk"), i),
@@ -94,7 +94,7 @@ namespace Madden.CustomPlaybook
                         SRMM = (int)(UInt32)TDB.TDBFieldGetValueAsInteger(DBIndex, TDB.StrReverse("PBPL"), TDB.StrReverse("SRMM"), i),
                         SITT = (int)(UInt32)TDB.TDBFieldGetValueAsInteger(DBIndex, TDB.StrReverse("PBPL"), TDB.StrReverse("SITT"), i),
                         PLYL = (int)(UInt32)TDB.TDBFieldGetValueAsInteger(DBIndex, TDB.StrReverse("PBPL"), TDB.StrReverse("PLYL"), i),
-                        PLTY = (int)(UInt32)TDB.TDBFieldGetValueAsInteger(DBIndex, TDB.StrReverse("PBPL"), TDB.StrReverse("PLTY"), i),
+                        PLYT = (int)(UInt32)TDB.TDBFieldGetValueAsInteger(DBIndex, TDB.StrReverse("PBPL"), TDB.StrReverse("PLYT"), i),
                         PLF_ = (int)(UInt32)TDB.TDBFieldGetValueAsInteger(DBIndex, TDB.StrReverse("PBPL"), TDB.StrReverse("PLF_"), i),
                         name = _name,
                         risk = (int)(UInt32)TDB.TDBFieldGetValueAsInteger(DBIndex, TDB.StrReverse("PBPL"), TDB.StrReverse("risk"), i),
@@ -141,7 +141,7 @@ namespace Madden.CustomPlaybook
                 TDB.TDBFieldSetValueAsInteger(DBIndex, TDB.StrReverse("PBPL"), TDB.StrReverse("SRMM"), item.rec, item.SRMM);
                 TDB.TDBFieldSetValueAsInteger(DBIndex, TDB.StrReverse("PBPL"), TDB.StrReverse("SITT"), item.rec, item.SITT);
                 TDB.TDBFieldSetValueAsInteger(DBIndex, TDB.StrReverse("PBPL"), TDB.StrReverse("PLYL"), item.rec, item.PLYL);
-                TDB.TDBFieldSetValueAsInteger(DBIndex, TDB.StrReverse("PBPL"), TDB.StrReverse("PLTY"), item.rec, item.PLTY);
+                TDB.TDBFieldSetValueAsInteger(DBIndex, TDB.StrReverse("PBPL"), TDB.StrReverse("PLYT"), item.rec, item.PLYT);
                 TDB.TDBFieldSetValueAsInteger(DBIndex, TDB.StrReverse("PBPL"), TDB.StrReverse("PLF_"), item.rec, item.PLF_);
                 TDB.TDBFieldSetValueAsString(DBIndex, TDB.StrReverse("PBPL"), TDB.StrReverse("name"), item.rec, item.name);
                 TDB.TDBFieldSetValueAsInteger(DBIndex, TDB.StrReverse("PBPL"), TDB.StrReverse("risk"), item.rec, item.risk);
@@ -152,7 +152,7 @@ namespace Madden.CustomPlaybook
 
         public static List<PBPL> Sort(List<PBPL> PBPL)
         {
-            return PBPL.OrderBy(s => s.PLTY).ThenBy(s => s.PLF_).Cast<PBPL>().ToList();
+            return PBPL.OrderBy(s => s.PLYT).ThenBy(s => s.PLF_).Cast<PBPL>().ToList();
         }
     }
 }

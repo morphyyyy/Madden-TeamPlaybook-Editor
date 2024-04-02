@@ -153,6 +153,7 @@
     <Compile Include="Classes\TDBAccess\TableNames.cs" />
     <Compile Include="Classes\Team\DCHT.cs" />
     <Compile Include="Classes\Team\PLAY.cs" />
+    <Compile Include="Classes\Team\TeamColors.cs" />
     <Compile Include="Classes\UniformGridWithOrientation.cs" />
     <Compile Include="UserControls\SubFormation_Modal.xaml.cs">
       <DependentUpon>SubFormation_Modal.xaml</DependentUpon>

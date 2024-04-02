@@ -1,16 +1,13 @@
-﻿using System;
+﻿using Madden.Team;
+using Madden.TeamPlaybook;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Globalization;
 using System.Linq;
-using System.Windows.Shapes;
-using TDBAccess;
-using Madden.TeamPlaybook;
-using Madden.Team;
 using System.Windows;
 using System.Windows.Media;
-using System.Globalization;
-using MaddenTeamPlaybookEditor.User_Controls;
-using System.Windows.Markup;
+using System.Windows.Shapes;
 using static MaddenTeamPlaybookEditor.ViewModels.SubFormationVM;
 
 namespace MaddenTeamPlaybookEditor.ViewModels

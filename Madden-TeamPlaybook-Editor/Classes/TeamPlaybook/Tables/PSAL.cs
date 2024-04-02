@@ -11,8 +11,116 @@ namespace Madden.TeamPlaybook
     {
         public static readonly Dictionary<KeyValuePair<int, string>, Dictionary<KeyValuePair<string, string>, Dictionary<int, string>>> CodeDefinition = new Dictionary<KeyValuePair<int, string>, Dictionary<KeyValuePair<string, string>, Dictionary<int, string>>>
         {
-            { 
-                new KeyValuePair<int, string>(26, "Initial Animation"),
+            {
+                new KeyValuePair<int, string>(-1, "None Value"),
+                new Dictionary<KeyValuePair<string, string>, Dictionary<int, string>>{ }
+            },
+            {
+                new KeyValuePair<int, string>(0, "None"),
+                new Dictionary<KeyValuePair<string, string>, Dictionary<int, string>>{ }
+            },
+            {
+                new KeyValuePair<int, string>(1, "Run Easy"),
+                new Dictionary<KeyValuePair<string, string>, Dictionary<int, string>>{ }
+            },
+            {
+                new KeyValuePair<int, string>(2, "Chase Ball"),
+                new Dictionary<KeyValuePair<string, string>, Dictionary<int, string>>{ }
+            },
+            {
+                new KeyValuePair<int, string>(3, "Move Direction Distance"),
+                new Dictionary<KeyValuePair<string, string>, Dictionary<int, string>>{ }
+            },
+            {
+                new KeyValuePair<int, string>(4, "Move Direction Distance Constant"),
+                new Dictionary<KeyValuePair<string, string>, Dictionary<int, string>>{ }
+            },
+            {
+                new KeyValuePair<int, string>(5, "Face Direction"),
+                new Dictionary<KeyValuePair<string, string>, Dictionary<int, string>>{ }
+            },
+            {
+                new KeyValuePair<int, string>(6, "Ball Carrier Dive"),
+                new Dictionary<KeyValuePair<string, string>, Dictionary<int, string>>{ }
+            },
+            {
+                new KeyValuePair<int, string>(7, "Scramble"),
+                new Dictionary<KeyValuePair<string, string>, Dictionary<int, string>>{ }
+            },
+            {
+                new KeyValuePair<int, string>(8, "Run Route"),
+                new Dictionary<KeyValuePair<string, string>, Dictionary<int, string>>{ }
+            },
+            {
+                new KeyValuePair<int, string>(9, "Receiver Cut"),
+                new Dictionary<KeyValuePair<string, string>, Dictionary<int, string>>{ }
+            },
+            {
+                new KeyValuePair<int, string>(10, "Receiver Get Open"),
+                new Dictionary<KeyValuePair<string, string>, Dictionary<int, string>>{ }
+            },
+            {
+                new KeyValuePair<int, string>(11, "Pitch"),
+                new Dictionary<KeyValuePair<string, string>, Dictionary<int, string>>{ }
+            },
+            {
+                new KeyValuePair<int, string>(12, "Handoff Option"),
+                new Dictionary<KeyValuePair<string, string>, Dictionary<int, string>>{ }
+            },
+            {
+                new KeyValuePair<int, string>(13, "Receive Handoff"),
+                new Dictionary<KeyValuePair<string, string>, Dictionary<int, string>>{ }
+            },
+            {
+                new KeyValuePair<int, string>(14, "Pass Block"),
+                new Dictionary<KeyValuePair<string, string>, Dictionary<int, string>>{ }
+            },
+            {
+                new KeyValuePair<int, string>(15, "Run Block"),
+                new Dictionary<KeyValuePair<string, string>, Dictionary<int, string>>{ }
+            },
+            {
+                new KeyValuePair<int, string>(16, "Kickoff"),
+                new Dictionary<KeyValuePair<string, string>, Dictionary<int, string>>{ }
+            },
+            {
+                new KeyValuePair<int, string>(17, "Kick Return"),
+                new Dictionary<KeyValuePair<string, string>, Dictionary<int, string>>{ }
+            },
+            {
+                new KeyValuePair<int, string>(18, "Lead Block"),
+                new Dictionary<KeyValuePair<string, string>, Dictionary<int, string>>{ }
+            },
+            {
+                new KeyValuePair<int, string>(19, "Man Coverage"),
+                new Dictionary<KeyValuePair<string, string>, Dictionary<int, string>>{ }
+            },
+            {
+                new KeyValuePair<int, string>(20, "Flat Zone"),
+                new Dictionary<KeyValuePair<string, string>, Dictionary<int, string>>{ }
+            },
+            {
+                new KeyValuePair<int, string>(21, "Hook Zone"),
+                new Dictionary<KeyValuePair<string, string>, Dictionary<int, string>>{ }
+            },
+            {
+                new KeyValuePair<int, string>(22, "Curl Flat Zone"),
+                new Dictionary<KeyValuePair<string, string>, Dictionary<int, string>>{ }
+            },
+            {
+                new KeyValuePair<int, string>(23, "Deep Zone"),
+                new Dictionary<KeyValuePair<string, string>, Dictionary<int, string>>{ }
+            },
+            {
+                new KeyValuePair<int, string>(24, "Show Blitz"),
+                new Dictionary<KeyValuePair<string, string>, Dictionary<int, string>>{ }
+            },
+            {
+                new KeyValuePair<int, string>(25, "Delay"),
+                new Dictionary<KeyValuePair<string, string>, Dictionary<int, string>>{ }
+            },
+            {
+                new KeyValuePair<int, string>(26, "Initial Move"),
                 new Dictionary<KeyValuePair<string, string>, Dictionary<int, string>>
                 {
                     { 
@@ -85,7 +193,127 @@ namespace Madden.TeamPlaybook
                     }
                 }
             },
-            { 
+            {
+                new KeyValuePair<int, string>(27, "FG Spot"),
+                new Dictionary<KeyValuePair<string, string>, Dictionary<int, string>>{ }
+            },
+            {
+                new KeyValuePair<int, string>(28, "FG Kick"),
+                new Dictionary<KeyValuePair<string, string>, Dictionary<int, string>>{ }
+            },
+            {
+                new KeyValuePair<int, string>(29, "Punt"),
+                new Dictionary<KeyValuePair<string, string>, Dictionary<int, string>>{ }
+            },
+            {
+                new KeyValuePair<int, string>(30, "Stop Clock"),
+                new Dictionary<KeyValuePair<string, string>, Dictionary<int, string>>{ }
+            },
+            {
+                new KeyValuePair<int, string>(31, "Kneel"),
+                new Dictionary<KeyValuePair<string, string>, Dictionary<int, string>>{ }
+            },
+            {
+                new KeyValuePair<int, string>(32, "Receive Pitch"),
+                new Dictionary<KeyValuePair<string, string>, Dictionary<int, string>>{ }
+            },
+            {
+                new KeyValuePair<int, string>(33, "Pull Block"),
+                new Dictionary<KeyValuePair<string, string>, Dictionary<int, string>>{ }
+            },
+            {
+                new KeyValuePair<int, string>(34, "Read and Blitz"),
+                new Dictionary<KeyValuePair<string, string>, Dictionary<int, string>>{ }
+            },
+            {
+                new KeyValuePair<int, string>(35, "Head Turn Run Route"),
+                new Dictionary<KeyValuePair<string, string>, Dictionary<int, string>>{ }
+            },
+            {
+                new KeyValuePair<int, string>(36, "Option Route"),
+                new Dictionary<KeyValuePair<string, string>, Dictionary<int, string>>{ }
+            },
+            {
+                new KeyValuePair<int, string>(37, "Option Route Extra Info"),
+                new Dictionary<KeyValuePair<string, string>, Dictionary<int, string>>{ }
+            },
+            {
+                new KeyValuePair<int, string>(38, "Handoff Turn"),
+                new Dictionary<KeyValuePair<string, string>, Dictionary<int, string>>{ }
+            },
+            {
+                new KeyValuePair<int, string>(39, "Handoff Give"),
+                new Dictionary<KeyValuePair<string, string>, Dictionary<int, string>>{ }
+            },
+            {
+                new KeyValuePair<int, string>(40, "Handoff Fake"),
+                new Dictionary<KeyValuePair<string, string>, Dictionary<int, string>>{ }
+            },
+            {
+                new KeyValuePair<int, string>(41, "Pass Rush"),
+                new Dictionary<KeyValuePair<string, string>, Dictionary<int, string>>{ }
+            },
+            {
+                new KeyValuePair<int, string>(42, "Option Run"),
+                new Dictionary<KeyValuePair<string, string>, Dictionary<int, string>>{ }
+            },
+            {
+                new KeyValuePair<int, string>(43, "Option Follow"),
+                new Dictionary<KeyValuePair<string, string>, Dictionary<int, string>>{ }
+            },
+            {
+                new KeyValuePair<int, string>(44, "Wedge Block"),
+                new Dictionary<KeyValuePair<string, string>, Dictionary<int, string>>{ }
+            },
+            {
+                new KeyValuePair<int, string>(45, "Auto Motion"),
+                new Dictionary<KeyValuePair<string, string>, Dictionary<int, string>>{ }
+            },
+            {
+                new KeyValuePair<int, string>(46, "Auto Motion Snap"),
+                new Dictionary<KeyValuePair<string, string>, Dictionary<int, string>>{ }
+            },
+            {
+                new KeyValuePair<int, string>(47, "Defensive Movement"),
+                new Dictionary<KeyValuePair<string, string>, Dictionary<int, string>>{ }
+            },
+            {
+                new KeyValuePair<int, string>(48, "Override Formation Position"),
+                new Dictionary<KeyValuePair<string, string>, Dictionary<int, string>>{ }
+            },
+            {
+                new KeyValuePair<int, string>(49, "Call for Ball"),
+                new Dictionary<KeyValuePair<string, string>, Dictionary<int, string>>{ }
+            },
+            {
+                new KeyValuePair<int, string>(50, "Run Route Turbo"),
+                new Dictionary<KeyValuePair<string, string>, Dictionary<int, string>>{ }
+            },
+            {
+                new KeyValuePair<int, string>(51, "Run Route Fake Out"),
+                new Dictionary<KeyValuePair<string, string>, Dictionary<int, string>>{ }
+            },
+            {
+                new KeyValuePair<int, string>(52, "Defensive Fake Out"),
+                new Dictionary<KeyValuePair<string, string>, Dictionary<int, string>>{ }
+            },
+            {
+                new KeyValuePair<int, string>(53, "Defensive Fake Out Extra Info"),
+                new Dictionary<KeyValuePair<string, string>, Dictionary<int, string>>{ }
+            },
+            {
+                new KeyValuePair<int, string>(54, "Move Defender"),
+                new Dictionary<KeyValuePair<string, string>, Dictionary<int, string>>{ }
+            },
+            {
+                new KeyValuePair<int, string>(55, "Delay Block"),
+                new Dictionary<KeyValuePair<string, string>, Dictionary<int, string>>{ }
+            },
+            {
+                new KeyValuePair<int, string>(56, "Disabled"),
+                new Dictionary<KeyValuePair<string, string>, Dictionary<int, string>>{ }
+            },
+            {
                 new KeyValuePair<int, string>(57, "Defensive Alignment"),
                 new Dictionary<KeyValuePair<string, string>, Dictionary<int, string>>
                 {
@@ -137,6 +365,306 @@ namespace Madden.TeamPlaybook
                         }
                     }
                 }
+            },
+            {
+                new KeyValuePair<int, string>(58, "Canned Handoff"),
+                new Dictionary<KeyValuePair<string, string>, Dictionary<int, string>>{ }
+            },
+            {
+                new KeyValuePair<int, string>(59, "Get Ball"),
+                new Dictionary<KeyValuePair<string, string>, Dictionary<int, string>>{ }
+            },
+            {
+                new KeyValuePair<int, string>(60, "Jump"),
+                new Dictionary<KeyValuePair<string, string>, Dictionary<int, string>>{ }
+            },
+            {
+                new KeyValuePair<int, string>(61, "Unused 4"),
+                new Dictionary<KeyValuePair<string, string>, Dictionary<int, string>>{ }
+            },
+            {
+                new KeyValuePair<int, string>(62, "Set Animation"),
+                new Dictionary<KeyValuePair<string, string>, Dictionary<int, string>>{ }
+            },
+            {
+                new KeyValuePair<int, string>(63, "Fall"),
+                new Dictionary<KeyValuePair<string, string>, Dictionary<int, string>>{ }
+            },
+            {
+                new KeyValuePair<int, string>(64, "Get Up"),
+                new Dictionary<KeyValuePair<string, string>, Dictionary<int, string>>{ }
+            },
+            {
+                new KeyValuePair<int, string>(65, "Move Offense Huddle"),
+                new Dictionary<KeyValuePair<string, string>, Dictionary<int, string>>{ }
+            },
+            {
+                new KeyValuePair<int, string>(66, "Move Defense Huddle"),
+                new Dictionary<KeyValuePair<string, string>, Dictionary<int, string>>{ }
+            },
+            {
+                new KeyValuePair<int, string>(67, "Pass"),
+                new Dictionary<KeyValuePair<string, string>, Dictionary<int, string>>{ }
+            },
+            {
+                new KeyValuePair<int, string>(68, "Wrap Tackle Offense"),
+                new Dictionary<KeyValuePair<string, string>, Dictionary<int, string>>{ }
+            },
+            {
+                new KeyValuePair<int, string>(69, "Wrap Tackle Defense"),
+                new Dictionary<KeyValuePair<string, string>, Dictionary<int, string>>{ }
+            },
+            {
+                new KeyValuePair<int, string>(70, "Move To Catch"),
+                new Dictionary<KeyValuePair<string, string>, Dictionary<int, string>>{ }
+            },
+            {
+                new KeyValuePair<int, string>(71, "Play Ball"),
+                new Dictionary<KeyValuePair<string, string>, Dictionary<int, string>>{ }
+            },
+            {
+                new KeyValuePair<int, string>(72, "Catch"),
+                new Dictionary<KeyValuePair<string, string>, Dictionary<int, string>>{ }
+            },
+            {
+                new KeyValuePair<int, string>(73, "Timeout"),
+                new Dictionary<KeyValuePair<string, string>, Dictionary<int, string>>{ }
+            },
+            {
+                new KeyValuePair<int, string>(74, "Wrap Block"),
+                new Dictionary<KeyValuePair<string, string>, Dictionary<int, string>>{ }
+            },
+            {
+                new KeyValuePair<int, string>(75, "Juke"),
+                new Dictionary<KeyValuePair<string, string>, Dictionary<int, string>>{ }
+            },
+            {
+                new KeyValuePair<int, string>(76, "Catch"),
+                new Dictionary<KeyValuePair<string, string>, Dictionary<int, string>>{ }
+            },
+            {
+                new KeyValuePair<int, string>(77, "Hurdle"),
+                new Dictionary<KeyValuePair<string, string>, Dictionary<int, string>>{ }
+            },
+            {
+                new KeyValuePair<int, string>(78, "Chuck"),
+                new Dictionary<KeyValuePair<string, string>, Dictionary<int, string>>{ }
+            },
+            {
+                new KeyValuePair<int, string>(79, "Defense Preplay"),
+                new Dictionary<KeyValuePair<string, string>, Dictionary<int, string>>{ }
+            },
+            {
+                new KeyValuePair<int, string>(80, "Stiffarm"),
+                new Dictionary<KeyValuePair<string, string>, Dictionary<int, string>>{ }
+            },
+            {
+                new KeyValuePair<int, string>(81, "Unused 7"),
+                new Dictionary<KeyValuePair<string, string>, Dictionary<int, string>>{ }
+            },
+            {
+                new KeyValuePair<int, string>(82, "Receive Snap"),
+                new Dictionary<KeyValuePair<string, string>, Dictionary<int, string>>{ }
+            },
+            {
+                new KeyValuePair<int, string>(83, "Stumble"),
+                new Dictionary<KeyValuePair<string, string>, Dictionary<int, string>>{ }
+            },
+            {
+                new KeyValuePair<int, string>(84, "Tight Rope"),
+                new Dictionary<KeyValuePair<string, string>, Dictionary<int, string>>{ }
+            },
+            {
+                new KeyValuePair<int, string>(85, "Unused 2"),
+                new Dictionary<KeyValuePair<string, string>, Dictionary<int, string>>{ }
+            },
+            {
+                new KeyValuePair<int, string>(86, "Unused 3"),
+                new Dictionary<KeyValuePair<string, string>, Dictionary<int, string>>{ }
+            },
+            {
+                new KeyValuePair<int, string>(87, "Play Over"),
+                new Dictionary<KeyValuePair<string, string>, Dictionary<int, string>>{ }
+            },
+            {
+                new KeyValuePair<int, string>(88, "Move To Point"),
+                new Dictionary<KeyValuePair<string, string>, Dictionary<int, string>>{ }
+            },
+            {
+                new KeyValuePair<int, string>(89, "Set Flag"),
+                new Dictionary<KeyValuePair<string, string>, Dictionary<int, string>>{ }
+            },
+            {
+                new KeyValuePair<int, string>(90, "Unused 6"),
+                new Dictionary<KeyValuePair<string, string>, Dictionary<int, string>>{ }
+            },
+            {
+                new KeyValuePair<int, string>(91, "Unused 5"),
+                new Dictionary<KeyValuePair<string, string>, Dictionary<int, string>>{ }
+            },
+            {
+                new KeyValuePair<int, string>(92, "Huddle Check"),
+                new Dictionary<KeyValuePair<string, string>, Dictionary<int, string>>{ }
+            },
+            {
+                new KeyValuePair<int, string>(93, "Injury"),
+                new Dictionary<KeyValuePair<string, string>, Dictionary<int, string>>{ }
+            },
+            {
+                new KeyValuePair<int, string>(94, "Slide"),
+                new Dictionary<KeyValuePair<string, string>, Dictionary<int, string>>{ }
+            },
+            {
+                new KeyValuePair<int, string>(95, "Celebration"),
+                new Dictionary<KeyValuePair<string, string>, Dictionary<int, string>>{ }
+            },
+            {
+                new KeyValuePair<int, string>(96, "Kickoff Spot Ball"),
+                new Dictionary<KeyValuePair<string, string>, Dictionary<int, string>>{ }
+            },
+            {
+                new KeyValuePair<int, string>(97, "Wait For Flag"),
+                new Dictionary<KeyValuePair<string, string>, Dictionary<int, string>>{ }
+            },
+            {
+                new KeyValuePair<int, string>(98, "Preplay"),
+                new Dictionary<KeyValuePair<string, string>, Dictionary<int, string>>{ }
+            },
+            {
+                new KeyValuePair<int, string>(99, "Set Animation Face Direction"),
+                new Dictionary<KeyValuePair<string, string>, Dictionary<int, string>>{ }
+            },
+            {
+                new KeyValuePair<int, string>(100, "Sty In Pose"),
+                new Dictionary<KeyValuePair<string, string>, Dictionary<int, string>>{ }
+            },
+            {
+                new KeyValuePair<int, string>(101, "Defensive Cut"),
+                new Dictionary<KeyValuePair<string, string>, Dictionary<int, string>>{ }
+            },
+            {
+                new KeyValuePair<int, string>(102, "Hit Stick"),
+                new Dictionary<KeyValuePair<string, string>, Dictionary<int, string>>{ }
+            },
+            {
+                new KeyValuePair<int, string>(103, "Snap"),
+                new Dictionary<KeyValuePair<string, string>, Dictionary<int, string>>{ }
+            },
+            {
+                new KeyValuePair<int, string>(104, "Option Transition"),
+                new Dictionary<KeyValuePair<string, string>, Dictionary<int, string>>{ }
+            },
+            {
+                new KeyValuePair<int, string>(105, "Strip Ball"),
+                new Dictionary<KeyValuePair<string, string>, Dictionary<int, string>>{ }
+            },
+            {
+                new KeyValuePair<int, string>(106, "Coach"),
+                new Dictionary<KeyValuePair<string, string>, Dictionary<int, string>>{ }
+            },
+            {
+                new KeyValuePair<int, string>(107, "Wrap Celebration Teammate"),
+                new Dictionary<KeyValuePair<string, string>, Dictionary<int, string>>{ }
+            },
+            {
+                new KeyValuePair<int, string>(108, "Wrap Celebration Key Player"),
+                new Dictionary<KeyValuePair<string, string>, Dictionary<int, string>>{ }
+            },
+            {
+                new KeyValuePair<int, string>(109, "Kick Return Assist"),
+                new Dictionary<KeyValuePair<string, string>, Dictionary<int, string>>{ }
+            },
+            {
+                new KeyValuePair<int, string>(110, "Prevent"),
+                new Dictionary<KeyValuePair<string, string>, Dictionary<int, string>>{ }
+            },
+            {
+                new KeyValuePair<int, string>(111, "Read and React"),
+                new Dictionary<KeyValuePair<string, string>, Dictionary<int, string>>{ }
+            },
+            {
+                new KeyValuePair<int, string>(112, "Give Up"),
+                new Dictionary<KeyValuePair<string, string>, Dictionary<int, string>>{ }
+            },
+            {
+                new KeyValuePair<int, string>(113, "Delay Get Up"),
+                new Dictionary<KeyValuePair<string, string>, Dictionary<int, string>>{ }
+            },
+            {
+                new KeyValuePair<int, string>(114, "Pitch Key"),
+                new Dictionary<KeyValuePair<string, string>, Dictionary<int, string>>{ }
+            },
+            {
+                new KeyValuePair<int, string>(115, "Defensive Strafe"),
+                new Dictionary<KeyValuePair<string, string>, Dictionary<int, string>>{ }
+            },
+            {
+                new KeyValuePair<int, string>(116, "Defensive Skill Dive"),
+                new Dictionary<KeyValuePair<string, string>, Dictionary<int, string>>{ }
+            },
+            {
+                new KeyValuePair<int, string>(117, "Defensive Skill Tractor Beam"),
+                new Dictionary<KeyValuePair<string, string>, Dictionary<int, string>>{ }
+            },
+            {
+                new KeyValuePair<int, string>(118, "Non Ball Carrier Dive"),
+                new Dictionary<KeyValuePair<string, string>, Dictionary<int, string>>{ }
+            },
+            {
+                new KeyValuePair<int, string>(119, "On Field Refs"),
+                new Dictionary<KeyValuePair<string, string>, Dictionary<int, string>>{ }
+            },
+            {
+                new KeyValuePair<int, string>(120, "On Field Refs Animation"),
+                new Dictionary<KeyValuePair<string, string>, Dictionary<int, string>>{ }
+            },
+            {
+                new KeyValuePair<int, string>(121, "Multi Actor Interaction Offense"),
+                new Dictionary<KeyValuePair<string, string>, Dictionary<int, string>>{ }
+            },
+            {
+                new KeyValuePair<int, string>(122, "Multi Actor Interaction Defense"),
+                new Dictionary<KeyValuePair<string, string>, Dictionary<int, string>>{ }
+            },
+            {
+                new KeyValuePair<int, string>(123, "Multi Actor Get Into Position"),
+                new Dictionary<KeyValuePair<string, string>, Dictionary<int, string>>{ }
+            },
+            {
+                new KeyValuePair<int, string>(124, "Canned Animation"),
+                new Dictionary<KeyValuePair<string, string>, Dictionary<int, string>>{ }
+            },
+            {
+                new KeyValuePair<int, string>(125, "Canned Chuck"),
+                new Dictionary<KeyValuePair<string, string>, Dictionary<int, string>>{ }
+            },
+            {
+                new KeyValuePair<int, string>(126, "Run Fit Movement"),
+                new Dictionary<KeyValuePair<string, string>, Dictionary<int, string>>{ }
+            },
+            {
+                new KeyValuePair<int, string>(127, "Press"),
+                new Dictionary<KeyValuePair<string, string>, Dictionary<int, string>>{ }
+            },
+            {
+                new KeyValuePair<int, string>(128, "Block Stick Attempt"),
+                new Dictionary<KeyValuePair<string, string>, Dictionary<int, string>>{ }
+            },
+            {
+                new KeyValuePair<int, string>(129, "Animation Script NonScriptable"),
+                new Dictionary<KeyValuePair<string, string>, Dictionary<int, string>>{ }
+            },
+            {
+                new KeyValuePair<int, string>(130, "Scramble Test"),
+                new Dictionary<KeyValuePair<string, string>, Dictionary<int, string>>{ }
+            },
+            {
+                new KeyValuePair<int, string>(131, "Animation Script"),
+                new Dictionary<KeyValuePair<string, string>, Dictionary<int, string>>{ }
+            },
+            {
+                new KeyValuePair<int, string>(132, "Max"),
+                new Dictionary<KeyValuePair<string, string>, Dictionary<int, string>>{ }
             }
         };
 

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
+using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -115,11 +116,6 @@ namespace MaddenTeamPlaybookEditor.ViewModels
         [field: NonSerialized()]
         public ICollectionView PlayerPlayartView { get; set; }
 
-        private bool _isShortAudible;
-        private bool _isRunAudible;
-        private bool _isDeepAudible;
-        private bool _isFakeAudible;
-
         public static readonly Dictionary<int, string> Situation = new Dictionary<int, string>
         {
             {2,"Quick Pass"},
@@ -156,14 +152,7 @@ namespace MaddenTeamPlaybookEditor.ViewModels
             UpdatePlay();
             GetPlayers();
 
-            try 
-            { 
-                PlayType = TeamPlaybook.PlayType[PLYL.PLYT]; 
-            }
-            catch 
-            { 
-                PlayType = "";
-            }
+            PlayType = TeamPlaybook.PlayType.Keys.Contains(PLYL.PLYT) ? TeamPlaybook.PlayType[PLYL.PLYT] : "";
 
             PlayArtFilePath = "pack://siteoforigin:,,,/playart/File" + pbpl.PLYL.ToString().PadLeft(5, '0') + ".PNG";
         }
@@ -173,6 +162,7 @@ namespace MaddenTeamPlaybookEditor.ViewModels
             PLPD = SubFormation.Formation.Playbook.PLPD.FirstOrDefault(play => play.PLYL == PBPL.PLYL);
             PLRD = SubFormation.Formation.Playbook.PLRD.FirstOrDefault(play => play.PLYL == PBPL.PLYL);
             GetAudibles();
+            GetPlayListFlags();
             GetSituations();
             GetPBAU();
             GetPBCC();
@@ -316,37 +306,7 @@ namespace MaddenTeamPlaybookEditor.ViewModels
 
         public void GetSituations()
         {
-            if (Situations == null)
-            {
-                Situations = new List<PBAI>();
-            }
-            else
-            {
-                Situations.Clear();
-            }
-            foreach (PBAI pbai in SubFormation.Formation.Playbook.PBAI.Where(s => s.PBPL == PBPL.pbpl))
-            {
-                Situations.Add(pbai);
-            }
-
-            List<int> situations = SubFormation.Formation.Playbook.Situations.Where(s => !Situations.Exists(k => k.AIGR == s.Key)).Select(s => s.Key).ToList();
-
-            foreach (int key in situations)
-            {
-                Situations.Add(new PBAI
-                {
-                    AIGR = key,
-                    Flag = PBPL.Flag,
-                    PBPL = PBPL.pbpl,
-                    PLF_ = PLYL.PLF_,
-                    PLYT = PLYL.PLYT,
-                    prct = 0,
-                    rec = SubFormation.Formation.Playbook.PBAI.Select(p => p.rec).Max() + 1,
-                    SETL = PLYL.SETL,
-                    vpos = PLYL.vpos
-                });
-            }
-            Situations = Situations.OrderBy(s => s.Name).ToList();
+            Situations = SubFormation.Formation.Playbook.PBAI.Where(s => s.PBPL == PBPL.pbpl).ToList();
         }
 
         public void GetPBAU()
@@ -479,9 +439,9 @@ namespace MaddenTeamPlaybookEditor.ViewModels
 
         public void GetAudibles()
         {
-            _isShortAudible = false;
-            _isRunAudible = false;
-            _isDeepAudible = false;
+            _isShortAudible =
+            _isRunAudible =
+            _isDeepAudible =
             _isFakeAudible = false;
             int _flag = PBPL.Flag;
 
@@ -507,6 +467,7 @@ namespace MaddenTeamPlaybookEditor.ViewModels
             }
         }
 
+        private bool _isShortAudible;
         public bool isShortAudible
         {
             get { return _isShortAudible; }
@@ -530,7 +491,7 @@ namespace MaddenTeamPlaybookEditor.ViewModels
                 }
             }
         }
-
+        private bool _isRunAudible;
         public bool isRunAudible
         {
             get { return _isRunAudible; }
@@ -554,7 +515,7 @@ namespace MaddenTeamPlaybookEditor.ViewModels
                 }
             }
         }
-
+        private bool _isDeepAudible;
         public bool isDeepAudible
         {
             get { return _isDeepAudible; }
@@ -578,7 +539,7 @@ namespace MaddenTeamPlaybookEditor.ViewModels
                 }
             }
         }
-
+        private bool _isFakeAudible;
         public bool isFakeAudible
         {
             get { return _isFakeAudible; }
@@ -600,6 +561,530 @@ namespace MaddenTeamPlaybookEditor.ViewModels
                     PBPL.Flag += 16;
                     this.OnPropertyChanged("isFakeAudible");
                 }
+            }
+        }
+
+        #endregion
+
+        #region Play List Flags
+
+        public void GetPlayListFlags()
+        {
+            _BlockAndRelease =
+            _BlockLeft =
+            _BlockRight =
+            _CanFlip =
+            _ContainLeft =
+            _ContainRight =
+            _Cover2Defense =
+            _DisableLockOn =
+            _EndComplement =
+            _IsBoosted =
+            _NoWideAlign =
+            _OptionStop =
+            _OutsideRunStop =
+            _PassLeft =
+            _PassLong =
+            _PassMedium =
+            _PassMiddle =
+            _PassRight =
+            _PassShort =
+            _PuntLeft =
+            _PuntRight =
+            _PuntSky =
+            _QBScrambleStop =
+            _RunLeft =
+            _RunMiddle =
+            _RunRight =
+            _SnapToVIP =
+            _StartComplement = false;
+
+            int _flag = PLYL.PLF_;
+
+            foreach (KeyValuePair<int, string> key in PLYL.PlayListFlag.Reverse().Where(k => k.Key <= PLYL.PLF_))
+            {
+                if (_flag >= key.Key)
+                {
+                    this.GetType()?.GetProperty(key.Value)?.SetValue(this, true);
+                    _flag -= key.Key;
+                }
+            }
+        }
+
+        private bool _BlockAndRelease;
+        public bool BlockAndRelease
+        {
+            get { return _BlockAndRelease; }
+            set
+            {
+                if (_BlockAndRelease == value)
+                    return;
+                _BlockAndRelease = value;
+                this.PLYL.PLF_ += _BlockAndRelease ?
+                    PLYL.PlayListFlag
+                    .FirstOrDefault(k => String.Equals(k.Value, "BlockAndRelease", StringComparison.OrdinalIgnoreCase)).Key :
+                    -PLYL.PlayListFlag
+                    .FirstOrDefault(k => String.Equals(k.Value, "BlockAndRelease", StringComparison.OrdinalIgnoreCase)).Key;
+                OnPropertyChanged("BlockAndRelease");
+            }
+        }
+        private bool _BlockLeft;
+        public bool BlockLeft
+        {
+            get { return _BlockLeft; }
+            set
+            {
+                if (_BlockLeft == value)
+                    return;
+                _BlockLeft = value;
+                this.PLYL.PLF_ += _BlockLeft ?
+                    PLYL.PlayListFlag
+                    .FirstOrDefault(k => String.Equals(k.Value, "BlockLeft", StringComparison.OrdinalIgnoreCase)).Key :
+                    -PLYL.PlayListFlag
+                    .FirstOrDefault(k => String.Equals(k.Value, "BlockLeft", StringComparison.OrdinalIgnoreCase)).Key;
+                OnPropertyChanged("BlockLeft");
+            }
+        }
+        private bool _BlockRight;
+        public bool BlockRight
+        {
+            get { return _BlockRight; }
+            set
+            {
+                if (_BlockRight == value)
+                    return;
+                _BlockRight = value;
+                this.PLYL.PLF_ += _BlockRight ?
+                    PLYL.PlayListFlag
+                    .FirstOrDefault(k => String.Equals(k.Value, "BlockRight", StringComparison.OrdinalIgnoreCase)).Key :
+                    -PLYL.PlayListFlag
+                    .FirstOrDefault(k => String.Equals(k.Value, "BlockRight", StringComparison.OrdinalIgnoreCase)).Key;
+                OnPropertyChanged("BlockRight");
+            }
+        }
+        private bool _CanFlip;
+        public bool CanFlip
+        {
+            get { return _CanFlip; }
+            set
+            {
+                if (_CanFlip == value)
+                    return;
+                _CanFlip = value;
+                this.PLYL.PLF_ += _CanFlip ?
+                    PLYL.PlayListFlag
+                    .FirstOrDefault(k => String.Equals(k.Value, "CanFlip", StringComparison.OrdinalIgnoreCase)).Key :
+                    -PLYL.PlayListFlag
+                    .FirstOrDefault(k => String.Equals(k.Value, "CanFlip", StringComparison.OrdinalIgnoreCase)).Key;
+                OnPropertyChanged("CanFlip");
+            }
+        }
+        private bool _ContainLeft;
+        public bool ContainLeft
+        {
+            get { return _ContainLeft; }
+            set
+            {
+                if (_ContainLeft == value)
+                    return;
+                _ContainLeft = value;
+                this.PLYL.PLF_ += _ContainLeft ?
+                    PLYL.PlayListFlag
+                    .FirstOrDefault(k => String.Equals(k.Value, "ContainLeft", StringComparison.OrdinalIgnoreCase)).Key :
+                    -PLYL.PlayListFlag
+                    .FirstOrDefault(k => String.Equals(k.Value, "ContainLeft", StringComparison.OrdinalIgnoreCase)).Key;
+                OnPropertyChanged("ContainLeft");
+            }
+        }
+        private bool _ContainRight;
+        public bool ContainRight
+        {
+            get { return _ContainRight; }
+            set
+            {
+                if (_ContainRight == value)
+                    return;
+                _ContainRight = value;
+                this.PLYL.PLF_ += _ContainRight ?
+                    PLYL.PlayListFlag
+                    .FirstOrDefault(k => String.Equals(k.Value, "ContainRight", StringComparison.OrdinalIgnoreCase)).Key :
+                    -PLYL.PlayListFlag
+                    .FirstOrDefault(k => String.Equals(k.Value, "ContainRight", StringComparison.OrdinalIgnoreCase)).Key;
+                OnPropertyChanged("ContainRight");
+            }
+        }
+        private bool _Cover2Defense;
+        public bool Cover2Defense
+        {
+            get { return _Cover2Defense; }
+            set
+            {
+                if (_Cover2Defense == value)
+                    return;
+                _Cover2Defense = value;
+                this.PLYL.PLF_ += _Cover2Defense ?
+                    PLYL.PlayListFlag
+                    .FirstOrDefault(k => String.Equals(k.Value, "Cover2Defense", StringComparison.OrdinalIgnoreCase)).Key :
+                    -PLYL.PlayListFlag
+                    .FirstOrDefault(k => String.Equals(k.Value, "Cover2Defense", StringComparison.OrdinalIgnoreCase)).Key;
+                OnPropertyChanged("Cover2Defense");
+            }
+        }
+        private bool _DisableLockOn;
+        public bool DisableLockOn
+        {
+            get { return _DisableLockOn; }
+            set
+            {
+                if (_DisableLockOn == value)
+                    return;
+                _DisableLockOn = value;
+                this.PLYL.PLF_ += _DisableLockOn ?
+                    PLYL.PlayListFlag
+                    .FirstOrDefault(k => String.Equals(k.Value, "DisableLockOn", StringComparison.OrdinalIgnoreCase)).Key :
+                    -PLYL.PlayListFlag
+                    .FirstOrDefault(k => String.Equals(k.Value, "DisableLockOn", StringComparison.OrdinalIgnoreCase)).Key;
+                OnPropertyChanged("DisableLockOn");
+            }
+        }
+        private bool _EndComplement;
+        public bool EndComplement
+        {
+            get { return _EndComplement; }
+            set
+            {
+                if (_EndComplement == value)
+                    return;
+                _EndComplement = value;
+                this.PLYL.PLF_ += _EndComplement ?
+                    PLYL.PlayListFlag
+                    .FirstOrDefault(k => String.Equals(k.Value, "EndComplement", StringComparison.OrdinalIgnoreCase)).Key :
+                    -PLYL.PlayListFlag
+                    .FirstOrDefault(k => String.Equals(k.Value, "EndComplement", StringComparison.OrdinalIgnoreCase)).Key;
+                OnPropertyChanged("EndComplement");
+            }
+        }
+        private bool _IsBoosted;
+        public bool IsBoosted
+        {
+            get { return _IsBoosted; }
+            set
+            {
+                if (_IsBoosted == value)
+                    return;
+                _IsBoosted = value;
+                this.PLYL.PLF_ += _IsBoosted ?
+                    PLYL.PlayListFlag
+                    .FirstOrDefault(k => String.Equals(k.Value, "IsBoosted", StringComparison.OrdinalIgnoreCase)).Key :
+                    -PLYL.PlayListFlag
+                    .FirstOrDefault(k => String.Equals(k.Value, "IsBoosted", StringComparison.OrdinalIgnoreCase)).Key;
+                OnPropertyChanged("IsBoosted");
+            }
+        }
+        private bool _NoWideAlign;
+        public bool NoWideAlign
+        {
+            get { return _NoWideAlign; }
+            set
+            {
+                if (_NoWideAlign == value)
+                    return;
+                _NoWideAlign = value;
+                this.PLYL.PLF_ += _NoWideAlign ?
+                    PLYL.PlayListFlag
+                    .FirstOrDefault(k => String.Equals(k.Value, "NoWideAlign", StringComparison.OrdinalIgnoreCase)).Key :
+                    -PLYL.PlayListFlag
+                    .FirstOrDefault(k => String.Equals(k.Value, "NoWideAlign", StringComparison.OrdinalIgnoreCase)).Key;
+                OnPropertyChanged("NoWideAlign");
+            }
+        }
+        private bool _OptionStop;
+        public bool OptionStop
+        {
+            get { return _OptionStop; }
+            set
+            {
+                if (_OptionStop == value)
+                    return;
+                _OptionStop = value;
+                this.PLYL.PLF_ += _OptionStop ?
+                    PLYL.PlayListFlag
+                    .FirstOrDefault(k => String.Equals(k.Value, "OptionStop", StringComparison.OrdinalIgnoreCase)).Key :
+                    -PLYL.PlayListFlag
+                    .FirstOrDefault(k => String.Equals(k.Value, "OptionStop", StringComparison.OrdinalIgnoreCase)).Key;
+                OnPropertyChanged("OptionStop");
+            }
+        }
+        private bool _OutsideRunStop;
+        public bool OutsideRunStop
+        {
+            get { return _OutsideRunStop; }
+            set
+            {
+                if (_OutsideRunStop == value)
+                    return;
+                _OutsideRunStop = value;
+                this.PLYL.PLF_ += _OutsideRunStop ?
+                    PLYL.PlayListFlag
+                    .FirstOrDefault(k => String.Equals(k.Value, "OutsideRunStop", StringComparison.OrdinalIgnoreCase)).Key :
+                    -PLYL.PlayListFlag
+                    .FirstOrDefault(k => String.Equals(k.Value, "OutsideRunStop", StringComparison.OrdinalIgnoreCase)).Key;
+                OnPropertyChanged("OutsideRunStop");
+            }
+        }
+        private bool _PassLeft;
+        public bool PassLeft
+        {
+            get { return _PassLeft; }
+            set
+            {
+                if (_PassLeft == value)
+                    return;
+                _PassLeft = value;
+                this.PLYL.PLF_ += _PassLeft ?
+                    PLYL.PlayListFlag
+                    .FirstOrDefault(k => String.Equals(k.Value, "PassLeft", StringComparison.OrdinalIgnoreCase)).Key :
+                    -PLYL.PlayListFlag
+                    .FirstOrDefault(k => String.Equals(k.Value, "PassLeft", StringComparison.OrdinalIgnoreCase)).Key;
+                OnPropertyChanged("PassLeft");
+            }
+        }
+        private bool _PassLong;
+        public bool PassLong
+        {
+            get { return _PassLong; }
+            set
+            {
+                if (_PassLong == value)
+                    return;
+                _PassLong = value;
+                this.PLYL.PLF_ += _PassLong ?
+                    PLYL.PlayListFlag
+                    .FirstOrDefault(k => String.Equals(k.Value, "PassLong", StringComparison.OrdinalIgnoreCase)).Key :
+                    -PLYL.PlayListFlag
+                    .FirstOrDefault(k => String.Equals(k.Value, "PassLong", StringComparison.OrdinalIgnoreCase)).Key;
+                OnPropertyChanged("PassLong");
+            }
+        }
+        private bool _PassMedium;
+        public bool PassMedium
+        {
+            get { return _PassMedium; }
+            set
+            {
+                if (_PassMedium == value)
+                    return;
+                _PassMedium = value;
+                this.PLYL.PLF_ += _PassMedium ?
+                    PLYL.PlayListFlag
+                    .FirstOrDefault(k => String.Equals(k.Value, "PassMedium", StringComparison.OrdinalIgnoreCase)).Key :
+                    -PLYL.PlayListFlag
+                    .FirstOrDefault(k => String.Equals(k.Value, "PassMedium", StringComparison.OrdinalIgnoreCase)).Key;
+                OnPropertyChanged("PassMedium");
+            }
+        }
+        private bool _PassMiddle;
+        public bool PassMiddle
+        {
+            get { return _PassMiddle; }
+            set
+            {
+                if (_PassMiddle == value)
+                    return;
+                _PassMiddle = value;
+                this.PLYL.PLF_ += _PassMiddle ?
+                    PLYL.PlayListFlag
+                    .FirstOrDefault(k => String.Equals(k.Value, "PassMiddle", StringComparison.OrdinalIgnoreCase)).Key :
+                    -PLYL.PlayListFlag
+                    .FirstOrDefault(k => String.Equals(k.Value, "PassMiddle", StringComparison.OrdinalIgnoreCase)).Key;
+                OnPropertyChanged("PassMiddle");
+            }
+        }
+        private bool _PassRight;
+        public bool PassRight
+        {
+            get { return _PassRight; }
+            set
+            {
+                if (_PassRight == value)
+                    return;
+                _PassRight = value;
+                this.PLYL.PLF_ += _PassRight ?
+                    PLYL.PlayListFlag
+                    .FirstOrDefault(k => String.Equals(k.Value, "PassRight", StringComparison.OrdinalIgnoreCase)).Key :
+                    -PLYL.PlayListFlag
+                    .FirstOrDefault(k => String.Equals(k.Value, "PassRight", StringComparison.OrdinalIgnoreCase)).Key;
+                OnPropertyChanged("PassRight");
+            }
+        }
+        private bool _PassShort;
+        public bool PassShort
+        {
+            get { return _PassShort; }
+            set
+            {
+                if (_PassShort == value)
+                    return;
+                _PassShort = value;
+                this.PLYL.PLF_ += _PassShort ?
+                    PLYL.PlayListFlag
+                    .FirstOrDefault(k => String.Equals(k.Value, "PassShort", StringComparison.OrdinalIgnoreCase)).Key :
+                    -PLYL.PlayListFlag
+                    .FirstOrDefault(k => String.Equals(k.Value, "PassShort", StringComparison.OrdinalIgnoreCase)).Key;
+                OnPropertyChanged("PassShort");
+            }
+        }
+        private bool _PuntLeft;
+        public bool PuntLeft
+        {
+            get { return _PuntLeft; }
+            set
+            {
+                if (_PuntLeft == value)
+                    return;
+                _PuntLeft = value;
+                this.PLYL.PLF_ += _PuntLeft ?
+                    PLYL.PlayListFlag
+                    .FirstOrDefault(k => String.Equals(k.Value, "PuntLeft", StringComparison.OrdinalIgnoreCase)).Key :
+                    -PLYL.PlayListFlag
+                    .FirstOrDefault(k => String.Equals(k.Value, "PuntLeft", StringComparison.OrdinalIgnoreCase)).Key;
+                OnPropertyChanged("PuntLeft");
+            }
+        }
+        private bool _PuntRight;
+        public bool PuntRight
+        {
+            get { return _PuntRight; }
+            set
+            {
+                if (_PuntRight == value)
+                    return;
+                _PuntRight = value;
+                this.PLYL.PLF_ += _PuntRight ?
+                    PLYL.PlayListFlag
+                    .FirstOrDefault(k => String.Equals(k.Value, "PuntRight", StringComparison.OrdinalIgnoreCase)).Key :
+                    -PLYL.PlayListFlag
+                    .FirstOrDefault(k => String.Equals(k.Value, "PuntRight", StringComparison.OrdinalIgnoreCase)).Key;
+                OnPropertyChanged("PuntRight");
+            }
+        }
+        private bool _PuntSky;
+        public bool PuntSky
+        {
+            get { return _PuntSky; }
+            set
+            {
+                if (_PuntSky == value)
+                    return;
+                _PuntSky = value;
+                this.PLYL.PLF_ += _PuntSky ?
+                    PLYL.PlayListFlag
+                    .FirstOrDefault(k => String.Equals(k.Value, "PuntSky", StringComparison.OrdinalIgnoreCase)).Key :
+                    -PLYL.PlayListFlag
+                    .FirstOrDefault(k => String.Equals(k.Value, "PuntSky", StringComparison.OrdinalIgnoreCase)).Key;
+                OnPropertyChanged("PuntSky");
+            }
+        }
+        private bool _QBScrambleStop;
+        public bool QBScrambleStop
+        {
+            get { return _QBScrambleStop; }
+            set
+            {
+                if (_QBScrambleStop == value)
+                    return;
+                _QBScrambleStop = value;
+                this.PLYL.PLF_ += _QBScrambleStop ?
+                    PLYL.PlayListFlag
+                    .FirstOrDefault(k => String.Equals(k.Value, "QBScrambleStop", StringComparison.OrdinalIgnoreCase)).Key :
+                    -PLYL.PlayListFlag
+                    .FirstOrDefault(k => String.Equals(k.Value, "QBScrambleStop", StringComparison.OrdinalIgnoreCase)).Key;
+                OnPropertyChanged("QBScrambleStop");
+            }
+        }
+        private bool _RunLeft;
+        public bool RunLeft
+        {
+            get { return _RunLeft; }
+            set
+            {
+                if (_RunLeft == value)
+                    return;
+                _RunLeft = value;
+                this.PLYL.PLF_ += _RunLeft ?
+                    PLYL.PlayListFlag
+                    .FirstOrDefault(k => String.Equals(k.Value, "RunLeft", StringComparison.OrdinalIgnoreCase)).Key :
+                    -PLYL.PlayListFlag
+                    .FirstOrDefault(k => String.Equals(k.Value, "RunLeft", StringComparison.OrdinalIgnoreCase)).Key;
+                OnPropertyChanged("RunLeft");
+            }
+        }
+        private bool _RunMiddle;
+        public bool RunMiddle
+        {
+            get { return _RunMiddle; }
+            set
+            {
+                if (_RunMiddle == value)
+                    return;
+                _RunMiddle = value;
+                this.PLYL.PLF_ += _RunMiddle ?
+                    PLYL.PlayListFlag
+                    .FirstOrDefault(k => String.Equals(k.Value, "RunMiddle", StringComparison.OrdinalIgnoreCase)).Key :
+                    -PLYL.PlayListFlag
+                    .FirstOrDefault(k => String.Equals(k.Value, "RunMiddle", StringComparison.OrdinalIgnoreCase)).Key;
+                OnPropertyChanged("RunMiddle");
+            }
+        }
+        private bool _RunRight;
+        public bool RunRight
+        {
+            get { return _RunRight; }
+            set
+            {
+                if (_RunRight == value)
+                    return;
+                _RunRight = value;
+                this.PLYL.PLF_ += _RunRight ?
+                    PLYL.PlayListFlag
+                    .FirstOrDefault(k => String.Equals(k.Value, "RunRight", StringComparison.OrdinalIgnoreCase)).Key :
+                    -PLYL.PlayListFlag
+                    .FirstOrDefault(k => String.Equals(k.Value, "RunRight", StringComparison.OrdinalIgnoreCase)).Key;
+                OnPropertyChanged("RunRight");
+            }
+        }
+        private bool _SnapToVIP;
+        public bool SnapToVIP
+        {
+            get { return _SnapToVIP; }
+            set
+            {
+                if (_SnapToVIP == value)
+                    return;
+                _SnapToVIP = value;
+                this.PLYL.PLF_ += _SnapToVIP ?
+                    PLYL.PlayListFlag
+                    .FirstOrDefault(k => String.Equals(k.Value, "SnapToVIP", StringComparison.OrdinalIgnoreCase)).Key :
+                    -PLYL.PlayListFlag
+                    .FirstOrDefault(k => String.Equals(k.Value, "SnapToVIP", StringComparison.OrdinalIgnoreCase)).Key;
+                OnPropertyChanged("SnapToVIP");
+            }
+        }
+        private bool _StartComplement;
+        public bool StartComplement
+        {
+            get { return _StartComplement; }
+            set
+            {
+                if (_StartComplement == value)
+                    return;
+                _StartComplement = value;
+                this.PLYL.PLF_ += _StartComplement ?
+                    PLYL.PlayListFlag
+                    .FirstOrDefault(k => String.Equals(k.Value, "StartComplement", StringComparison.OrdinalIgnoreCase)).Key :
+                    -PLYL.PlayListFlag
+                    .FirstOrDefault(k => String.Equals(k.Value, "StartComplement", StringComparison.OrdinalIgnoreCase)).Key;
+                OnPropertyChanged("StartComplement");
             }
         }
 
