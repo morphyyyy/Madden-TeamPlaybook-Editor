@@ -91,13 +91,13 @@
                     </Grid>
                     <ControlTemplate.Triggers>
 
-                        <Trigger Property="IsExpanded" Value="true">
+                        <!--<Trigger Property="IsExpanded" Value="true">
                             <Setter Property="ItemsPanel" Value="{DynamicResource iptThreeColumns}"/>
                         </Trigger>
 
                         <Trigger Property="IsExpanded" Value="false">
                             <Setter Property="ItemsPanel" Value="{DynamicResource iptOneColumn}"/>
-                        </Trigger>
+                        </Trigger>-->
 
                         <Trigger Property="IsSelected" Value="True">
 

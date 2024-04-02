@@ -7,7 +7,13 @@
 
         <Style.Resources>
 
-            <UniformGrid x:Key="ugdSubFormations" FlowDirection="LeftToRight" IsItemsHost="True" Margin="0,0" MaxWidth="592" Columns="3"/>
+            <ItemsPanelTemplate x:Key="iptThreeColumns">
+                <classes:UniformGridOrientations Orientation="Horizontal" FlowDirection="LeftToRight" IsItemsHost="True" Margin="0,0" MaxWidth="592" Columns="3"/>
+            </ItemsPanelTemplate>
+
+            <ItemsPanelTemplate x:Key="iptOneColumns">
+                <classes:UniformGridOrientations Orientation="Horizontal" FlowDirection="LeftToRight" IsItemsHost="True" Margin="0,0" MaxWidth="592" Columns="1"/>
+            </ItemsPanelTemplate>
 
             <ImageBrush 
                 x:Key="FormationSelected"
@@ -140,7 +146,7 @@
         <Setter Property="ItemsPanel">
             <Setter.Value>
                 <ItemsPanelTemplate>
-                    <classes:UniformGridOrientations Orientation="Horizontal" FlowDirection="LeftToRight" IsItemsHost="True" Margin="0,0" MaxWidth="592" Columns="3"/>
+                    <classes:UniformGridOrientations Orientation="Horizontal" FlowDirection="LeftToRight" IsItemsHost="True" Margin="0,0" MaxWidth="592"/>
                 </ItemsPanelTemplate>
             </Setter.Value>
         </Setter>
