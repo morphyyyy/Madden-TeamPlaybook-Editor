@@ -49,6 +49,7 @@ namespace Madden.TeamPlaybook
                 return MaddenTeamPlaybookEditor.ViewModels.TeamPlaybook.PlayType.FirstOrDefault(x => x.Key == PLYT).Value;
             }
         }
+        public string PlayName { get; set; }
 
         public override string ToString()
         {

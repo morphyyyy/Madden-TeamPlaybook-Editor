@@ -6,18 +6,42 @@
 
     <Application.Resources>
         <ResourceDictionary>
-            <Color x:Key="Primary"/>
-            <Color x:Key="Secondary"/>
-            <Color x:Key="Tertiary"/>
-            <Color x:Key="Quaternary"/>
-            <Color x:Key="Quinary"/>
-            <Color x:Key="Senary"/>
+            <Color x:Key="Primary">#0A3161</Color>
+            <Color x:Key="Secondary">#B31942</Color>
+            <Color x:Key="Tertiary">#FFFFFF</Color>
+            <Color x:Key="Quaternary">#FFFFFF</Color>
+            <Color x:Key="Quinary">#FFFFFF</Color>
+            <Color x:Key="Senary">#FFFFFF</Color>
+            <Color x:Key="Undefined">#00000000</Color>
+            <Color x:Key="Block">#c8c8c8</Color>
+            <Color x:Key="BaseRoute">#c3b152</Color>
+            <Color x:Key="PrimaryRoute">#db4155</Color>
+            <Color x:Key="DelayRoute">#346ff7</Color>
+            <Color x:Key="MotionRoute">#9ce3f1</Color>
+            <Color x:Key="Run">#db4155</Color>
+            <Color x:Key="QBScramble">#13e884</Color>
+            <Color x:Key="QBHandoff">#db4155</Color>
+            <Color x:Key="Kickoff">#db4155</Color>
+            <Color x:Key="CloudFlat">#08c2db</Color>
+            <Color x:Key="HardFlat">#5aa3aa</Color>
+            <Color x:Key="SoftSquat">#99eaf4</Color>
+            <Color x:Key="MidRead">#a5bd6b</Color>
+            <Color x:Key="ThreeReceiverHook">#dbf39f</Color>
+            <Color x:Key="HookCurl">#e7efc0</Color>
+            <Color x:Key="VertHook">#d6e394</Color>
+            <Color x:Key="CurlFlat">#913ede</Color>
+            <Color x:Key="SeamFlat">#bd80f5</Color>
+            <Color x:Key="QuarterFlat">#ffb6f7</Color>
+            <Color x:Key="DeepZone">#316df7</Color>
+            <Color x:Key="QBSpy">#c87810</Color>
+            <Color x:Key="RushQB">#db4155</Color>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="/Styles/FormationStyle.xaml" />
+                <ResourceDictionary Source="/Styles/tciTeamColorStyle.xaml" />
+                <ResourceDictionary Source="/Styles/lviTeamColorStyle.xaml" />
+                <ResourceDictionary Source="/Styles/tviTeamColorStyle.xaml" />
                 <ResourceDictionary Source="/Styles/FormationTabItemStyle.xaml" />
-                <ResourceDictionary Source="/Styles/SubFormationStyle.xaml" />
-                <ResourceDictionary Source="/Styles/SubFormationTabItemStyle.xaml" />
-                <ResourceDictionary Source="/Styles/PlayStyle.xaml" />
+                <ResourceDictionary Source="/Styles/SubFormationTabItemStyle.xaml" /> 
+                <ResourceDictionary Source="/Styles/tviFieldStyle.xaml" />
                 <ResourceDictionary Source="/Styles/PlayTabItemStyle.xaml" />
                 <ResourceDictionary Source="/Styles/SituationStyle.xaml" />
                 <ResourceDictionary Source="/Styles/AudibleDeep.xaml" />

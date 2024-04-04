@@ -373,44 +373,75 @@ namespace MaddenTeamPlaybookEditor.ViewModels
             }
         } 
 
-        public Canvas ToCanvas(int Scale, bool PSALView)
+        public Canvas ToCanvas(double Scale, bool PSALView)
         {
-            Canvas cvsSave = new Canvas { Width = 512 * Scale, Height = 512 * Scale};
+
+            Canvas cvsSave = new Canvas { Width = PSALView ? 512 : 175, Height = PSALView ? 512 : 175, Background = new SolidColorBrush(Colors.Transparent) };
             foreach (PlayerVM player in PlayerPlayartView)
             {
-                Playart playart = new Playart { Player = player, PSALView = PSALView, Scale = PSALView ? 2 : 1 * Scale, AbsolutePositioning = true };
-                Canvas.SetLeft(playart, PSALView ? (SubFormation.Formation.Playbook.LOS.X + player.XY.X) : player.SETP.artx * Scale);
-                Canvas.SetTop(playart, PSALView ? (450 + player.XY.Y) : player.SETP.arty * Scale);
+                Playart playart = new Playart { Player = player, PSALView = PSALView, Scale = PSALView ? 2 : 1, AbsolutePositioning = true };
+                Canvas.SetLeft(playart, PSALView ? (SubFormation.Formation.Playbook.LOS.X + player.XY.X) : player.SETP.artx);
+                Canvas.SetTop(playart, PSALView ? (450 + player.XY.Y) : player.SETP.arty);
                 cvsSave.Children.Add(playart);
             }
             foreach (PlayerVM player in PlayerPlayartView)
             {
-                PlayerIcon playart = new PlayerIcon { Player = player, ShowPosition = false, Scale = PSALView ? 2 : 1 * Scale, AbsolutePositioning = true };
-                Canvas.SetLeft(playart, PSALView ? (SubFormation.Formation.Playbook.LOS.X + player.XY.X) : player.SETP.artx * Scale);
-                Canvas.SetTop(playart, PSALView ? (450 + player.XY.Y) : player.SETP.arty * Scale);
+                PlayerIcon playart = new PlayerIcon { Player = player, ShowPosition = false, Scale = PSALView ? 2 : 1, AbsolutePositioning = true };
+                Canvas.SetLeft(playart, PSALView ? (SubFormation.Formation.Playbook.LOS.X + player.XY.X) : player.SETP.artx);
+                Canvas.SetTop(playart, PSALView ? (450 + player.XY.Y) : player.SETP.arty);
                 cvsSave.Children.Add(playart);
             }
-            TransformGroup tg = new TransformGroup();
-            double scale = PSALView ? .9 : 460.8 / 180;
-            tg.Children.Add(new ScaleTransform(scale, scale));
-            Point offset = PSALView ? new Point(533 * .05, 533 * .05) : new Point(9.0 * scale, 40.0 * scale);
-            tg.Children.Add(new TranslateTransform(offset.X, offset.Y));
-            cvsSave.RenderTransform = tg;
+            if (PSALView)
+            {
+                TransformGroup _tg = new TransformGroup();
+                double scale = PSALView ? .9 : 460.8 / 180;
+                _tg.Children.Add(new ScaleTransform(scale, scale));
+                Point offset = PSALView ? new Point(533 * .05, 533 * .05) : new Point(9.0 * scale, 40.0 * scale);
+                _tg.Children.Add(new TranslateTransform(offset.X, offset.Y));
+                cvsSave.RenderTransform = _tg;
+            }
+            else
+            {
+                TransformGroup _tg = new TransformGroup();
+                Point offset = new Point(0, 32);
+                _tg.Children.Add(new TranslateTransform(offset.X, offset.Y));
+                cvsSave.RenderTransform = _tg;
+            }
             Size size = new Size(cvsSave.Width, cvsSave.Height);
             cvsSave.Measure(size);
             cvsSave.Arrange(new Rect(size));
             cvsSave.UpdateLayout();
+            Canvas cvsFinal = new Canvas { Width = PSALView ? 512 : 175, Height = PSALView ? 512 : 175, Background = new SolidColorBrush(Colors.Transparent) };
+            cvsFinal.Children.Add(cvsSave);
+            TransformGroup tg = new TransformGroup();
+            cvsFinal.RenderTransform = tg;
+            if (!PSALView)
+            {
+                double scale = 512.0 / 175.0;
+                cvsFinal.Width = cvsFinal.Width * scale;
+                cvsFinal.Height = cvsFinal.Height * scale;
+                tg.Children.Add(new ScaleTransform(scale, scale));
+            }
+            {
+                cvsFinal.Width = cvsFinal.Width * Scale;
+                cvsFinal.Height = cvsFinal.Height * Scale;
+                tg.Children.Add(new ScaleTransform(Scale, Scale));
+            }
+            size = new Size(cvsFinal.Width, cvsFinal.Height);
+            cvsFinal.Measure(new Size(cvsFinal.Width, cvsFinal.Height));
+            cvsFinal.Arrange(new Rect(size));
+            cvsFinal.UpdateLayout();
             //Window window = new Window
             //{
             //    Title = "PSAL Editor",
-            //    Content = cvsSave,
-            //    Background = Brushes.Black,
+            //    Content = cvsFinal,
+            //    Background = Brushes.Transparent,
             //    SizeToContent = SizeToContent.WidthAndHeight,
-            //    ResizeMode = ResizeMode.NoResize
+            //    ResizeMode = ResizeMode.NoResize,
             //};
-            //window.ShowDialog();
+            //window.Show();
 
-            return cvsSave;
+            return cvsFinal;
         }
 
         #endregion
@@ -599,10 +630,16 @@ namespace MaddenTeamPlaybookEditor.ViewModels
             _SnapToVIP =
             _StartComplement = false;
 
+            int _flag = PLYL.PLF_;
+
             foreach (KeyValuePair<int, string> key in PLYL.PlayListFlag.Reverse().Where(k => k.Key <= PLYL.PLF_))
             {
-                this.GetType()?.GetProperty(key.Value)?.SetValue(this, true);
-                PLYL.PLF_ = PLYL.PLF_ - key.Key;
+                if (_flag >= key.Key)
+                {
+                    this.GetType()?.GetProperty(key.Value)?.SetValue(this, true);
+                    PLYL.PLF_ = PLYL.PLF_ - key.Key;
+                    _flag -= key.Key;
+                }
             }
         }
 

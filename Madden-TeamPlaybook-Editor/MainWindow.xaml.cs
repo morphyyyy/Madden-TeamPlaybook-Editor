@@ -1,27 +1,24 @@
-﻿    using MaddenTeamPlaybookEditor.User_Controls;
+﻿using Madden.TeamPlaybook;
+using MaddenCustomPlaybookEditor;
+using MaddenTeamPlaybookEditor.Classes;
+using MaddenTeamPlaybookEditor.User_Controls;
 using MaddenTeamPlaybookEditor.ViewModels;
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
+using System.Linq;
+using System.Reflection;
+using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Controls;
-using System.Diagnostics;
-using System.Windows.Navigation;
-using System.Windows.Input;
-using MaddenCustomPlaybookEditor;
-using System.Windows.Media;
-using MaddenTeamPlaybookEditor.Classes;
 using System.Windows.Documents;
-using System.Runtime.InteropServices;
-using System.Linq;
+using System.Windows.Input;
+using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using IDataObject = System.Windows.IDataObject;
-using Madden.CustomPlaybook;
-using System.Reflection;
-using Madden.Team;
-using System.ComponentModel;
-using Madden.TeamPlaybook;
 
 namespace MaddenTeamPlaybookEditor
 {
@@ -59,7 +56,7 @@ namespace MaddenTeamPlaybookEditor
         {
             InitializeComponent();
 
-            filePath = "E:\\Software\\MMC_Editor\\Madden 24\\All_Legacy_Files\\common\\database\\playbooks\\madden_def_patriots.db.DB";
+            filePath = "E:\\Software\\MMC_Editor\\Madden 24\\All_Legacy_Files\\common\\database\\playbooks\\madden_49ers.db.DB";
 
             if (File.Exists(filePath))
             {
@@ -215,6 +212,29 @@ namespace MaddenTeamPlaybookEditor
                 Application.Current.Resources["Quaternary"] = TeamColors.Count() > 3 ? TeamColors[3] : Colors.Transparent;
                 Application.Current.Resources["Quinary"] = TeamColors.Count() > 4 ? TeamColors[4] : Colors.Transparent;
                 Application.Current.Resources["Senary"] = TeamColors.Count() > 5 ? TeamColors[5] : Colors.Transparent;
+                Application.Current.Resources["Undefined"] = ARTLColor.Undefined.Color;
+                Application.Current.Resources["Block"] = ARTLColor.Block.Color;
+                Application.Current.Resources["BaseRoute"] = ARTLColor.BaseRoute.Color;
+                Application.Current.Resources["PrimaryRoute"] = ARTLColor.PrimaryRoute.Color;
+                Application.Current.Resources["DelayRoute"] = ARTLColor.DelayRoute.Color;
+                Application.Current.Resources["MotionRoute"] = ARTLColor.MotionRoute.Color;
+                Application.Current.Resources["Run"] = ARTLColor.Run.Color;
+                Application.Current.Resources["QBScramble"] = ARTLColor.QBScramble.Color;
+                Application.Current.Resources["QBHandoff"] = ARTLColor.QBHandoff.Color;
+                Application.Current.Resources["Kickoff"] = ARTLColor.Kickoff.Color;
+                Application.Current.Resources["CloudFlat"] = ARTLColor.CloudFlat.Color;
+                Application.Current.Resources["HardFlat"] = ARTLColor.HardFlat.Color;
+                Application.Current.Resources["SoftSquat"] = ARTLColor.SoftSquat.Color;
+                Application.Current.Resources["MidRead"] = ARTLColor.MidRead.Color;
+                Application.Current.Resources["ThreeReceiverHook"] = ARTLColor.ThreeReceiverHook.Color;
+                Application.Current.Resources["HookCurl"] = ARTLColor.HookCurl.Color;
+                Application.Current.Resources["VertHook"] = ARTLColor.VertHook.Color;
+                Application.Current.Resources["CurlFlat"] = ARTLColor.CurlFlat.Color;
+                Application.Current.Resources["SeamFlat"] = ARTLColor.SeamFlat.Color;
+                Application.Current.Resources["QuarterFlat"] = ARTLColor.QuarterFlat.Color;
+                Application.Current.Resources["DeepZone"] = ARTLColor.DeepZone.Color;
+                Application.Current.Resources["QBSpy"] = ARTLColor.QBSpy.Color;
+                Application.Current.Resources["RushQB"] = ARTLColor.RushQB.Color;
 
                 //myLinearGradientBrush.GradientStops.Add(new GradientStop(color3, 1.0));
 
@@ -257,6 +277,51 @@ namespace MaddenTeamPlaybookEditor
             lvwSituations.DataContext = situations;
             lvwPlaysBySituation.DataContext = TeamPlaybook.Plays;
             lvwPlaysBySituation.Items.Filter = PlayListFilter;
+            lvw1stDown.ItemsSource = TeamPlaybook.SitOff_1stDown;
+            lvw2ndandShort.ItemsSource = TeamPlaybook.SitOff_2ndandShort;
+            lvw2ndandMed.ItemsSource = TeamPlaybook.SitOff_2ndandMed;
+            lvw2ndandLong.ItemsSource = TeamPlaybook.SitOff_2ndandLong;
+            lvw3rdandShort.ItemsSource = TeamPlaybook.SitOff_3rdandShort;
+            lvw3rdandMed.ItemsSource = TeamPlaybook.SitOff_3rdandMed;
+            lvw3rdandLong.ItemsSource = TeamPlaybook.SitOff_3rdandLong;
+            lvw3rdandXLong.ItemsSource = TeamPlaybook.SitOff_3rdandXLong;
+            lvw4thandShort.ItemsSource = TeamPlaybook.SitOff_4thandShort;
+            lvw4thandMed.ItemsSource = TeamPlaybook.SitOff_4thandMed;
+            lvw4thandLong.ItemsSource = TeamPlaybook.SitOff_4thandLong;
+            lvw4thandXLong.ItemsSource = TeamPlaybook.SitOff_4thandXLong;
+            lvwRZ21to25.ItemsSource = TeamPlaybook.SitOff_RZ21to25;
+            lvwRZ16to20.ItemsSource = TeamPlaybook.SitOff_RZ16to20;
+            lvwRZ11to15.ItemsSource = TeamPlaybook.SitOff_RZ11to15;
+            lvwRZ6to10.ItemsSource = TeamPlaybook.SitOff_RZ6to10;
+            lvwRZ3to5.ItemsSource = TeamPlaybook.SitOff_RZ3to5;
+            lvwRedZone.ItemsSource = TeamPlaybook.SitOff_RedZone;
+            lvwInsideFive.ItemsSource = TeamPlaybook.SitOff_InsideFive;
+            lvwGoalLine.ItemsSource = TeamPlaybook.SitOff_GoalLine;
+            lvwGoalLinePass.ItemsSource = TeamPlaybook.SitOff_GoalLinePass;
+            lvwCM2min.ItemsSource = TeamPlaybook.SitOff_CM2min;
+            lvwCM4min.ItemsSource = TeamPlaybook.SitOff_CM4min;
+            lvwCMKneel.ItemsSource = TeamPlaybook.SitOff_CMKneel;
+            lvwCMStopClock.ItemsSource = TeamPlaybook.SitOff_CMStopClock;
+            lvwCMStopClockUser.ItemsSource = TeamPlaybook.SitOff_CMStopClockUser;
+            lvwCMStopClockFakeUser.ItemsSource = TeamPlaybook.SitOff_CMStopClockFakeUser;
+            lvwCMWasteTime.ItemsSource = TeamPlaybook.SitOff_CMWasteTime;
+            lvwSTExtraPoint.ItemsSource = TeamPlaybook.SitOff_STExtraPoint;
+            lvwSTFakeFG.ItemsSource = TeamPlaybook.SitOff_STFakeFG;
+            lvwSTFakePunt.ItemsSource = TeamPlaybook.SitOff_STFakePunt;
+            lvwSTKickoff.ItemsSource = TeamPlaybook.SitOff_STKickoff;
+            lvwSTKickoffOnside.ItemsSource = TeamPlaybook.SitOff_STKickoffOnside;
+            lvwSTKickoffSafety.ItemsSource = TeamPlaybook.SitOff_STKickoffSafety;
+            lvwSTPunt.ItemsSource = TeamPlaybook.SitOff_STPunt;
+            lvwSTPuntMaxProtect.ItemsSource = TeamPlaybook.SitOff_STPuntMaxProtect;
+            lvwSTSquib.ItemsSource = TeamPlaybook.SitOff_STSquib;
+            lvwMisc1stPlay.ItemsSource = TeamPlaybook.SitOff_Misc1stPlay;
+            lvwMiscGoforTwo.ItemsSource = TeamPlaybook.SitOff_MiscGoforTwo;
+            lvwMiscHailMary.ItemsSource = TeamPlaybook.SitOff_MiscHailMary;
+            lvwMiscLastPlay.ItemsSource = TeamPlaybook.SitOff_MiscLastPlay;
+            lvwMiscMax.ItemsSource = TeamPlaybook.SitOff_MiscMax;
+            lvwMiscPlayAction.ItemsSource = TeamPlaybook.SitOff_MiscPlayAction;
+            lvwMiscSigniaturePlays.ItemsSource = TeamPlaybook.SitOff_MiscSigniaturePlays;
+            lvwMiscSuddenChange.ItemsSource = TeamPlaybook.SitOff_MiscSuddenChange;
             foreach (PropertyInfo p in typeof(PlayVM).GetProperties())
             {
                 Console.WriteLine(p);
@@ -1009,6 +1074,7 @@ namespace MaddenTeamPlaybookEditor
                 {
                     TeamPlaybook.RevampGameplan();
                     lvwSituations.Items.Refresh();
+                    lvw1stDown.Items.Refresh();
                 }
                 catch (Exception)
                 {
@@ -1022,6 +1088,7 @@ namespace MaddenTeamPlaybookEditor
                         {
                             TeamPlaybook.RevampGameplanRedDobe();
                             lvwSituations.Items.Refresh();
+                            lvw1stDown.Items.Refresh();
                         }
                         catch (Exception)
                         {
@@ -1292,6 +1359,26 @@ namespace MaddenTeamPlaybookEditor
             {
                 enc.Save(stm);
             }
+        }
+
+        private void sitPlay_MouseEnter(object sender, MouseEventArgs e)
+        {
+            ((Situation)sender).ToolTip = TeamPlaybook.Plays.FirstOrDefault(p => p.Situations.Contains(((Situation)sender).situation))?.ToCanvas(.333, false);
+        }
+
+        private void sitPlay_GetToolTip(object sender, ToolTipEventArgs e)
+        {
+            Console.WriteLine(sender);
+        }
+
+        private void sitPlay_DumpToolTip(object sender, ToolTipEventArgs e)
+        {
+            Console.WriteLine(sender);
+        }
+
+        private void sitPlay_MouseLeave(object sender, MouseEventArgs e)
+        {
+            ((Situation)sender).ToolTip = null;
         }
 
         #endregion

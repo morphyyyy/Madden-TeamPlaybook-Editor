@@ -7,8 +7,7 @@
     xmlns:math="clr-namespace:HexInnovation;assembly=MathConverter.XamarinForms"
     xmlns:UserControls="clr-namespace:MaddenTeamPlaybookEditor.User_Controls"
     x:Name="uclSubFormationModal"
-    AllowDrop="True"
-    Width="1285">
+    AllowDrop="True">
     
     <UserControl.Resources>
         <ItemsPanelTemplate x:Key="MenuItemPanelTemplate">
@@ -124,7 +123,7 @@
         </Style>
         <ImageBrush 
                 x:Key="FieldBrush"
-                ImageSource="../Resources/full_field.jpg"
+                ImageSource="../Resources/full_field_mask.png"
                 RenderOptions.BitmapScalingMode="Fant"
                 Stretch="UniformToFill"
                 AlignmentY="Top"
@@ -137,14 +136,14 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <Canvas x:Name="cvsField" Grid.Column="0" Height="950" Width="533">
+        <Canvas x:Name="cvsField" Grid.Column="0" Height="900" Width="533"  VerticalAlignment="Top">
 
-            <Border 
+            <!--<Border 
                 Name="bdrField"
                 Background="{StaticResource FieldBrush}"
                 CornerRadius="10"
                 Width="533"
-                Height="950"
+                Height="900"
                 />
 
             <Line X1="0" Y1="599.5" X2="533" Y2="599.5" StrokeThickness="5">
@@ -165,7 +164,7 @@
                         </SolidColorBrush.Color>
                     </SolidColorBrush>
                 </Line.Stroke>
-            </Line>
+            </Line>-->
 
             <ItemsControl 
                 IsEnabled="True"
@@ -248,33 +247,10 @@
                     </Style>
                 </ItemsControl.ItemContainerStyle>
             </ItemsControl>
-
-            <!--<DockPanel VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="0,0,0,0" x:Name="ReferenceInfo" Canvas.Left="0" Canvas.Top="0" Width="{Binding ActualWidth, ElementName=cvsField}" Height="{Binding ActualHeight, ElementName=cvsField}">
-                <TabControl
-                    x:Name="tabAlignments" 
-                    ItemsSource="{Binding Alignments}"
-                    Background="Transparent" 
-                    BorderBrush="Transparent" 
-                    VerticalAlignment="Bottom"
-                    HorizontalAlignment="Center"
-                    SelectionChanged="tabAlignments_SelectionChanged">
-                    <TabControl.ItemTemplate>
-                        <DataTemplate DataType="{x:Type TeamPlaybookViewModels:SubFormationVM}">
-                            <TextBlock x:Name="tabAlignment" Text="{Binding SGFM.name}"/>
-                        </DataTemplate>
-                    </TabControl.ItemTemplate>
-                    <TabControl.ContentTemplate>
-                        <DataTemplate/>
-                    </TabControl.ContentTemplate>
-                    <TabControl.ItemContainerStyle>
-                        <Style TargetType="{x:Type TabItem}" BasedOn="{StaticResource FormationTabItem}"></Style>
-                    </TabControl.ItemContainerStyle>
-                </TabControl>
-            </DockPanel>-->
     
         </Canvas>
 
-        <Grid Margin="10" Grid.Column="1">
+        <Grid Margin="5" Grid.Column="1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
@@ -370,48 +346,49 @@
                             </Grid>
                         </GroupBox>
                         <GroupBox Header="Alignments" Grid.Row="2" Margin="5">
-                            <TabControl
-                                    x:Name="tabAlignments" 
-                                    ItemsSource="{Binding Alignments}"
-                                    Background="Transparent" 
-                                    BorderBrush="Transparent" 
-                                    VerticalAlignment="Bottom"
-                                    HorizontalAlignment="Center"
-                                    SelectionChanged="tabAlignments_SelectionChanged">
-                                <TabControl.ItemTemplate>
+                            <ListView
+                                x:Name="tabAlignments" 
+                                ItemsSource="{Binding Alignments}"
+                                Background="Transparent" 
+                                BorderBrush="Transparent" 
+                                HorizontalAlignment="Center"
+                                SelectionChanged="tabAlignments_SelectionChanged">
+                                <ListView.ItemTemplate>
                                     <DataTemplate DataType="{x:Type TeamPlaybookViewModels:SubFormationVM}">
                                         <TextBlock x:Name="tabAlignment" Text="{Binding SGFM.name}"/>
                                     </DataTemplate>
-                                </TabControl.ItemTemplate>
-                                <!--<TabControl.ContentTemplate>
-                                        <DataTemplate/>
-                                    </TabControl.ContentTemplate>-->
-                                <TabControl.ItemContainerStyle>
-                                    <Style TargetType="{x:Type TabItem}" BasedOn="{StaticResource FormationTabItem}"></Style>
-                                </TabControl.ItemContainerStyle>
-                            </TabControl>
+                                </ListView.ItemTemplate>
+                                <ListView.ItemContainerStyle>
+                                    <Style TargetType="{x:Type ListViewItem}" BasedOn="{StaticResource lviTeamColorStyle}"/>
+                                </ListView.ItemContainerStyle>
+                                <ListView.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <classes:UniformGridOrientations IsItemsHost="False" FlowDirection="LeftToRight" Orientation="Horizontal" Rows="2"/>
+                                    </ItemsPanelTemplate>
+                                </ListView.ItemsPanel>
+                            </ListView>
                         </GroupBox>
-                        <GroupBox Header="Alignments" Grid.Row="3" Margin="5">
-                            <TabControl
-                            x:Name="tabPackages" 
-                            ItemsSource="{Binding Packages}"
-                            Background="Transparent" 
-                            BorderBrush="Transparent" 
-                            VerticalAlignment="Bottom"
-                            HorizontalAlignment="Center"
-                            SelectionChanged="tabAlignments_SelectionChanged">
-                                <TabControl.ItemTemplate>
+                        <GroupBox Header="Packages" Grid.Row="3" Margin="5">
+                            <ListView
+                                x:Name="tabPackages" 
+                                ItemsSource="{Binding Packages}"
+                                Background="Transparent" 
+                                BorderBrush="Transparent" 
+                                HorizontalAlignment="Center">
+                                <ListView.ItemTemplate>
                                     <DataTemplate DataType="{x:Type TeamPlaybookViewModels:SubFormationVM}">
                                         <TextBlock x:Name="tabAlignment" Text="{Binding SPKF.name}"/>
                                     </DataTemplate>
-                                </TabControl.ItemTemplate>
-                                <!--<TabControl.ContentTemplate>
-                                <DataTemplate/>
-                            </TabControl.ContentTemplate>-->
-                                <TabControl.ItemContainerStyle>
-                                    <Style TargetType="{x:Type TabItem}" BasedOn="{StaticResource FormationTabItem}"></Style>
-                                </TabControl.ItemContainerStyle>
-                            </TabControl>
+                                </ListView.ItemTemplate>
+                                <ListView.ItemContainerStyle>
+                                    <Style TargetType="{x:Type ListViewItem}" BasedOn="{StaticResource lviTeamColorStyle}"/>
+                                </ListView.ItemContainerStyle>
+                                <ListView.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <classes:UniformGridOrientations IsItemsHost="False" FlowDirection="LeftToRight" Orientation="Horizontal" Rows="2"/>
+                                    </ItemsPanelTemplate>
+                                </ListView.ItemsPanel>
+                            </ListView>
                         </GroupBox>
                     </Grid>
                 </DockPanel>

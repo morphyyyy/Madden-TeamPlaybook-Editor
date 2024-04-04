@@ -690,89 +690,139 @@ namespace MaddenTeamPlaybookEditor.ViewModels
             {163, new List<string> { "Max", "Max" } }
         };
 
+        #region Situations
+
         public static readonly Dictionary<int?, string> SituationOff = new Dictionary<int?, string>
         {
-            {0,"1st Play"},
-            {35,"1st Down"},
-            {20,"2nd & Short"},
-            {17,"2nd & Med"},
-            {6,"2nd & Long"},
-            {1,"3rd & Short"},
-            {7,"3rd & Med"},
-            {8,"3rd & Long"},
-            {40,"3rd & Extra Long"},
-            {31,"4th & Short"},
-            {32,"4th & Medium"},
-            {33,"4th & Long"},
-            {41,"4rd & Extra Long"},
-            {25,"Opp 21 to 25"},
-            {26,"Red Zone 16 to 20"},
-            {27,"Red Zone 11 to 15"},
-            {28,"Red Zone 6 to 10"},
-            {39,"Red Zone 3 to 5"},
-            {4,"Red Zone"},
-            {5,"Inside Five"},
-            {3,"Goal Line"},
-            {22,"Goal Line Pass"},
-            {24,"4 min Offense"},
-            {10,"2 min Offense"},
-            {37,"Play Action"},
-            {23,"Signiature Plays"},
-            {42,"Sudden Change"},
-            {43,"Last Play"},
-            {21,"Hail Mary"},
-            {44,"Max"},
-            {2,"Stop Clock"},
-            {29,"Stop Clock User"},
-            {30,"Stop Clock Fake User"},
-            {13,"Waste Time"},
-            {14,"Kneel"},
-            {38,"Extra Point"},
-            {34,"Go for 2"},
-            {12,"Fake FG"},
-            {9,"Punt"},
-            {19,"Punt Max Protect"},
-            {11,"Fake Punt"},
-            {15,"Kickoff"},
-            {36,"Squib"},
-            {16,"Kickoff Onside"},
-            {18,"Kickoff Safety"}
+            {0,"1st Play"},       //Misc
+            {35,"1st Down"},         //1st Down
+            {20,"2nd & Short"},      //2nd Down
+            {17,"2nd & Med"},      //2nd Down
+            {6,"2nd & Long"},      //2nd Down
+            {1,"3rd & Short"},      //3rd Down
+            {7,"3rd & Med"},      //3rd Down
+            {8,"3rd & Long"},      //3rd Down
+            {40,"3rd & Extra Long"},      //3rd Down
+            {31,"4th & Short"},         //4th Down
+            {32,"4th & Medium"},         //4th Down
+            {33,"4th & Long"},         //4th Down
+            {41,"4rd & Extra Long"},         //4th Down
+            {25,"Opp 21 to 25"},        //Red Zone
+            {26,"Red Zone 16 to 20"},        //Red Zone
+            {27,"Red Zone 11 to 15"},        //Red Zone
+            {28,"Red Zone 6 to 10"},        //Red Zone
+            {39,"Red Zone 3 to 5"},        //Red Zone
+            {4,"Red Zone"},        //Red Zone
+            {5,"Inside Five"},        //Red Zone
+            {3,"Goal Line"},        //Red Zone
+            {22,"Goal Line Pass"},        //Red Zone
+            {24,"4 min Offense"},      //Clock Management
+            {10,"2 min Offense"},      //Clock Management
+            {37,"Play Action"},         //Misc
+            {23,"Signiature Plays"},    //Misc
+            {42,"Sudden Change"},       //Misc
+            {43,"Last Play"},       //Misc
+            {21,"Hail Mary"},       //Misc
+            {44,"Max"},       //Misc
+            {2,"Stop Clock"},      //Clock Management
+            {29,"Stop Clock User"},      //Clock Management
+            {30,"Stop Clock Fake User"},      //Clock Management
+            {13,"Waste Time"},      //Clock Management
+            {14,"Kneel"},      //Clock Management
+            {38,"Extra Point"},       //Misc
+            {34,"Go for 2"},       //Down
+            {12,"Fake FG"},        //Special Teams
+            {9,"Punt"},        //Special Teams
+            {19,"Punt Max Protect"},        //Special Teams
+            {11,"Fake Punt"},        //Special Teams
+            {15,"Kickoff"},        //Special Teams
+            {36,"Squib"},        //Special Teams
+            {16,"Kickoff Onside"},        //Special Teams
+            {18,"Kickoff Safety"}        //Special Teams
         };
 
         public static readonly Dictionary<int?, string> SituationDef = new Dictionary<int?, string>
         {
-            {0,"Normal"},
-            {18,"Run"},
-            {2,"Pass"},
-            {20,"Nickle"},
-            {6,"Nickle Run"},
-            {13,"Nickle Pass"},
-            {21,"Dime"},
-            {27,"Dime Pass"},
-            {12,"Trips"},
-            {1,"Trips Run"},
-            {11,"Trips Pass"},
-            {10,"Bunch"},
-            {19,"Empty"},
-            {25,"Overload"},
-            {24,"Wildcat"},
-            {29,"Conserve Time"},
-            {28,"Prevent"},
-            {26,"Hail Mary"},
-            {22,"Goal Line"},
-            {5,"Goal Line Run"},
-            {7,"Goal Line Pass"},
-            {3,"Kickoff Return"},
-            {4,"Kickoff Return Onsides"},
-            {8,"Kickoff Return Safety"},
-            {14,"Punt Return"},
-            {15,"Punt Return Safe"},
-            {9,"Punt Block"},
-            {17,"FG Safe"},
-            {16,"FG Block"},
-            {23,"FG Return"},
-            {30,"Max"}
+            {0,"Normal"},       //Normal
+            {18,"Run"},       //Normal
+            {2,"Pass"},       //Normal
+            {20,"Nickle"},       //Nickle
+            {6,"Nickle Run"},       //Nickle
+            {13,"Nickle Pass"},       //Nickle
+            {21,"Dime"},            //Dime
+            {27,"Dime Pass"},       //Dime
+            {12,"Trips"},       //Trips
+            {1,"Trips Run"},       //Trips
+            {11,"Trips Pass"},       //Trips
+            {10,"Bunch"},       //Bunch
+            {19,"Empty"},       //Empty
+            {25,"Overload"},       //Overload
+            {24,"Wildcat"},       //Wildcat
+            {29,"Conserve Time"},   //Clock Management
+            {28,"Prevent"},         //Prevent
+            {26,"Hail Mary"},       //Prevent
+            {22,"Goal Line"},       //Red Zone
+            {5,"Goal Line Run"},       //Red Zone
+            {7,"Goal Line Pass"},       //Red Zone
+            {3,"Kickoff Return"},       //Special Teams
+            {4,"Kickoff Return Onsides"},       //Special Teams
+            {8,"Kickoff Return Safety"},       //Special Teams
+            {14,"Punt Return"},       //Special Teams
+            {15,"Punt Return Safe"},       //Special Teams
+            {9,"Punt Block"},       //Special Teams
+            {17,"FG Safe"},       //Special Teams
+            {16,"FG Block"},       //Special Teams
+            {23,"FG Return"},       //Special Teams
+            {30,"Max"}       //Misc
         };
+
+        public ObservableCollection<PBAI> SitOff_1stDown { get { return new ObservableCollection<PBAI>(PBAI.Where(p => p.AIGR == 35).OrderByDescending(p => p.prct).ThenBy(p => p.PlayName)); } }
+        public ObservableCollection<PBAI> SitOff_2ndandShort { get { return new ObservableCollection<PBAI>(PBAI.Where(p => p.AIGR == 20).OrderByDescending(p => p.prct).ThenBy(p => p.PlayName)); } }
+        public ObservableCollection<PBAI> SitOff_2ndandMed { get { return new ObservableCollection<PBAI>(PBAI.Where(p => p.AIGR == 17).OrderByDescending(p => p.prct).ThenBy(p => p.PlayName)); } }
+        public ObservableCollection<PBAI> SitOff_2ndandLong { get { return new ObservableCollection<PBAI>(PBAI.Where(p => p.AIGR == 6).OrderByDescending(p => p.prct).ThenBy(p => p.PlayName)); } }
+        public ObservableCollection<PBAI> SitOff_3rdandShort { get { return new ObservableCollection<PBAI>(PBAI.Where(p => p.AIGR == 1).OrderByDescending(p => p.prct).ThenBy(p => p.PlayName)); } }
+        public ObservableCollection<PBAI> SitOff_3rdandMed { get { return new ObservableCollection<PBAI>(PBAI.Where(p => p.AIGR == 7).OrderByDescending(p => p.prct).ThenBy(p => p.PlayName)); } }
+        public ObservableCollection<PBAI> SitOff_3rdandLong { get { return new ObservableCollection<PBAI>(PBAI.Where(p => p.AIGR == 8).OrderByDescending(p => p.prct).ThenBy(p => p.PlayName)); } }
+        public ObservableCollection<PBAI> SitOff_3rdandXLong { get { return new ObservableCollection<PBAI>(PBAI.Where(p => p.AIGR == 40).OrderByDescending(p => p.prct).ThenBy(p => p.PlayName)); } }
+        public ObservableCollection<PBAI> SitOff_4thandShort { get { return new ObservableCollection<PBAI>(PBAI.Where(p => p.AIGR == 31).OrderByDescending(p => p.prct).ThenBy(p => p.PlayName)); } }
+        public ObservableCollection<PBAI> SitOff_4thandMed { get { return new ObservableCollection<PBAI>(PBAI.Where(p => p.AIGR == 32).OrderByDescending(p => p.prct).ThenBy(p => p.PlayName)); } }
+        public ObservableCollection<PBAI> SitOff_4thandLong { get { return new ObservableCollection<PBAI>(PBAI.Where(p => p.AIGR == 33).OrderByDescending(p => p.prct).ThenBy(p => p.PlayName)); } }
+        public ObservableCollection<PBAI> SitOff_4thandXLong { get { return new ObservableCollection<PBAI>(PBAI.Where(p => p.AIGR == 41).OrderByDescending(p => p.prct).ThenBy(p => p.PlayName)); } }
+        public ObservableCollection<PBAI> SitOff_RZ21to25 { get { return new ObservableCollection<PBAI>(PBAI.Where(p => p.AIGR == 25).OrderByDescending(p => p.prct).ThenBy(p => p.PlayName)); } }
+        public ObservableCollection<PBAI> SitOff_RZ16to20 { get { return new ObservableCollection<PBAI>(PBAI.Where(p => p.AIGR == 26).OrderByDescending(p => p.prct).ThenBy(p => p.PlayName)); } }
+        public ObservableCollection<PBAI> SitOff_RZ11to15 { get { return new ObservableCollection<PBAI>(PBAI.Where(p => p.AIGR == 27).OrderByDescending(p => p.prct).ThenBy(p => p.PlayName)); } }
+        public ObservableCollection<PBAI> SitOff_RZ6to10 { get { return new ObservableCollection<PBAI>(PBAI.Where(p => p.AIGR == 28).OrderByDescending(p => p.prct).ThenBy(p => p.PlayName)); } }
+        public ObservableCollection<PBAI> SitOff_RZ3to5 { get { return new ObservableCollection<PBAI>(PBAI.Where(p => p.AIGR == 39).OrderByDescending(p => p.prct).ThenBy(p => p.PlayName)); } }
+        public ObservableCollection<PBAI> SitOff_RedZone { get { return new ObservableCollection<PBAI>(PBAI.Where(p => p.AIGR == 4).OrderByDescending(p => p.prct).ThenBy(p => p.PlayName)); } }
+        public ObservableCollection<PBAI> SitOff_InsideFive { get { return new ObservableCollection<PBAI>(PBAI.Where(p => p.AIGR == 5).OrderByDescending(p => p.prct).ThenBy(p => p.PlayName)); } }
+        public ObservableCollection<PBAI> SitOff_GoalLine { get { return new ObservableCollection<PBAI>(PBAI.Where(p => p.AIGR == 3).OrderByDescending(p => p.prct).ThenBy(p => p.PlayName)); } }
+        public ObservableCollection<PBAI> SitOff_GoalLinePass { get { return new ObservableCollection<PBAI>(PBAI.Where(p => p.AIGR == 22).OrderByDescending(p => p.prct).ThenBy(p => p.PlayName)); } }
+        public ObservableCollection<PBAI> SitOff_CM2min { get { return new ObservableCollection<PBAI>(PBAI.Where(p => p.AIGR == 10).OrderByDescending(p => p.prct).ThenBy(p => p.PlayName)); } }
+        public ObservableCollection<PBAI> SitOff_CM4min { get { return new ObservableCollection<PBAI>(PBAI.Where(p => p.AIGR == 24).OrderByDescending(p => p.prct).ThenBy(p => p.PlayName)); } }
+        public ObservableCollection<PBAI> SitOff_CMKneel { get { return new ObservableCollection<PBAI>(PBAI.Where(p => p.AIGR == 14).OrderByDescending(p => p.prct).ThenBy(p => p.PlayName)); } }
+        public ObservableCollection<PBAI> SitOff_CMStopClock { get { return new ObservableCollection<PBAI>(PBAI.Where(p => p.AIGR == 2).OrderByDescending(p => p.prct).ThenBy(p => p.PlayName)); } }
+        public ObservableCollection<PBAI> SitOff_CMStopClockUser { get { return new ObservableCollection<PBAI>(PBAI.Where(p => p.AIGR == 29).OrderByDescending(p => p.prct).ThenBy(p => p.PlayName)); } }
+        public ObservableCollection<PBAI> SitOff_CMStopClockFakeUser { get { return new ObservableCollection<PBAI>(PBAI.Where(p => p.AIGR == 30).OrderByDescending(p => p.prct).ThenBy(p => p.PlayName)); } }
+        public ObservableCollection<PBAI> SitOff_CMWasteTime { get { return new ObservableCollection<PBAI>(PBAI.Where(p => p.AIGR == 13).OrderByDescending(p => p.prct).ThenBy(p => p.PlayName)); } }
+        public ObservableCollection<PBAI> SitOff_STExtraPoint { get { return new ObservableCollection<PBAI>(PBAI.Where(p => p.AIGR == 38).OrderByDescending(p => p.prct).ThenBy(p => p.PlayName)); } }
+        public ObservableCollection<PBAI> SitOff_STFakeFG { get { return new ObservableCollection<PBAI>(PBAI.Where(p => p.AIGR == 12).OrderByDescending(p => p.prct).ThenBy(p => p.PlayName)); } }
+        public ObservableCollection<PBAI> SitOff_STFakePunt { get { return new ObservableCollection<PBAI>(PBAI.Where(p => p.AIGR == 11).OrderByDescending(p => p.prct).ThenBy(p => p.PlayName)); } }
+        public ObservableCollection<PBAI> SitOff_STKickoff { get { return new ObservableCollection<PBAI>(PBAI.Where(p => p.AIGR == 15).OrderByDescending(p => p.prct).ThenBy(p => p.PlayName)); } }
+        public ObservableCollection<PBAI> SitOff_STKickoffOnside { get { return new ObservableCollection<PBAI>(PBAI.Where(p => p.AIGR == 16).OrderByDescending(p => p.prct).ThenBy(p => p.PlayName)); } }
+        public ObservableCollection<PBAI> SitOff_STKickoffSafety { get { return new ObservableCollection<PBAI>(PBAI.Where(p => p.AIGR == 18).OrderByDescending(p => p.prct).ThenBy(p => p.PlayName)); } }
+        public ObservableCollection<PBAI> SitOff_STPunt { get { return new ObservableCollection<PBAI>(PBAI.Where(p => p.AIGR == 9).OrderByDescending(p => p.prct).ThenBy(p => p.PlayName)); } }
+        public ObservableCollection<PBAI> SitOff_STPuntMaxProtect { get { return new ObservableCollection<PBAI>(PBAI.Where(p => p.AIGR == 19).OrderByDescending(p => p.prct).ThenBy(p => p.PlayName)); } }
+        public ObservableCollection<PBAI> SitOff_STSquib { get { return new ObservableCollection<PBAI>(PBAI.Where(p => p.AIGR == 36).OrderByDescending(p => p.prct).ThenBy(p => p.PlayName)); } }
+        public ObservableCollection<PBAI> SitOff_Misc1stPlay { get { return new ObservableCollection<PBAI>(PBAI.Where(p => p.AIGR == 0).OrderByDescending(p => p.prct).ThenBy(p => p.PlayName)); } }
+        public ObservableCollection<PBAI> SitOff_MiscGoforTwo { get { return new ObservableCollection<PBAI>(PBAI.Where(p => p.AIGR == 34).OrderByDescending(p => p.prct).ThenBy(p => p.PlayName)); } }
+        public ObservableCollection<PBAI> SitOff_MiscHailMary { get { return new ObservableCollection<PBAI>(PBAI.Where(p => p.AIGR == 21).OrderByDescending(p => p.prct).ThenBy(p => p.PlayName)); } }
+        public ObservableCollection<PBAI> SitOff_MiscLastPlay { get { return new ObservableCollection<PBAI>(PBAI.Where(p => p.AIGR == 43).OrderByDescending(p => p.prct).ThenBy(p => p.PlayName)); } }
+        public ObservableCollection<PBAI> SitOff_MiscMax { get { return new ObservableCollection<PBAI>(PBAI.Where(p => p.AIGR == 44).OrderByDescending(p => p.prct).ThenBy(p => p.PlayName)); } }
+        public ObservableCollection<PBAI> SitOff_MiscPlayAction { get { return new ObservableCollection<PBAI>(PBAI.Where(p => p.AIGR == 37).OrderByDescending(p => p.prct).ThenBy(p => p.PlayName)); } }
+        public ObservableCollection<PBAI> SitOff_MiscSigniaturePlays { get { return new ObservableCollection<PBAI>(PBAI.Where(p => p.AIGR == 23).OrderByDescending(p => p.prct).ThenBy(p => p.PlayName)); } }
+        public ObservableCollection<PBAI> SitOff_MiscSuddenChange { get { return new ObservableCollection<PBAI>(PBAI.Where(p => p.AIGR == 42).OrderByDescending(p => p.prct).ThenBy(p => p.PlayName)); } }
+
+        #endregion
 
         public string filePath { get; set; }
 
@@ -1334,6 +1384,14 @@ namespace MaddenTeamPlaybookEditor.ViewModels
             SPKF = Madden.TeamPlaybook.SPKF.GetSPKF();
             SPKG = Madden.TeamPlaybook.SPKG.GetSPKG();
             SRFT = Madden.TeamPlaybook.SRFT.GetSRFT();
+
+            foreach (PBAI _pbai in PBAI)
+            {
+                PBPL _play = PBPL.FirstOrDefault(p => p.pbpl == _pbai.PBPL);
+                PBST _subFormation = PBST.FirstOrDefault(s => s.pbst == _play.PBST);
+                PBFM _formation = PBFM.FirstOrDefault(s => s.pbfm == _subFormation.PBFM);
+                _pbai.PlayName = _formation.name + " - " + _subFormation.name + " - " + _play.name;
+            }
         }
 
         public void GetRoster()

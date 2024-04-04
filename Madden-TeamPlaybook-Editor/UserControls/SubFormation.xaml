@@ -165,13 +165,10 @@
 
         <TextBlock 
             DockPanel.Dock="Top"
-            Text="{Binding PBST.name}" 
-            FontFamily="DK Crayon Crumble" 
-            FontSize="22"
-            TextWrapping="Wrap" 
-            TextAlignment="Center" 
-            Background="Transparent" 
-            Foreground="White"/>
+            Text="{Binding PBST.name}"
+            FontSize="18"
+            TextWrapping="NoWrap" 
+            TextAlignment="Center"/>
 
         <StackPanel x:Name="pnlSubFormation">
         
@@ -194,7 +191,6 @@
                         Foreground="Orange" 
                         FontSize="15" 
                         FontWeight="Bold" 
-                        FontFamily="DK Crayon Crumble" 
                         />
 
                     <TextBlock 
@@ -206,7 +202,6 @@
                         Text="{Binding Position1name}" 
                         Foreground="LightGray" 
                         FontSize="15" 
-                        FontFamily="DK Crayon Crumble" 
                         />
 
                 </StackPanel>
@@ -222,7 +217,6 @@
                         Foreground="Orange" 
                         FontSize="15" 
                         FontWeight="Bold" 
-                        FontFamily="DK Crayon Crumble" 
                         />
 
                     <TextBlock 
@@ -234,7 +228,6 @@
                         Text="{Binding Position2name}" 
                         Foreground="LightGray" 
                         FontSize="15" 
-                        FontFamily="DK Crayon Crumble" 
                         />
 
                 </StackPanel>
@@ -250,7 +243,6 @@
                         Foreground="Orange"
                         FontSize="15" 
                         FontWeight="Bold" 
-                        FontFamily="DK Crayon Crumble"
                         />
 
                     <TextBlock 
@@ -262,7 +254,6 @@
                         Text="{Binding Position3name}" 
                         Foreground="LightGray"
                         FontSize="15" 
-                        FontFamily="DK Crayon Crumble" 
                         />
 
                 </StackPanel>
@@ -270,10 +261,11 @@
             </StackPanel>
 
             <ItemsControl 
-            IsEnabled="False"
-            x:Name="iclPlayers"
-            DockPanel.Dock="Top"
-            ItemsSource="{Binding CurrentPackage}">
+                IsEnabled="False"
+                x:Name="iclPlayers"
+                DockPanel.Dock="Top"
+                HorizontalAlignment="Center"
+                ItemsSource="{Binding CurrentPackage}">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
                         <Canvas 

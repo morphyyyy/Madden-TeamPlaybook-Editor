@@ -12,8 +12,6 @@
         <Style TargetType="UserControl">
             <Setter Property="FontSize" Value="14" />
             <Setter Property="Background" Value="Transparent" />
-            <Setter Property="HorizontalContentAlignment" Value="Center" />
-            <Setter Property="VerticalContentAlignment" Value="Center" />
             <Setter Property="Foreground" Value="LightGray" />
         </Style>
     </UserControl.Style>
@@ -36,16 +34,19 @@
         </Style>-->
     </UserControl.Resources>
 
-    <DockPanel>
-
-        <Canvas 
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+        
+        <Canvas Grid.Column="0"
             Height="19"
             Width="100"
             MouseDown="pbrSituation_MouseDown"
             MouseMove="pbrSituation_MouseMove"
             MouseUp="pbrSituation_MouseUp"
-            MouseLeave="pbrSituation_MouseLeave"
-            >
+            MouseLeave="pbrSituation_MouseLeave">
             <ProgressBar 
                 x:Name="pbrSituation" 
                 Height="19" 
@@ -69,8 +70,10 @@
             </ProgressBar>
         </Canvas>
 
-        <TextBlock Text="{Binding Name}"/>
-        
-    </DockPanel>
+        <TextBlock x:Name="tbkPlayName" Text="{Binding PlayName}"  Grid.Column="1"/>
+
+        <TextBlock x:Name="tbkName" Text="{Binding Name}" Grid.Column="1"/>
+
+    </Grid>
     
 </UserControl>
