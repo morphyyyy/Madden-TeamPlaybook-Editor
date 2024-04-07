@@ -171,7 +171,7 @@
                 x:Name="iclIcons"
                 ItemsSource="{Binding PlayerPlayartView, Mode=TwoWay}"
                 Canvas.Left="266.5"
-                Canvas.Top="600">
+                Canvas.Top="650">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
                         <Canvas x:Name="cvsPlayers"/>

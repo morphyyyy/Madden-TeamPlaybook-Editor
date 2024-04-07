@@ -36,6 +36,7 @@
             <Color x:Key="QBSpy">#c87810</Color>
             <Color x:Key="RushQB">#db4155</Color>
             <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Styles/sbrTeamColorStyle.xaml" />
                 <ResourceDictionary Source="/Styles/tciTeamColorStyle.xaml" />
                 <ResourceDictionary Source="/Styles/lviTeamColorStyle.xaml" />
                 <ResourceDictionary Source="/Styles/tviTeamColorStyle.xaml" />

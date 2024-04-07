@@ -138,54 +138,26 @@
         </Grid.ColumnDefinitions>
 
         <Canvas x:Name="cvsField" Grid.Column="0" Height="900" Width="533" VerticalAlignment="Top">
-
             <Canvas.ContextMenu>
                 <ContextMenu>
                     <TextBlock  
-                Background="Transparent" 
-                Foreground="LightGreen"
-                Text="Save Playart"
-                MouseUp="savePlayart"
-                />
+                        Background="Transparent" 
+                        Foreground="LightGreen"
+                        Text="Save Playart"
+                        MouseUp="savePlayart"
+                        />
                 </ContextMenu>
             </Canvas.ContextMenu>
 
-            <!--<Border 
-                Name="bdrField"
-                Background="{StaticResource FieldBrush}"
-                CornerRadius="10"
-                Width="533"
-                Height="900"
-                />
-
-            <Line X1="0" Y1="599.5" X2="533" Y2="599.5" StrokeThickness="5">
-                <Line.Stroke>
-                    <SolidColorBrush>
-                        <SolidColorBrush.Color>
-                            <Color A="96" R="0" G="0" B="0"/>
-                        </SolidColorBrush.Color>
-                    </SolidColorBrush>
-                </Line.Stroke>
-            </Line>
-
-            <Line X1="0" Y1="499.5" X2="533" Y2="499.5" StrokeThickness="5">
-                <Line.Stroke>
-                    <SolidColorBrush>
-                        <SolidColorBrush.Color>
-                            <Color A="144" R="204" G="128" B="40"/>
-                        </SolidColorBrush.Color>
-                    </SolidColorBrush>
-                </Line.Stroke>
-            </Line>-->
-
             <Canvas x:Name="cvsPlayart" Height="750" Width="533">
+                
                 <ItemsControl 
                     IsEnabled="true"
                     x:Name="iclPSALs"
                     DockPanel.Dock="Top"
                     ItemsSource="{Binding PlayerPlayartView, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                     Canvas.Left="266.5"
-                    Canvas.Top="600"
+                    Canvas.Top="650"
                     MouseDown="iclPSALs_MouseDown">
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
@@ -263,7 +235,7 @@
                     DockPanel.Dock="Top"
                     ItemsSource="{Binding PlayerPlayartView, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                     Canvas.Left="266.5"
-                    Canvas.Top="600"
+                    Canvas.Top="650"
                     MouseDown="iclIcons_MouseDown">
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
@@ -339,6 +311,7 @@
                         </Style>
                     </ItemsControl.ItemContainerStyle>
                 </ItemsControl>
+                
             </Canvas>
 
         </Canvas>
@@ -548,7 +521,8 @@
                                 ScrollViewer.HorizontalScrollBarVisibility="Hidden"
                                 BorderBrush="Transparent"
                                 Background="Transparent"
-                                BorderThickness="0">
+                                BorderThickness="0"
+                                >
                                 <ListView.ItemTemplate>
                                     <DataTemplate>
                                         <UserControls:Situation situation="{Binding}" showPlayName="False"/>
@@ -565,18 +539,34 @@
                 </DockPanel>
             </GroupBox>
 
-            <GroupBox Header="Player" x:Name="tabPlayer" Grid.Row="1" Margin="5">
-                <DockPanel Margin="5" LastChildFill="False">
-                    <TextBlock DockPanel.Dock="Top" Margin="5"
-                        FontFamily="Tahoma" 
-                        FontSize="24"
-                        FontWeight="Bold"
-                        Text="{Binding Label}" 
-                        HorizontalAlignment="Left"/>
-                    <DockPanel DockPanel.Dock="Left" LastChildFill="False">
-                        <GroupBox Header="PLYS" DockPanel.Dock="Top" Margin="5">
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+            
+                <GroupBox Header="Player" x:Name="tabPlayer" Grid.Column="0" Margin="5">
+                    <DockPanel Margin="5" LastChildFill="False">
+                        <TextBlock DockPanel.Dock="Top" Margin="5"
+                            FontFamily="Tahoma" 
+                            FontSize="24"
+                            FontWeight="Bold"
+                            Text="{Binding Label}" 
+                            HorizontalAlignment="Left"/>
+                        <!--<GroupBox Header="SETP" DockPanel.Dock="Top" Margin="5">
                             <Grid HorizontalAlignment="Stretch">
                                 <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="*"/>
@@ -585,143 +575,269 @@
                                     <RowDefinition />
                                     <RowDefinition />
                                 </Grid.RowDefinitions>
-                                <TextBlock Grid.Column="0" Grid.Row="0" Text="PSAL"/>
-                                <TextBox Grid.Column="0" Grid.Row="1" Text="{Binding PLYS.PSAL, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextChanged="txtPlayerUpdated"/>
-                                <TextBlock Grid.Column="1" Grid.Row="0" Text="ARTL"/>
-                                <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding PLYS.ARTL, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextChanged="txtPlayerUpdated"/>
-                                <TextBlock Grid.Column="2" Grid.Row="0" Text="PLRR"/>
-                                <TextBox Grid.Column="2" Grid.Row="1" Text="{Binding PLYS.PLRR, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextChanged="txtPlayerUpdated"/>
+                                <TextBlock Grid.Column="0" Grid.Row="0" Text="SGT_"/>
+                                <TextBox Grid.Column="0" Grid.Row="1" Text="{Binding SETP.SGT_, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextChanged="txtPlayerUpdated" ToolTip="Set Group Type"/>
+                                <TextBlock Grid.Column="1" Grid.Row="0" Text="arti"/>
+                                <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding SETP.arti, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextChanged="txtPlayerUpdated" ToolTip="Art Icon"/>
+                                <TextBlock Grid.Column="2" Grid.Row="0" Text="tabo"/>
+                                <TextBox Grid.Column="2" Grid.Row="1" Text="{Binding SETP.tabo, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextChanged="txtPlayerUpdated"/>
+                                <TextBlock Grid.Column="3" Grid.Row="0" Text="poso"/>
+                                <TextBox Grid.Column="3" Grid.Row="1" Text="{Binding SETP.poso, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextChanged="txtPlayerUpdated"/>
+                                <TextBlock Grid.Column="4" Grid.Row="0" Text="flas"/>
+                                <TextBox Grid.Column="4" Grid.Row="1" Text="{Binding SETP.flas, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextChanged="txtPlayerUpdated"/>
+                                <TextBlock Grid.Column="5" Grid.Row="0" Text="DPos"/>
+                                <TextBox Grid.Column="5" Grid.Row="1" Text="{Binding SETP.DPos, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextChanged="txtPlayerUpdated"/>
+                                <TextBlock Grid.Column="6" Grid.Row="0" Text="EPos"/>
+                                <TextBox Grid.Column="6" Grid.Row="1" Text="{Binding SETP.EPos, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextChanged="txtPlayerUpdated"/>
+                                <TextBlock Grid.Column="7" Grid.Row="0" Text="fmtx"/>
+                                <TextBox Grid.Column="7" Grid.Row="1" Text="{Binding SETP.fmtx, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextChanged="txtPlayerUpdated"/>
+                                <TextBlock Grid.Column="8" Grid.Row="0" Text="artx"/>
+                                <TextBox Grid.Column="8" Grid.Row="1" Text="{Binding SETP.artx, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextChanged="txtPlayerUpdated"/>
+                                <TextBlock Grid.Column="9" Grid.Row="0" Text="fmty"/>
+                                <TextBox Grid.Column="9" Grid.Row="1" Text="{Binding SETP.fmty, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextChanged="txtPlayerUpdated"/>
+                                <TextBlock Grid.Column="10" Grid.Row="0" Text="arty"/>
+                                <TextBox Grid.Column="10" Grid.Row="1" Text="{Binding SETP.arty, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextChanged="txtPlayerUpdated"/>
                             </Grid>
                         </GroupBox>
-                        <GroupBox Header="PSAL" DockPanel.Dock="Top" Margin="5">
-                            <DataGrid 
-                                ItemsSource="{Binding PSAL, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                HorizontalAlignment="Stretch"
-                                CurrentCellChanged="dgdPSALupdated"/>
+                        <GroupBox Header="SETG" DockPanel.Dock="Top" Margin="5">
+                            <Grid HorizontalAlignment="Stretch">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                </Grid.RowDefinitions>
+                                <TextBlock Grid.Column="0" Grid.Row="0" Text="SF__"/>
+                                <TextBox Grid.Column="0" Grid.Row="1" Text="{Binding SETG.SF__, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextChanged="txtPlayerUpdated"/>
+                                <TextBlock Grid.Column="1" Grid.Row="0" Text="x___"/>
+                                <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding SETG.x___, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextChanged="txtPlayerUpdated"/>
+                                <TextBlock Grid.Column="2" Grid.Row="0" Text="y___"/>
+                                <TextBox Grid.Column="2" Grid.Row="1" Text="{Binding SETG.y___, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextChanged="txtPlayerUpdated"/>
+                                <TextBlock Grid.Column="3" Grid.Row="0" Text="fx__"/>
+                                <TextBox Grid.Column="3" Grid.Row="1" Text="{Binding SETG.fx__, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextChanged="txtPlayerUpdated"/>
+                                <TextBlock Grid.Column="4" Grid.Row="0" Text="fy__"/>
+                                <TextBox Grid.Column="4" Grid.Row="1" Text="{Binding SETG.fy__, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextChanged="txtPlayerUpdated"/>
+                                <TextBlock Grid.Column="5" Grid.Row="0" Text="anm_"/>
+                                <TextBox Grid.Column="5" Grid.Row="1" Text="{Binding SETG.anm_, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextChanged="txtPlayerUpdated"/>
+                                <TextBlock Grid.Column="6" Grid.Row="0" Text="dir_"/>
+                                <TextBox Grid.Column="6" Grid.Row="1" Text="{Binding SETG.dir_, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextChanged="txtPlayerUpdated"/>
+                                <TextBlock Grid.Column="7" Grid.Row="0" Text="fanm"/>
+                                <TextBox Grid.Column="7" Grid.Row="1" Text="{Binding SETG.fanm, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextChanged="txtPlayerUpdated"/>
+                                <TextBlock Grid.Column="8" Grid.Row="0" Text="fdir"/>
+                                <TextBox Grid.Column="8" Grid.Row="1" Text="{Binding SETG.fdir, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextChanged="txtPlayerUpdated"/>
+                            </Grid>
+                        </GroupBox>-->
+                        <GroupBox Header="SRFT" DockPanel.Dock="Top" Margin="5">
+                            <Grid HorizontalAlignment="Stretch">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                </Grid.RowDefinitions>
+                            
+                                <TextBlock Grid.Column="0" Grid.Row="0" Text="SIDE"/>
+                                <TextBox Grid.Column="0" Grid.Row="1" Text="{Binding SRFT.SIDE, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextChanged="txtPlayerUpdated"/>
+                                <TextBlock Grid.Column="1" Grid.Row="0" Text="YOFF"/>
+                                <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding SRFT.YOFF, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextChanged="txtPlayerUpdated"/>
+                                <TextBlock Grid.Column="2" Grid.Row="0" Text="TECH"/>
+                                <TextBox Grid.Column="2" Grid.Row="1" Text="{Binding SRFT.TECH, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextChanged="txtPlayerUpdated"/>
+                                <TextBlock Grid.Column="3" Grid.Row="0" Text="STAN"/>
+                                <TextBox Grid.Column="3" Grid.Row="1" Text="{Binding SRFT.STAN, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextChanged="txtPlayerUpdated"/>
+                                <TextBlock Grid.Column="0" Grid.Row="3" Text="Strong" HorizontalAlignment="Right"/>
+                                <TextBlock Grid.Column="0" Grid.Row="4" Text="Weak" HorizontalAlignment="Right"/>
+                                <TextBlock Grid.Column="1" Grid.Row="2" Text="PRI"/>
+                                <TextBox Grid.Column="1" Grid.Row="3" Text="{Binding SRFT.PRIS, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextChanged="txtPlayerUpdated"/>
+                                <TextBlock Grid.Column="2" Grid.Row="2" Text="GAP"/>
+                                <TextBox Grid.Column="2" Grid.Row="3" Text="{Binding SRFT.GAPS, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextChanged="txtPlayerUpdated"/>
+                                <TextBlock Grid.Column="3" Grid.Row="2" Text="ASS"/>
+                                <TextBox Grid.Column="3" Grid.Row="3" Text="{Binding SRFT.ASSS, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextChanged="txtPlayerUpdated"/>
+                                <TextBox Grid.Column="1" Grid.Row="4" Text="{Binding SRFT.PRIW, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextChanged="txtPlayerUpdated"/>
+                                <TextBox Grid.Column="2" Grid.Row="4" Text="{Binding SRFT.GAPW, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextChanged="txtPlayerUpdated"/>
+                                <TextBox Grid.Column="3" Grid.Row="4" Text="{Binding SRFT.ASSW, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextChanged="txtPlayerUpdated"/>
+                            </Grid>
                         </GroupBox>
+                        <DockPanel DockPanel.Dock="Top" LastChildFill="False">
+                            <!--<GroupBox Header="PLYS" DockPanel.Dock="Top" Margin="5">
+                                <Grid HorizontalAlignment="Stretch">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                    </Grid.RowDefinitions>
+                                    <TextBlock Grid.Column="0" Grid.Row="0" Text="PSAL"/>
+                                    <TextBox Grid.Column="0" Grid.Row="1" Text="{Binding PLYS.PSAL, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextChanged="txtPlayerUpdated"/>
+                                    <TextBlock Grid.Column="1" Grid.Row="0" Text="ARTL"/>
+                                    <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding PLYS.ARTL, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextChanged="txtPlayerUpdated"/>
+                                    <TextBlock Grid.Column="2" Grid.Row="0" Text="PLRR"/>
+                                    <TextBox Grid.Column="2" Grid.Row="1" Text="{Binding PLYS.PLRR, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextChanged="txtPlayerUpdated"/>
+                                </Grid>
+                            </GroupBox>-->
+                            <GroupBox Header="PSAL" DockPanel.Dock="Top" Margin="5">
+                                <DataGrid 
+                                    ItemsSource="{Binding PSAL, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                    HorizontalAlignment="Stretch"
+                                    CurrentCellChanged="dgdPSALupdated"/>
+                            </GroupBox>
+                        </DockPanel>
                     </DockPanel>
-                    <GroupBox Header="SETP" DockPanel.Dock="Top" Margin="5">
-                        <Grid HorizontalAlignment="Stretch">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition />
-                                <RowDefinition />
-                            </Grid.RowDefinitions>
-                            <TextBlock Grid.Column="0" Grid.Row="0" Text="SGT_"/>
-                            <TextBox Grid.Column="0" Grid.Row="1" Text="{Binding SETP.SGT_, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextChanged="txtPlayerUpdated" ToolTip="Set Group Type"/>
-                            <TextBlock Grid.Column="1" Grid.Row="0" Text="arti"/>
-                            <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding SETP.arti, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextChanged="txtPlayerUpdated" ToolTip="Art Icon"/>
-                            <TextBlock Grid.Column="2" Grid.Row="0" Text="tabo"/>
-                            <TextBox Grid.Column="2" Grid.Row="1" Text="{Binding SETP.tabo, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextChanged="txtPlayerUpdated"/>
-                            <TextBlock Grid.Column="3" Grid.Row="0" Text="poso"/>
-                            <TextBox Grid.Column="3" Grid.Row="1" Text="{Binding SETP.poso, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextChanged="txtPlayerUpdated"/>
-                            <TextBlock Grid.Column="4" Grid.Row="0" Text="flas"/>
-                            <TextBox Grid.Column="4" Grid.Row="1" Text="{Binding SETP.flas, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextChanged="txtPlayerUpdated"/>
-                            <TextBlock Grid.Column="5" Grid.Row="0" Text="DPos"/>
-                            <TextBox Grid.Column="5" Grid.Row="1" Text="{Binding SETP.DPos, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextChanged="txtPlayerUpdated"/>
-                            <TextBlock Grid.Column="6" Grid.Row="0" Text="EPos"/>
-                            <TextBox Grid.Column="6" Grid.Row="1" Text="{Binding SETP.EPos, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextChanged="txtPlayerUpdated"/>
-                            <TextBlock Grid.Column="7" Grid.Row="0" Text="fmtx"/>
-                            <TextBox Grid.Column="7" Grid.Row="1" Text="{Binding SETP.fmtx, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextChanged="txtPlayerUpdated"/>
-                            <TextBlock Grid.Column="8" Grid.Row="0" Text="artx"/>
-                            <TextBox Grid.Column="8" Grid.Row="1" Text="{Binding SETP.artx, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextChanged="txtPlayerUpdated"/>
-                            <TextBlock Grid.Column="9" Grid.Row="0" Text="fmty"/>
-                            <TextBox Grid.Column="9" Grid.Row="1" Text="{Binding SETP.fmty, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextChanged="txtPlayerUpdated"/>
-                            <TextBlock Grid.Column="10" Grid.Row="0" Text="arty"/>
-                            <TextBox Grid.Column="10" Grid.Row="1" Text="{Binding SETP.arty, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextChanged="txtPlayerUpdated"/>
-                        </Grid>
-                    </GroupBox>
-                    <GroupBox Header="SETG" DockPanel.Dock="Top" Margin="5">
-                        <Grid HorizontalAlignment="Stretch">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition />
-                                <RowDefinition />
-                            </Grid.RowDefinitions>
-                            <TextBlock Grid.Column="0" Grid.Row="0" Text="SF__"/>
-                            <TextBox Grid.Column="0" Grid.Row="1" Text="{Binding SETG.SF__, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextChanged="txtPlayerUpdated"/>
-                            <TextBlock Grid.Column="1" Grid.Row="0" Text="x___"/>
-                            <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding SETG.x___, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextChanged="txtPlayerUpdated"/>
-                            <TextBlock Grid.Column="2" Grid.Row="0" Text="y___"/>
-                            <TextBox Grid.Column="2" Grid.Row="1" Text="{Binding SETG.y___, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextChanged="txtPlayerUpdated"/>
-                            <TextBlock Grid.Column="3" Grid.Row="0" Text="fx__"/>
-                            <TextBox Grid.Column="3" Grid.Row="1" Text="{Binding SETG.fx__, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextChanged="txtPlayerUpdated"/>
-                            <TextBlock Grid.Column="4" Grid.Row="0" Text="fy__"/>
-                            <TextBox Grid.Column="4" Grid.Row="1" Text="{Binding SETG.fy__, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextChanged="txtPlayerUpdated"/>
-                            <TextBlock Grid.Column="5" Grid.Row="0" Text="anm_"/>
-                            <TextBox Grid.Column="5" Grid.Row="1" Text="{Binding SETG.anm_, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextChanged="txtPlayerUpdated"/>
-                            <TextBlock Grid.Column="6" Grid.Row="0" Text="dir_"/>
-                            <TextBox Grid.Column="6" Grid.Row="1" Text="{Binding SETG.dir_, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextChanged="txtPlayerUpdated"/>
-                            <TextBlock Grid.Column="7" Grid.Row="0" Text="fanm"/>
-                            <TextBox Grid.Column="7" Grid.Row="1" Text="{Binding SETG.fanm, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextChanged="txtPlayerUpdated"/>
-                            <TextBlock Grid.Column="8" Grid.Row="0" Text="fdir"/>
-                            <TextBox Grid.Column="8" Grid.Row="1" Text="{Binding SETG.fdir, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextChanged="txtPlayerUpdated"/>
-                        </Grid>
-                    </GroupBox>
-                    <GroupBox Header="SRFT" DockPanel.Dock="Top" Margin="5">
-                        <Grid HorizontalAlignment="Stretch">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition />
-                                <RowDefinition />
-                            </Grid.RowDefinitions>
-                            <TextBlock Grid.Column="0" Grid.Row="0" Text="SIDE"/>
-                            <TextBox Grid.Column="0" Grid.Row="1" Text="{Binding SRFT.SIDE, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextChanged="txtPlayerUpdated"/>
-                            <TextBlock Grid.Column="1" Grid.Row="0" Text="YOFF"/>
-                            <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding SRFT.YOFF, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextChanged="txtPlayerUpdated"/>
-                            <TextBlock Grid.Column="2" Grid.Row="0" Text="TECH"/>
-                            <TextBox Grid.Column="2" Grid.Row="1" Text="{Binding SRFT.TECH, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextChanged="txtPlayerUpdated"/>
-                            <TextBlock Grid.Column="3" Grid.Row="0" Text="STAN"/>
-                            <TextBox Grid.Column="3" Grid.Row="1" Text="{Binding SRFT.STAN, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextChanged="txtPlayerUpdated"/>
-                            <TextBlock Grid.Column="4" Grid.Row="0" Text="PRIS"/>
-                            <TextBox Grid.Column="4" Grid.Row="1" Text="{Binding SRFT.PRIS, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextChanged="txtPlayerUpdated"/>
-                            <TextBlock Grid.Column="5" Grid.Row="0" Text="GAPS"/>
-                            <TextBox Grid.Column="5" Grid.Row="1" Text="{Binding SRFT.GAPS, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextChanged="txtPlayerUpdated"/>
-                            <TextBlock Grid.Column="6" Grid.Row="0" Text="ASSS"/>
-                            <TextBox Grid.Column="6" Grid.Row="1" Text="{Binding SRFT.ASSS, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextChanged="txtPlayerUpdated"/>
-                            <TextBlock Grid.Column="7" Grid.Row="0" Text="PRIW"/>
-                            <TextBox Grid.Column="7" Grid.Row="1" Text="{Binding SRFT.PRIW, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextChanged="txtPlayerUpdated"/>
-                            <TextBlock Grid.Column="8" Grid.Row="0" Text="GAPW"/>
-                            <TextBox Grid.Column="8" Grid.Row="1" Text="{Binding SRFT.GAPW, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextChanged="txtPlayerUpdated"/>
-                            <TextBlock Grid.Column="9" Grid.Row="0" Text="ASSW"/>
-                            <TextBox Grid.Column="9" Grid.Row="1" Text="{Binding SRFT.ASSW, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextChanged="txtPlayerUpdated"/>
-                        </Grid>
-                    </GroupBox>
-                </DockPanel>
-            </GroupBox>
+                </GroupBox>
+
+                <GroupBox Header="PSALs" x:Name="gbxPSALs" Grid.Column="1" Margin="5">
+
+                    <TreeView x:Name="tvwPSALs"
+                        Background="Transparent"
+                        BorderBrush="{x:Null}"
+                        Foreground="{x:Null}"
+                        DockPanel.Dock="Top"
+                        TreeViewItem.Selected="tvwPSALs_Selected"
+                        AllowDrop="True"
+                        ItemsSource="{Binding SubFormation.Formation.Playbook.PSALs}"
+                        ScrollViewer.VerticalScrollBarVisibility="Hidden"
+                        ScrollViewer.HorizontalScrollBarVisibility="Hidden">
+
+                        <TreeView.Resources>
+
+                            <ResourceDictionary>
+
+                                <HierarchicalDataTemplate DataType="{x:Type ViewModels:FormationVM}" ItemsSource="{Binding SubFormations}">
+
+                                    <HierarchicalDataTemplate.ItemContainerStyle>
+                                        <Style TargetType="TreeViewItem" BasedOn="{StaticResource tviTeamColorStyle}">
+                                            <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}" />
+                                            <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay}" />
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding IsVisible}" Value="True">
+                                                    <Setter Property="Visibility" Value="Visible" />
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding IsVisible}" Value="False">
+                                                    <Setter Property="Visibility" Value="Collapsed" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </HierarchicalDataTemplate.ItemContainerStyle>
+
+                                    <TextBlock 
+                                        Text="{Binding PBFM.name}"
+                                        TextWrapping="NoWrap" 
+                                        TextAlignment="Center"
+                                        FontSize="26"/>
+
+                                </HierarchicalDataTemplate>
+
+                                <HierarchicalDataTemplate DataType="{x:Type ViewModels:SubFormationVM}" ItemsSource="{Binding Plays}">
+
+                                    <HierarchicalDataTemplate.ItemContainerStyle>
+                                        <Style TargetType="TreeViewItem" BasedOn="{StaticResource tviTeamColorStyle}">
+                                            <Setter Property="ItemsPanel">
+                                                <Setter.Value>
+                                                    <ItemsPanelTemplate>
+                                                        <UniformGrid FlowDirection="LeftToRight" IsItemsHost="True" Margin="0,0" MaxWidth="592" Columns="3"/>
+                                                    </ItemsPanelTemplate>
+                                                </Setter.Value>
+                                            </Setter>
+                                            <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}" />
+                                            <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay}" />
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding IsVisible}" Value="True">
+                                                    <Setter Property="Visibility" Value="Visible" />
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding IsVisible}" Value="False">
+                                                    <Setter Property="Visibility" Value="Collapsed" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </HierarchicalDataTemplate.ItemContainerStyle>
+
+                                    <TextBlock 
+                                        Text="{Binding PBST.name}"
+                                        TextWrapping="NoWrap" 
+                                        TextAlignment="Center"
+                                        FontSize="26"
+                                        Width="270"/>
+
+                                </HierarchicalDataTemplate>
+
+                                <HierarchicalDataTemplate DataType="{x:Type ViewModels:PlayVM}">
+
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition/>
+                                            <RowDefinition/>
+                                        </Grid.RowDefinitions>
+                                        
+                                        <UserControls:Play Grid.Row="0"
+                                            x:Name="uclPlay"
+                                            play="{Binding}" 
+                                            DockPanel.Dock="Top"
+                                            HorizontalAlignment="Center"/>
+
+                                        <TextBlock  Grid.Row="1"
+                                            Text="{Binding PBPL.name}"
+                                            DockPanel.Dock="Top" 
+                                            FontFamily="DK Crayon Crumble" 
+                                            FontSize="20"
+                                            TextWrapping="Wrap" 
+                                            TextAlignment="Center" 
+                                            Background="Transparent" 
+                                            Foreground="LightGray" 
+                                            />
+
+                                    </Grid>
+
+                                </HierarchicalDataTemplate>
+
+                            </ResourceDictionary>
+
+                        </TreeView.Resources>
+
+                        <TreeView.ItemContainerStyle>
+                            <Style TargetType="{x:Type TreeViewItem}" BasedOn="{StaticResource tviTeamColorStyle}">
+                                <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}" />
+                                <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay}" />
+                                <Setter Property="LayoutTransform">
+                                    <Setter.Value>
+                                        <TransformGroup>
+                                            <ScaleTransform ScaleX="0.6" ScaleY="0.6"/>
+                                        </TransformGroup>
+                                    </Setter.Value>
+                                </Setter>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding IsVisible}" Value="True">
+                                        <Setter Property="Visibility" Value="Visible" />
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding IsVisible}" Value="False">
+                                        <Setter Property="Visibility" Value="Collapsed" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TreeView.ItemContainerStyle>
+
+                    </TreeView>
+
+                </GroupBox>
+
+            </Grid>
             
         </Grid>
 

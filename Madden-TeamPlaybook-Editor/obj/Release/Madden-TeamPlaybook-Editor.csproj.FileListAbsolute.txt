@@ -57,3 +57,4 @@ D:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\obj\Release\Styles\
 D:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\obj\Release\Styles\tciTeamColorStyle.baml
 D:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\obj\Release\Styles\lviTeamColorStyle.baml
 D:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\obj\Release\Styles\tviTeamColorStyle.baml
+D:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\obj\Release\Styles\sbrTeamColorStyle.baml

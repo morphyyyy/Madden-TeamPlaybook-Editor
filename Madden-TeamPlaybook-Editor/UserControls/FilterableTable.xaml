@@ -20,8 +20,8 @@
             HorizontalGridLinesBrush="#FFD6D6D6"
             VerticalGridLinesBrush="Black"
             GridLinesVisibility="Horizontal"
-            CanUserAddRows="True"
-            CanUserDeleteRows="True"
+            CanUserAddRows="False"
+            CanUserDeleteRows="False"
             EnableColumnVirtualization="True"
             EnableRowVirtualization="True"
             DataContextChanged="dataContextChanged"/>

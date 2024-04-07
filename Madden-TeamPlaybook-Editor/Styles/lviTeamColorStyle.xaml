@@ -19,6 +19,8 @@
                      Color="{DynamicResource Quinary}" />
             <SolidColorBrush x:Key="SenaryBrush"
                      Color="{DynamicResource Senary}"/>
+            <SolidColorBrush x:Key="BorderBrush"
+                     Color="{DynamicResource Primary}" Opacity="0.333"/>
             <LinearGradientBrush x:Key="GradientBrush" StartPoint="0.5,1" EndPoint="0.5,0" Opacity="0.333">
                 <GradientStop Offset=".333" Color="{DynamicResource Primary}"/>
                 <GradientStop Offset="1" Color="{DynamicResource Secondary}"/>
@@ -48,7 +50,7 @@
                             <Trigger Property="IsSelected" Value="True">
                                 <Setter Property="Background" Value="{StaticResource GradientBrush}"/>
                                 <Setter Property="Foreground" Value="{StaticResource TertiaryBrush}"/>
-                                <Setter Property="BorderBrush" Value="{StaticResource PrimaryBrush}"/>
+                                <Setter Property="BorderBrush" Value="{StaticResource BorderBrush}"/>
                             </Trigger>
                             <Trigger Property="IsSelected" Value="False">
                                 <Setter Property="Background" Value="{StaticResource BaseBrush}"/>
@@ -57,7 +59,7 @@
                             <Trigger Property="IsMouseOver" Value="True">
                                 <Setter Property="Background" Value="{StaticResource GradientBrush}"/>
                                 <Setter Property="Foreground" Value="{StaticResource TertiaryBrush}"/>
-                                <Setter Property="BorderBrush" Value="{StaticResource PrimaryBrush}"/>
+                                <Setter Property="BorderBrush" Value="{StaticResource BorderBrush}"/>
                             </Trigger>
 
                             <!--<Trigger Property="IsMouseOver" Value="True">

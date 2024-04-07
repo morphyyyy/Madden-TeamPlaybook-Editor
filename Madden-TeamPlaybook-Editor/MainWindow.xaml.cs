@@ -1,4 +1,5 @@
-﻿using Madden.TeamPlaybook;
+﻿using Madden.Team;
+using Madden.TeamPlaybook;
 using MaddenCustomPlaybookEditor;
 using MaddenTeamPlaybookEditor.Classes;
 using MaddenTeamPlaybookEditor.User_Controls;
@@ -6,6 +7,7 @@ using MaddenTeamPlaybookEditor.ViewModels;
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -13,6 +15,7 @@ using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -209,32 +212,9 @@ namespace MaddenTeamPlaybookEditor
                 Application.Current.Resources["Primary"] = TeamColors[0];
                 Application.Current.Resources["Secondary"] = TeamColors[1];
                 Application.Current.Resources["Tertiary"] = TeamColors[2];
-                Application.Current.Resources["Quaternary"] = TeamColors.Count() > 3 ? TeamColors[3] : Colors.Transparent;
-                Application.Current.Resources["Quinary"] = TeamColors.Count() > 4 ? TeamColors[4] : Colors.Transparent;
-                Application.Current.Resources["Senary"] = TeamColors.Count() > 5 ? TeamColors[5] : Colors.Transparent;
-                Application.Current.Resources["Undefined"] = ARTLColor.Undefined.Color;
-                Application.Current.Resources["Block"] = ARTLColor.Block.Color;
-                Application.Current.Resources["BaseRoute"] = ARTLColor.BaseRoute.Color;
-                Application.Current.Resources["PrimaryRoute"] = ARTLColor.PrimaryRoute.Color;
-                Application.Current.Resources["DelayRoute"] = ARTLColor.DelayRoute.Color;
-                Application.Current.Resources["MotionRoute"] = ARTLColor.MotionRoute.Color;
-                Application.Current.Resources["Run"] = ARTLColor.Run.Color;
-                Application.Current.Resources["QBScramble"] = ARTLColor.QBScramble.Color;
-                Application.Current.Resources["QBHandoff"] = ARTLColor.QBHandoff.Color;
-                Application.Current.Resources["Kickoff"] = ARTLColor.Kickoff.Color;
-                Application.Current.Resources["CloudFlat"] = ARTLColor.CloudFlat.Color;
-                Application.Current.Resources["HardFlat"] = ARTLColor.HardFlat.Color;
-                Application.Current.Resources["SoftSquat"] = ARTLColor.SoftSquat.Color;
-                Application.Current.Resources["MidRead"] = ARTLColor.MidRead.Color;
-                Application.Current.Resources["ThreeReceiverHook"] = ARTLColor.ThreeReceiverHook.Color;
-                Application.Current.Resources["HookCurl"] = ARTLColor.HookCurl.Color;
-                Application.Current.Resources["VertHook"] = ARTLColor.VertHook.Color;
-                Application.Current.Resources["CurlFlat"] = ARTLColor.CurlFlat.Color;
-                Application.Current.Resources["SeamFlat"] = ARTLColor.SeamFlat.Color;
-                Application.Current.Resources["QuarterFlat"] = ARTLColor.QuarterFlat.Color;
-                Application.Current.Resources["DeepZone"] = ARTLColor.DeepZone.Color;
-                Application.Current.Resources["QBSpy"] = ARTLColor.QBSpy.Color;
-                Application.Current.Resources["RushQB"] = ARTLColor.RushQB.Color;
+                Application.Current.Resources["Quaternary"] = TeamColors.Count() > 3 ? TeamColors[3] : TeamColors[0];
+                Application.Current.Resources["Quinary"] = TeamColors.Count() > 4 ? TeamColors[4] : TeamColors[1];
+                Application.Current.Resources["Senary"] = TeamColors.Count() > 5 ? TeamColors[5] : TeamColors[2];
 
                 //myLinearGradientBrush.GradientStops.Add(new GradientStop(color3, 1.0));
 
@@ -274,62 +254,73 @@ namespace MaddenTeamPlaybookEditor
                 situations = TeamPlaybook.SituationDef.OrderBy(s => s.Value).ToList();
             }
             //situations.Insert(0, new KeyValuePair<int?, string>(null, "None"));
-            lvwSituations.DataContext = situations;
-            lvwPlaysBySituation.DataContext = TeamPlaybook.Plays;
-            lvwPlaysBySituation.Items.Filter = PlayListFilter;
-            lvw1stDown.ItemsSource = TeamPlaybook.SitOff_1stDown;
-            lvw2ndandShort.ItemsSource = TeamPlaybook.SitOff_2ndandShort;
-            lvw2ndandMed.ItemsSource = TeamPlaybook.SitOff_2ndandMed;
-            lvw2ndandLong.ItemsSource = TeamPlaybook.SitOff_2ndandLong;
-            lvw3rdandShort.ItemsSource = TeamPlaybook.SitOff_3rdandShort;
-            lvw3rdandMed.ItemsSource = TeamPlaybook.SitOff_3rdandMed;
-            lvw3rdandLong.ItemsSource = TeamPlaybook.SitOff_3rdandLong;
-            lvw3rdandXLong.ItemsSource = TeamPlaybook.SitOff_3rdandXLong;
-            lvw4thandShort.ItemsSource = TeamPlaybook.SitOff_4thandShort;
-            lvw4thandMed.ItemsSource = TeamPlaybook.SitOff_4thandMed;
-            lvw4thandLong.ItemsSource = TeamPlaybook.SitOff_4thandLong;
-            lvw4thandXLong.ItemsSource = TeamPlaybook.SitOff_4thandXLong;
-            lvwRZ21to25.ItemsSource = TeamPlaybook.SitOff_RZ21to25;
-            lvwRZ16to20.ItemsSource = TeamPlaybook.SitOff_RZ16to20;
-            lvwRZ11to15.ItemsSource = TeamPlaybook.SitOff_RZ11to15;
-            lvwRZ6to10.ItemsSource = TeamPlaybook.SitOff_RZ6to10;
-            lvwRZ3to5.ItemsSource = TeamPlaybook.SitOff_RZ3to5;
-            lvwRedZone.ItemsSource = TeamPlaybook.SitOff_RedZone;
-            lvwInsideFive.ItemsSource = TeamPlaybook.SitOff_InsideFive;
-            lvwGoalLine.ItemsSource = TeamPlaybook.SitOff_GoalLine;
-            lvwGoalLinePass.ItemsSource = TeamPlaybook.SitOff_GoalLinePass;
-            lvwCM2min.ItemsSource = TeamPlaybook.SitOff_CM2min;
-            lvwCM4min.ItemsSource = TeamPlaybook.SitOff_CM4min;
-            lvwCMKneel.ItemsSource = TeamPlaybook.SitOff_CMKneel;
-            lvwCMStopClock.ItemsSource = TeamPlaybook.SitOff_CMStopClock;
-            lvwCMStopClockUser.ItemsSource = TeamPlaybook.SitOff_CMStopClockUser;
-            lvwCMStopClockFakeUser.ItemsSource = TeamPlaybook.SitOff_CMStopClockFakeUser;
-            lvwCMWasteTime.ItemsSource = TeamPlaybook.SitOff_CMWasteTime;
-            lvwSTExtraPoint.ItemsSource = TeamPlaybook.SitOff_STExtraPoint;
-            lvwSTFakeFG.ItemsSource = TeamPlaybook.SitOff_STFakeFG;
-            lvwSTFakePunt.ItemsSource = TeamPlaybook.SitOff_STFakePunt;
-            lvwSTKickoff.ItemsSource = TeamPlaybook.SitOff_STKickoff;
-            lvwSTKickoffOnside.ItemsSource = TeamPlaybook.SitOff_STKickoffOnside;
-            lvwSTKickoffSafety.ItemsSource = TeamPlaybook.SitOff_STKickoffSafety;
-            lvwSTPunt.ItemsSource = TeamPlaybook.SitOff_STPunt;
-            lvwSTPuntMaxProtect.ItemsSource = TeamPlaybook.SitOff_STPuntMaxProtect;
-            lvwSTSquib.ItemsSource = TeamPlaybook.SitOff_STSquib;
-            lvwMisc1stPlay.ItemsSource = TeamPlaybook.SitOff_Misc1stPlay;
-            lvwMiscGoforTwo.ItemsSource = TeamPlaybook.SitOff_MiscGoforTwo;
-            lvwMiscHailMary.ItemsSource = TeamPlaybook.SitOff_MiscHailMary;
-            lvwMiscLastPlay.ItemsSource = TeamPlaybook.SitOff_MiscLastPlay;
-            lvwMiscMax.ItemsSource = TeamPlaybook.SitOff_MiscMax;
-            lvwMiscPlayAction.ItemsSource = TeamPlaybook.SitOff_MiscPlayAction;
-            lvwMiscSigniaturePlays.ItemsSource = TeamPlaybook.SitOff_MiscSigniaturePlays;
-            lvwMiscSuddenChange.ItemsSource = TeamPlaybook.SitOff_MiscSuddenChange;
-            foreach (PropertyInfo p in typeof(PlayVM).GetProperties())
+            lvwSituations.ItemsSource = situations;
+            lvwPlaysBySituation.ItemsSource = TeamPlaybook.PBAI;
+            lvwPlaysBySituation.Items.Filter = SituationFilter;
             {
-                Console.WriteLine(p);
+                lvwPlaysBySituation.Items.SortDescriptions.Clear();
+                lvwPlaysBySituation.Items.SortDescriptions.Add(new System.ComponentModel.SortDescription("prct", System.ComponentModel.ListSortDirection.Descending));
+                CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(lvwPlaysBySituation.ItemsSource);
+                PropertyGroupDescription groupDescription = new PropertyGroupDescription("prct");
+                view.GroupDescriptions.Clear();
+                view.GroupDescriptions.Add(groupDescription);
             }
+            //lvw1stDown.ItemsSource = TeamPlaybook.SitOff_1stDown;
+            //lvw2ndandShort.ItemsSource = TeamPlaybook.SitOff_2ndandShort;
+            //lvw2ndandMed.ItemsSource = TeamPlaybook.SitOff_2ndandMed;
+            //lvw2ndandLong.ItemsSource = TeamPlaybook.SitOff_2ndandLong;
+            //lvw3rdandShort.ItemsSource = TeamPlaybook.SitOff_3rdandShort;
+            //lvw3rdandMed.ItemsSource = TeamPlaybook.SitOff_3rdandMed;
+            //lvw3rdandLong.ItemsSource = TeamPlaybook.SitOff_3rdandLong;
+            //lvw3rdandXLong.ItemsSource = TeamPlaybook.SitOff_3rdandXLong;
+            //lvw4thandShort.ItemsSource = TeamPlaybook.SitOff_4thandShort;
+            //lvw4thandMed.ItemsSource = TeamPlaybook.SitOff_4thandMed;
+            //lvw4thandLong.ItemsSource = TeamPlaybook.SitOff_4thandLong;
+            //lvw4thandXLong.ItemsSource = TeamPlaybook.SitOff_4thandXLong;
+            //lvwRZ21to25.ItemsSource = TeamPlaybook.SitOff_RZ21to25;
+            //lvwRZ16to20.ItemsSource = TeamPlaybook.SitOff_RZ16to20;
+            //lvwRZ11to15.ItemsSource = TeamPlaybook.SitOff_RZ11to15;
+            //lvwRZ6to10.ItemsSource = TeamPlaybook.SitOff_RZ6to10;
+            //lvwRZ3to5.ItemsSource = TeamPlaybook.SitOff_RZ3to5;
+            //lvwRedZone.ItemsSource = TeamPlaybook.SitOff_RedZone;
+            //lvwInsideFive.ItemsSource = TeamPlaybook.SitOff_InsideFive;
+            //lvwGoalLine.ItemsSource = TeamPlaybook.SitOff_GoalLine;
+            //lvwGoalLinePass.ItemsSource = TeamPlaybook.SitOff_GoalLinePass;
+            //lvwCM2min.ItemsSource = TeamPlaybook.SitOff_CM2min;
+            //lvwCM4min.ItemsSource = TeamPlaybook.SitOff_CM4min;
+            //lvwCMKneel.ItemsSource = TeamPlaybook.SitOff_CMKneel;
+            //lvwCMStopClock.ItemsSource = TeamPlaybook.SitOff_CMStopClock;
+            //lvwCMStopClockUser.ItemsSource = TeamPlaybook.SitOff_CMStopClockUser;
+            //lvwCMStopClockFakeUser.ItemsSource = TeamPlaybook.SitOff_CMStopClockFakeUser;
+            //lvwCMWasteTime.ItemsSource = TeamPlaybook.SitOff_CMWasteTime;
+            //lvwSTExtraPoint.ItemsSource = TeamPlaybook.SitOff_STExtraPoint;
+            //lvwSTFakeFG.ItemsSource = TeamPlaybook.SitOff_STFakeFG;
+            //lvwSTFakePunt.ItemsSource = TeamPlaybook.SitOff_STFakePunt;
+            //lvwSTKickoff.ItemsSource = TeamPlaybook.SitOff_STKickoff;
+            //lvwSTKickoffOnside.ItemsSource = TeamPlaybook.SitOff_STKickoffOnside;
+            //lvwSTKickoffSafety.ItemsSource = TeamPlaybook.SitOff_STKickoffSafety;
+            //lvwSTPunt.ItemsSource = TeamPlaybook.SitOff_STPunt;
+            //lvwSTPuntMaxProtect.ItemsSource = TeamPlaybook.SitOff_STPuntMaxProtect;
+            //lvwSTSquib.ItemsSource = TeamPlaybook.SitOff_STSquib;
+            //lvwMisc1stPlay.ItemsSource = TeamPlaybook.SitOff_Misc1stPlay;
+            //lvwMiscGoforTwo.ItemsSource = TeamPlaybook.SitOff_MiscGoforTwo;
+            //lvwMiscHailMary.ItemsSource = TeamPlaybook.SitOff_MiscHailMary;
+            //lvwMiscLastPlay.ItemsSource = TeamPlaybook.SitOff_MiscLastPlay;
+            //lvwMiscMax.ItemsSource = TeamPlaybook.SitOff_MiscMax;
+            //lvwMiscPlayAction.ItemsSource = TeamPlaybook.SitOff_MiscPlayAction;
+            //lvwMiscSigniaturePlays.ItemsSource = TeamPlaybook.SitOff_MiscSigniaturePlays;
+            //lvwMiscSuddenChange.ItemsSource = TeamPlaybook.SitOff_MiscSuddenChange;
             tclTables.DataContext = Playbook;
-            //tvwPSALs.DataContext = Playbook.GetPSALlist();
+            //ObservableCollection<FormationVM> psalList = Playbook.GetPSALlist();
             //tabPlaybook.DataContext = Playbook;
             //IEnumerable<PlayVM> playsWithoutCode58 = TeamPlaybook.Plays.Where(p => TeamPlaybook.Gameplan.Run.Contains(p.PLYL.PLYT) && !p.Players.FirstOrDefault(r => r.PLYS.poso == 0).PSAL.Exists(r => r.code == 58));
+        }
+
+        public bool SituationFilter(object obj)
+        {
+            return ((Madden.TeamPlaybook.PBAI)obj).AIGR == (int?)lvwSituations.SelectedValue;
+
+            //((Madden.TeamPlaybook.PBAI)lvw1stDown.SelectedItem)?.AIGR;
         }
 
         private bool PlayListFilter(object obj)
@@ -664,97 +655,6 @@ namespace MaddenTeamPlaybookEditor
 
         #region UI Events
 
-        #region Playbook TreeView Events
-
-        private void tvwPlaybook_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
-        {
-            if (((TreeView)sender).SelectedItem is MaddenTeamPlaybookEditor.ViewModels.FormationVM)
-            {
-
-            }
-
-            if (((TreeView)sender).SelectedItem is MaddenTeamPlaybookEditor.ViewModels.SubFormationVM)
-            {
-                uclSubFormationModal.subFormation = (SubFormationVM)((TreeView)sender).SelectedItem;
-                uclSubFormationModal.DataContext = (SubFormationVM)((TreeView)sender).SelectedItem;
-                uclPlayModal.Visibility = Visibility.Collapsed;
-                uclSubFormationModal.Visibility = Visibility.Visible;
-            }
-
-            if (((TreeView)sender).SelectedItem is MaddenTeamPlaybookEditor.ViewModels.PlayVM)
-            {
-                uclPlayModal.play = (PlayVM)((TreeView)sender).SelectedItem;
-                Console.WriteLine(uclPlayModal.play.PBPL.Flag);
-                uclPlayModal.DataContext = (PlayVM)((TreeView)sender).SelectedItem;
-                uclSubFormationModal.Visibility = Visibility.Collapsed;
-                uclPlayModal.Visibility = Visibility.Visible;
-                //for (int i = 0; i < lvwSituations.Items.Count; i++)
-                //{
-                //    Madden.TeamPlaybook.PBAI _pbai = uclPlayModal.play.Situations.FirstOrDefault(p => p.AIGR == ((KeyValuePair<int, string>)lvwSituations.Items[i]).Key);
-                //}
-                //lvwSituations.Items.Refresh();
-                //lvwSituations.SelectedItems.Clear();
-                //foreach (Madden.TeamPlaybook.PBAI situation in uclPlayModal.play.Situations)
-                //{
-                //    lvwSituations.SelectedItems.Add(TeamPlaybook.Situations.FirstOrDefault(p => p.Key == situation.AIGR));
-                //    Console.WriteLine(situation);
-                //}
-            }
-        }
-
-        private void tvwPlaybook_DoubleClick(object sender, MouseButtonEventArgs e)
-        {
-
-        }
-
-        private void tvwPlaybook_Selected(object sender, RoutedEventArgs e)
-        {
-            //TreeViewItem tvi = e.OriginalSource as TreeViewItem;
-
-            //if (tvi == null || e.Handled) return;
-
-            //if (tvi.DataContext is PlayVM)
-            //{
-            //    tvi.IsExpanded = !tvi.IsExpanded;
-            //    e.Handled = true;
-            //}
-        }
-
-        private void tvwPSALs_Selected(object sender, RoutedEventArgs e)
-        {
-            //Working Code
-            //PlayerVM _player = uclPlayModal.play != null ? uclPlayModal.play.Players.FirstOrDefault(p => p.IsSelected) : null;
-            //if (tvwPSALs.SelectedItem is PlayVM && _player != null)
-            //{
-            //    _player.PLYS.PSAL = ((PlayVM)tvwPSALs.SelectedItem).Players[0].PLYS.PSAL;
-            //    _player.PLYS.ARTL = ((PlayVM)tvwPSALs.SelectedItem).Players[0].PLYS.ARTL;
-            //    _player.PLYS.PLRR = ((PlayVM)tvwPSALs.SelectedItem).Players[0].PLYS.PLRR;
-            //    _player.UpdatePlayer();
-            //    _player.Play.UpdatePlay();
-            //    UserControl _play = UIHelper.FindChild<UserControl>(tvwPlaybook, "uclPlay", uclPlayModal.play);
-            //    ItemsControl playart = UIHelper.FindChild<ItemsControl>(_play, "iclPlayarts");
-            //    if (playart != null)
-            //    {
-            //        playart.Items.Refresh();
-            //    }
-            //    uclPlayModal.iclPSALs.Items.Refresh();
-            //    uclPlayModal.tabPlayer.Items.Refresh();
-            //}
-
-
-            //Old Code
-            //TreeViewItem tvi = e.OriginalSource as TreeViewItem;
-
-            //if (tvi == null || e.Handled) return;
-
-            //tvi.IsExpanded = !tvi.IsExpanded;
-            //if (tvi.IsSelected)
-            //{
-            //    tvi.IsSelected = false;
-            //    e.Handled = true;
-            //}
-        }
-
         public static class UIHelper
         {
             public static T FindVisualParent<T>(DependencyObject control)
@@ -829,7 +729,102 @@ namespace MaddenTeamPlaybookEditor
             }
         }
 
-        #endregion
+        #region Playbook TreeView Events
+
+        private void tvwPlaybook_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
+        {
+            if (((TreeView)sender).SelectedItem is MaddenTeamPlaybookEditor.ViewModels.FormationVM)
+            {
+
+            }
+
+            if (((TreeView)sender).SelectedItem is MaddenTeamPlaybookEditor.ViewModels.SubFormationVM)
+            {
+                uclSubFormationModal.subFormation = (SubFormationVM)((TreeView)sender).SelectedItem;
+                uclSubFormationModal.DataContext = (SubFormationVM)((TreeView)sender).SelectedItem;
+                uclPlayModal.Visibility = Visibility.Collapsed;
+                uclSubFormationModal.Visibility = Visibility.Visible;
+            }
+
+            if (((TreeView)sender).SelectedItem is MaddenTeamPlaybookEditor.ViewModels.PlayVM)
+            {
+                uclPlayModal.play = (PlayVM)((TreeView)sender).SelectedItem;
+                Console.WriteLine(uclPlayModal.play.PBPL.Flag);
+                uclPlayModal.DataContext = (PlayVM)((TreeView)sender).SelectedItem;
+                uclSubFormationModal.Visibility = Visibility.Collapsed;
+                uclPlayModal.Visibility = Visibility.Visible;
+                if (!uclPlayModal.play.Players.ToList().Exists(p => p.IsSelected))
+                {
+                    uclPlayModal.play.Players[0].IsSelected = true;
+                }
+                uclPlayModal.tabPlayer.DataContext = uclPlayModal.play.Players.FirstOrDefault(player => player.IsSelected);
+                uclPlayModal.GetPlayer();
+                //for (int i = 0; i < lvwSituations.Items.Count; i++)
+                //{
+                //    Madden.TeamPlaybook.PBAI _pbai = uclPlayModal.play.Situations.FirstOrDefault(p => p.AIGR == ((KeyValuePair<int, string>)lvwSituations.Items[i]).Key);
+                //}
+                //lvwSituations.Items.Refresh();
+                //lvwSituations.SelectedItems.Clear();
+                //foreach (Madden.TeamPlaybook.PBAI situation in uclPlayModal.play.Situations)
+                //{
+                //    lvwSituations.SelectedItems.Add(TeamPlaybook.Situations.FirstOrDefault(p => p.Key == situation.AIGR));
+                //    Console.WriteLine(situation);
+                //}
+            }
+        }
+
+        private void tvwPlaybook_DoubleClick(object sender, MouseButtonEventArgs e)
+        {
+
+        }
+
+        private void tvwPlaybook_Selected(object sender, RoutedEventArgs e)
+        {
+            //TreeViewItem tvi = e.OriginalSource as TreeViewItem;
+
+            //if (tvi == null || e.Handled) return;
+
+            //if (tvi.DataContext is PlayVM)
+            //{
+            //    tvi.IsExpanded = !tvi.IsExpanded;
+            //    e.Handled = true;
+            //}
+        }
+
+        private void tvwPSALs_Selected(object sender, RoutedEventArgs e)
+        {
+            //Working Code
+            //PlayerVM _player = uclPlayModal.play != null ? uclPlayModal.play.Players.FirstOrDefault(p => p.IsSelected) : null;
+            //if (tvwPSALs.SelectedItem is PlayVM && _player != null)
+            //{
+            //    _player.PLYS.PSAL = ((PlayVM)tvwPSALs.SelectedItem).Players[0].PLYS.PSAL;
+            //    _player.PLYS.ARTL = ((PlayVM)tvwPSALs.SelectedItem).Players[0].PLYS.ARTL;
+            //    _player.PLYS.PLRR = ((PlayVM)tvwPSALs.SelectedItem).Players[0].PLYS.PLRR;
+            //    _player.UpdatePlayer();
+            //    _player.Play.UpdatePlay();
+            //    UserControl _play = UIHelper.FindChild<UserControl>(tvwPlaybook, "uclPlay", uclPlayModal.play);
+            //    ItemsControl playart = UIHelper.FindChild<ItemsControl>(_play, "iclPlayarts");
+            //    if (playart != null)
+            //    {
+            //        playart.Items.Refresh();
+            //    }
+            //    uclPlayModal.iclPSALs.Items.Refresh();
+            //    uclPlayModal.tabPlayer.Items.Refresh();
+            //}
+
+
+            //Old Code
+            //TreeViewItem tvi = e.OriginalSource as TreeViewItem;
+
+            //if (tvi == null || e.Handled) return;
+
+            //tvi.IsExpanded = !tvi.IsExpanded;
+            //if (tvi.IsSelected)
+            //{
+            //    tvi.IsSelected = false;
+            //    e.Handled = true;
+            //}
+        }
 
         private void treeView_MouseDown(object sender, MouseButtonEventArgs e)
         {
@@ -956,6 +951,8 @@ namespace MaddenTeamPlaybookEditor
             return container;
         }
 
+        #endregion
+
         private bool CheckDropTarget(TreeViewItem _sourceItem, TreeViewItem _targetItem)
         {
             //Check whether the target item is meeting your condition
@@ -1062,7 +1059,7 @@ namespace MaddenTeamPlaybookEditor
                 //    _play.IsExpanded = _play.Situations.Exists(pbai => pbai.PLYT == (int)cbxPLYT.SelectedValue);
                 //}
                 //uclPlayModal.UpdateLayout();
-                lvwPlaysBySituation.Items.Filter = PlayListFilter;
+                lvwPlaysBySituation.Items.Filter = SituationFilter;
             }
         }
 
@@ -1073,8 +1070,8 @@ namespace MaddenTeamPlaybookEditor
                 try
                 {
                     TeamPlaybook.RevampGameplan();
-                    lvwSituations.Items.Refresh();
-                    lvw1stDown.Items.Refresh();
+                    lvwPlaysBySituation.ItemsSource = TeamPlaybook.PBAI;
+                    lvwPlaysBySituation.Items.Refresh();
                 }
                 catch (Exception)
                 {
@@ -1087,8 +1084,8 @@ namespace MaddenTeamPlaybookEditor
                         try
                         {
                             TeamPlaybook.RevampGameplanRedDobe();
-                            lvwSituations.Items.Refresh();
-                            lvw1stDown.Items.Refresh();
+                            lvwPlaysBySituation.ItemsSource = TeamPlaybook.PBAI;
+                            lvwPlaysBySituation.Items.Refresh();
                         }
                         catch (Exception)
                         {
@@ -1110,8 +1107,8 @@ namespace MaddenTeamPlaybookEditor
                 //    _play.IsExpanded = TeamPlaybook.PBAI.Where(p => p.PBPL == _play.PBPL.pbpl && p.AIGR == ((KeyValuePair<int, string>)lvwSituations.SelectedItem).Key).Count() > 0;
                 //}
                 //uclPlayModal.UpdateLayout();
-                lvwPlaysBySituation.DataContext = TeamPlaybook.Plays.OrderBy(p => p.Situations.FirstOrDefault(s => s.AIGR == ((KeyValuePair<int?, string>)(lvwSituations.SelectedItem)).Key)?.prct);
-                lvwPlaysBySituation.Items.Filter = PlayListFilter;
+                //lvwPlaysBySituation.DataContext = TeamPlaybook.Plays.OrderBy(p => p.Situations.FirstOrDefault(s => s.AIGR == ((KeyValuePair<int?, string>)(lvwSituations.SelectedItem)).Key)?.prct);
+                lvwPlaysBySituation.Items.Filter = SituationFilter;
             }
         }
 
@@ -1129,7 +1126,7 @@ namespace MaddenTeamPlaybookEditor
 
         private void lvwSituations_MouseUp(object sender, MouseButtonEventArgs e)
         {
-            GetPlayPercentages();
+            //GetPlayPercentages();
         }
 
         private void GetPlayPercentages()
@@ -1379,6 +1376,23 @@ namespace MaddenTeamPlaybookEditor
         private void sitPlay_MouseLeave(object sender, MouseEventArgs e)
         {
             ((Situation)sender).ToolTip = null;
+        }
+
+        private void tclTeamPlaybook_TabChanged(object sender, SelectionChangedEventArgs e)
+        {
+            //if ((string)((TabItem)tclTeamPlaybook.SelectedItem).Header == "Gameplan")
+            //{
+            //    //lvwPlaysBySituation.Items.Filter = SituationFilter;
+            //}
+        }
+
+        private void btnSelectView(object sender, RoutedEventArgs e)
+        {
+            tclTeamPlaybook.SelectedItem = tclTeamPlaybook.Items.OfType<TabItem>().SingleOrDefault(n => (string)n.Header == (string)((MenuItem)sender).Header);
+            if ((string)(((TabItem)tclTeamPlaybook.SelectedItem).Header) == "Gameplan")
+            {
+                lvwPlaysBySituation.Items.Filter = SituationFilter;
+            }
         }
 
         #endregion

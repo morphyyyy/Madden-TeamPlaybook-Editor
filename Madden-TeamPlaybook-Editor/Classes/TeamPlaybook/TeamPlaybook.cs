@@ -1,5 +1,6 @@
 ﻿using Madden.Team;
 using Madden.TeamPlaybook;
+using MaddenTeamPlaybookEditor.ExtensionMethods;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -776,6 +777,7 @@ namespace MaddenTeamPlaybookEditor.ViewModels
             {30,"Max"}       //Misc
         };
 
+        [Bindable(true)]
         public ObservableCollection<PBAI> SitOff_1stDown { get { return new ObservableCollection<PBAI>(PBAI.Where(p => p.AIGR == 35).OrderByDescending(p => p.prct).ThenBy(p => p.PlayName)); } }
         public ObservableCollection<PBAI> SitOff_2ndandShort { get { return new ObservableCollection<PBAI>(PBAI.Where(p => p.AIGR == 20).OrderByDescending(p => p.prct).ThenBy(p => p.PlayName)); } }
         public ObservableCollection<PBAI> SitOff_2ndandMed { get { return new ObservableCollection<PBAI>(PBAI.Where(p => p.AIGR == 17).OrderByDescending(p => p.prct).ThenBy(p => p.PlayName)); } }
@@ -826,7 +828,9 @@ namespace MaddenTeamPlaybookEditor.ViewModels
 
         public string filePath { get; set; }
 
-        public ObservableCollection<FormationVM> Formations { get; set; }
+        public ObservableCollection<FormationVM> PSALs { get; set; } = new ObservableCollection<FormationVM>();
+
+        public ObservableCollection<FormationVM> Formations { get; set; } = new ObservableCollection<FormationVM>();
 
         public ObservableCollection<SubFormationVM> SubFormations
         {
@@ -891,8 +895,8 @@ namespace MaddenTeamPlaybookEditor.ViewModels
                 OnPropertyChanged("FORM");
             }
         }
-        private List<Madden.TeamPlaybook.PBAI> _PBAI;
-        public List<Madden.TeamPlaybook.PBAI> PBAI
+        private ObservableCollection<Madden.TeamPlaybook.PBAI> _PBAI;
+        public ObservableCollection<Madden.TeamPlaybook.PBAI> PBAI
         {
             get { return _PBAI; }
             set
@@ -900,6 +904,29 @@ namespace MaddenTeamPlaybookEditor.ViewModels
                 if (_PBAI == value)
                     return;
                 _PBAI = value;
+                if (PBAI != null)
+                {
+                    foreach (PBAI _pbai in PBAI)
+                    {
+                        PlayVM _playVM = Plays?.FirstOrDefault(p => p.Situations.Contains(_pbai));
+                        if (_playVM == null)
+                        {
+                            Plays.FirstOrDefault(p => p.PBPL.pbpl == _pbai.PBPL)?.Situations?.Add(_pbai);
+                        }
+
+                        PBPL _play = PBPL?.FirstOrDefault(p => p.pbpl == _pbai.PBPL);
+                        PBST _subFormation = PBST?.FirstOrDefault(s => s.pbst == _play.PBST);
+                        PBFM _formation = PBFM?.FirstOrDefault(s => s.pbfm == _subFormation.PBFM);
+                        if (_play != null)
+                        {
+                            _pbai.PlayName = _formation?.name + " - " + _subFormation?.name + " - " + _play?.name;
+                        }
+                        else
+                        {
+                            _pbai.PlayName = "";
+                        }
+                    }
+                }
                 OnPropertyChanged("PBAI");
             }
         }
@@ -1361,13 +1388,13 @@ namespace MaddenTeamPlaybookEditor.ViewModels
 
         public void GetTables()
         {
-            ARTL = Madden.TeamPlaybook.ARTL.GetARTL();    //ARTO ARTD
-            FORM = Madden.TeamPlaybook.FORM.GetFORM();    //CPFM
-            PBAI = Madden.TeamPlaybook.PBAI.GetPBAI();    //PBAI
-            PBAU = Madden.TeamPlaybook.PBAU.GetPBAU();    //PBAU
+            ARTL = Madden.TeamPlaybook.ARTL.GetARTL();
+            FORM = Madden.TeamPlaybook.FORM.GetFORM();
+            PBAI = new ObservableCollection<PBAI>(Madden.TeamPlaybook.PBAI.GetPBAI());
+            PBAU = Madden.TeamPlaybook.PBAU.GetPBAU();
             PBCC = Madden.TeamPlaybook.PBCC.GetPBCC();    
-            PBFM = Madden.TeamPlaybook.PBFM.GetPBFM();    //PBFM
-            PBPL = Madden.TeamPlaybook.PBPL.GetPBPL();    //PBPL
+            PBFM = Madden.TeamPlaybook.PBFM.GetPBFM();
+            PBPL = Madden.TeamPlaybook.PBPL.GetPBPL();
             PBST = Madden.TeamPlaybook.PBST.GetPBST();    
             PLCM = Madden.TeamPlaybook.PLCM.GetPLCM();
             PLPD = Madden.TeamPlaybook.PLPD.GetPLPD();
@@ -1384,14 +1411,6 @@ namespace MaddenTeamPlaybookEditor.ViewModels
             SPKF = Madden.TeamPlaybook.SPKF.GetSPKF();
             SPKG = Madden.TeamPlaybook.SPKG.GetSPKG();
             SRFT = Madden.TeamPlaybook.SRFT.GetSRFT();
-
-            foreach (PBAI _pbai in PBAI)
-            {
-                PBPL _play = PBPL.FirstOrDefault(p => p.pbpl == _pbai.PBPL);
-                PBST _subFormation = PBST.FirstOrDefault(s => s.pbst == _play.PBST);
-                PBFM _formation = PBFM.FirstOrDefault(s => s.pbfm == _subFormation.PBFM);
-                _pbai.PlayName = _formation.name + " - " + _subFormation.name + " - " + _play.name;
-            }
         }
 
         public void GetRoster()
@@ -1412,28 +1431,28 @@ namespace MaddenTeamPlaybookEditor.ViewModels
 
         public ObservableCollection<FormationVM> GetPSALlist()
         {
-            ObservableCollection<FormationVM> routes = new ObservableCollection<FormationVM>();
-            TeamPlaybook routeTypes = new TeamPlaybook { Formations = routes };
+            ObservableCollection<FormationVM> formations = new ObservableCollection<FormationVM>();
+            TeamPlaybook playbook = new TeamPlaybook { Formations = formations };
             var routePositions = RouteType.GroupBy(type => type.Value[0]).ToDictionary(type => type.Key, type => type.ToList());
 
             foreach (var _position in routePositions)
             {
-                ObservableCollection<SubFormationVM> positions = new ObservableCollection<SubFormationVM>();
-                FormationVM route = new FormationVM
+                ObservableCollection<SubFormationVM> subFormations = new ObservableCollection<SubFormationVM>();
+                FormationVM formation = new FormationVM
                 {
                     PBFM = new Madden.TeamPlaybook.PBFM { name = _position.Key },
-                    SubFormations = positions,
-                    Playbook = routeTypes,
+                    SubFormations = subFormations,
+                    Playbook = playbook,
                     IsVisible = true
                 };
                 foreach (var _type in _position.Value)
                 {
-                    ObservableCollection<PlayVM> types = new ObservableCollection<PlayVM>();
-                    SubFormationVM position = new SubFormationVM
+                    ObservableCollection<PlayVM> Plays = new ObservableCollection<PlayVM>();
+                    SubFormationVM subFormation = new SubFormationVM
                     {
-                        PBST = new PBST { name = _type.Key.ToString() + ": " + _type.Value[1] },
-                        Plays = types,
-                        Formation = route,
+                        PBST = new PBST { name = /*_type.Key.ToString() + ": " +*/ _type.Value[1] },
+                        Plays = Plays,
+                        Formation = formation,
                         CurrentPackage = new List<Madden.TeamPlaybook.SETP>(),
                         Packages = new List<SubFormationVM.Package>
                         {
@@ -1468,7 +1487,7 @@ namespace MaddenTeamPlaybookEditor.ViewModels
                             EPos = "",
                             DPos = "1"
                         };
-                        PlayVM type = new PlayVM
+                        PlayVM play = new PlayVM
                         {
                             PBPL = new Madden.TeamPlaybook.PBPL { name = "PSAL: " + _route.PSAL.ToString() },
                             PLYL = new PLYL { vpos = 0 },
@@ -1477,28 +1496,28 @@ namespace MaddenTeamPlaybookEditor.ViewModels
                             {
                                 player
                             },
-                            SubFormation = position
+                            SubFormation = subFormation
                         };
-                        player.Play = type;
+                        player.Play = play;
                         player.ConvertARTL(player.ARTL);
                         player.GetARTLcolor();
                         player.ConvertPSAL(player.PSAL);
                         player.GetRouteCap();
-                        type.GetPlayerPlayartViewList();
-                        types.Add(type);
+                        play.GetPlayerPlayartViewList();
+                        Plays.Add(play);
                     }
-                    if (position.Plays.Count() > 0)
+                    if (subFormation.Plays.Count() > 0)
                     {
-                        positions.Add(position);
+                        subFormations.Add(subFormation);
                     }
                 }
-                if (route.SubFormations.Count() > 0)
+                if (formation.SubFormations.Count() > 0)
                 {
-                    routes.Add(route);
+                    formations.Add(formation);
                 }
             }
 
-            return routes;
+            return formations;
         }
 
         public ObservableCollection<FormationVM> GetPlayTypelist()
@@ -1628,6 +1647,8 @@ namespace MaddenTeamPlaybookEditor.ViewModels
                 }
                 Formations.Add(new FormationVM(formation, _form, this));
             }
+
+            PSALs = GetPSALlist();
         }
 
         public void GetSide()

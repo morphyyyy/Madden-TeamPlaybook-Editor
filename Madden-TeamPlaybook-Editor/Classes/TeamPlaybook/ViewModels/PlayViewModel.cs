@@ -64,6 +64,7 @@ namespace MaddenTeamPlaybookEditor.ViewModels
 
         #region Instantiation
 
+        public string FullName { get { return SubFormation?.Formation?.PBFM.name + " - " + SubFormation?.PBST.name + " - " + PBPL.name; } }
         public SubFormationVM SubFormation { get; set; }
 
         private PBPL _PBPL { get; set; }
@@ -464,6 +465,20 @@ namespace MaddenTeamPlaybookEditor.ViewModels
                     }
                 });
             }
+        }
+
+        public void AddSituation(PBAI _pbai)
+        {
+            _pbai.PlayName = FullName;
+            _pbai.rec = SubFormation.Formation.Playbook.PBAI.Select(p => p.rec).Max() + 1;
+            Situations.Add(_pbai);
+            SubFormation.Formation.Playbook.PBAI.Add(_pbai);
+        }
+
+        public void RemoveSituation(PBAI _pbai)
+        {
+            Situations.Remove(_pbai);
+            SubFormation.Formation.Playbook.PBAI.Remove(_pbai);
         }
 
         #region Audibles
