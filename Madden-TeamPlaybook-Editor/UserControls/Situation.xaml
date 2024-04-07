@@ -39,6 +39,16 @@
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
+
+        <Canvas Background="{DynamicResource PrimaryBrush}">
+            <Canvas.OpacityMask>
+                <ImageBrush
+                    ImageSource="../Resources/Situation_Background_mask.png"
+                    RenderOptions.BitmapScalingMode="HighQuality"
+                    Stretch="None"
+                    AlignmentX="Left"/>
+            </Canvas.OpacityMask>            
+        </Canvas>
         
         <Canvas Grid.Column="0"
             Height="19"
@@ -47,27 +57,21 @@
             MouseMove="pbrSituation_MouseMove"
             MouseUp="pbrSituation_MouseUp"
             MouseLeave="pbrSituation_MouseLeave">
+            <Canvas.OpacityMask>
+                <ImageBrush
+                    ImageSource="../Resources/Situation_Foreground_mask.png"
+                    RenderOptions.BitmapScalingMode="HighQuality"
+                    Stretch="None"
+                    AlignmentX="Left"/>
+            </Canvas.OpacityMask>
             <ProgressBar 
                 x:Name="pbrSituation" 
                 Height="19" 
                 Width="100"
                 Value="{Binding prct, Mode=TwoWay, NotifyOnSourceUpdated=True, NotifyOnTargetUpdated=True, UpdateSourceTrigger=PropertyChanged}" 
-                BorderBrush="Transparent">
-                <ProgressBar.Background>
-                    <ImageBrush
-                        ImageSource="../Resources/Situation_Background.png"
-                        RenderOptions.BitmapScalingMode="HighQuality"
-                        Stretch="None"
-                        AlignmentX="Left"/>
-                </ProgressBar.Background>
-                <ProgressBar.Foreground>
-                    <ImageBrush
-                        ImageSource="../Resources/Situation_Foreground.png"
-                        RenderOptions.BitmapScalingMode="HighQuality"
-                        Stretch="None"
-                        AlignmentX="Left"/>
-                </ProgressBar.Foreground>
-            </ProgressBar>
+                BorderBrush="Transparent"
+                Background="Transparent"
+                Foreground="{DynamicResource SecondaryBrush}"/>
         </Canvas>
 
         <TextBlock x:Name="tbkPlayName" Text="{Binding PlayName}"  Grid.Column="1"/>

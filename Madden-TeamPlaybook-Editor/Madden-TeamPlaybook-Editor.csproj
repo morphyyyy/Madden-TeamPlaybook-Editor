@@ -396,6 +396,10 @@
   <ItemGroup>
     <Resource Include="Resources\full_field_mask.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Situation_Background_mask.png" />
+    <Resource Include="Resources\Situation_Foreground_mask.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Fody.4.0.2\build\Fody.targets" Condition="Exists('..\packages\Fody.4.0.2\build\Fody.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
