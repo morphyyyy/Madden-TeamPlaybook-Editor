@@ -7,7 +7,6 @@
     xmlns:UserControls="clr-namespace:MaddenTeamPlaybookEditor.User_Controls"
     xmlns:math="http://hexinnovation.com/math" 
     mc:Ignorable="d" 
-    d:DesignHeight="512" d:DesignWidth="512"
     x:Name="uclPlay"
     AllowDrop="True"
     >
@@ -34,75 +33,13 @@
         </Style>
     </UserControl.Resources>
 
-    <DockPanel x:Name="dckPlay"
-        HorizontalAlignment="Center" 
+    <Grid HorizontalAlignment="Center" Margin="7,0"
         IsEnabled="{Binding IsSelected}">
 
-        <DockPanel.ContextMenu>
-            <ContextMenu>
-                <TextBlock  
-                    Background="Transparent" 
-                    Foreground="LightGreen"
-                    Text="{Binding PBPL}"
-                    />
-                <TextBlock  
-                    Background="Transparent" 
-                    Foreground="LightGreen"
-                    Text="{Binding PLYL}"
-                    />
-                <TextBlock  
-                    Background="Transparent" 
-                    Foreground="LightGreen"
-                    Text="{Binding PLPD}"
-                    />
-                <TextBlock  
-                    Background="Transparent" 
-                    Foreground="LightGreen"
-                    Text="{Binding PLRD}"
-                    />
-                <TextBlock  
-                    Background="Transparent" 
-                    Foreground="LightGreen"
-                    Text="{Binding Situations}"
-                    />
-                <TextBlock  
-                    Background="Transparent" 
-                    Foreground="LightGreen"
-                    Text="{Binding PBCC}"
-                    />
-                <TextBlock  
-                    Background="Transparent" 
-                    Foreground="LightGreen"
-                    Text="{Binding PLCM}"
-                    />
-                <TextBlock  
-                    Background="Transparent" 
-                    Foreground="LightGreen"
-                    Text="{Binding PPCT}"
-                    />
-                <TextBlock  
-                    Background="Transparent" 
-                    Foreground="LightGreen"
-                    Text="{Binding SDEF}"
-                    />
-                <TextBlock  
-                    Background="Transparent" 
-                    Foreground="LightGreen"
-                    Text="{Binding SRFT}"
-                    />
-                <TextBlock  
-                    Background="Transparent" 
-                    Foreground="LightGreen"
-                    Text="{Binding PLYS}"
-                    />
-            </ContextMenu>
-        </DockPanel.ContextMenu>
-
         <Canvas x:Name="cvsPlay"
-            DockPanel.Dock="Top"
             Width="180"
             Height="120"
-            >
+            HorizontalAlignment="Center">
 
             <Canvas.ContextMenu>
                 <ContextMenu>
@@ -115,7 +52,7 @@
                 </ContextMenu>
             </Canvas.ContextMenu>
 
-            <ItemsControl 
+            <ItemsControl
                 x:Name="iclPlayarts"
                 ItemsSource="{Binding PlayerPlayartView, Mode=TwoWay}">
                 <ItemsControl.ItemsPanel>
@@ -150,7 +87,7 @@
                 </ItemsControl.ItemContainerStyle>
             </ItemsControl>
 
-            <ItemsControl 
+            <ItemsControl
                 x:Name="iclIcons"
                 ItemsSource="{Binding PlayerPlayartView, Mode=TwoWay}">
                 <ItemsControl.ItemsPanel>
@@ -197,6 +134,6 @@
 
         </Canvas>
 
-    </DockPanel>
+    </Grid>
     
 </UserControl>

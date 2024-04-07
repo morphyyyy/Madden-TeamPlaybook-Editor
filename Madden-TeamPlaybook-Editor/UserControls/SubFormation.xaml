@@ -7,10 +7,8 @@
     xmlns:UserControls="clr-namespace:MaddenTeamPlaybookEditor.User_Controls"
     xmlns:math="http://hexinnovation.com/math" 
     mc:Ignorable="d" 
-    d:DesignHeight="512" d:DesignWidth="512"
     x:Name="uclSubFormationVM"
-    AllowDrop="True"
-    >
+    AllowDrop="True">
 
     <UserControl.Resources>
         <math:MathConverter x:Key="math" />
@@ -34,9 +32,13 @@
         </Style>
     </UserControl.Resources>
 
-    <DockPanel HorizontalAlignment="Center">
-
-        <DockPanel.ContextMenu>
+    <Grid Margin="0,5" Width="196">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid.ContextMenu>
             <ContextMenu>
                 <!--<StackPanel Orientation="Horizontal">
                     <TextBlock Text="PBST: "/>
@@ -161,116 +163,109 @@
                     </TabControl>
                 </StackPanel>-->
             </ContextMenu>
-        </DockPanel.ContextMenu>
+        </Grid.ContextMenu>
 
-        <TextBlock 
-            DockPanel.Dock="Top"
+        <TextBlock Grid.Row="0"
             Text="{Binding PBST.name}"
-            FontSize="18"
             TextWrapping="NoWrap" 
             TextAlignment="Center"/>
 
-        <StackPanel x:Name="pnlSubFormation">
-        
+        <StackPanel Grid.Row="1"
+            IsEnabled="False"
+            x:Name="pnlInfo"
+            Orientation="Horizontal" 
+            HorizontalAlignment="Center">
+            <StackPanel.LayoutTransform>
+                <ScaleTransform 
+                    ScaleX=".9"
+                    ScaleY=".9"/>
+            </StackPanel.LayoutTransform>
+
             <StackPanel 
-                IsEnabled="False"
-                x:Name="pnlInfo"
-                DockPanel.Dock="Top" 
                 Orientation="Horizontal" 
+                Margin="2,2" 
                 HorizontalAlignment="Center"
                 >
 
-                <StackPanel 
-                    Orientation="Horizontal" 
-                    Margin="2,2" 
-                    HorizontalAlignment="Center"
-                    >
+                <TextBlock 
+                    Text="{Binding Position1count}" 
+                    Foreground="Orange" 
+                    FontWeight="Bold" 
+                    />
 
-                    <TextBlock 
-                        Text="{Binding Position1count}" 
-                        Foreground="Orange" 
-                        FontSize="15" 
-                        FontWeight="Bold" 
-                        />
+                <TextBlock 
+                    Text=" " 
+                    />
 
-                    <TextBlock 
-                        Text=" " 
-                        FontSize="8" 
-                        />
-
-                    <TextBlock 
-                        Text="{Binding Position1name}" 
-                        Foreground="LightGray" 
-                        FontSize="15" 
-                        />
-
-                </StackPanel>
-
-                <StackPanel 
-                    Orientation="Horizontal" 
-                    Margin="2,2" 
-                    HorizontalAlignment="Center"
-                    >
-
-                    <TextBlock 
-                        Text="{Binding Position2count}" 
-                        Foreground="Orange" 
-                        FontSize="15" 
-                        FontWeight="Bold" 
-                        />
-
-                    <TextBlock 
-                        Text=" " 
-                        FontSize="8" 
-                        />
-
-                    <TextBlock 
-                        Text="{Binding Position2name}" 
-                        Foreground="LightGray" 
-                        FontSize="15" 
-                        />
-
-                </StackPanel>
-
-                <StackPanel 
-                    Orientation="Horizontal"
-                    Margin="2,2"
-                    HorizontalAlignment="Center"
-                    >
-
-                    <TextBlock 
-                        Text="{Binding Position3count}"
-                        Foreground="Orange"
-                        FontSize="15" 
-                        FontWeight="Bold" 
-                        />
-
-                    <TextBlock 
-                        Text=" "
-                        FontSize="8"
-                        />
-
-                    <TextBlock
-                        Text="{Binding Position3name}" 
-                        Foreground="LightGray"
-                        FontSize="15" 
-                        />
-
-                </StackPanel>
+                <TextBlock 
+                    Text="{Binding Position1name}" 
+                    Foreground="LightGray" 
+                    />
 
             </StackPanel>
 
-            <ItemsControl 
+            <StackPanel 
+                Orientation="Horizontal" 
+                Margin="2,2" 
+                HorizontalAlignment="Center"
+                >
+
+                <TextBlock 
+                    Text="{Binding Position2count}" 
+                    Foreground="Orange" 
+                    FontWeight="Bold" 
+                    />
+
+                <TextBlock 
+                    Text=" " 
+                    />
+
+                <TextBlock 
+                    Text="{Binding Position2name}" 
+                    Foreground="LightGray" 
+                    />
+
+            </StackPanel>
+
+            <StackPanel 
+                Orientation="Horizontal"
+                Margin="2,2"
+                HorizontalAlignment="Center"
+                >
+
+                <TextBlock 
+                    Text="{Binding Position3count}"
+                    Foreground="Orange"
+                    FontWeight="Bold" 
+                    />
+
+                <TextBlock 
+                    Text=" "
+                    />
+
+                <TextBlock
+                    Text="{Binding Position3name}" 
+                    Foreground="LightGray"
+                    />
+
+            </StackPanel>
+
+        </StackPanel>
+
+        <Canvas Grid.Row="2"
+            x:Name="cvsSubFormation"
+            Width="144"
+            Height="48"
+            HorizontalAlignment="Stretch">
+
+            <ItemsControl
                 IsEnabled="False"
                 x:Name="iclPlayers"
-                DockPanel.Dock="Top"
-                HorizontalAlignment="Center"
                 ItemsSource="{Binding CurrentPackage}">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
                         <Canvas 
                             x:Name="cvsSubFormation"
-                            HorizontalAlignment="Left"
                             Width="360" 
                             Height="120"
                         />
@@ -278,19 +273,12 @@
                 </ItemsControl.ItemsPanel>
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <Ellipse
+                        <UserControls:PlayerIcon
                             x:Name="clnIcon"
-                            Width="8"
-                            Height="8"
-                            HorizontalAlignment="Center"
-                            VerticalAlignment="Center"
-                            Fill="Ivory">
-                            <Ellipse.RenderTransform>
-                                <ScaleTransform 
-                                    ScaleX="2.5"
-                                    ScaleY="2.5"/>
-                            </Ellipse.RenderTransform>
-                        </Ellipse>
+                            Player="{Binding}"
+                            Scale="2.5"
+                            ShowPosition="True"
+                            AbsolutePositioning="True"/>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
                 <ItemsControl.ItemContainerStyle>
@@ -305,13 +293,13 @@
                 </ItemsControl.ItemContainerStyle>
                 <ItemsControl.LayoutTransform>
                     <ScaleTransform 
-                        ScaleX=".333"
-                        ScaleY=".333"/>
+                        ScaleX=".4"
+                        ScaleY=".4"/>
                 </ItemsControl.LayoutTransform>
             </ItemsControl>
 
-        </StackPanel>
+        </Canvas>
 
-    </DockPanel>
+    </Grid>
 
 </UserControl>

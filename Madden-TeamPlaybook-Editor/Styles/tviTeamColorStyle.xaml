@@ -19,6 +19,8 @@
                      Color="{DynamicResource Quinary}" />
             <SolidColorBrush x:Key="SenaryBrush"
                      Color="{DynamicResource Senary}"/>
+            <SolidColorBrush x:Key="BorderBrush"
+                     Color="{DynamicResource Primary}" Opacity="0.333"/>
             <LinearGradientBrush x:Key="GradientBrush" StartPoint="0.5,1" EndPoint="0.5,0" Opacity="0.333">
                 <GradientStop Offset=".333" Color="{DynamicResource Primary}"/>
                 <GradientStop Offset="1" Color="{DynamicResource Secondary}"/>
@@ -26,41 +28,36 @@
         </Style.Resources>
 
         <Setter Property="FontFamily" Value="DK Crayon Crumble" />
-        <Setter Property="FontSize" Value="26" />
+        <Setter Property="FontSize" Value="18" />
         <Setter Property="Background" Value="Transparent" />
-        <Setter Property="HorizontalContentAlignment" Value="{Binding Path=HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" />
-        <Setter Property="VerticalContentAlignment" Value="{Binding Path=VerticalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" />
         <Setter Property="Foreground" Value="{StaticResource TertiaryBrush}" />
 
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type TreeViewItem}">
-                    <Grid Margin="2" x:Name="ControlTemplateGrid">
+                    <Grid Margin="0,2" x:Name="ControlTemplateGrid">
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
+                            <RowDefinition/>
+                            <RowDefinition/>
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
-                        <Border BorderBrush="{TemplateBinding BorderBrush}"
+                        <Border Grid.Row="0"
+                            BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="3"
                             Background="{TemplateBinding Background}" 
                             Padding="{TemplateBinding Padding}"
                             Margin="{TemplateBinding Margin}"
                             CornerRadius="8">
-                            <ContentPresenter 
-                                x:Name="cprFormation"
-                                HorizontalAlignment="Center"
-                                VerticalAlignment="Center"
-                                ContentSource="Header"
-                                Grid.Row="0"/>
                         </Border>
-                        <ItemsPresenter x:Name="ItemsHost"
-                            Grid.Row="1">
-                            <ItemsPresenter.LayoutTransform>
-                                <ScaleTransform ScaleY="1" />
-                            </ItemsPresenter.LayoutTransform>
+                        <ContentPresenter Grid.Row="0"
+                            x:Name="cprFormation"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            ContentSource="Header"/>
+                        <ItemsPresenter Grid.Row="1"
+                            x:Name="ItemsHost">
                         </ItemsPresenter>
                     </Grid>
                     <ControlTemplate.Triggers>
@@ -68,7 +65,7 @@
                         <Trigger Property="IsSelected" Value="True">
                             <Setter Property="Background" Value="{StaticResource GradientBrush}"/>
                             <Setter Property="Foreground" Value="{StaticResource TertiaryBrush}"/>
-                            <Setter Property="BorderBrush" Value="{StaticResource PrimaryBrush}"/>
+                            <Setter Property="BorderBrush" Value="{StaticResource BorderBrush}"/>
                         </Trigger>
                         <Trigger Property="IsSelected" Value="False">
                             <Setter Property="Background" Value="{StaticResource BaseBrush}"/>
@@ -77,7 +74,7 @@
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter Property="Background" Value="{StaticResource GradientBrush}"/>
                             <Setter Property="Foreground" Value="{StaticResource TertiaryBrush}"/>
-                            <Setter Property="BorderBrush" Value="{StaticResource PrimaryBrush}"/>
+                            <Setter Property="BorderBrush" Value="{StaticResource BorderBrush}"/>
                         </Trigger>
 
                         <!--<MultiTrigger>
@@ -118,6 +115,14 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-        
+
+        <Setter Property="ItemsPanel">
+            <Setter.Value>
+                <ItemsPanelTemplate>
+                    <WrapPanel Orientation="Horizontal" MaxWidth="600" HorizontalAlignment="Center"/>
+                </ItemsPanelTemplate>
+            </Setter.Value>
+        </Setter>
+
     </Style>
 </ResourceDictionary>

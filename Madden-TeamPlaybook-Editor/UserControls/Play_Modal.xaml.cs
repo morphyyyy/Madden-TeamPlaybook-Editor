@@ -57,12 +57,39 @@ namespace MaddenTeamPlaybookEditor.User_Controls
 
         private void iclIcons_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            tabPlayer.DataContext = play.Players.FirstOrDefault(player => player.IsSelected);
+            GetPlayer();
         }
 
         private void iclPSALs_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            tabPlayer.DataContext = play.Players.FirstOrDefault(player => player.IsSelected);
+            GetPlayer();
+        }
+
+        public void GetPlayer()
+        {
+            PlayerVM _player = play.Players.FirstOrDefault(player => player.IsSelected);
+            tabPlayer.DataContext = _player;
+            foreach (FormationVM _psalType in _player.Play.SubFormation.Formation.Playbook.PSALs)
+            {
+                _psalType.IsExpanded = false;
+                foreach (SubFormationVM _psalPlayer in _psalType.SubFormations)
+                {
+                    _psalPlayer.IsExpanded = false;
+                    foreach (PlayVM _psal in _psalPlayer.Plays)
+                    {
+                        _psal.IsExpanded = false;
+                        PlayVM _psalPlay = _psal.Players.SingleOrDefault(player => player.PSAL.Intersect(_player.PSAL)?.Count() > 0 )?.Play;
+                        if (_psalPlay != null)
+                        {
+                            _psalPlay.SubFormation.Formation.IsExpanded = true;
+                            _psalPlay.SubFormation.IsExpanded = true;
+                            _psalPlay.IsSelected = true;
+                        }
+                    }
+                }
+            }
+            Play _play = tvwPSALs.SelectedItem is Play ? ((Play)tvwPSALs.SelectedItem) : null;
+            _play?.BringIntoView();
         }
 
         private void dgdPSALupdated(object sender, EventArgs e)
@@ -216,6 +243,39 @@ namespace MaddenTeamPlaybookEditor.User_Controls
         {
             play.AddPLPD();
             play.UpdatePlay();
+        }
+
+        private void tvwPSALs_Selected(object sender, RoutedEventArgs e)
+        {
+            //Working Code
+            PlayerVM _player = play != null ? play.Players.FirstOrDefault(p => p.IsSelected) : null;
+            if (tvwPSALs.SelectedItem is PlayVM && _player != null)
+            {
+                _player.PLYS.PSAL = ((PlayVM)tvwPSALs.SelectedItem).Players[0].PLYS.PSAL;
+                _player.PLYS.ARTL = ((PlayVM)tvwPSALs.SelectedItem).Players[0].PLYS.ARTL;
+                _player.PLYS.PLRR = ((PlayVM)tvwPSALs.SelectedItem).Players[0].PLYS.PLRR;
+                _player.UpdatePlayer();
+                _player.Play.UpdatePlay();
+                MainWindow mainWindow = UIHelper.FindVisualParent<MainWindow>(this);
+                TreeView _treeView = UIHelper.FindChild<TreeView>(mainWindow, "tvwPlaybook");
+                UserControl _play = UIHelper.FindChild<UserControl>(_treeView, "uclPlay", uclPlayModal.play);
+                ItemsControl playart = UIHelper.FindChild<ItemsControl>(_play, "iclPlayarts");
+                playart?.Items.Refresh();
+                iclPSALs.Items.Refresh();
+                //tabPlayer.Items.Refresh();
+            }
+
+            //Old Code
+            //TreeViewItem tvi = e.OriginalSource as TreeViewItem;
+
+            //if (tvi == null || e.Handled) return;
+
+            //tvi.IsExpanded = !tvi.IsExpanded;
+            //if (tvi.IsSelected)
+            //{
+            //    tvi.IsSelected = false;
+            //    e.Handled = true;
+            //}
         }
     }
 }

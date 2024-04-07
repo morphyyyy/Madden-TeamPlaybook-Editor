@@ -1,6 +1,7 @@
 ﻿using MaddenTeamPlaybookEditor.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using TDBAccess;
 
@@ -112,7 +113,7 @@ namespace Madden.TeamPlaybook
             return _PBAI;
         }
 
-        public static void SetPBAI(List<PBAI> PBAI, int DBIndex = 0)
+        public static void SetPBAI(ObservableCollection<PBAI> PBAI, int DBIndex = 0)
         {
             TdbTableProperties TableProps = new TdbTableProperties();
             TableProps.Name = new string((char)0, 5);
@@ -146,9 +147,9 @@ namespace Madden.TeamPlaybook
             }
         }
 
-        public static List<PBAI> Sort(List<PBAI> PBAI)
+        public static ObservableCollection<PBAI> Sort(ObservableCollection<PBAI> PBAI)
         {
-            List<PBAI> _PBAI = PBAI.OrderByDescending(s => s.prct).ThenBy(s => s.PBPL).Cast<PBAI>().ToList();
+            ObservableCollection<PBAI> _PBAI = new ObservableCollection<PBAI>(PBAI.OrderByDescending(s => s.prct).ThenBy(s => s.PBPL).Cast<PBAI>());
             for (int i = 0; i < _PBAI.Count(); i++)
             {
                 _PBAI[i].rec = i;

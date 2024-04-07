@@ -51,7 +51,7 @@
                 x:Name="pbrSituation" 
                 Height="19" 
                 Width="100"
-                Value="{Binding prct}" 
+                Value="{Binding prct, Mode=TwoWay, NotifyOnSourceUpdated=True, NotifyOnTargetUpdated=True, UpdateSourceTrigger=PropertyChanged}" 
                 BorderBrush="Transparent">
                 <ProgressBar.Background>
                     <ImageBrush

@@ -19,6 +19,8 @@
                      Color="{DynamicResource Quinary}" />
             <SolidColorBrush x:Key="SenaryBrush"
                      Color="{DynamicResource Senary}"/>
+            <SolidColorBrush x:Key="BorderBrush"
+                     Color="{DynamicResource Primary}" Opacity="0.333"/>
             <LinearGradientBrush x:Key="GradientBrush" StartPoint="0.5,1" EndPoint="0.5,0" Opacity="0.333">
                 <GradientStop Offset=".333" Color="{DynamicResource Primary}"/>
                 <GradientStop Offset="1" Color="{DynamicResource Secondary}"/>
@@ -26,10 +28,8 @@
         </Style.Resources>
 
         <Setter Property="FontFamily" Value="DK Crayon Crumble" />
-        <Setter Property="FontSize" Value="14" />
+        <Setter Property="FontSize" Value="16" />
         <Setter Property="Background" Value="Transparent" />
-        <Setter Property="HorizontalContentAlignment" Value="{Binding Path=HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" />
-        <Setter Property="VerticalContentAlignment" Value="{Binding Path=VerticalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" />
         <Setter Property="Foreground" Value="{StaticResource TertiaryBrush}" />
 
         <Setter Property="Template">
@@ -64,7 +64,7 @@
                         <Trigger Property="IsSelected" Value="True">
                             <Setter Property="Background" Value="{StaticResource GradientBrush}"/>
                             <Setter Property="Foreground" Value="{StaticResource TertiaryBrush}"/>
-                            <Setter Property="BorderBrush" Value="{StaticResource PrimaryBrush}"/>
+                            <Setter Property="BorderBrush" Value="{StaticResource BorderBrush}"/>
                         </Trigger>
                         <Trigger Property="IsSelected" Value="False">
                             <Setter Property="Background" Value="{StaticResource BaseBrush}"/>
@@ -73,7 +73,7 @@
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter Property="Background" Value="{StaticResource GradientBrush}"/>
                             <Setter Property="Foreground" Value="{StaticResource TertiaryBrush}"/>
-                            <Setter Property="BorderBrush" Value="{StaticResource PrimaryBrush}"/>
+                            <Setter Property="BorderBrush" Value="{StaticResource BorderBrush}"/>
                         </Trigger>
 
                     </ControlTemplate.Triggers>
