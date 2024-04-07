@@ -3,27 +3,6 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:classes="clr-namespace:MaddenTeamPlaybookEditor.Classes">
 
-    <SolidColorBrush x:Key="BaseBrush"
-                     Color="Black" Opacity="0.333"/>
-    <SolidColorBrush x:Key="PrimaryBrush"
-                     Color="{DynamicResource Primary}" />
-    <SolidColorBrush x:Key="SecondaryBrush"
-                     Color="{DynamicResource Secondary}" />
-    <SolidColorBrush x:Key="TertiaryBrush"
-                     Color="{DynamicResource Tertiary}" Opacity="0.7"/>
-    <SolidColorBrush x:Key="QuaternaryBrush"
-                     Color="{DynamicResource Quaternary}" />
-    <SolidColorBrush x:Key="QuinaryBrush"
-                     Color="{DynamicResource Quinary}" />
-    <SolidColorBrush x:Key="SenaryBrush"
-                     Color="{DynamicResource Senary}"/>
-    <SolidColorBrush x:Key="BorderBrush"
-                     Color="{DynamicResource Primary}" Opacity="0.333"/>
-    <LinearGradientBrush x:Key="GradientBrush" StartPoint="0.5,1" EndPoint="0.5,0" Opacity="0.333">
-        <GradientStop Offset=".333" Color="{DynamicResource Primary}"/>
-        <GradientStop Offset="1" Color="{DynamicResource Secondary}"/>
-    </LinearGradientBrush>
-
     <Style x:Key="ScrollBarLineButton"
        TargetType="{x:Type RepeatButton}">
         <Setter Property="SnapsToDevicePixels"
@@ -36,34 +15,11 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type RepeatButton}">
                     <Border x:Name="Border"
-                Margin="1"
-                CornerRadius="2"
-                BorderThickness="1">
-                        <Border.BorderBrush>
-                            <LinearGradientBrush StartPoint="0,0"
-                                 EndPoint="0,1">
-                                <LinearGradientBrush.GradientStops>
-                                    <GradientStopCollection>
-                                        <GradientStop Color="{DynamicResource Secondary}"
-                                Offset="0.0" />
-                                        <GradientStop Color="{DynamicResource Primary}"
-                                Offset="1.0" />
-                                    </GradientStopCollection>
-                                </LinearGradientBrush.GradientStops>
-                            </LinearGradientBrush>
-                        </Border.BorderBrush>
-                        <Border.Background>
-                            <LinearGradientBrush StartPoint="0,0"
-                                 EndPoint="0,1">
-                                <LinearGradientBrush.GradientStops>
-                                    <GradientStopCollection>
-                                        <GradientStop Color="{DynamicResource Secondary}"/>
-                                        <GradientStop Color="{DynamicResource Primary}"
-                                Offset="1.0" />
-                                    </GradientStopCollection>
-                                </LinearGradientBrush.GradientStops>
-                            </LinearGradientBrush>
-                        </Border.Background>
+                        Margin="1"
+                        CornerRadius="2"
+                        BorderThickness="1"
+                        BorderBrush="{DynamicResource BorderBrush}"
+                        Background="{DynamicResource GradientBrush}">
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup x:Name="CommonStates">
                                 <VisualState x:Name="Normal" />
@@ -71,32 +27,28 @@
                                 <VisualState x:Name="Pressed">
                                     <Storyboard>
                                         <ColorAnimationUsingKeyFrames Storyboard.TargetName="Border"
-                                                Storyboard.TargetProperty="(Panel.Background).
-                    (GradientBrush.GradientStops)[1].(GradientStop.Color)">
-                                            <EasingColorKeyFrame KeyTime="0"
-                                         Value="{DynamicResource Primary}" />
+                                            Storyboard.TargetProperty="(Panel.Background).(GradientBrush.GradientStops)[1].(GradientStop.Color)">
+                                            <EasingColorKeyFrame KeyTime="0" Value="{DynamicResource Primary}" />
                                         </ColorAnimationUsingKeyFrames>
                                     </Storyboard>
                                 </VisualState>
                                 <VisualState x:Name="Disabled">
                                     <Storyboard>
                                         <ColorAnimationUsingKeyFrames Storyboard.TargetName="Arrow"
-                                                Storyboard.TargetProperty="(Shape.Fill).
-                    (SolidColorBrush.Color)">
-                                            <EasingColorKeyFrame KeyTime="0"
-                                         Value="{DynamicResource Secondary}" />
+                                            Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)">
+                                            <EasingColorKeyFrame KeyTime="0" Value="{DynamicResource Secondary}" />
                                         </ColorAnimationUsingKeyFrames>
                                     </Storyboard>
                                 </VisualState>
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
                         <Path x:Name="Arrow"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Center"
-                Data="{Binding Content, 
-            RelativeSource={RelativeSource TemplatedParent}}" >
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Data="{Binding Content, 
+                            RelativeSource={RelativeSource TemplatedParent}}" >
                             <Path.Fill>
-                                <SolidColorBrush Color="{DynamicResource Secondary}"/>
+                                <SolidColorBrush Color="{DynamicResource Tertiary}"/>
                             </Path.Fill>
                         </Path>
                     </Border>
@@ -138,9 +90,9 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Thumb}">
                     <Border CornerRadius="2"
-                Background="{TemplateBinding Background}"
-                BorderBrush="{TemplateBinding BorderBrush}"
-                BorderThickness="1" />
+                        Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="1" />
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
@@ -170,39 +122,7 @@
                       Command="ScrollBar.PageUpCommand" />
                 </Track.DecreaseRepeatButton>
                 <Track.Thumb>
-                    <Thumb Style="{StaticResource ScrollBarThumb}"
-               Margin="1,0,1,0">
-                        <Thumb.BorderBrush>
-
-                            <LinearGradientBrush StartPoint="0,0"
-                                 EndPoint="1,0">
-                                <LinearGradientBrush.GradientStops>
-                                    <GradientStopCollection>
-                                        <GradientStop Color="{DynamicResource Secondary}"
-                                Offset="0.0" />
-                                        <GradientStop Color="{DynamicResource Primary}"
-                                Offset="1.0" />
-                                    </GradientStopCollection>
-                                </LinearGradientBrush.GradientStops>
-                            </LinearGradientBrush>
-
-                        </Thumb.BorderBrush>
-                        <Thumb.Background>
-
-                            <LinearGradientBrush StartPoint="0,0"
-                                 EndPoint="1,0">
-                                <LinearGradientBrush.GradientStops>
-                                    <GradientStopCollection>
-                                        <GradientStop Color="{DynamicResource Primary}"
-                                Offset="0.0" />
-                                        <GradientStop Color="{DynamicResource Secondary}"
-                                Offset="1.0" />
-                                    </GradientStopCollection>
-                                </LinearGradientBrush.GradientStops>
-                            </LinearGradientBrush>
-
-                        </Thumb.Background>
-                    </Thumb>
+                    <Thumb Style="{StaticResource ScrollBarThumb}" Margin="1,0,1,0" BorderBrush="{DynamicResource BorderBrush}" Background="{DynamicResource BorderBrush}"/>
                 </Track.Thumb>
                 <Track.IncreaseRepeatButton>
                     <RepeatButton Style="{StaticResource ScrollBarPageButton}"
@@ -241,40 +161,7 @@
                       Command="ScrollBar.PageLeftCommand" />
                 </Track.DecreaseRepeatButton>
                 <Track.Thumb>
-                    <Thumb Style="{StaticResource ScrollBarThumb}"
-               Margin="0,1,0,1">
-
-                        <Thumb.BorderBrush>
-
-                            <LinearGradientBrush StartPoint="0,0"
-                                 EndPoint="1,0">
-                                <LinearGradientBrush.GradientStops>
-                                    <GradientStopCollection>
-                                        <GradientStop Color="{DynamicResource Primary}"
-                                Offset="0.0" />
-                                        <GradientStop Color="{DynamicResource Secondary}"
-                                Offset="1.0" />
-                                    </GradientStopCollection>
-                                </LinearGradientBrush.GradientStops>
-                            </LinearGradientBrush>
-
-                        </Thumb.BorderBrush>
-                        <Thumb.Background>
-
-                            <LinearGradientBrush StartPoint="0,0"
-                                 EndPoint="0,1">
-                                <LinearGradientBrush.GradientStops>
-                                    <GradientStopCollection>
-                                        <GradientStop Color="{DynamicResource Primary}"
-                                Offset="0.0" />
-                                        <GradientStop Color="{DynamicResource Secondary}"
-                                Offset="1.0" />
-                                    </GradientStopCollection>
-                                </LinearGradientBrush.GradientStops>
-                            </LinearGradientBrush>
-
-                        </Thumb.Background>
-                    </Thumb>
+                    <Thumb Style="{StaticResource ScrollBarThumb}" Margin="1,0,1,0" BorderBrush="{DynamicResource BorderBrush}" Background="{DynamicResource BorderBrush}"/>
                 </Track.Thumb>
                 <Track.IncreaseRepeatButton>
                     <RepeatButton Style="{StaticResource ScrollBarPageButton}"

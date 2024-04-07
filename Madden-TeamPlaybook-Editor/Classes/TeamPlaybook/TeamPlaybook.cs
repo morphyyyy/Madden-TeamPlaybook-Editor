@@ -777,7 +777,6 @@ namespace MaddenTeamPlaybookEditor.ViewModels
             {30,"Max"}       //Misc
         };
 
-        [Bindable(true)]
         public ObservableCollection<PBAI> SitOff_1stDown { get { return new ObservableCollection<PBAI>(PBAI.Where(p => p.AIGR == 35).OrderByDescending(p => p.prct).ThenBy(p => p.PlayName)); } }
         public ObservableCollection<PBAI> SitOff_2ndandShort { get { return new ObservableCollection<PBAI>(PBAI.Where(p => p.AIGR == 20).OrderByDescending(p => p.prct).ThenBy(p => p.PlayName)); } }
         public ObservableCollection<PBAI> SitOff_2ndandMed { get { return new ObservableCollection<PBAI>(PBAI.Where(p => p.AIGR == 17).OrderByDescending(p => p.prct).ThenBy(p => p.PlayName)); } }

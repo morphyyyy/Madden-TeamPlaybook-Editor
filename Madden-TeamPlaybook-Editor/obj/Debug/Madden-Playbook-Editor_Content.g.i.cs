@@ -8,6 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("resources/full_field_mask.png")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("resources/situation_background_mask.png")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("resources/situation_foreground_mask.png")]
 
 

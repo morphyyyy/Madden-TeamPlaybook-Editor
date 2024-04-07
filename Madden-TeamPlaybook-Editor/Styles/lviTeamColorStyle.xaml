@@ -4,34 +4,11 @@
     xmlns:classes="clr-namespace:MaddenTeamPlaybookEditor.Classes">
 
     <Style x:Key="lviTeamColorStyle" TargetType="ListBoxItem">
-        <Style.Resources>
-            <SolidColorBrush x:Key="BaseBrush"
-                     Color="Black" Opacity="0.333"/>
-            <SolidColorBrush x:Key="PrimaryBrush"
-                     Color="{DynamicResource Primary}" />
-            <SolidColorBrush x:Key="SecondaryBrush"
-                     Color="{DynamicResource Secondary}" />
-            <SolidColorBrush x:Key="TertiaryBrush"
-                     Color="{DynamicResource Tertiary}" Opacity="0.7"/>
-            <SolidColorBrush x:Key="QuaternaryBrush"
-                     Color="{DynamicResource Quaternary}" />
-            <SolidColorBrush x:Key="QuinaryBrush"
-                     Color="{DynamicResource Quinary}" />
-            <SolidColorBrush x:Key="SenaryBrush"
-                     Color="{DynamicResource Senary}"/>
-            <SolidColorBrush x:Key="BorderBrush"
-                     Color="{DynamicResource Primary}" Opacity="0.333"/>
-            <LinearGradientBrush x:Key="GradientBrush" StartPoint="0.5,1" EndPoint="0.5,0" Opacity="0.333">
-                <GradientStop Offset=".333" Color="{DynamicResource Primary}"/>
-                <GradientStop Offset="1" Color="{DynamicResource Secondary}"/>
-            </LinearGradientBrush>
-        </Style.Resources>
-
         <Style.Setters>
             <Setter Property="FontFamily" Value="DK Crayon Crumble" />
             <Setter Property="FontSize" Value="14" />
             <Setter Property="Background" Value="Transparent" />
-            <Setter Property="Foreground" Value="{StaticResource TertiaryBrush}" />
+            <Setter Property="Foreground" Value="{DynamicResource TertiaryBrush}" />
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="ListBoxItem">
@@ -48,18 +25,18 @@
                         <ControlTemplate.Triggers>
 
                             <Trigger Property="IsSelected" Value="True">
-                                <Setter Property="Background" Value="{StaticResource GradientBrush}"/>
-                                <Setter Property="Foreground" Value="{StaticResource TertiaryBrush}"/>
-                                <Setter Property="BorderBrush" Value="{StaticResource BorderBrush}"/>
+                                <Setter Property="Background" Value="{DynamicResource GradientBrush}"/>
+                                <Setter Property="Foreground" Value="{DynamicResource TertiaryBrush}"/>
+                                <Setter Property="BorderBrush" Value="{DynamicResource BorderBrush}"/>
                             </Trigger>
                             <Trigger Property="IsSelected" Value="False">
-                                <Setter Property="Background" Value="{StaticResource BaseBrush}"/>
-                                <Setter Property="Foreground" Value="{StaticResource TertiaryBrush}"/>
+                                <Setter Property="Background" Value="{DynamicResource BaseBrush}"/>
+                                <Setter Property="Foreground" Value="{DynamicResource TertiaryBrush}"/>
                             </Trigger>
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter Property="Background" Value="{StaticResource GradientBrush}"/>
-                                <Setter Property="Foreground" Value="{StaticResource TertiaryBrush}"/>
-                                <Setter Property="BorderBrush" Value="{StaticResource BorderBrush}"/>
+                                <Setter Property="Background" Value="{DynamicResource GradientBrush}"/>
+                                <Setter Property="Foreground" Value="{DynamicResource TertiaryBrush}"/>
+                                <Setter Property="BorderBrush" Value="{DynamicResource BorderBrush}"/>
                             </Trigger>
 
                             <!--<Trigger Property="IsMouseOver" Value="True">
@@ -70,11 +47,11 @@
                                             <ColorAnimation
                                                 Storyboard.TargetName="ListBoxItem" 
                                                 Storyboard.TargetProperty="Background"
-                                                To="{StaticResource MouseOverBrushKey.Color}" Duration="0:0:0.2" />
+                                                To="{DynamicResource MouseOverBrushKey.Color}" Duration="0:0:0.2" />
                                             <ColorAnimation
                                                 Storyboard.TargetName="ListBoxItem" 
                                                 Storyboard.TargetProperty="Foreground"
-                                                To="{StaticResource PrimaryBrush.Color}" Duration="0:0:0.2" />
+                                                To="{DynamicResource PrimaryBrush.Color}" Duration="0:0:0.2" />
                                         </Storyboard>
                                     </BeginStoryboard>
                                 </Trigger.EnterActions>

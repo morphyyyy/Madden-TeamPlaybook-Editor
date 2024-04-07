@@ -259,9 +259,11 @@ namespace MaddenTeamPlaybookEditor
             lvwPlaysBySituation.Items.Filter = SituationFilter;
             {
                 lvwPlaysBySituation.Items.SortDescriptions.Clear();
+                lvwPlaysBySituation.Items.SortDescriptions.Add(new System.ComponentModel.SortDescription("Type", System.ComponentModel.ListSortDirection.Ascending));
                 lvwPlaysBySituation.Items.SortDescriptions.Add(new System.ComponentModel.SortDescription("prct", System.ComponentModel.ListSortDirection.Descending));
+                lvwPlaysBySituation.Items.SortDescriptions.Add(new System.ComponentModel.SortDescription("PlayName", System.ComponentModel.ListSortDirection.Ascending));
                 CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(lvwPlaysBySituation.ItemsSource);
-                PropertyGroupDescription groupDescription = new PropertyGroupDescription("prct");
+                PropertyGroupDescription groupDescription = new PropertyGroupDescription("Type");
                 view.GroupDescriptions.Clear();
                 view.GroupDescriptions.Add(groupDescription);
             }
@@ -311,7 +313,6 @@ namespace MaddenTeamPlaybookEditor
             //lvwMiscSigniaturePlays.ItemsSource = TeamPlaybook.SitOff_MiscSigniaturePlays;
             //lvwMiscSuddenChange.ItemsSource = TeamPlaybook.SitOff_MiscSuddenChange;
             tclTables.DataContext = Playbook;
-            //ObservableCollection<FormationVM> psalList = Playbook.GetPSALlist();
             //tabPlaybook.DataContext = Playbook;
             //IEnumerable<PlayVM> playsWithoutCode58 = TeamPlaybook.Plays.Where(p => TeamPlaybook.Gameplan.Run.Contains(p.PLYL.PLYT) && !p.Players.FirstOrDefault(r => r.PLYS.poso == 0).PSAL.Exists(r => r.code == 58));
         }
@@ -1071,6 +1072,17 @@ namespace MaddenTeamPlaybookEditor
                 {
                     TeamPlaybook.RevampGameplan();
                     lvwPlaysBySituation.ItemsSource = TeamPlaybook.PBAI;
+                    {
+                        lvwPlaysBySituation.Items.SortDescriptions.Clear();
+                        lvwPlaysBySituation.Items.SortDescriptions.Add(new System.ComponentModel.SortDescription("Type", System.ComponentModel.ListSortDirection.Ascending));
+                        lvwPlaysBySituation.Items.SortDescriptions.Add(new System.ComponentModel.SortDescription("prct", System.ComponentModel.ListSortDirection.Descending));
+                        lvwPlaysBySituation.Items.SortDescriptions.Add(new System.ComponentModel.SortDescription("PlayName", System.ComponentModel.ListSortDirection.Ascending));
+                        CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(lvwPlaysBySituation.ItemsSource);
+                        PropertyGroupDescription groupDescription = new PropertyGroupDescription("Type");
+                        view.GroupDescriptions.Clear();
+                        view.GroupDescriptions.Add(groupDescription);
+                    }
+
                     lvwPlaysBySituation.Items.Refresh();
                 }
                 catch (Exception)
@@ -1085,6 +1097,17 @@ namespace MaddenTeamPlaybookEditor
                         {
                             TeamPlaybook.RevampGameplanRedDobe();
                             lvwPlaysBySituation.ItemsSource = TeamPlaybook.PBAI;
+                            {
+                                lvwPlaysBySituation.Items.SortDescriptions.Clear();
+                                lvwPlaysBySituation.Items.SortDescriptions.Add(new System.ComponentModel.SortDescription("Type", System.ComponentModel.ListSortDirection.Ascending));
+                                lvwPlaysBySituation.Items.SortDescriptions.Add(new System.ComponentModel.SortDescription("prct", System.ComponentModel.ListSortDirection.Descending));
+                                lvwPlaysBySituation.Items.SortDescriptions.Add(new System.ComponentModel.SortDescription("PlayName", System.ComponentModel.ListSortDirection.Ascending));
+                                CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(lvwPlaysBySituation.ItemsSource);
+                                PropertyGroupDescription groupDescription = new PropertyGroupDescription("Type");
+                                view.GroupDescriptions.Clear();
+                                view.GroupDescriptions.Add(groupDescription);
+                            }
+
                             lvwPlaysBySituation.Items.Refresh();
                         }
                         catch (Exception)
@@ -1389,6 +1412,10 @@ namespace MaddenTeamPlaybookEditor
         private void btnSelectView(object sender, RoutedEventArgs e)
         {
             tclTeamPlaybook.SelectedItem = tclTeamPlaybook.Items.OfType<TabItem>().SingleOrDefault(n => (string)n.Header == (string)((MenuItem)sender).Header);
+            if (tclTeamPlaybook.SelectedItem == null)
+            {
+                return;
+            }
             if ((string)(((TabItem)tclTeamPlaybook.SelectedItem).Header) == "Gameplan")
             {
                 lvwPlaysBySituation.Items.Filter = SituationFilter;
