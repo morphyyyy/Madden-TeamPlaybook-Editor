@@ -22,7 +22,7 @@
             <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
 
-        <Canvas Background="Black">
+        <Canvas Background="Black" Opacity=".333">
             <Canvas.OpacityMask>
                 <ImageBrush
                     ImageSource="../Resources/Situation_Background_mask.png"
