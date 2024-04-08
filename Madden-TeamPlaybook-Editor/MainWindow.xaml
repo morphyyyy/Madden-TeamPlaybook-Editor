@@ -9,6 +9,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:classes="clr-namespace:MaddenTeamPlaybookEditor.Classes"
     xmlns:math="http://hexinnovation.com/math"
+    xmlns:p="clr-namespace:System.Windows.Controls.Primitives;assembly=PresentationFramework"
     mc:Ignorable="d" 
     x:Name="wdwPlaybookEditor"
     x:Class="MaddenTeamPlaybookEditor.MainWindow"
@@ -23,8 +24,8 @@
 
     <Window.Background>
         <ImageBrush 
-            ImageSource="Resources/chalkboard.jpg" 
-            Viewport="0,0,1920,1067"
+            ImageSource="Resources/Black_Canvas.jpg" 
+            Viewport="0,0,1920,1080"
             ViewportUnits="Absolute"
             TileMode="Tile"
             Stretch="UniformToFill" 
@@ -80,6 +81,68 @@
                 </Setter.Value>
             </Setter>
         </Style>
+        <SolidColorBrush x:Key="BaseBrush"
+                     Color="Black" Opacity="0.333"/>
+        <SolidColorBrush x:Key="PrimaryBrush"
+                     Color="{DynamicResource Primary}" Opacity=".333"/>
+        <SolidColorBrush x:Key="SecondaryBrush"
+                     Color="{DynamicResource Secondary}" />
+        <SolidColorBrush x:Key="TertiaryBrush"
+                     Color="{DynamicResource Tertiary}" Opacity="0.7"/>
+        <SolidColorBrush x:Key="QuaternaryBrush"
+                     Color="{DynamicResource Quaternary}" />
+        <SolidColorBrush x:Key="QuinaryBrush"
+                     Color="{DynamicResource Quinary}" />
+        <SolidColorBrush x:Key="SenaryBrush"
+                     Color="{DynamicResource Senary}"/>
+        <SolidColorBrush x:Key="BorderBrush"
+                     Color="{DynamicResource Primary}" Opacity="0.333"/>
+        <SolidColorBrush x:Key="UndefinedBrush"
+                     Color="{DynamicResource Undefined}" Opacity="0.1"/>
+        <SolidColorBrush x:Key="BlockBrush"
+                     Color="{DynamicResource Block}" Opacity="0.1"/>
+        <SolidColorBrush x:Key="BaseRouteBrush"
+                     Color="{DynamicResource BaseRoute}" Opacity="0.1"/>
+        <SolidColorBrush x:Key="PrimaryRouteBrush"
+                     Color="{DynamicResource PrimaryRoute}" Opacity="0.1"/>
+        <SolidColorBrush x:Key="DelayRouteBrush"
+                     Color="{DynamicResource DelayRoute}" Opacity="0.1"/>
+        <SolidColorBrush x:Key="MotionRouteBrush"
+                     Color="{DynamicResource MotionRoute}" Opacity="0.1"/>
+        <SolidColorBrush x:Key="RunBrush"
+                     Color="{DynamicResource Run}" Opacity="0.1"/>
+        <SolidColorBrush x:Key="QBScrambleBrush"
+                     Color="{DynamicResource QBScramble}" Opacity="0.1"/>
+        <SolidColorBrush x:Key="QBHandoffBrush"
+                     Color="{DynamicResource QBHandoff}" Opacity="0.1"/>
+        <SolidColorBrush x:Key="KickoffBrush"
+                     Color="{DynamicResource Kickoff}" Opacity="0.1"/>
+        <SolidColorBrush x:Key="CloudFlatBrush"
+                     Color="{DynamicResource CloudFlat}" Opacity="0.1"/>
+        <SolidColorBrush x:Key="HardFlatBrush"
+                     Color="{DynamicResource HardFlat}" Opacity="0.1"/>
+        <SolidColorBrush x:Key="SoftSquatBrush"
+                     Color="{DynamicResource SoftSquat}" Opacity="0.1"/>
+        <SolidColorBrush x:Key="MidReadBrush"
+                     Color="{DynamicResource MidRead}" Opacity="0.1"/>
+        <SolidColorBrush x:Key="ThreeReceiverHookBrush"
+                     Color="{DynamicResource ThreeReceiverHook}" Opacity="0.1"/>
+        <SolidColorBrush x:Key="HookCurlBrush"
+                     Color="{DynamicResource HookCurl}" Opacity="0.1"/>
+        <SolidColorBrush x:Key="VertHookBrush"
+                     Color="{DynamicResource VertHook}" Opacity="0.1"/>
+        <SolidColorBrush x:Key="CurlFlatBrush"
+                     Color="{DynamicResource CurlFlat}" Opacity="0.1"/>
+        <SolidColorBrush x:Key="SeamFlatBrush"
+                     Color="{DynamicResource SeamFlat}" Opacity="0.1"/>
+        <SolidColorBrush x:Key="QuarterFlatBrush"
+                     Color="{DynamicResource QuarterFlat}" Opacity="0.1"/>
+        <SolidColorBrush x:Key="DeepZoneBrush"
+                     Color="{DynamicResource DeepZone}" Opacity="0.1"/>
+        <SolidColorBrush x:Key="QBSpyBrush"
+                     Color="{DynamicResource QBSpy}" Opacity="0.1"/>
+        <SolidColorBrush x:Key="RushQBBrush"
+                     Color="{DynamicResource RushQB}" Opacity="0.1"/>
         <ImageBrush 
             x:Key="FieldBrush"
             ImageSource="./Resources/full_field_mask.png"
@@ -128,6 +191,11 @@
                 </MenuItem>
                 <MenuItem Header="PSAL Editor" Click="PSAL_Editor"/>
             </MenuItem>
+            <ComboBox x:Name="lvwTeamColors"
+                SelectedValuePath="Value"
+                DisplayMemberPath="Key"
+                SelectionChanged="lvwTeamColors_Selected"
+                ItemsSource="{Binding Source={x:Static TeamPlaybookViewModels:TeamPlaybook.TeamColors}}"/>
             <MenuItem Header="Help">
                 <Hyperlink NavigateUri="https://docs.google.com/spreadsheets/d/1yGtMkVxY1HZ-Pi_ZuffaI1TUtA6tpNpQPQUELa-INaI/edit?usp=sharing" RequestNavigate="Hyperlink_RequestNavigate">
                     Table Definitions
@@ -464,9 +532,7 @@
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
 
                         <ListView x:Name="lvwSituations" Grid.Column="0"
@@ -535,13 +601,11 @@
                             </TreeView.ItemContainerStyle>
                         </TreeView>-->
 
-                        <ListView  Grid.Column="1"
-                            x:Name="lvwPlaysBySituation"
+                        <ListView x:Name="lvwPlaysBySituation" Grid.Column="1"
                             Margin="5,1"
-                            MaxHeight="1080"
                             ScrollViewer.CanContentScroll="False"
                             ScrollViewer.VerticalScrollBarVisibility="Auto"
-                            ScrollViewer.HorizontalScrollBarVisibility="Hidden"
+                            ScrollViewer.HorizontalScrollBarVisibility="Auto"
                             BorderBrush="Transparent"
                             Background="Transparent"
                             BorderThickness="0"
@@ -560,24 +624,24 @@
                                     <GroupStyle.HeaderTemplate>
                                         <DataTemplate>
                                             <Border Grid.Row="0"
-                                                BorderBrush="{DynamicResource BorderBrush}"
-                                                BorderThickness="3"
-                                                Background="{DynamicResource GradientBrush}" 
-                                                CornerRadius="8">
-                                                <TextBlock Foreground="{DynamicResource TertiaryBrush}" FontWeight="Bold" FontFamily="DK Crayon Crumble" FontSize="18" Text="{Binding Name}"/>
+                                                BorderBrush="Transparent"
+                                                BorderThickness="0"
+                                                Background="{DynamicResource PrimaryBrush}" 
+                                                CornerRadius="4">
+                                                <TextBlock Foreground="{DynamicResource TertiaryBrush}" 
+                                                    FontWeight="Bold" 
+                                                    FontFamily="DK Crayon Crumble" 
+                                                    FontSize="16" 
+                                                    HorizontalAlignment="Center"
+                                                    Text="{Binding Name}"/>
                                             </Border>
                                         </DataTemplate>
                                     </GroupStyle.HeaderTemplate>
                                 </GroupStyle>
                             </ListView.GroupStyle>
-                            <ListView.ItemsPanel>
-                                <ItemsPanelTemplate>
-                                    <WrapPanel HorizontalAlignment="Left" Orientation="Vertical"/>
-                                </ItemsPanelTemplate>
-                            </ListView.ItemsPanel>
                         </ListView>
 
-                        <Canvas x:Name="cvsGameplanPercent" Grid.Column="2"
+                        <!--<Canvas x:Name="cvsGameplanPercent" Grid.Column="2"
                                 Visibility="Collapsed"
                                 Height="600" 
                                 Width="600" />
@@ -606,8 +670,9 @@
                                             VerticalAlignment="Center"
                                             HorizontalAlignment="Right"
                                             Grid.Column="0"
-                                            BorderBrush="{DynamicResource BorderBrush}"
-                                            Background="{DynamicResource GradientBrush}">
+                                            BorderThickness="0"
+                                            BorderBrush="Transparent"
+                                            Background="{DynamicResource PrimaryBrush}">
                                         </Border>
 
                                         <StackPanel Grid.Column="1" Orientation="Horizontal" Margin="1">
@@ -616,12 +681,6 @@
                                                 FontSize="14"
                                                 Foreground="{DynamicResource TertiaryBrush}"
                                                 VerticalAlignment="Center"/>
-
-                                            <!--<TextBlock Text="{Binding Plays.Count, StringFormat=({0})}"
-                                                FontSize="14"
-                                                Foreground="LightGray"
-                                                Margin="5,0,0,0"
-                                                VerticalAlignment="Center"/>-->
 
                                             <TextBlock Text="{Binding Percentage, StringFormat='{}{0}&#32;%'}"
                                                 FontSize="14"
@@ -635,7 +694,7 @@
                                     </Grid>
                                 </DataTemplate>
                             </ListView.ItemTemplate>
-                        </ListView>
+                        </ListView>-->
 
                     </Grid>
 

@@ -20,7 +20,7 @@
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="ToolTip">
-                        <Border CornerRadius="10" BorderThickness="0" Background="DarkOliveGreen" SnapsToDevicePixels="True">
+                        <Border CornerRadius="4" BorderThickness="0" Background="{Binding PrimaryBrush}" SnapsToDevicePixels="True">
                             <ItemsPresenter />
                         </Border>
                     </ControlTemplate>

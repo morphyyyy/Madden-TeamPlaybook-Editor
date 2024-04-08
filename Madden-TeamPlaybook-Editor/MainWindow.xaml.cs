@@ -59,7 +59,7 @@ namespace MaddenTeamPlaybookEditor
         {
             InitializeComponent();
 
-            filePath = "E:\\Software\\MMC_Editor\\Madden 24\\All_Legacy_Files\\common\\database\\playbooks\\madden_49ers.db.DB";
+            filePath = "E:\\Software\\MMC_Editor\\Madden 24\\All_Legacy_Files\\common\\database\\playbooks\\teams\\madden_49ers.db.DB";
 
             if (File.Exists(filePath))
             {
@@ -196,48 +196,7 @@ namespace MaddenTeamPlaybookEditor
 
         public void BindPlaybook(TeamPlaybook Playbook)
         {
-            //Apply UI Colors and Image
-            if (this.TeamPlaybook.TeamColor.Value != null)
-            {
-                LinearGradientBrush myLinearGradientBrush = new LinearGradientBrush();
-                myLinearGradientBrush.StartPoint = new Point(1, 0.5);
-                myLinearGradientBrush.EndPoint = new Point(0, 0.5);
-                List<Color> TeamColors = new List<Color>();
-                foreach (string hex in TeamPlaybook.TeamColor.Value)
-                {
-                    TeamColors.Add((Color)ColorConverter.ConvertFromString(hex));
-                }
-                myLinearGradientBrush.GradientStops.Add(new GradientStop(TeamColors[0], 0.666));
-                myLinearGradientBrush.GradientStops.Add(new GradientStop(TeamColors[1], 1));
-                Application.Current.Resources["Primary"] = TeamColors[0];
-                Application.Current.Resources["Secondary"] = TeamColors[1];
-                Application.Current.Resources["Tertiary"] = TeamColors[2];
-                Application.Current.Resources["Quaternary"] = TeamColors.Count() > 3 ? TeamColors[3] : TeamColors[0];
-                Application.Current.Resources["Quinary"] = TeamColors.Count() > 4 ? TeamColors[4] : TeamColors[1];
-                Application.Current.Resources["Senary"] = TeamColors.Count() > 5 ? TeamColors[5] : TeamColors[2];
-
-                //myLinearGradientBrush.GradientStops.Add(new GradientStop(color3, 1.0));
-
-                //for (int i = 2; i < this.TeamPlaybook.TeamColor.Value.Count; i++)
-                //{
-                //    color = (Color)ColorConverter.ConvertFromString(this.TeamPlaybook.TeamColor.Value[i]);
-                //    double stop = (((double)i / (double)this.TeamPlaybook.TeamColor.Value.Count) * 0.05) + 0.95;
-                //    myLinearGradientBrush.GradientStops.Add(new GradientStop(color, stop));
-                //}
-
-                //cvsTeamColors.Background = myLinearGradientBrush;
-
-                //ImageBrush imageBrush = new ImageBrush();
-                //imageBrush.ImageSource = new BitmapImage(new Uri("pack://application:,,,/Resources/" + TeamPlaybook.TeamColor.Key + ".png"));
-                //imageBrush.Viewport = new Rect(0, 0, 384, 384);
-                //imageBrush.ViewportUnits = BrushMappingMode.Absolute;
-                //imageBrush.TileMode = TileMode.None;
-                //imageBrush.Stretch = Stretch.UniformToFill;
-                //imageBrush.AlignmentX = AlignmentX.Center;
-                //imageBrush.AlignmentY = AlignmentY.Center;
-
-                //cvsTeamHelmet.Background = imageBrush;
-            }
+            SetTeamColors(this.TeamPlaybook.TeamColor.Value);
 
             wdwPlaybookEditor.Title = "Madden Team Playbook Editor - " + Path.GetFileName(Playbook.filePath);
             tvwPlaybook.DataContext = Playbook;
@@ -350,6 +309,40 @@ namespace MaddenTeamPlaybookEditor
         {
             wdwPlaybookEditor.Title = "Madden Team Playbook Editor - " + Path.GetFileName(Playbook.filePath);
             tclCustomPlaybook.DataContext = Playbook;
+        }
+
+        public void SetTeamColors(List<string> TeamColors)
+        {
+            if (TeamColors == null) return;
+
+            List<Color> TeamColorsHex = new List<Color>();
+            foreach (string hex in TeamColors)
+            {
+                Color color = (Color)ColorConverter.ConvertFromString(hex);
+                TeamColorsHex.Add(color);
+            }
+            if (TeamColors[0] == "#010101")
+            {
+                TeamColorsHex[0] = (Color)ColorConverter.ConvertFromString(TeamColors[1]);
+                TeamColorsHex[1] = TeamColors.Count() > 3 ? (Color)ColorConverter.ConvertFromString(TeamColors[3]) : (Color)ColorConverter.ConvertFromString(TeamColors[2]);
+            }
+            Application.Current.Resources["Primary"] = TeamColorsHex[0];
+            Application.Current.Resources["Secondary"] = TeamColorsHex[1];
+            Application.Current.Resources["Tertiary"] = TeamColorsHex[2];
+            Application.Current.Resources["Quaternary"] = TeamColorsHex.Count() > 3 ? TeamColorsHex[3] : TeamColorsHex[0];
+            Application.Current.Resources["Quinary"] = TeamColorsHex.Count() > 4 ? TeamColorsHex[4] : TeamColorsHex[1];
+            Application.Current.Resources["Senary"] = TeamColorsHex.Count() > 5 ? TeamColorsHex[5] : TeamColorsHex[2];
+
+            //ImageBrush imageBrush = new ImageBrush();
+            //imageBrush.ImageSource = new BitmapImage(new Uri("pack://application:,,,/Resources/" + TeamPlaybook.TeamColor.Key + ".png"));
+            //imageBrush.Viewport = new Rect(0, 0, 384, 384);
+            //imageBrush.ViewportUnits = BrushMappingMode.Absolute;
+            //imageBrush.TileMode = TileMode.None;
+            //imageBrush.Stretch = Stretch.UniformToFill;
+            //imageBrush.AlignmentX = AlignmentX.Center;
+            //imageBrush.AlignmentY = AlignmentY.Center;
+
+            //cvsTeamHelmet.Background = imageBrush;
         }
 
         #endregion
@@ -1188,127 +1181,127 @@ namespace MaddenTeamPlaybookEditor
             //((TeamPlaybook)tvwPlaybook.DataContext).PBAI = Madden.TeamPlaybook.PBAI.Sort(((TeamPlaybook)tvwPlaybook.DataContext).PBAI);
             //uclPBAITable.dataGrid.Items.Refresh();
 
-            int SelectedSituation = ((KeyValuePair<int?, string>)lvwSituations.SelectedItem).Key ?? -1;
-            if (lvwSituations.SelectedItem == null || /*cbxPLYT.SelectedItem == null || */SelectedSituation == -1)
-            {
-                return;
-            }
-            List<SituationVM> PlayTypes = new List<SituationVM>();
-            int playCount = 0;
-            int TotalSitWeight = TeamPlaybook.PBAI.Where(p => p.AIGR == SelectedSituation).Sum(p => p.prct);
-            int Weight = 0;
-            List<int> _plyl = TeamPlaybook.PBAI.Where(p => p.AIGR == SelectedSituation).Select(p => p.PLYT).Distinct().ToList();
-            foreach (int playtype in _plyl)
-            {
-                List<Color> colors = typeof(Colors)
-                    .GetProperties()
-                    .Where(c =>
-                        ((Color)ColorConverter.ConvertFromString(c.Name)).R > 64 &&
-                        ((Color)ColorConverter.ConvertFromString(c.Name)).R < 248 &&
-                        ((Color)ColorConverter.ConvertFromString(c.Name)).G > 0 &&
-                        ((Color)ColorConverter.ConvertFromString(c.Name)).G < 192 &&
-                        ((Color)ColorConverter.ConvertFromString(c.Name)).B > 64 &&
-                        ((Color)ColorConverter.ConvertFromString(c.Name)).B < 248)
-                    .Select(c => ((Color)ColorConverter.ConvertFromString(c.Name)))
-                    .OrderBy(c => c.ToString())
-                    .ToList();
-                //PlayTypes.Add(new SituationVM
-                //{
-                //    Title = TeamPlaybook.PlayType[playtype],
-                //    ColorBrush = new SolidColorBrush(colors[PlayTypes.Count]),
-                //    Plays = ((TeamPlaybook)tvwPlaybook.DataContext).Plays.Where(p => p.PLYL.PLYT == playtype).ToList()
-                //});
-                PlayTypes.Add(new SituationVM
-                {
-                    Title = TeamPlaybook.PlayType.Keys.Contains(playtype) ? TeamPlaybook.PlayType[playtype] : "Play Type " + playtype + " Not Found!",
-                    ColorBrush = new SolidColorBrush(colors[PlayTypes.Count]),
-                    Plays = ((TeamPlaybook)tvwPlaybook.DataContext).Plays.Where(p => p.PLYL.PLYT == playtype).ToList(),
-                    Weight = TeamPlaybook.PBAI.Where(p => p.PLYT == playtype && p.AIGR == SelectedSituation).Sum(p => p.prct),
-                    Percentage = (float)Math.Round(((double)Weight / (double)TotalSitWeight) * 100)
-                });
-                playCount += PlayTypes[PlayTypes.Count() - 1].Plays.Count();
-            }
-            foreach (SituationVM playtype in PlayTypes)
-            {
-                playtype.Percentage = Math.Round(((float)playtype.Plays.Count / (float)playCount) * 100);
-            }
-            PlayTypes = PlayTypes.OrderByDescending(p => p.Percentage).ToList();
-            iclGameplanPercent.ItemsSource = PlayTypes;
+            //int SelectedSituation = ((KeyValuePair<int?, string>)lvwSituations.SelectedItem).Key ?? -1;
+            //if (lvwSituations.SelectedItem == null || /*cbxPLYT.SelectedItem == null || */SelectedSituation == -1)
+            //{
+            //    return;
+            //}
+            //List<SituationVM> PlayTypes = new List<SituationVM>();
+            //int playCount = 0;
+            //int TotalSitWeight = TeamPlaybook.PBAI.Where(p => p.AIGR == SelectedSituation).Sum(p => p.prct);
+            //int Weight = 0;
+            //List<int> _plyl = TeamPlaybook.PBAI.Where(p => p.AIGR == SelectedSituation).Select(p => p.PLYT).Distinct().ToList();
+            //foreach (int playtype in _plyl)
+            //{
+            //    List<Color> colors = typeof(Colors)
+            //        .GetProperties()
+            //        .Where(c =>
+            //            ((Color)ColorConverter.ConvertFromString(c.Name)).R > 64 &&
+            //            ((Color)ColorConverter.ConvertFromString(c.Name)).R < 248 &&
+            //            ((Color)ColorConverter.ConvertFromString(c.Name)).G > 0 &&
+            //            ((Color)ColorConverter.ConvertFromString(c.Name)).G < 192 &&
+            //            ((Color)ColorConverter.ConvertFromString(c.Name)).B > 64 &&
+            //            ((Color)ColorConverter.ConvertFromString(c.Name)).B < 248)
+            //        .Select(c => ((Color)ColorConverter.ConvertFromString(c.Name)))
+            //        .OrderBy(c => c.ToString())
+            //        .ToList();
+            //    //PlayTypes.Add(new SituationVM
+            //    //{
+            //    //    Title = TeamPlaybook.PlayType[playtype],
+            //    //    ColorBrush = new SolidColorBrush(colors[PlayTypes.Count]),
+            //    //    Plays = ((TeamPlaybook)tvwPlaybook.DataContext).Plays.Where(p => p.PLYL.PLYT == playtype).ToList()
+            //    //});
+            //    PlayTypes.Add(new SituationVM
+            //    {
+            //        Title = TeamPlaybook.PlayType.Keys.Contains(playtype) ? TeamPlaybook.PlayType[playtype] : "Play Type " + playtype + " Not Found!",
+            //        ColorBrush = new SolidColorBrush(colors[PlayTypes.Count]),
+            //        Plays = ((TeamPlaybook)tvwPlaybook.DataContext).Plays.Where(p => p.PLYL.PLYT == playtype).ToList(),
+            //        Weight = TeamPlaybook.PBAI.Where(p => p.PLYT == playtype && p.AIGR == SelectedSituation).Sum(p => p.prct),
+            //        Percentage = (float)Math.Round(((double)Weight / (double)TotalSitWeight) * 100)
+            //    });
+            //    playCount += PlayTypes[PlayTypes.Count() - 1].Plays.Count();
+            //}
+            //foreach (SituationVM playtype in PlayTypes)
+            //{
+            //    playtype.Percentage = Math.Round(((float)playtype.Plays.Count / (float)playCount) * 100);
+            //}
+            //PlayTypes = PlayTypes.OrderByDescending(p => p.Percentage).ToList();
+            //iclGameplanPercent.ItemsSource = PlayTypes;
 
-            float angle = -90, prevAngle = -90;
-            cvsGameplanPercent.Children.Clear();
-            foreach (SituationVM playtype in PlayTypes)
-            {
-                double line1X = ((cvsGameplanPercent.Width / 2) * Math.Cos(angle * Math.PI / 180)) + (cvsGameplanPercent.Width / 2);
-                double line1Y = ((cvsGameplanPercent.Width / 2) * Math.Sin(angle * Math.PI / 180)) + (cvsGameplanPercent.Height / 2);
+            //float angle = -90, prevAngle = -90;
+            //cvsGameplanPercent.Children.Clear();
+            //foreach (SituationVM playtype in PlayTypes)
+            //{
+            //    double line1X = ((cvsGameplanPercent.Width / 2) * Math.Cos(angle * Math.PI / 180)) + (cvsGameplanPercent.Width / 2);
+            //    double line1Y = ((cvsGameplanPercent.Width / 2) * Math.Sin(angle * Math.PI / 180)) + (cvsGameplanPercent.Height / 2);
 
-                angle = (float)playtype.Percentage * (float)360 / 100 + prevAngle;
+            //    angle = (float)playtype.Percentage * (float)360 / 100 + prevAngle;
 
-                double arcX = ((cvsGameplanPercent.Width / 2) * Math.Cos(angle * Math.PI / 180)) + (cvsGameplanPercent.Width / 2);
-                double arcY = ((cvsGameplanPercent.Width / 2) * Math.Sin(angle * Math.PI / 180)) + (cvsGameplanPercent.Height / 2);
+            //    double arcX = ((cvsGameplanPercent.Width / 2) * Math.Cos(angle * Math.PI / 180)) + (cvsGameplanPercent.Width / 2);
+            //    double arcY = ((cvsGameplanPercent.Width / 2) * Math.Sin(angle * Math.PI / 180)) + (cvsGameplanPercent.Height / 2);
 
-                var line1Segment = new LineSegment(new Point(line1X, line1Y), false);
-                double arcWidth = (cvsGameplanPercent.Width / 2), arcHeight = (cvsGameplanPercent.Width / 2);
-                bool isLargeArc = playtype.Percentage > 50;
-                var arcSegment = new ArcSegment()
-                {
-                    Size = new Size(arcWidth, arcHeight),
-                    Point = new Point(arcX, arcY),
-                    SweepDirection = SweepDirection.Clockwise,
-                    IsLargeArc = isLargeArc,
-                };
-                var line2Segment = new LineSegment(new Point((cvsGameplanPercent.Width / 2), (cvsGameplanPercent.Height / 2)), false);
+            //    var line1Segment = new LineSegment(new Point(line1X, line1Y), false);
+            //    double arcWidth = (cvsGameplanPercent.Width / 2), arcHeight = (cvsGameplanPercent.Width / 2);
+            //    bool isLargeArc = playtype.Percentage > 50;
+            //    var arcSegment = new ArcSegment()
+            //    {
+            //        Size = new Size(arcWidth, arcHeight),
+            //        Point = new Point(arcX, arcY),
+            //        SweepDirection = SweepDirection.Clockwise,
+            //        IsLargeArc = isLargeArc,
+            //    };
+            //    var line2Segment = new LineSegment(new Point((cvsGameplanPercent.Width / 2), (cvsGameplanPercent.Height / 2)), false);
 
-                var pathFigure = new PathFigure(
-                    new Point((cvsGameplanPercent.Width / 2), (cvsGameplanPercent.Height / 2)),
-                    new List<PathSegment>()
-                    {
-                    line1Segment,
-                    arcSegment,
-                    line2Segment,
-                    },
-                    true);
+            //    var pathFigure = new PathFigure(
+            //        new Point((cvsGameplanPercent.Width / 2), (cvsGameplanPercent.Height / 2)),
+            //        new List<PathSegment>()
+            //        {
+            //        line1Segment,
+            //        arcSegment,
+            //        line2Segment,
+            //        },
+            //        true);
 
-                var pathFigures = new List<PathFigure>() { pathFigure, };
-                var pathGeometry = new PathGeometry(pathFigures);
-                var path = PlayTypes.Count == 1 ?
-                    new System.Windows.Shapes.Path()
-                    {
-                        Fill = playtype.ColorBrush,
-                        Data = new EllipseGeometry(pathFigure.StartPoint, cvsGameplanPercent.Width / 2, cvsGameplanPercent.Height / 2),
-                    } :
-                    new System.Windows.Shapes.Path()
-                    {
-                        Fill = playtype.ColorBrush,
-                        Data = pathGeometry,
-                    };
-                cvsGameplanPercent.Children.Add(path);
-                prevAngle = angle;
+            //    var pathFigures = new List<PathFigure>() { pathFigure, };
+            //    var pathGeometry = new PathGeometry(pathFigures);
+            //    var path = PlayTypes.Count == 1 ?
+            //        new System.Windows.Shapes.Path()
+            //        {
+            //            Fill = playtype.ColorBrush,
+            //            Data = new EllipseGeometry(pathFigure.StartPoint, cvsGameplanPercent.Width / 2, cvsGameplanPercent.Height / 2),
+            //        } :
+            //        new System.Windows.Shapes.Path()
+            //        {
+            //            Fill = playtype.ColorBrush,
+            //            Data = pathGeometry,
+            //        };
+            //    cvsGameplanPercent.Children.Add(path);
+            //    prevAngle = angle;
 
 
-                // draw outlines
-                //var outline1 = new System.Windows.Shapes.Line()
-                //{
-                //    X1 = (cvsGameplanPercent.Width / 2),
-                //    Y1 = (cvsGameplanPercent.Height / 2),
-                //    X2 = line1Segment.Point.X,
-                //    Y2 = line1Segment.Point.Y,
-                //    Stroke = Brushes.Black,
-                //    StrokeThickness = 1,
-                //};
-                //var outline2 = new System.Windows.Shapes.Line()
-                //{
-                //    X1 = (cvsGameplanPercent.Width / 2),
-                //    Y1 = (cvsGameplanPercent.Height / 2),
-                //    X2 = arcSegment.Point.X,
-                //    Y2 = arcSegment.Point.Y,
-                //    Stroke = Brushes.Black,
-                //    StrokeThickness = 1,
-                //};
+            //    // draw outlines
+            //    //var outline1 = new System.Windows.Shapes.Line()
+            //    //{
+            //    //    X1 = (cvsGameplanPercent.Width / 2),
+            //    //    Y1 = (cvsGameplanPercent.Height / 2),
+            //    //    X2 = line1Segment.Point.X,
+            //    //    Y2 = line1Segment.Point.Y,
+            //    //    Stroke = Brushes.Black,
+            //    //    StrokeThickness = 1,
+            //    //};
+            //    //var outline2 = new System.Windows.Shapes.Line()
+            //    //{
+            //    //    X1 = (cvsGameplanPercent.Width / 2),
+            //    //    Y1 = (cvsGameplanPercent.Height / 2),
+            //    //    X2 = arcSegment.Point.X,
+            //    //    Y2 = arcSegment.Point.Y,
+            //    //    Stroke = Brushes.Black,
+            //    //    StrokeThickness = 1,
+            //    //};
 
-                //cvsGameplanPercent.Children.Add(outline1);
-                //cvsGameplanPercent.Children.Add(outline2);
-            }
+            //    //cvsGameplanPercent.Children.Add(outline1);
+            //    //cvsGameplanPercent.Children.Add(outline2);
+            //}
         }
 
         private void SaveAllPlayart(object sender, RoutedEventArgs e)
@@ -1420,6 +1413,13 @@ namespace MaddenTeamPlaybookEditor
             {
                 lvwPlaysBySituation.Items.Filter = SituationFilter;
             }
+        }
+
+        private void lvwTeamColors_Selected(object sender, SelectionChangedEventArgs e)
+        {
+            if (lvwTeamColors.SelectedValue == null) return;
+            List<string> teamColors = lvwTeamColors.SelectedValue as List<string>;
+            SetTeamColors(teamColors);
         }
 
         #endregion
