@@ -39,18 +39,16 @@
                     <ControlTemplate.Triggers>
 
                         <Trigger Property="IsSelected" Value="True">
-                            <Setter Property="Background" Value="{DynamicResource GradientBrush}"/>
+                            <Setter Property="Background" Value="{DynamicResource PrimaryBrush}"/>
                             <Setter Property="Foreground" Value="{DynamicResource TertiaryBrush}"/>
-                            <Setter Property="BorderBrush" Value="{DynamicResource BorderBrush}"/>
                         </Trigger>
                         <Trigger Property="IsSelected" Value="False">
                             <Setter Property="Background" Value="{DynamicResource BaseBrush}"/>
                             <Setter Property="Foreground" Value="{DynamicResource TertiaryBrush}"/>
                         </Trigger>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Background" Value="{DynamicResource GradientBrush}"/>
+                            <Setter Property="Background" Value="{DynamicResource PrimaryBrush}"/>
                             <Setter Property="Foreground" Value="{DynamicResource TertiaryBrush}"/>
-                            <Setter Property="BorderBrush" Value="{DynamicResource BorderBrush}"/>
                         </Trigger>
 
                     </ControlTemplate.Triggers>
