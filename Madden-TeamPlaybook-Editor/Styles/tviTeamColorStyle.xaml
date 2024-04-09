@@ -40,15 +40,15 @@
                     <ControlTemplate.Triggers>
 
                         <Trigger Property="IsSelected" Value="True">
-                            <Setter Property="Background" Value="{DynamicResource PrimaryBrush}"/>
+                            <Setter Property="Background" Value="{DynamicResource SecondaryBrush}"/>
                             <Setter Property="Foreground" Value="{DynamicResource TertiaryBrush}"/>
                         </Trigger>
                         <Trigger Property="IsSelected" Value="False">
-                            <Setter Property="Background" Value="{DynamicResource BaseBrush}"/>
+                            <Setter Property="Background" Value="{DynamicResource PrimaryBrush}"/>
                             <Setter Property="Foreground" Value="{DynamicResource TertiaryBrush}"/>
                         </Trigger>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Background" Value="{DynamicResource PrimaryBrush}"/>
+                            <Setter Property="Background" Value="{DynamicResource SecondaryBrush}"/>
                             <Setter Property="Foreground" Value="{DynamicResource TertiaryBrush}"/>
                         </Trigger>
 

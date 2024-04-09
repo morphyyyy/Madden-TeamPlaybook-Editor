@@ -8,7 +8,6 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:classes="clr-namespace:MaddenTeamPlaybookEditor.Classes"
-    xmlns:math="http://hexinnovation.com/math"
     xmlns:p="clr-namespace:System.Windows.Controls.Primitives;assembly=PresentationFramework"
     mc:Ignorable="d" 
     x:Name="wdwPlaybookEditor"
@@ -20,72 +19,20 @@
     ScrollViewer.HorizontalScrollBarVisibility="Visible"
     Width="1920"
     Height="1080"
-    WindowState="Maximized">
-
+    WindowState="Maximized"
+    UseLayoutRounding="True">
     <Window.Background>
-        <ImageBrush 
-            ImageSource="Resources/Black_Canvas.jpg" 
-            Viewport="0,0,1920,1080"
-            ViewportUnits="Absolute"
-            TileMode="Tile"
-            Stretch="UniformToFill" 
-            AlignmentX="Left" 
-            AlignmentY="Top" 
-            />
+        <SolidColorBrush Color="{DynamicResource BackgroundColor}"/>
     </Window.Background>
-
     <Window.CommandBindings>
         <CommandBinding Command="ApplicationCommands.Paste" Executed="PasteFromClipboard" />
     </Window.CommandBindings>
-
     <Window.Resources>
-        <Style TargetType="{x:Type DataGrid}">
-            <Setter Property="Background" Value="Transparent"/>
-            <Setter Property="BorderBrush" Value="Transparent"/>
-            <Setter Property="Foreground" Value="Black"/>
-            <Setter Property="HorizontalGridLinesBrush" Value="#FFD6D6D6"/>
-            <Setter Property="VerticalGridLinesBrush" Value="Black"/>
-            <Setter Property="GridLinesVisibility" Value="Horizontal"/>
-            <Setter Property="CanUserAddRows" Value="False"/>
-            <Setter Property="CanUserDeleteRows" Value="False"/>
-        </Style>
-        <Style TargetType="{x:Type TabControl}">
-            <Setter Property="Background" Value="Transparent"/>
-            <Setter Property="BorderBrush" Value="Transparent"/>
-            <Setter Property="Foreground" Value="Black"/>
-        </Style>
-        <Style TargetType="{x:Type GroupBox}">
-            <Setter Property="BorderBrush" Value="Transparent"/>
-            <Setter Property="BorderThickness" Value=".333"/>
-            <Setter Property="Foreground" Value="LightGray"/>
-        </Style>
-        <Style TargetType="ToolTip">
-            <Setter Property="OverridesDefaultStyle" Value="true" />
-            <Setter Property="HasDropShadow" Value="True" />
-            <Setter Property="ToolTipService.InitialShowDelay" Value="0" />
-            <Setter Property="ToolTipService.BetweenShowDelay" Value="0" />
-            <Setter Property="ToolTipService.ShowDuration" Value="0" />
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="ToolTip">
-                        <Border 
-                            HorizontalAlignment="Stretch"
-                            VerticalAlignment="Stretch"
-                            CornerRadius="4"
-                            Padding="5"
-                            Background="Black"
-                            Opacity=".8">
-                            <ContentPresenter />
-                        </Border>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-        <SolidColorBrush x:Key="BaseBrush" Color="Black" Opacity="0.333"/>
-        <SolidColorBrush x:Key="BorderBrush" Color="{DynamicResource Primary}" Opacity="0.5"/>
-        <SolidColorBrush x:Key="PrimaryBrush"  Color="{DynamicResource Primary}" Opacity="0.5"/>
+        <SolidColorBrush x:Key="BaseBrush" Color="{DynamicResource Primary}" Opacity="1"/>
+        <SolidColorBrush x:Key="BorderBrush" Color="{DynamicResource Primary}" Opacity="1"/>
+        <SolidColorBrush x:Key="PrimaryBrush"  Color="{DynamicResource Primary}" Opacity="1"/>
         <SolidColorBrush x:Key="SecondaryBrush" Color="{DynamicResource Secondary}" />
-        <SolidColorBrush x:Key="TertiaryBrush" Color="{DynamicResource Tertiary}" Opacity="0.7"/>
+        <SolidColorBrush x:Key="TertiaryBrush" Color="{DynamicResource Tertiary}" Opacity="1"/>
         <SolidColorBrush x:Key="QuaternaryBrush" Color="{DynamicResource Quaternary}" />
         <SolidColorBrush x:Key="QuinaryBrush" Color="{DynamicResource Quinary}" />
         <SolidColorBrush x:Key="SenaryBrush" Color="{DynamicResource Senary}"/>
@@ -112,28 +59,22 @@
         <SolidColorBrush x:Key="DeepZoneBrush" Color="{DynamicResource DeepZone}" Opacity="0.1"/>
         <SolidColorBrush x:Key="QBSpyBrush" Color="{DynamicResource QBSpy}" Opacity="0.1"/>
         <SolidColorBrush x:Key="RushQBBrush" Color="{DynamicResource RushQB}" Opacity="0.1"/>
-        <ImageBrush 
-            x:Key="FieldBrush"
-            ImageSource="./Resources/full_field_mask.png"
-            RenderOptions.BitmapScalingMode="Fant"
-            Stretch="UniformToFill"
-            AlignmentY="Top"
-            Opacity=".8"/>
-        <math:MathConverter x:Key="Math" />
     </Window.Resources>
-        
+    
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        
+
+        <Canvas Grid.Row="1" Background="{StaticResource BackgroundBrush}" Opacity="1"/>
+
         <Menu IsMainMenu="True" Grid.Row="0">
             <MenuItem Header="_File">
                 <MenuItem Header="Open" Click="mnuOpen_Click"/>
-                <Separator />
+                <Separator/>
                 <MenuItem Header="Load Roster" Click="mnuLoadRoster_Click"/>
-                <Separator />
+                <Separator/>
                 <MenuItem Header="Save" Click="mnuSave_Click"/>
                 <MenuItem Header="Save All Playart" Click="SaveAllPlayart"/>
                 <MenuItem Header="Save All ARTL" Click="SaveAllARTL"/>
@@ -165,17 +106,19 @@
                     Table Definitions
                 </Hyperlink>
             </MenuItem>
-                <ComboBox x:Name="lvwTeamColors"
-                    SelectedValuePath="Value"
-                    DisplayMemberPath="Key"
-                    SelectionChanged="lvwTeamColors_Selected"
-                    ItemsSource="{Binding Source={x:Static TeamPlaybookViewModels:TeamPlaybook.TeamColors}}"/>
-
+            <MenuItem Header="Themes">
+                <MenuItem Header="Load Theme" Click="btnLoadTheme_Click"/>
+            </MenuItem>
+            <ComboBox x:Name="lvwTeamColors"
+                SelectedValuePath="Value"
+                DisplayMemberPath="Key"
+                SelectionChanged="lvwTeamColors_Selected"
+                ItemsSource="{Binding Source={x:Static TeamPlaybookViewModels:TeamPlaybook.TeamColors}}"/>
         </Menu>
 
         <Grid Margin="5" Grid.Row="1">
 
-            <TabControl x:Name="tclTeamPlaybook" Grid.Row="0" SelectionChanged="tclTeamPlaybook_TabChanged">
+            <TabControl Background="Transparent" BorderThickness="0" BorderBrush="Transparent" x:Name="tclTeamPlaybook" Grid.Row="0" SelectionChanged="tclTeamPlaybook_TabChanged">
                 <TabControl.ItemContainerStyle>
                     <!--<Style TargetType="{x:Type TabItem}" BasedOn="{DynamicResource tciTeamColorStyle}"></Style>-->
                     <Style TargetType="{x:Type TabItem}">
@@ -355,13 +298,16 @@
                         </TreeView>
 
                         <Canvas Name="bdrField"
-                            Background="{StaticResource FieldBrush}"
                             Width="533"
                             Height="1048"
                             VerticalAlignment="Top"
                             HorizontalAlignment="Left"
                             Grid.Column="1"
-                            Margin="0,-100.5">
+                            Margin="0,-100.5"
+                            OpacityMask="{StaticResource FieldBrush}">
+                            <Canvas.Background>
+                                <SolidColorBrush Color="{DynamicResource TextColor}"/>
+                            </Canvas.Background>
                             
                             <Line X1="0" Y1="749" X2="533" Y2="749" StrokeThickness="5" Grid.Column="1" Stroke="{DynamicResource PrimaryBrush}" Opacity=".5"/>
 
