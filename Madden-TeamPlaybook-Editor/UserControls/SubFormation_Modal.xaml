@@ -64,7 +64,8 @@
                                 Scale="2"
                                 ShowPosition="True"
                                 AbsolutePositioning="True"
-                                Draggable="True"/>
+                                Draggable="True"
+                                MouseRightButtonUp="iclIconMouseRightButtonUp"/>
                         </Canvas>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
@@ -84,7 +85,7 @@
                                         <DropShadowEffect ShadowDepth="0" Color="White" Opacity="1" BlurRadius="20"/>
                                     </Setter.Value>
                                 </Setter>
-                                <Setter Property="UserControls:PlayerIcon.RenderTransform">
+                                <Setter Property="UserControls:PlayerIcon.LayoutTransform">
                                     <Setter.Value>
                                         <ScaleTransform ScaleX="2" ScaleY="2"/>
                                     </Setter.Value>
@@ -225,19 +226,19 @@
                         </GroupBox>
                         <GroupBox Header="Alignments" Grid.Row="2" Margin="5">
                             <ListView
-                                x:Name="tabAlignments" 
+                                x:Name="lvwAlignments" 
                                 ItemsSource="{Binding Alignments}"
                                 Background="Transparent" 
                                 BorderBrush="Transparent" 
                                 HorizontalAlignment="Center"
-                                SelectionChanged="tabAlignments_SelectionChanged">
+                                SelectionChanged="lvwAlignments_SelectionChanged">
                                 <ListView.ItemTemplate>
                                     <DataTemplate DataType="{x:Type TeamPlaybookViewModels:SubFormationVM}">
                                         <TextBlock x:Name="tabAlignment" Text="{Binding SGFM.name}"/>
                                     </DataTemplate>
                                 </ListView.ItemTemplate>
                                 <ListView.ItemContainerStyle>
-                                    <Style TargetType="{x:Type ListViewItem}" BasedOn="{StaticResource lviTeamColorStyle}"/>
+                                    <Style TargetType="{x:Type ListViewItem}" BasedOn="{StaticResource lbiTeamColorStyle}"/>
                                 </ListView.ItemContainerStyle>
                                 <ListView.ItemsPanel>
                                     <ItemsPanelTemplate>
@@ -248,18 +249,20 @@
                         </GroupBox>
                         <GroupBox Header="Packages" Grid.Row="3" Margin="5">
                             <ListView
-                                x:Name="tabPackages" 
+                                x:Name="lvwPackages"
                                 ItemsSource="{Binding Packages}"
                                 Background="Transparent" 
                                 BorderBrush="Transparent" 
-                                HorizontalAlignment="Center">
+                                HorizontalAlignment="Center"
+                                MouseRightButtonUp="lvwPackagesMouseRightUp"
+                                SelectionChanged="lvwPackagesSelectionChanged">
                                 <ListView.ItemTemplate>
                                     <DataTemplate DataType="{x:Type TeamPlaybookViewModels:SubFormationVM}">
                                         <TextBlock x:Name="tabAlignment" Text="{Binding SPKF.name}"/>
                                     </DataTemplate>
                                 </ListView.ItemTemplate>
                                 <ListView.ItemContainerStyle>
-                                    <Style TargetType="{x:Type ListViewItem}" BasedOn="{StaticResource lviTeamColorStyle}"/>
+                                    <Style TargetType="{x:Type ListViewItem}" BasedOn="{StaticResource lbiTeamColorStyle}"/>
                                 </ListView.ItemContainerStyle>
                                 <ListView.ItemsPanel>
                                     <ItemsPanelTemplate>

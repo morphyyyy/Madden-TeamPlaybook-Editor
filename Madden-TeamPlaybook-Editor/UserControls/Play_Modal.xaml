@@ -149,7 +149,7 @@
                                             <DropShadowEffect ShadowDepth="0" Color="White" Opacity="1" BlurRadius="20"/>
                                         </Setter.Value>
                                     </Setter>
-                                    <Setter Property="UserControls:PlayerIcon.RenderTransform">
+                                    <Setter Property="UserControls:PlayerIcon.LayoutTransform">
                                         <Setter.Value>
                                             <ScaleTransform ScaleX="2" ScaleY="2"/>
                                         </Setter.Value>

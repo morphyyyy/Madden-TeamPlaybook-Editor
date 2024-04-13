@@ -419,7 +419,7 @@
                                                     </DataTemplate>
                                                 </ListView.ItemTemplate>
                                                 <ListView.ItemContainerStyle>
-                                                    <Style TargetType="{x:Type ListViewItem}" BasedOn="{StaticResource lviTeamColorStyle}"></Style>
+                                                    <Style TargetType="{x:Type ListViewItem}" BasedOn="{StaticResource lbiTeamColorStyle}"></Style>
                                                 </ListView.ItemContainerStyle>
                                                 <ListView.ItemsPanel>
                                                     <ItemsPanelTemplate>
@@ -467,7 +467,7 @@
                             ScrollViewer.VerticalScrollBarVisibility="Hidden"
                             ScrollViewer.HorizontalScrollBarVisibility="Hidden">
                             <ListView.ItemContainerStyle>
-                                <Style TargetType="{x:Type ListViewItem}" BasedOn="{StaticResource lviTeamColorStyle}"/>
+                                <Style TargetType="{x:Type ListViewItem}" BasedOn="{StaticResource lbiTeamColorStyle}"/>
                             </ListView.ItemContainerStyle>
                         </ListView>
 

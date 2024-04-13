@@ -147,35 +147,62 @@
                 </Setter>
                 <Setter Property="Effect">
                     <Setter.Value>
-                        <DropShadowEffect Color="{DynamicResource BackgroundColor}" Direction="45" ShadowDepth="0" Opacity="1.0" />
+                        <DropShadowEffect Color="{DynamicResource BackgroundColor}" Direction="225" ShadowDepth="0" BlurRadius="3" Opacity="5.0" />
                     </Setter.Value>
                 </Setter>
             </Style>
             <Style TargetType="{x:Type TextBox}">
-                <Setter Property="Background" Value="Transparent" />
-                <Setter Property="BorderBrush">
+                <Setter Property="SnapsToDevicePixels" Value="True" />
+                <Setter Property="OverridesDefaultStyle" Value="True" />
+                <Setter Property="KeyboardNavigation.TabNavigation" Value="None" />
+                <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+                <Setter Property="MinWidth" Value="120" />
+                <Setter Property="MinHeight" Value="20" />
+                <Setter Property="AllowDrop" Value="true" />
+                <Setter Property="Template">
                     <Setter.Value>
-                        <SolidColorBrush Color="{DynamicResource TextColor}"/>
+                        <ControlTemplate TargetType="{x:Type TextBox}">
+                            <Grid>
+                                <Border Name="Border"
+                                    CornerRadius="2"
+                                    Padding="2"
+                                    BorderThickness="1"
+                                    Background="{DynamicResource PrimaryBrush}"
+                                    BorderBrush="Transparent">
+                                    <VisualStateManager.VisualStateGroups>
+                                        <VisualStateGroup x:Name="CommonStates">
+                                            <VisualState x:Name="Normal" />
+                                            <VisualState x:Name="Disabled">
+                                                <Storyboard>
+                                                    <ColorAnimationUsingKeyFrames Storyboard.TargetName="Border" Storyboard.TargetProperty="(Panel.Background).(SolidColorBrush.Color)">
+                                                        <EasingColorKeyFrame KeyTime="0" Value="{StaticResource Tertiary}" />
+                                                    </ColorAnimationUsingKeyFrames>
+                                                </Storyboard>
+                                            </VisualState>
+                                            <VisualState x:Name="ReadOnly">
+                                                <Storyboard>
+                                                    <ColorAnimationUsingKeyFrames Storyboard.TargetName="Border" Storyboard.TargetProperty="(Panel.Background).(SolidColorBrush.Color)">
+                                                        <EasingColorKeyFrame KeyTime="0" Value="{StaticResource Tertiary}" />
+                                                    </ColorAnimationUsingKeyFrames>
+                                                </Storyboard>
+                                            </VisualState>
+                                            <VisualState x:Name="MouseOver" />
+                                        </VisualStateGroup>
+                                    </VisualStateManager.VisualStateGroups>
+                                    <ScrollViewer Margin="0" x:Name="PART_ContentHost" />
+                                </Border>
+                            </Grid>
+                        </ControlTemplate>
                     </Setter.Value>
-                </Setter>
-                <Setter Property="Foreground">
-                    <Setter.Value>
-                        <SolidColorBrush Color="{DynamicResource TextColor}"/>
-                    </Setter.Value>
-                </Setter>
-                <Setter Property="Effect">
-                    <Setter.Value>
-                        <DropShadowEffect Color="{DynamicResource BackgroundColor}" Direction="45" ShadowDepth="0" Opacity="1.0" />
-                    </Setter.Value>
-                </Setter>
+                </Setter>            
             </Style>
             <Style TargetType="{x:Type DataGridColumnHeader}">
                 <Setter Property="Background" Value="Transparent" />
-                <Setter Property="MinWidth" Value="30" />
-                <Setter Property="IsEnabled" Value="False"/>
+                <!--<Setter Property="MinWidth" Value="30" />
+                <Setter Property="IsEnabled" Value="False"/>-->
             </Style>
             <Style TargetType="{x:Type DataGridRowHeader}">
-                <Setter Property="Background" Value="Transparent" />
+                <!--<Setter Property="Background" Value="Transparent" />-->
                 <Setter Property="IsEnabled" Value="False"/>
             </Style>
             <BorderGapMaskConverter x:Key="BorderGapMaskConverter"/>
@@ -222,36 +249,27 @@
                     </Setter.Value>
                 </Setter>
             </Style>
-            <Style TargetType="{x:Type ListViewItem}">
-                <Setter Property="HorizontalContentAlignment" Value="Left" />
-                <Setter Property="HorizontalAlignment" Value="Stretch" />
-                <Setter Property="Width" Value="Auto" />
-            </Style>
             <Style TargetType="{x:Type CheckBox}">
                 <Setter Property="Margin" Value="0,1" />
-                <Setter Property="Background" Value="Transparent" />
-                <Setter Property="BorderBrush">
-                    <Setter.Value>
-                        <SolidColorBrush Color="{DynamicResource TextColor}"/>
-                    </Setter.Value>
-                </Setter>
-                <Setter Property="Foreground">
-                    <Setter.Value>
-                        <SolidColorBrush Color="{DynamicResource TextColor}"/>
-                    </Setter.Value>
-                </Setter>
-                <Setter Property="BorderThickness" Value="1"/>
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="{x:Type CheckBox}">
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" >
-                                <Border BorderBrush="{TemplateBinding BorderBrush}" Background="{TemplateBinding Background}" BorderThickness="{TemplateBinding BorderThickness}" Width="15" Height="15">
+                                <Border BorderBrush="{DynamicResource PrimaryBrush}" Background="{DynamicResource PrimaryBrush}" CornerRadius="2" BorderThickness="0" Width="15" Height="15">
                                     <Grid>
-                                        <Grid Background="{TemplateBinding Foreground}" Margin="1" Visibility="Collapsed" Name="nullBlock"/>
-                                        <Path Stretch="Uniform" Width="15" Height="10" Fill="{TemplateBinding Foreground}" Name="eliCheck" Data="F1 M 9.97498,1.22334L 4.6983,9.09834L 4.52164,9.09834L 0,5.19331L 1.27664,3.52165L 4.255,6.08833L 8.33331,1.52588e-005L 9.97498,1.22334 Z " Visibility="Collapsed"/>
+                                        <Grid Margin="1" Visibility="Collapsed" Name="nullBlock">
+                                            <Grid.Background>
+                                                <SolidColorBrush Color="{DynamicResource TextColor}"/>
+                                            </Grid.Background>
+                                        </Grid>
+                                        <Border Name="eliCheck" Background="{DynamicResource SecondaryBrush}" CornerRadius="1" BorderThickness="0" Width="11" Height="11" Visibility="Collapsed"/>
                                     </Grid>
                                 </Border>
-                                <TextBlock Margin="2,0,0,0"  VerticalAlignment="Center" Foreground="{TemplateBinding Foreground}" Text="{TemplateBinding Content}"></TextBlock>
+                                <TextBlock Margin="2,0,0,0"  VerticalAlignment="Center" Text="{TemplateBinding Content}">
+                                    <TextBlock.Foreground>
+                                        <SolidColorBrush Color="{DynamicResource TextColor}"/>
+                                    </TextBlock.Foreground>
+                                </TextBlock>
                             </StackPanel>
                             <ControlTemplate.Triggers>
                                 <Trigger Property="IsChecked" Value="True">
@@ -270,6 +288,7 @@
                 <ResourceDictionary Source="/Styles/sbrTeamColorStyle.xaml" />
                 <ResourceDictionary Source="/Styles/tciTeamColorStyle.xaml" />
                 <ResourceDictionary Source="/Styles/lviTeamColorStyle.xaml" />
+                <ResourceDictionary Source="/Styles/lbiTeamColorStyle.xaml" />
                 <ResourceDictionary Source="/Styles/tviTeamColorStyle.xaml" />
                 <ResourceDictionary Source="/Styles/FormationTabItemStyle.xaml" />
                 <ResourceDictionary Source="/Styles/SubFormationTabItemStyle.xaml" /> 
