@@ -44,7 +44,18 @@ namespace MaddenTeamPlaybookEditor.ViewModels
                 }
             }
         }
-        public SETP SETP { get; set; }
+        private SETP _SETP { get; set; }
+        public SETP SETP
+        {
+            get { return _SETP; }
+            set
+            {
+                if (_SETP == value)
+                    return;
+                _SETP = value;
+            }
+        }
+
         public SETG SETG { get; set; }
         public SRFT SRFT { get; set; }
         private List<PSAL> _PSAL { get; set; }
@@ -266,11 +277,6 @@ namespace MaddenTeamPlaybookEditor.ViewModels
                 this.SETG.x___ = (float)(_XY.X * .0875);
                 this.SETG.y___ = (float)(_XY.Y * -.1);
             }
-        }
-
-        public void UpdateAlignment()
-        {
-
         }
 
         public void UpdatePSAL()

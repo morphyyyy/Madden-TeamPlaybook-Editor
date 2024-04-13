@@ -5,13 +5,11 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
     xmlns:UserControls="clr-namespace:MaddenTeamPlaybookEditor.User_Controls"
-    xmlns:math="http://hexinnovation.com/math" 
     mc:Ignorable="d" 
     x:Name="uclSubFormationVM"
     AllowDrop="True">
 
     <UserControl.Resources>
-        <math:MathConverter x:Key="math" />
         <ItemsPanelTemplate x:Key="MenuItemPanelTemplate">
             <StackPanel Margin="-20,0,0,0"/>
         </ItemsPanelTemplate>
@@ -30,6 +28,37 @@
                 </Setter.Value>
             </Setter>
         </Style>
+        <SolidColorBrush x:Key="BaseBrush" Color="{DynamicResource Primary}" Opacity="1"/>
+        <SolidColorBrush x:Key="BorderBrush" Color="{DynamicResource Primary}" Opacity="1"/>
+        <SolidColorBrush x:Key="PrimaryBrush"  Color="{DynamicResource Primary}" Opacity="1"/>
+        <SolidColorBrush x:Key="SecondaryBrush" Color="{DynamicResource Secondary}" />
+        <SolidColorBrush x:Key="TertiaryBrush" Color="{DynamicResource Tertiary}" Opacity="1"/>
+        <SolidColorBrush x:Key="QuaternaryBrush" Color="{DynamicResource Quaternary}" />
+        <SolidColorBrush x:Key="QuinaryBrush" Color="{DynamicResource Quinary}" />
+        <SolidColorBrush x:Key="SenaryBrush" Color="{DynamicResource Senary}"/>
+        <SolidColorBrush x:Key="UndefinedBrush" Color="{DynamicResource Undefined}" Opacity="0.1"/>
+        <SolidColorBrush x:Key="BlockBrush"  Color="{DynamicResource Block}" Opacity="0.1"/>
+        <SolidColorBrush x:Key="BaseRouteBrush" Color="{DynamicResource BaseRoute}" Opacity="0.1"/>
+        <SolidColorBrush x:Key="PrimaryRouteBrush" Color="{DynamicResource PrimaryRoute}" Opacity="0.1"/>
+        <SolidColorBrush x:Key="DelayRouteBrush" Color="{DynamicResource DelayRoute}" Opacity="0.1"/>
+        <SolidColorBrush x:Key="MotionRouteBrush" Color="{DynamicResource MotionRoute}" Opacity="0.1"/>
+        <SolidColorBrush x:Key="RunBrush"  Color="{DynamicResource Run}" Opacity="0.1"/>
+        <SolidColorBrush x:Key="QBScrambleBrush" Color="{DynamicResource QBScramble}" Opacity="0.1"/>
+        <SolidColorBrush x:Key="QBHandoffBrush" Color="{DynamicResource QBHandoff}" Opacity="0.1"/>
+        <SolidColorBrush x:Key="KickoffBrush" Color="{DynamicResource Kickoff}" Opacity="0.1"/>
+        <SolidColorBrush x:Key="CloudFlatBrush" Color="{DynamicResource CloudFlat}" Opacity="0.1"/>
+        <SolidColorBrush x:Key="HardFlatBrush" Color="{DynamicResource HardFlat}" Opacity="0.1"/>
+        <SolidColorBrush x:Key="SoftSquatBrush" Color="{DynamicResource SoftSquat}" Opacity="0.1"/>
+        <SolidColorBrush x:Key="MidReadBrush" Color="{DynamicResource MidRead}" Opacity="0.1"/>
+        <SolidColorBrush x:Key="ThreeReceiverHookBrush" Color="{DynamicResource ThreeReceiverHook}" Opacity="0.1"/>
+        <SolidColorBrush x:Key="HookCurlBrush" Color="{DynamicResource HookCurl}" Opacity="0.1"/>
+        <SolidColorBrush x:Key="VertHookBrush" Color="{DynamicResource VertHook}" Opacity="0.1"/>
+        <SolidColorBrush x:Key="CurlFlatBrush" Color="{DynamicResource CurlFlat}" Opacity="0.1"/>
+        <SolidColorBrush x:Key="SeamFlatBrush" Color="{DynamicResource SeamFlat}" Opacity="0.1"/>
+        <SolidColorBrush x:Key="QuarterFlatBrush" Color="{DynamicResource QuarterFlat}" Opacity="0.1"/>
+        <SolidColorBrush x:Key="DeepZoneBrush" Color="{DynamicResource DeepZone}" Opacity="0.1"/>
+        <SolidColorBrush x:Key="QBSpyBrush" Color="{DynamicResource QBSpy}" Opacity="0.1"/>
+        <SolidColorBrush x:Key="RushQBBrush" Color="{DynamicResource RushQB}" Opacity="0.1"/>
     </UserControl.Resources>
 
     <Grid Margin="0,5" Width="196">
@@ -189,7 +218,7 @@
 
                 <TextBlock 
                     Text="{Binding Position1count}" 
-                    Foreground="Orange" 
+                    Foreground="{DynamicResource SecondaryBrush}" 
                     FontWeight="Bold" 
                     />
 
@@ -212,7 +241,7 @@
 
                 <TextBlock 
                     Text="{Binding Position2count}" 
-                    Foreground="Orange" 
+                    Foreground="{DynamicResource SecondaryBrush}" 
                     FontWeight="Bold" 
                     />
 
@@ -235,7 +264,7 @@
 
                 <TextBlock 
                     Text="{Binding Position3count}"
-                    Foreground="Orange"
+                    Foreground="{DynamicResource SecondaryBrush}"
                     FontWeight="Bold" 
                     />
 

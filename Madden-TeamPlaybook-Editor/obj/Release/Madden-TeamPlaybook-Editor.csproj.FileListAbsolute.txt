@@ -9,7 +9,6 @@ D:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\obj\Release\Styles\
 D:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\obj\Release\Styles\AudibleDeep.baml
 D:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\obj\Release\Styles\AudibleQuick.baml
 D:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\obj\Release\Styles\FormationTabItemStyle.baml
-D:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\obj\Release\Styles\ComboBoxStyle.baml
 D:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\obj\Release\Styles\PlayTabItemStyle.baml
 D:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\obj\Release\Styles\SituationStyle.baml
 D:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\obj\Release\Styles\NameTextBox.baml
@@ -59,3 +58,4 @@ D:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\obj\Release\Styles\
 D:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\obj\Release\Styles\tviTeamColorStyle.baml
 D:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\obj\Release\Styles\sbrTeamColorStyle.baml
 D:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\obj\Release\Styles\cbxTeamColorStyle.baml
+D:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\obj\Release\Styles\lbiTeamColorStyle.baml

@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Drawing.Drawing2D;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -19,8 +20,11 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Effects;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
+using System.Xml;
+using System.Xml.Linq;
 using IDataObject = System.Windows.IDataObject;
 
 namespace MaddenTeamPlaybookEditor
@@ -321,11 +325,11 @@ namespace MaddenTeamPlaybookEditor
                 Color color = (Color)ColorConverter.ConvertFromString(hex);
                 TeamColorsHex.Add(color);
             }
-            if (TeamColors[0] == "#010101")
-            {
-                TeamColorsHex[0] = (Color)ColorConverter.ConvertFromString(TeamColors[1]);
-                TeamColorsHex[1] = TeamColors.Count() > 3 ? (Color)ColorConverter.ConvertFromString(TeamColors[3]) : (Color)ColorConverter.ConvertFromString(TeamColors[2]);
-            }
+            //if (TeamColors[0] == "#2C2C30")
+            //{
+            //    TeamColorsHex[0] = (Color)ColorConverter.ConvertFromString(TeamColors[1]);
+            //    TeamColorsHex[1] = TeamColors.Count() > 3 ? (Color)ColorConverter.ConvertFromString(TeamColors[3]) : (Color)ColorConverter.ConvertFromString(TeamColors[2]);
+            //}
             Application.Current.Resources["Primary"] = TeamColorsHex[0];
             Application.Current.Resources["Secondary"] = TeamColorsHex[1];
             Application.Current.Resources["Tertiary"] = TeamColorsHex[2];
@@ -1420,6 +1424,71 @@ namespace MaddenTeamPlaybookEditor
             if (lvwTeamColors.SelectedValue == null) return;
             List<string> teamColors = lvwTeamColors.SelectedValue as List<string>;
             SetTeamColors(teamColors);
+        }
+
+        private void btnLoadTheme_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                OpenFileDialog openFileDialog1 = new OpenFileDialog();
+                openFileDialog1.Title = "Open Team Color Theme";
+                openFileDialog1.Filter = "XML Files | *.xml";
+                openFileDialog1.FileName = "";
+
+                if (openFileDialog1.ShowDialog() != false || openFileDialog1.FileName != "")
+                {
+                    string folderPath = Path.GetDirectoryName(openFileDialog1.FileName);
+                    string[] fileList = Directory.GetFiles(folderPath, "*", SearchOption.AllDirectories);
+                    Window wndw = new Window { SizeToContent = SizeToContent.WidthAndHeight };
+                    StackPanel AllTeamColors = new StackPanel();
+                    ScrollViewer scrollViewer = new ScrollViewer { Content = AllTeamColors };
+                    wndw.Content = scrollViewer;
+
+                    foreach (string path in fileList)
+                    {
+                        var xml = XDocument.Load(path);
+                        List<XElement> UniformTeamColorList = xml.Root.Descendants("UniformTeamColorList").First()?.Descendants("Vec4")?.ToList();
+
+                        List<string> teamColors = new List<string>();
+                        for (int i = 0; i < UniformTeamColorList.Count(); i++)
+                        {
+                            double r, g, b;
+                            bool hasR = double.TryParse(UniformTeamColorList[i].Descendants("x")?.First()?.Value, out r);
+                            bool hasG = double.TryParse(UniformTeamColorList[i].Descendants("y")?.First()?.Value, out g);
+                            bool hasB = double.TryParse(UniformTeamColorList[i].Descendants("z")?.First()?.Value, out b);
+                            r = Math.Pow(r, (1.0 / 2.2));
+                            g = Math.Pow(g, (1.0 / 2.2));
+                            b = Math.Pow(b, (1.0 / 2.2));
+                            System.Drawing.Color colorSD = System.Drawing.Color.FromArgb((byte)Math.Round(r * 255), (byte)Math.Round(g * 255), (byte)Math.Round(b * 255));
+                            string colorHTML = System.Drawing.ColorTranslator.ToHtml(colorSD);
+                            if (!colorHTML.Equals("#D0D0E5") && !colorHTML.Equals("#282828"))
+                            {
+                                teamColors.Add(colorHTML);
+                            }
+                        }
+                        teamColors = teamColors.Distinct().ToList();
+                        WrapPanel wrap = new WrapPanel { Background = new SolidColorBrush(Colors.Black) };
+                        DropShadowBitmapEffect myDropShadowEffect = new DropShadowBitmapEffect { Color = Colors.Black, Direction = 320, ShadowDepth = 1, Softness = .5, Opacity = 1.0 };
+                        Grid grid = new Grid { Width = 150, Height = 100 };
+                        grid.Children.Add(new TextBlock { Foreground = new SolidColorBrush(Colors.White), Text = Path.GetFileName(path), TextAlignment = TextAlignment.Center, HorizontalAlignment = HorizontalAlignment.Center, VerticalAlignment = VerticalAlignment.Center, BitmapEffect = myDropShadowEffect });
+                        wrap.Children.Add(grid);
+                        foreach (string html in teamColors)
+                        {
+                            System.Drawing.Color teamColor = System.Drawing.ColorTranslator.FromHtml(html);
+                            Grid color = new Grid { Background = new SolidColorBrush(Color.FromRgb(teamColor.R, teamColor.G, teamColor.B)), Height = 100, Width = 100 };
+                            TextBox colorText = new TextBox { Foreground = new SolidColorBrush(Colors.White), BorderBrush = new SolidColorBrush(Colors.Transparent), Background = new SolidColorBrush(Colors.Transparent), BitmapEffect = myDropShadowEffect, Text = html, IsReadOnly = true, HorizontalAlignment = HorizontalAlignment.Center, VerticalAlignment = VerticalAlignment.Center };
+                            color.Children.Add(colorText);
+                            wrap.Children.Add(color);
+                        }
+                        AllTeamColors.Children.Add(wrap);
+                    }
+                    wndw.Show();
+                }
+            }
+            catch
+            {
+                throw new Exception("Can't read XML. Only designed for color lists exported from frosty");
+            }
         }
 
         #endregion

@@ -3,7 +3,14 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:classes="clr-namespace:MaddenTeamPlaybookEditor.Classes">
 
-    <Style x:Key="lviTeamColorStyle" TargetType="ListBoxItem">
+    <Style x:Key="lviTeamColorStyle" TargetType="ListViewItem">
+        <Style.Resources>
+            <ControlTemplate x:Key="SelectedTemplate" TargetType="ListViewItem">
+                <Border CornerRadius="2" BorderThickness="0" Background="{DynamicResource PrimaryBrush}" Padding="2" HorizontalAlignment="Left" Margin="5" Tag="{Binding Value}" Cursor="Hand">
+                    <TextBlock Text="{Binding Name}" Margin="5" />
+                </Border>
+            </ControlTemplate>
+        </Style.Resources>
         <Style.Setters>
             <Setter Property="FontFamily" Value="DK Crayon Crumble" />
             <Setter Property="FontSize" Value="14" />
@@ -11,54 +18,26 @@
             <Setter Property="Foreground" Value="{DynamicResource TertiaryBrush}" />
             <Setter Property="Template">
                 <Setter.Value>
-                    <ControlTemplate TargetType="ListBoxItem">
-                        <Border 
-                            BorderBrush="{TemplateBinding BorderBrush}"
-                            BorderThickness="{TemplateBinding BorderThickness}"
-                            Background="{TemplateBinding Background}" 
-                            Padding="{TemplateBinding Padding}"
-                            Margin="{TemplateBinding Margin}"
-                            CornerRadius="4">
-                            <ContentPresenter />
-                        </Border>
-
-                        <ControlTemplate.Triggers>
-
-                            <Trigger Property="IsSelected" Value="True">
-                                <Setter Property="Background" Value="{DynamicResource PrimaryBrush}"/>
-                                <Setter Property="Foreground" Value="{DynamicResource TertiaryBrush}"/>
-                            </Trigger>
-                            <Trigger Property="IsSelected" Value="False">
-                                <Setter Property="Background" Value="{DynamicResource BaseBrush}"/>
-                                <Setter Property="Foreground" Value="{DynamicResource TertiaryBrush}"/>
-                            </Trigger>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter Property="Background" Value="{DynamicResource PrimaryBrush}"/>
-                                <Setter Property="Foreground" Value="{DynamicResource TertiaryBrush}"/>
-                            </Trigger>
-
-                            <!--<Trigger Property="IsMouseOver" Value="True">
-
-                                <Trigger.EnterActions>
-                                    <BeginStoryboard>
-                                        <Storyboard>
-                                            <ColorAnimation
-                                                Storyboard.TargetName="ListBoxItem" 
-                                                Storyboard.TargetProperty="Background"
-                                                To="{DynamicResource MouseOverBrushKey.Color}" Duration="0:0:0.2" />
-                                            <ColorAnimation
-                                                Storyboard.TargetName="ListBoxItem" 
-                                                Storyboard.TargetProperty="Foreground"
-                                                To="{DynamicResource PrimaryBrush.Color}" Duration="0:0:0.2" />
-                                        </Storyboard>
-                                    </BeginStoryboard>
-                                </Trigger.EnterActions>
-
-                            </Trigger>-->
-
-                        </ControlTemplate.Triggers>
-                        
-                    </ControlTemplate>
+                    <Style TargetType="ListViewItem">
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="ListViewItem">
+                                    <Border CornerRadius="2" BorderThickness="0" Background="{DynamicResource PrimaryBrush}" Padding="2" HorizontalAlignment="Left" Margin="5" Tag="{Binding Value}" Cursor="Hand">
+                                        <TextBlock Text="{Binding Name}" Margin="5" />
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                        <Style.Triggers>
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="IsSelected" Value="true" />
+                                    <Condition Property="Selector.IsSelectionActive" Value="true" />
+                                </MultiTrigger.Conditions>
+                                <Setter Property="Template" Value="{StaticResource SelectedTemplate}" />
+                            </MultiTrigger>
+                        </Style.Triggers>
+                    </Style>
                 </Setter.Value>
             </Setter>
         </Style.Setters>

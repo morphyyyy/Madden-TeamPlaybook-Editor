@@ -12,20 +12,24 @@
         <Border x:Name="Border"
                 Grid.ColumnSpan="2"
                 CornerRadius="2"
-                BorderThickness="1"
-                BorderBrush="{DynamicResource BaseBrush}"
-                Background="{DynamicResource BaseBrush}">
+                BorderThickness="0"
+                BorderBrush="Transparent"
+                Background="{DynamicResource PrimaryBrush}">
         </Border>
             <Border Grid.Column="0"
                 CornerRadius="2,0,0,2"
                 Margin="1"
-                Background="{DynamicResource SecondaryBrush}"/>
+                BorderThickness="0"
+                BorderBrush="Transparent"
+                Background="{DynamicResource PrimaryBrush}"/>
             <Path x:Name="Arrow"
                 Grid.Column="1"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
-                Data="M 0 0 L 4 4 L 8 0 Z"
-                Fill="{DynamicResource TertiaryBrush}">
+                Data="M 0 0 L 4 4 L 8 0 Z">
+                <Path.Fill>
+                    <SolidColorBrush Color="{DynamicResource TextColor}"/>
+                </Path.Fill>
         </Path>
         </Grid>
     </ControlTemplate>
@@ -37,20 +41,13 @@
     </ControlTemplate>
 
     <Style x:Key="{x:Type ComboBox}" TargetType="{x:Type ComboBox}">
-        <Setter Property="SnapsToDevicePixels"
-                Value="true" />
-        <Setter Property="OverridesDefaultStyle"
-                Value="true" />
-        <Setter Property="ScrollViewer.HorizontalScrollBarVisibility"
-                Value="Auto" />
-        <Setter Property="ScrollViewer.VerticalScrollBarVisibility"
-                Value="Auto" />
-        <Setter Property="ScrollViewer.CanContentScroll"
-                Value="true" />
-        <Setter Property="MinWidth"
-                Value="120" />
-        <Setter Property="MinHeight"
-                Value="20" />
+        <Setter Property="SnapsToDevicePixels" Value="true" />
+        <Setter Property="OverridesDefaultStyle" Value="true" />
+        <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto" />
+        <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto" />
+        <Setter Property="ScrollViewer.CanContentScroll" Value="true" />
+        <!--<Setter Property="MinWidth" Value="120" />-->
+        <Setter Property="MinHeight" Value="20" />
         <Setter Property="Template">
         <Setter.Value>
             <ControlTemplate TargetType="{x:Type ComboBox}">
@@ -91,9 +88,9 @@
                         MinWidth="{TemplateBinding ActualWidth}"
                         MaxHeight="{TemplateBinding MaxDropDownHeight}">
                     <Border x:Name="DropDownBorder"
-                        BorderThickness="1"
-                        BorderBrush="{DynamicResource PrimaryBrush}"
-                        Background="{DynamicResource SecondaryBrush}"/>
+                        BorderThickness="0"
+                        BorderBrush="Transparent"
+                        Background="{DynamicResource PrimaryBrush}"/>
                     <ScrollViewer Margin="4,6,4,6" SnapsToDevicePixels="True">
                         <StackPanel IsItemsHost="True" KeyboardNavigation.DirectionalNavigation="Contained" />
                     </ScrollViewer>
@@ -101,16 +98,13 @@
                 </Popup>
             </Grid>
             <ControlTemplate.Triggers>
-                <Trigger Property="HasItems"
-                        Value="false">
+                <Trigger Property="HasItems" Value="false">
                 <Setter TargetName="DropDownBorder"
                         Property="MinHeight"
                         Value="95" />
                 </Trigger>
-                <Trigger Property="IsGrouping"
-                        Value="true">
-                <Setter Property="ScrollViewer.CanContentScroll"
-                        Value="false" />
+                <Trigger Property="IsGrouping" Value="true">
+                <Setter Property="ScrollViewer.CanContentScroll" Value="false" />
                 </Trigger>
                 <Trigger SourceName="Popup"
                         Property="AllowsTransparency"
@@ -137,9 +131,9 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ComboBoxItem}">
                     <Border x:Name="Border"
-                    Padding="2"
-                    SnapsToDevicePixels="true"
-                    Background="Transparent">
+                        Padding="2"
+                        SnapsToDevicePixels="true"
+                        Background="Transparent">
                         <ContentPresenter />
                     </Border>
                 </ControlTemplate>

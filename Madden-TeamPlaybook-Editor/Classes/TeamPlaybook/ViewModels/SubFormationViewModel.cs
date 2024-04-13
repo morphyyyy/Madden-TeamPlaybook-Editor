@@ -165,7 +165,19 @@ namespace MaddenTeamPlaybookEditor.ViewModels
 
         public FormationVM Formation { get; set; }
         public ObservableCollection<PlayVM> Plays { get; set; }
-        public ObservableCollection<PlayerVM> Players { get; set; }
+        private ObservableCollection<PlayerVM> _Players;
+        public ObservableCollection<PlayerVM> Players
+        {
+            get { return _Players; }
+            set
+            {
+                if (_Players == value)
+                    return;
+                _Players = value;
+                OnPropertyChanged("PlayerPlayartView");
+            }
+        }
+
         [NonSerialized]
         private ICollectionView _PlayerPlayartView;
         public ICollectionView PlayerPlayartView
@@ -207,8 +219,6 @@ namespace MaddenTeamPlaybookEditor.ViewModels
             CurrentPackage = new List<SETP>();
             Alignments = new List<Alignment>();
             GetFormation(_Formation);
-            GetPackage();
-            CurrentPackage = BasePackage;
             GetPackages();
             GetAlignments();
             //GetAlignment("Norm");
@@ -1401,39 +1411,67 @@ namespace MaddenTeamPlaybookEditor.ViewModels
 
         #region Packages
 
-        public void AddPackage(Package package)
+        public void UpdatePackage(Package package)
         {
-            Formation.Playbook.SPKF.Add(package.SPKF);
-            Formation.Playbook.SPKF[Formation.Playbook.SPKF.Count - 1].rec = Formation.Playbook.SPKF.Count - 1;
-            foreach (SPKG set in package.SPKG)
+            if (!Packages.Exists(p => p.SPKF == package.SPKF))
             {
-                Formation.Playbook.SPKG.Add(set);
-                Formation.Playbook.SPKG[Formation.Playbook.SPKG.Count - 1].rec = Formation.Playbook.SPKG.Count - 1;
+                Formation.Playbook.SPKF.Add(package.SPKF);
+                Formation.Playbook.SPKF[Formation.Playbook.SPKF.Count - 1].rec = Formation.Playbook.SPKF.Count - 1;
+                Packages.Add(package);
+            }
+            else
+            {
+                foreach (SPKG set in package.SPKG)
+                {
+                    Formation.Playbook.SPKG.Add(set);
+                    Formation.Playbook.SPKG[Formation.Playbook.SPKG.Count - 1].rec = Formation.Playbook.SPKG.Count - 1;
+                }
             }
         }
 
-        public void GetPackage()
+        public void GetBasePackage()
         {
             BasePackage = new List<SETP>();
             foreach (SETP player in Formation.Playbook.SETP.Where(player => player.SETL == PBST.SETL))
                 BasePackage.Add(player);
             BasePackage.OrderBy(player => player.poso);
+            CurrentPackage = BasePackage.Select(p => new SETP
+            {
+                arti = p.arti,
+                artx = p.artx,
+                arty = p.arty,
+                DPos = p.DPos,
+                EPos = p.EPos,
+                flas = p.flas,
+                fmtx = p.fmtx,
+                fmty = p.fmty,
+                poso = p.poso,
+                rec = p.rec,
+                SETL = p.SETL,
+                setp = p.setp,
+                SGT_ = p.SGT_,
+                tabo = p.tabo
+            }).ToList();
         }
 
         public void GetPackage(Package Package)
         {
-            CurrentPackage = new List<SETP>();
-            foreach (SETP player in Formation.Playbook.SETP.Where(player => player.SETL == PBST.SETL))
+            GetBasePackage();
+            if (Package.SPKF.name == "Normal") return;
+            foreach (SPKG player in Package?.SPKG)
             {
-                CurrentPackage.Add(player);
-                player.DPos = Package.SPKG.FirstOrDefault(poso => poso.poso == player.poso).DPos;
-                player.EPos = Package.SPKG.FirstOrDefault(poso => poso.poso == player.poso).EPos;
+                try
+                {
+                    CurrentPackage.SingleOrDefault(poso => poso.poso == player.poso).DPos = player.DPos;
+                    CurrentPackage.SingleOrDefault(poso => poso.poso == player.poso).EPos = player.EPos;
+                }
+                catch { }
             }
-            CurrentPackage.OrderBy(player => player.poso);
         }
 
         public void GetPackages()
         {
+            GetBasePackage();
             Packages.Clear();
             foreach (SPKF package in Formation.Playbook.SPKF.Where(package => package.SETL == PBST.SETL))
             {
@@ -1444,6 +1482,7 @@ namespace MaddenTeamPlaybookEditor.ViewModels
                 Packages.Add(new Package(package, SPKG));
             }
             Packages.OrderBy(package => package.SPKF.SPF_);
+            Packages.Insert(0, new Package(new SPKF { name = "Normal" }, new List<SPKG>()));
         }
 
         #endregion
