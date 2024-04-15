@@ -36,7 +36,7 @@ namespace MaddenTeamPlaybookEditor.User_Controls
 
         private void lvwAlignments_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            ListView tabControl = sender as ListView;
+            ComboBox tabControl = sender as ComboBox;
             if (tabControl.SelectedItem == null) return;
             if (tabControl.SelectedItem is Alignment)
             {
@@ -47,11 +47,6 @@ namespace MaddenTeamPlaybookEditor.User_Controls
             { 
 
             }
-        }
-
-        private void lvwPackagesMouseRightUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
-        {
-
         }
 
         private void lvwPackagesSelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -140,6 +135,11 @@ namespace MaddenTeamPlaybookEditor.User_Controls
                 }
             }
             subFormation.GetPlayers();
+        }
+
+        private void PBST_name_changed(object sender, TextChangedEventArgs e)
+        {
+            subFormation.SETL.name = subFormation.PBST.name;
         }
     }
 }

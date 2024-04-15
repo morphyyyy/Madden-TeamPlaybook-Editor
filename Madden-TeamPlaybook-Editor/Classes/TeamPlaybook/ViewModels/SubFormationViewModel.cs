@@ -195,9 +195,9 @@ namespace MaddenTeamPlaybookEditor.ViewModels
         public string Position1name { get; set; }
         public string Position2name { get; set; }
         public string Position3name { get; set; }
-        public int Position1count { get; set; }
-        public int Position2count { get; set; }
-        public int Position3count { get; set; }
+        public int? Position1count { get; set; }
+        public int? Position2count { get; set; }
+        public int? Position3count { get; set; }
 
         private bool _isExpanded;
         private bool _isVisible;
@@ -221,6 +221,7 @@ namespace MaddenTeamPlaybookEditor.ViewModels
             GetFormation(_Formation);
             GetPackages();
             GetAlignments();
+            GetPlayListFlags();
             //GetAlignment("Norm");
             GetPlayers();
             GetSubCount();
@@ -1587,6 +1588,263 @@ namespace MaddenTeamPlaybookEditor.ViewModels
         {
             PlayerPlayartView = CollectionViewSource.GetDefaultView(Players);
             PlayerPlayartView.SortDescriptions.Add(new SortDescription("PLYS.poso", ListSortDirection.Descending));
+        }
+
+        #endregion
+
+        #region Play List Flags
+
+        public void GetPlayListFlags()
+        {
+            if (SETL == null) return;
+
+            _Bunch =
+            _CanFlip =
+            _Close =
+            _DimebacKatPosition5 =
+            _NonSymmetrical =
+            _NoWideAlignment =
+            _PassOriented =
+            _PreventDefense =
+            _PreventAudible =
+            _ProwlDefense =
+            _RunOriented =
+            _SpecialOriented =
+            _Tight = false;
+
+            int _flag = SETL.SLF_;
+
+            foreach (KeyValuePair<int, string> key in SETL.SetListFlag.Reverse().Where(k => k.Key <= SETL.SLF_))
+            {
+                if (_flag >= key.Key)
+                {
+                    this.GetType()?.GetProperty(key.Value)?.SetValue(this, true);
+                    SETL.SLF_ = SETL.SLF_ - key.Key;
+                    _flag -= key.Key;
+                }
+            }
+        }
+
+        private bool _Bunch;
+        public bool Bunch
+        {
+            get { return _Bunch; }
+            set
+            {
+                if (_Bunch == value)
+                    return;
+                _Bunch = value;
+                this.SETL.SLF_ += _Bunch ?
+                    SETL.SetListFlag
+                    .FirstOrDefault(k => String.Equals(k.Value, "Bunch", StringComparison.OrdinalIgnoreCase)).Key :
+                    -1* SETL.SetListFlag
+                    .FirstOrDefault(k => String.Equals(k.Value, "Bunch", StringComparison.OrdinalIgnoreCase)).Key;
+                OnPropertyChanged("Bunch");
+            }
+        }
+        private bool _CanFlip;
+        public bool CanFlip
+        {
+            get { return _CanFlip; }
+            set
+            {
+                if (_CanFlip == value)
+                    return;
+                _CanFlip = value;
+                this.SETL.SLF_ += _CanFlip ?
+                    SETL.SetListFlag
+                    .FirstOrDefault(k => String.Equals(k.Value, "Can Flip", StringComparison.OrdinalIgnoreCase)).Key :
+                    -1 * SETL.SetListFlag
+                    .FirstOrDefault(k => String.Equals(k.Value, "Can Flip", StringComparison.OrdinalIgnoreCase)).Key;
+                OnPropertyChanged("CanFlip");
+            }
+        }
+        private bool _Close;
+        public bool Close
+        {
+            get { return _Close; }
+            set
+            {
+                if (_Close == value)
+                    return;
+                _Close = value;
+                this.SETL.SLF_ += _Close ?
+                    SETL.SetListFlag
+                    .FirstOrDefault(k => String.Equals(k.Value, "Close", StringComparison.OrdinalIgnoreCase)).Key :
+                    -1 * SETL.SetListFlag
+                    .FirstOrDefault(k => String.Equals(k.Value, "Close", StringComparison.OrdinalIgnoreCase)).Key;
+                OnPropertyChanged("Close");
+            }
+        }
+        private bool _DimebacKatPosition5;
+        public bool DimebacKatPosition5
+        {
+            get { return _DimebacKatPosition5; }
+            set
+            {
+                if (_DimebacKatPosition5 == value)
+                    return;
+                _DimebacKatPosition5 = value;
+                this.SETL.SLF_ += _DimebacKatPosition5 ?
+                    SETL.SetListFlag
+                    .FirstOrDefault(k => String.Equals(k.Value, "DimebacK At Pos 5", StringComparison.OrdinalIgnoreCase)).Key :
+                    -1 * SETL.SetListFlag
+                    .FirstOrDefault(k => String.Equals(k.Value, "DimebacK At Pos 5", StringComparison.OrdinalIgnoreCase)).Key;
+                OnPropertyChanged("DimebacKatPosition5");
+            }
+        }
+        private bool _NonSymmetrical;
+        public bool NonSymmetrical
+        {
+            get { return _NonSymmetrical; }
+            set
+            {
+                if (_NonSymmetrical == value)
+                    return;
+                _NonSymmetrical = value;
+                this.SETL.SLF_ += _NonSymmetrical ?
+                    SETL.SetListFlag
+                    .FirstOrDefault(k => String.Equals(k.Value, "Non Symmetrical", StringComparison.OrdinalIgnoreCase)).Key :
+                    -1 * SETL.SetListFlag
+                    .FirstOrDefault(k => String.Equals(k.Value, "Non Symmetrical", StringComparison.OrdinalIgnoreCase)).Key;
+                OnPropertyChanged("NonSymmetrical");
+            }
+        }
+        private bool _NoWideAlignment;
+        public bool NoWideAlignment
+        {
+            get { return _NoWideAlignment; }
+            set
+            {
+                if (_NoWideAlignment == value)
+                    return;
+                _NoWideAlignment = value;
+                this.SETL.SLF_ += _NoWideAlignment ?
+                    SETL.SetListFlag
+                    .FirstOrDefault(k => String.Equals(k.Value, "No Wide Align", StringComparison.OrdinalIgnoreCase)).Key :
+                    -1 * SETL.SetListFlag
+                    .FirstOrDefault(k => String.Equals(k.Value, "No Wide Align", StringComparison.OrdinalIgnoreCase)).Key;
+                OnPropertyChanged("NoWideAlignment");
+            }
+        }
+        private bool _PassOriented;
+        public bool PassOriented
+        {
+            get { return _PassOriented; }
+            set
+            {
+                if (_PassOriented == value)
+                    return;
+                _PassOriented = value;
+                this.SETL.SLF_ += _PassOriented ?
+                    SETL.SetListFlag
+                    .FirstOrDefault(k => String.Equals(k.Value, "Pass Oriented", StringComparison.OrdinalIgnoreCase)).Key :
+                    -1 * SETL.SetListFlag
+                    .FirstOrDefault(k => String.Equals(k.Value, "Pass Oriented", StringComparison.OrdinalIgnoreCase)).Key;
+                OnPropertyChanged("PassOriented");
+            }
+        }
+        private bool _PreventDefense;
+        public bool PreventDefense
+        {
+            get { return _PreventDefense; }
+            set
+            {
+                if (_PreventDefense == value)
+                    return;
+                _PreventDefense = value;
+                this.SETL.SLF_ += _PreventDefense ?
+                    SETL.SetListFlag
+                    .FirstOrDefault(k => String.Equals(k.Value, "Prevent Defense", StringComparison.OrdinalIgnoreCase)).Key :
+                    -1 * SETL.SetListFlag
+                    .FirstOrDefault(k => String.Equals(k.Value, "Prevent Defense", StringComparison.OrdinalIgnoreCase)).Key;
+                OnPropertyChanged("PreventDefense");
+            }
+        }
+        private bool _PreventAudible;
+        public bool PreventAudible
+        {
+            get { return _PreventAudible; }
+            set
+            {
+                if (_PreventAudible == value)
+                    return;
+                _PreventAudible = value;
+                this.SETL.SLF_ += _PreventAudible ?
+                    SETL.SetListFlag
+                    .FirstOrDefault(k => String.Equals(k.Value, "Prevent Audible", StringComparison.OrdinalIgnoreCase)).Key :
+                    -1 * SETL.SetListFlag
+                    .FirstOrDefault(k => String.Equals(k.Value, "Prevent Audible", StringComparison.OrdinalIgnoreCase)).Key;
+                OnPropertyChanged("PreventAudible");
+            }
+        }
+        private bool _ProwlDefense;
+        public bool ProwlDefense
+        {
+            get { return _ProwlDefense; }
+            set
+            {
+                if (_ProwlDefense == value)
+                    return;
+                _ProwlDefense = value;
+                this.SETL.SLF_ += _ProwlDefense ?
+                    SETL.SetListFlag
+                    .FirstOrDefault(k => String.Equals(k.Value, "Prowl Defense", StringComparison.OrdinalIgnoreCase)).Key :
+                    -1 * SETL.SetListFlag
+                    .FirstOrDefault(k => String.Equals(k.Value, "Prowl Defense", StringComparison.OrdinalIgnoreCase)).Key;
+                OnPropertyChanged("ProwlDefense");
+            }
+        }
+        private bool _RunOriented;
+        public bool RunOriented
+        {
+            get { return _RunOriented; }
+            set
+            {
+                if (_RunOriented == value)
+                    return;
+                _RunOriented = value;
+                this.SETL.SLF_ += _RunOriented ?
+                    SETL.SetListFlag
+                    .FirstOrDefault(k => String.Equals(k.Value, "Run Oriented", StringComparison.OrdinalIgnoreCase)).Key :
+                    -1 * SETL.SetListFlag
+                    .FirstOrDefault(k => String.Equals(k.Value, "Run Oriented", StringComparison.OrdinalIgnoreCase)).Key;
+                OnPropertyChanged("RunOriented");
+            }
+        }
+        private bool _SpecialOriented;
+        public bool SpecialOriented
+        {
+            get { return _SpecialOriented; }
+            set
+            {
+                if (_SpecialOriented == value)
+                    return;
+                _SpecialOriented = value;
+                this.SETL.SLF_ += _SpecialOriented ?
+                    SETL.SetListFlag
+                    .FirstOrDefault(k => String.Equals(k.Value, "Special Oriented", StringComparison.OrdinalIgnoreCase)).Key :
+                    -1 * SETL.SetListFlag
+                    .FirstOrDefault(k => String.Equals(k.Value, "Special Oriented", StringComparison.OrdinalIgnoreCase)).Key;
+                OnPropertyChanged("SpecialOriented");
+            }
+        }
+        private bool _Tight;
+        public bool Tight
+        {
+            get { return _Tight; }
+            set
+            {
+                if (_Tight == value)
+                    return;
+                _Tight = value;
+                this.SETL.SLF_ += _Tight ?
+                    SETL.SetListFlag
+                    .FirstOrDefault(k => String.Equals(k.Value, "Tight", StringComparison.OrdinalIgnoreCase)).Key :
+                    -1 * SETL.SetListFlag
+                    .FirstOrDefault(k => String.Equals(k.Value, "Tight", StringComparison.OrdinalIgnoreCase)).Key;
+                OnPropertyChanged("Tight");
+            }
         }
 
         #endregion

@@ -36,6 +36,7 @@ namespace MaddenTeamPlaybookEditor.User_Controls
         {
             InitializeComponent();
             Player = player;
+            SolidColorBrush playerIconBrush = IconColor ?? new SolidColorBrush(Madden.TeamPlaybook.ARTLColor.PlayerIconColor);
             this.MouseLeftButtonDown += new MouseButtonEventHandler(UserControl_MouseLeftButtonDown);
             this.MouseLeftButtonUp += new MouseButtonEventHandler(UserControl_MouseLeftButtonUp);
             this.MouseMove += new MouseEventHandler(UserControl_MouseMove);
@@ -43,7 +44,7 @@ namespace MaddenTeamPlaybookEditor.User_Controls
 
         protected override void OnRender(DrawingContext dc)
         {
-            SolidColorBrush playerIconBrush = new SolidColorBrush(Madden.TeamPlaybook.ARTLColor.PlayerIconColor);
+            SolidColorBrush playerIconBrush = IconColor ?? new SolidColorBrush(Madden.TeamPlaybook.ARTLColor.PlayerIconColor);
             Pen iconPen = new Pen(playerIconBrush, 0);
             SolidColorBrush EPosBrush = new SolidColorBrush(Colors.Black);
             Pen EPosPen = new Pen(playerIconBrush, 0.3);
@@ -257,6 +258,13 @@ namespace MaddenTeamPlaybookEditor.User_Controls
         {
             get { return (PlayerVM)GetValue(PlayerProperty); }
             set { SetValue(PlayerProperty, value); }
+        }
+
+        public static DependencyProperty IconColorProperty = DependencyProperty.Register("IconColor", typeof(SolidColorBrush), typeof(PlayerIcon));
+        public SolidColorBrush IconColor
+        {
+            get { return (SolidColorBrush)GetValue(IconColorProperty); }
+            set { SetValue(IconColorProperty, value); }
         }
 
         public static DependencyProperty ShowPositionProperty = DependencyProperty.Register("ShowPosition", typeof(bool), typeof(PlayerIcon));

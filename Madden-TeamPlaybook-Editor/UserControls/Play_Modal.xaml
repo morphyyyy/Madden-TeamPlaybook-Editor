@@ -295,7 +295,7 @@
                                 <TextBlock Grid.Column="1" Grid.Row="0" Text="Blocking"/>
                                 <ComboBox x:Name="cbxPLYL_SRMM" Grid.Column="1" Grid.Row="1" ItemsSource="{Binding Source={x:Static MaddenTeamPlaybook:PLYL.BlockingScheme}}" SelectedValue="{Binding PLYL.SRMM, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="Key" DisplayMemberPath="Value" SelectionChanged="plylChanged" HorizontalAlignment="Left"/>
                                 <TextBlock Grid.Column="2" Grid.Row="0" Text="Situation"/>
-                                <ComboBox x:Name="cbxPLYL_SITT" Grid.Column="2" Grid.Row="1" ItemsSource="{Binding Source={x:Static MaddenTeamPlaybook:SETL.Situation}}" SelectedValue="{Binding PLYL.SITT, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="Key" DisplayMemberPath="Value" HorizontalAlignment="Left"/>
+                                <ComboBox x:Name="cbxPLYL_SITT" Grid.Column="2" Grid.Row="1" ItemsSource="{Binding Source={x:Static MaddenTeamPlaybook:PLYL.Situation}}" SelectedValue="{Binding PLYL.SITT, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="Key" DisplayMemberPath="Value" HorizontalAlignment="Left"/>
                                 <TextBlock Grid.Column="3" Grid.Row="0" Text="Play Type"/>
                                 <ComboBox x:Name="cbxPLYL_PLYT" Grid.Column="3" Grid.Row="1" ItemsSource="{Binding Source={x:Static ViewModels:TeamPlaybook.PlayType}}" SelectedValue="{Binding PLYL.PLYT, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="Key" DisplayMemberPath="Value" HorizontalAlignment="Left"/>
                                 <TextBlock Grid.Column="4" Grid.Row="0" Text="risk"/>
@@ -347,7 +347,7 @@
                             <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <GroupBox Header="Play Flags" Grid.Column="0" DockPanel.Dock="Top" Margin="5">
+                        <GroupBox Header="Flags" Grid.Column="0" DockPanel.Dock="Top" Margin="5">
                             <ScrollViewer ScrollViewer.VerticalScrollBarVisibility="Hidden" ScrollViewer.HorizontalScrollBarVisibility="Hidden">
                                 <Grid>
                                     <Grid.ColumnDefinitions>
