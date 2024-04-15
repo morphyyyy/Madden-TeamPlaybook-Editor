@@ -121,9 +121,9 @@ namespace MaddenCustomPlaybookEditor.ViewModels
         public string Position1name { get; set; }
         public string Position2name { get; set; }
         public string Position3name { get; set; }
-        public int Position1count { get; set; }
-        public int Position2count { get; set; }
-        public int Position3count { get; set; }
+        public int? Position1count { get; set; }
+        public int? Position2count { get; set; }
+        public int? Position3count { get; set; }
 
         private bool _isExpanded { get; set; }
         private bool _isVisible { get; set; }
@@ -283,6 +283,9 @@ namespace MaddenCustomPlaybookEditor.ViewModels
                         break;
                 }
             }
+            Position1count = Position1count == 0 ? null : Position1count;
+            Position2count = Position2count == 0 ? null : Position2count;
+            Position3count = Position3count == 0 ? null : Position3count;
         }
 
         #endregion

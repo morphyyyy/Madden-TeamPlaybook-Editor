@@ -104,6 +104,7 @@
                         <UserControls:PlayerIcon
                             x:Name="clnIcon"
                             Player="{Binding}"
+                            IconColor="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type TreeViewItem}}, Path=Foreground}"
                             Scale="1"
                             ShowPosition="False"
                             AbsolutePositioning="True"/>

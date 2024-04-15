@@ -39,16 +39,19 @@
                     <ControlTemplate.Triggers>
 
                         <Trigger Property="IsSelected" Value="True">
-                            <Setter Property="Background" Value="{DynamicResource PrimaryBrush}"/>
-                            <Setter Property="Foreground" Value="{DynamicResource TertiaryBrush}"/>
+                            <Setter Property="Background" Value="{DynamicResource QuaternaryBrush}"/>
+                            <Setter Property="Foreground" Value="{DynamicResource QuinaryBrush}"/>
+                            <Setter Property="BorderBrush" Value="{DynamicResource SenaryBrush}"/>
                         </Trigger>
                         <Trigger Property="IsSelected" Value="False">
-                            <Setter Property="Background" Value="{DynamicResource BaseBrush}"/>
-                            <Setter Property="Foreground" Value="{DynamicResource TertiaryBrush}"/>
+                            <Setter Property="Background" Value="{DynamicResource PrimaryBrush}"/>
+                            <Setter Property="Foreground" Value="{DynamicResource SecondaryBrush}"/>
+                            <Setter Property="BorderBrush" Value="{DynamicResource TertiaryBrush}"/>
                         </Trigger>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Background" Value="{DynamicResource PrimaryBrush}"/>
-                            <Setter Property="Foreground" Value="{DynamicResource TertiaryBrush}"/>
+                            <Setter Property="Background" Value="{DynamicResource QuaternaryBrush}"/>
+                            <Setter Property="Foreground" Value="{DynamicResource QuinaryBrush}"/>
+                            <Setter Property="BorderBrush" Value="{DynamicResource SenaryBrush}"/>
                         </Trigger>
 
                     </ControlTemplate.Triggers>

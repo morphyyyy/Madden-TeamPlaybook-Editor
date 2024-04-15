@@ -9,6 +9,13 @@ namespace Madden.TeamPlaybook
     [Serializable]
     public class PLYL
     {
+        public static readonly Dictionary<int, string> Situation = new Dictionary<int, string>
+        {
+            {-1, "Situation_Invalid" },
+            {1, "LongYardage"},
+            {2, "GeneralPurpose" },
+            {3, "ShortYardage" }
+        };
         public static readonly Dictionary<int, string> BlockingScheme = new Dictionary<int, string>
         {
             {-1, "Invalid"},

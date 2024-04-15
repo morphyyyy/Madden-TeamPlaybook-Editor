@@ -330,12 +330,13 @@ namespace MaddenTeamPlaybookEditor
             //    TeamColorsHex[0] = (Color)ColorConverter.ConvertFromString(TeamColors[1]);
             //    TeamColorsHex[1] = TeamColors.Count() > 3 ? (Color)ColorConverter.ConvertFromString(TeamColors[3]) : (Color)ColorConverter.ConvertFromString(TeamColors[2]);
             //}
-            Application.Current.Resources["Primary"] = TeamColorsHex[0];
-            Application.Current.Resources["Secondary"] = TeamColorsHex[1];
-            Application.Current.Resources["Tertiary"] = TeamColorsHex[2];
-            Application.Current.Resources["Quaternary"] = TeamColorsHex.Count() > 3 ? TeamColorsHex[3] : TeamColorsHex[0];
-            Application.Current.Resources["Quinary"] = TeamColorsHex.Count() > 4 ? TeamColorsHex[4] : TeamColorsHex[1];
-            Application.Current.Resources["Senary"] = TeamColorsHex.Count() > 5 ? TeamColorsHex[5] : TeamColorsHex[2];
+            Application.Current.Resources["Accent"] = TeamColorsHex[0];
+            Application.Current.Resources["Primary"] = TeamColorsHex[1];
+            Application.Current.Resources["Secondary"] = TeamColorsHex[2];
+            Application.Current.Resources["Tertiary"] = TeamColorsHex[3];
+            Application.Current.Resources["Quaternary"] = TeamColorsHex[4];
+            Application.Current.Resources["Quinary"] = TeamColorsHex[5];
+            Application.Current.Resources["Senary"] = TeamColorsHex[6];
 
             //ImageBrush imageBrush = new ImageBrush();
             //imageBrush.ImageSource = new BitmapImage(new Uri("pack://application:,,,/Resources/" + TeamPlaybook.TeamColor.Key + ".png"));
@@ -787,6 +788,8 @@ namespace MaddenTeamPlaybookEditor
             //    tvi.IsExpanded = !tvi.IsExpanded;
             //    e.Handled = true;
             //}
+
+            ((TreeView)sender).Tag = e.OriginalSource;
         }
 
         private void tvwPSALs_Selected(object sender, RoutedEventArgs e)
@@ -1468,15 +1471,14 @@ namespace MaddenTeamPlaybookEditor
                         }
                         teamColors = teamColors.Distinct().ToList();
                         WrapPanel wrap = new WrapPanel { Background = new SolidColorBrush(Colors.Black) };
-                        DropShadowBitmapEffect myDropShadowEffect = new DropShadowBitmapEffect { Color = Colors.Black, Direction = 320, ShadowDepth = 1, Softness = .5, Opacity = 1.0 };
                         Grid grid = new Grid { Width = 150, Height = 100 };
-                        grid.Children.Add(new TextBlock { Foreground = new SolidColorBrush(Colors.White), Text = Path.GetFileName(path), TextAlignment = TextAlignment.Center, HorizontalAlignment = HorizontalAlignment.Center, VerticalAlignment = VerticalAlignment.Center, BitmapEffect = myDropShadowEffect });
+                        grid.Children.Add(new TextBlock { Foreground = new SolidColorBrush(Colors.White), Text = Path.GetFileName(path), TextAlignment = TextAlignment.Center, HorizontalAlignment = HorizontalAlignment.Center, VerticalAlignment = VerticalAlignment.Center });
                         wrap.Children.Add(grid);
                         foreach (string html in teamColors)
                         {
                             System.Drawing.Color teamColor = System.Drawing.ColorTranslator.FromHtml(html);
                             Grid color = new Grid { Background = new SolidColorBrush(Color.FromRgb(teamColor.R, teamColor.G, teamColor.B)), Height = 100, Width = 100 };
-                            TextBox colorText = new TextBox { Foreground = new SolidColorBrush(Colors.White), BorderBrush = new SolidColorBrush(Colors.Transparent), Background = new SolidColorBrush(Colors.Transparent), BitmapEffect = myDropShadowEffect, Text = html, IsReadOnly = true, HorizontalAlignment = HorizontalAlignment.Center, VerticalAlignment = VerticalAlignment.Center };
+                            TextBox colorText = new TextBox { Foreground = new SolidColorBrush(Colors.White), BorderBrush = new SolidColorBrush(Colors.Transparent), Background = new SolidColorBrush(Colors.Transparent), Text = html, IsReadOnly = true, HorizontalAlignment = HorizontalAlignment.Center, VerticalAlignment = VerticalAlignment.Center };
                             color.Children.Add(colorText);
                             wrap.Children.Add(color);
                         }
@@ -1487,7 +1489,7 @@ namespace MaddenTeamPlaybookEditor
             }
             catch
             {
-                throw new Exception("Can't read XML. Only designed for color lists exported from frosty");
+                MessageBox.Show("Can't read XML. Only designed for color lists exported from frosty");
             }
         }
 

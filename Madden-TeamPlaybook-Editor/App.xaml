@@ -10,12 +10,13 @@
             <math:MathConverter x:Key="Math" />
             <Color x:Key="TextColor">LightGray</Color>
             <Color x:Key="BackgroundColor">black</Color>
-            <Color x:Key="Primary">#0A3161</Color>
-            <Color x:Key="Secondary">#B31942</Color>
-            <Color x:Key="Tertiary">#FFFFFF</Color>
-            <Color x:Key="Quaternary">#FFFFFF</Color>
-            <Color x:Key="Quinary">#FFFFFF</Color>
-            <Color x:Key="Senary">#FFFFFF</Color>
+            <Color x:Key="Accent">White</Color>
+            <Color x:Key="Primary">#2C2C30</Color>
+            <Color x:Key="Secondary">#C1B28C</Color>
+            <Color x:Key="Tertiary">#E7E8E7</Color>
+            <Color x:Key="Quaternary">#E7E8E7</Color>
+            <Color x:Key="Quinary">#2C2C30</Color>
+            <Color x:Key="Senary">#C1B28C</Color>
             <Color x:Key="Undefined">#00000000</Color>
             <Color x:Key="Block">#c8c8c8</Color>
             <Color x:Key="BaseRoute">#c3b152</Color>
@@ -39,8 +40,7 @@
             <Color x:Key="DeepZone">#316df7</Color>
             <Color x:Key="QBSpy">#c87810</Color>
             <Color x:Key="RushQB">#db4155</Color>
-            <SolidColorBrush x:Key="BaseBrush" Color="{DynamicResource Primary}" Opacity="1"/>
-            <SolidColorBrush x:Key="BorderBrush" Color="{DynamicResource Primary}" Opacity="1"/>
+            <SolidColorBrush x:Key="AccentBrush" Color="{DynamicResource Accent}" Opacity="1"/>
             <SolidColorBrush x:Key="PrimaryBrush"  Color="{DynamicResource Primary}" Opacity="1"/>
             <SolidColorBrush x:Key="SecondaryBrush" Color="{DynamicResource Secondary}" />
             <SolidColorBrush x:Key="TertiaryBrush" Color="{DynamicResource Tertiary}" Opacity="1"/>
@@ -156,7 +156,7 @@
                 <Setter Property="OverridesDefaultStyle" Value="True" />
                 <Setter Property="KeyboardNavigation.TabNavigation" Value="None" />
                 <Setter Property="FocusVisualStyle" Value="{x:Null}" />
-                <Setter Property="MinWidth" Value="120" />
+                <Setter Property="MinWidth" Value="40" />
                 <Setter Property="MinHeight" Value="20" />
                 <Setter Property="AllowDrop" Value="true" />
                 <Setter Property="Template">

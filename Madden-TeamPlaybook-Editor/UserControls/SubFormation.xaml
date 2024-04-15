@@ -28,7 +28,6 @@
                 </Setter.Value>
             </Setter>
         </Style>
-        <SolidColorBrush x:Key="BaseBrush" Color="{DynamicResource Primary}" Opacity="1"/>
         <SolidColorBrush x:Key="BorderBrush" Color="{DynamicResource Primary}" Opacity="1"/>
         <SolidColorBrush x:Key="PrimaryBrush"  Color="{DynamicResource Primary}" Opacity="1"/>
         <SolidColorBrush x:Key="SecondaryBrush" Color="{DynamicResource Secondary}" />
@@ -197,7 +196,8 @@
         <TextBlock Grid.Row="0"
             Text="{Binding PBST.name}"
             TextWrapping="NoWrap" 
-            TextAlignment="Center"/>
+            TextAlignment="Center"
+            Foreground="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type TreeViewItem}}, Path=Foreground}" />
 
         <StackPanel Grid.Row="1"
             IsEnabled="False"
@@ -213,69 +213,54 @@
             <StackPanel 
                 Orientation="Horizontal" 
                 Margin="2,2" 
-                HorizontalAlignment="Center"
-                >
+                HorizontalAlignment="Center">
 
                 <TextBlock 
                     Text="{Binding Position1count}" 
-                    Foreground="{DynamicResource SecondaryBrush}" 
-                    FontWeight="Bold" 
-                    />
+                    Foreground="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type TreeViewItem}}, Path=BorderBrush}" 
+                    FontWeight="Bold" />
 
-                <TextBlock 
-                    Text=" " 
-                    />
+                <TextBlock Text=" " />
 
                 <TextBlock 
                     Text="{Binding Position1name}" 
-                    Foreground="LightGray" 
-                    />
+                    Foreground="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type TreeViewItem}}, Path=Foreground}" />
 
             </StackPanel>
 
             <StackPanel 
                 Orientation="Horizontal" 
                 Margin="2,2" 
-                HorizontalAlignment="Center"
-                >
+                HorizontalAlignment="Center">
 
                 <TextBlock 
                     Text="{Binding Position2count}" 
-                    Foreground="{DynamicResource SecondaryBrush}" 
-                    FontWeight="Bold" 
-                    />
+                    Foreground="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type TreeViewItem}}, Path=BorderBrush}" 
+                    FontWeight="Bold"/>
 
-                <TextBlock 
-                    Text=" " 
-                    />
+                <TextBlock Text=" " />
 
                 <TextBlock 
                     Text="{Binding Position2name}" 
-                    Foreground="LightGray" 
-                    />
+                    Foreground="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type TreeViewItem}}, Path=Foreground}" />
 
             </StackPanel>
 
             <StackPanel 
                 Orientation="Horizontal"
                 Margin="2,2"
-                HorizontalAlignment="Center"
-                >
+                HorizontalAlignment="Center">
 
                 <TextBlock 
                     Text="{Binding Position3count}"
-                    Foreground="{DynamicResource SecondaryBrush}"
-                    FontWeight="Bold" 
-                    />
+                    Foreground="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type TreeViewItem}}, Path=BorderBrush}" 
+                    FontWeight="Bold"/>
 
-                <TextBlock 
-                    Text=" "
-                    />
+                <TextBlock Text=" " />
 
                 <TextBlock
                     Text="{Binding Position3name}" 
-                    Foreground="LightGray"
-                    />
+                    Foreground="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type TreeViewItem}}, Path=Foreground}" />
 
             </StackPanel>
 
@@ -305,6 +290,7 @@
                         <UserControls:PlayerIcon
                             x:Name="clnIcon"
                             Player="{Binding}"
+                            IconColor="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type TreeViewItem}}, Path=Foreground}"
                             Scale="2.5"
                             ShowPosition="True"
                             AbsolutePositioning="True"/>

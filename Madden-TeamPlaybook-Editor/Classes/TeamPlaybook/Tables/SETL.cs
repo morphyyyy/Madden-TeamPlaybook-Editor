@@ -16,6 +16,77 @@ namespace Madden.TeamPlaybook
             {2, "GeneralPurpose" },
             {3, "ShortYardage" }
         };
+        public static readonly Dictionary<int, string> SetListFlag = new Dictionary<int, string>
+        {
+            {1, "Can Flip"},
+            {2, "No Wide Align" },
+            {4, "Run Oriented" },
+            {8, "Pass Oriented" },
+            {16, "Special Oriented" },
+            {32, "Prowl Defense" },
+            {64, "Prevent Defense" },
+            {128, "Non Symmetrical" },
+            {256, "Close" },
+            {512, "Tight" },
+            {1024, "Bunch" },
+            {2048, "Prevent Audible" },
+            {16384, "DimebacK At Pos 5" }
+        };
+        public static readonly Dictionary<int, string> SetType = new Dictionary<int, string>
+        {
+            {4, "Big"},
+            {9, "Bunch"},
+            {10, "Empty"},
+            {6, "Four WR"},
+            {8, "Goalline"},
+            {-1, "Invalid"},
+            {3, "Jumbo"},
+            {0, "None"},
+            {2, "Normal"},
+            {11, "Overload"},
+            {5, "Three WR"},
+            {7, "Trips"},
+            {12, "Wildcat"}
+        };
+        public static readonly Dictionary<int, string> SetClassification = new Dictionary<int, string>
+        {
+            {17, "1 4 6"},
+            {18, "2 4 6"},
+            {14, "3 2 6"},
+            {15, "3 3 5"},
+            {13, "3 4"},
+            {16, "4 2 5"},
+            {12, "4 3"},
+            {30, "4 4"},
+            {31, "46"},
+            {32, "5 2"},
+            {20, "Dime"},
+            {22, "Dollar"},
+            {25, "FGBlock"},
+            {24, "FGReturn"},
+            {7, "FieldGoal"},
+            {23, "GoallineDefense"},
+            {4, "GoallineOffense"},
+            {-1, "Invalid"},
+            {9, "Kickoff"},
+            {28, "KickReturn"},
+            {33, "Kneel"},
+            {19, "Nickel"},
+            {11, "OnsideKick"},
+            {29, "OnsideReturn"},
+            {3, "Pistol"},
+            {5, "Punt"},
+            {27, "PuntBlock"},
+            {6, "PuntProtect"},
+            {26, "PuntReturn"},
+            {21, "Quarter"},
+            {10, "SafetyKickoff"},
+            {1, "Shotgun"},
+            {8, "Special"},
+            {34, "StopClock"},
+            {0, "Under Center"},
+            {2, "Wildcat"}
+        };
 
         public int rec { get; set; }
         /// <summary>
