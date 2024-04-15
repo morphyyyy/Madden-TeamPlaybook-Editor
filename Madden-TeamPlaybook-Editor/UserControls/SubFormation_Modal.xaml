@@ -202,7 +202,7 @@
                                     BorderBrush="Transparent" 
                                     HorizontalAlignment="Left"
                                     SelectionChanged="lvwPackagesSelectionChanged"/>
-                                <TextBlock Grid.Column="0" Grid.Row="2" Text="CLAS" HorizontalAlignment="Right" />
+                                <TextBlock Grid.Column="0" Grid.Row="2" Text="Classification" HorizontalAlignment="Right" />
                                 <ComboBox Grid.Column="1" Grid.Row="2"
                                     x:Name="cbxSETL_CLAS"  
                                     ItemsSource="{Binding Source={x:Static MaddenTeamPlaybook:SETL.SetClassification}}" 
@@ -210,9 +210,9 @@
                                     SelectedValuePath="Key" 
                                     DisplayMemberPath="Value" 
                                     HorizontalAlignment="Left"/>
-                                <TextBlock Grid.Column="0" Grid.Row="3" Text="SETT" HorizontalAlignment="Right" />
+                                <TextBlock Grid.Column="0" Grid.Row="3" Text="Type" HorizontalAlignment="Right" />
                                 <ComboBox x:Name="cbxSETL_SETT" Grid.Column="1" Grid.Row="3" ItemsSource="{Binding Source={x:Static MaddenTeamPlaybook:SETL.SetType}}" SelectedValue="{Binding SETL.SETT, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="Key" DisplayMemberPath="Value" HorizontalAlignment="Left"/>
-                                <TextBlock Grid.Column="0" Grid.Row="4" Text="SITT" HorizontalAlignment="Right" />
+                                <TextBlock Grid.Column="0" Grid.Row="4" Text="Situation" HorizontalAlignment="Right" />
                                 <ComboBox x:Name="cbxSETL_SITT" Grid.Column="1" Grid.Row="4" ItemsSource="{Binding Source={x:Static MaddenTeamPlaybook:SETL.Situation}}" SelectedValue="{Binding SETL.SITT, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="Key" DisplayMemberPath="Value" HorizontalAlignment="Left"/>
                                 <TextBlock Grid.Column="0" Grid.Row="5" Text="poso" HorizontalAlignment="Right" />
                                 <ComboBox x:Name="cbxSETL_poso" Grid.Column="1" Grid.Row="5" SelectedValue="{Binding SETL.poso, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left">
