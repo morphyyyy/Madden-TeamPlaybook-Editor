@@ -734,7 +734,8 @@ namespace MaddenTeamPlaybookEditor
         {
             if (((TreeView)sender).SelectedItem is MaddenTeamPlaybookEditor.ViewModels.FormationVM)
             {
-
+                uclPlayModal.Visibility = Visibility.Collapsed;
+                uclSubFormationModal.Visibility = Visibility.Collapsed;
             }
 
             if (((TreeView)sender).SelectedItem is MaddenTeamPlaybookEditor.ViewModels.SubFormationVM)

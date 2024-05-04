@@ -141,5 +141,16 @@ namespace MaddenTeamPlaybookEditor.User_Controls
         {
             subFormation.SETL.name = subFormation.PBST.name;
         }
+
+        private void iclIconMouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            if (sender.GetType() != typeof(PlayerIcon)) return;
+            GetPlayer(((PlayerIcon)sender).Player);
+        }
+
+        public void GetPlayer(PlayerVM player)
+        {
+            tabPlayer.DataContext = player;
+        }
     }
 }

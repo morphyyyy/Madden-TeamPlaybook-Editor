@@ -9,6 +9,31 @@ namespace Madden.TeamPlaybook
     [Serializable]
     public class SETP
     {
+        public static readonly Dictionary<int, string> SetGroupType = new Dictionary<int, string>
+        {
+            {6, "Defensive Backs"},
+            {8, "Defensive Line"},
+            {-1, "Invalid"},
+            {10, "Kick Return Player"},
+            {14, "Kicker"},
+            {9, "Kickoff Player"},
+            {5, "Linebackers"},
+            {4, "Linemen"},
+            {24, "Max"},
+            {15, "MotionMan1"},
+            {16, "MotionMan2"},
+            {17, "MotionMan3"},
+            {18, "MotionMan4"},
+            {19, "MotionMan5"},
+            {13, "Punt Coverage"},
+            {1, "Quarterback"},
+            {2, "Runningback"},
+            {12, "Safety Kick Return Player"},
+            {11, "Safety Kickoff Player"},
+            {23, "Undefined"},
+            {3, "Wide Receiver"}
+        };
+
         public int rec { get; set; }
         /// <summary>
         /// SET.setl

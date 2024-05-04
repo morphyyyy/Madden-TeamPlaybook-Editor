@@ -18,15 +18,13 @@
                         CornerRadius="2"
                         BorderThickness="0"
                         BorderBrush="Transparent"
-                        Background="{DynamicResource SecondaryBrush}">
+                        Background="{DynamicResource PrimaryBrush}">
                         <Path x:Name="Arrow"
                             HorizontalAlignment="Center"
                             VerticalAlignment="Center"
                             Data="{Binding Content, 
-                            RelativeSource={RelativeSource TemplatedParent}}" >
-                            <Path.Fill>
-                                <SolidColorBrush Color="{DynamicResource Tertiary}"/>
-                            </Path.Fill>
+                            RelativeSource={RelativeSource TemplatedParent}}"
+                            Fill="{DynamicResource SecondaryBrush}">
                         </Path>
                     </Border>
                 </ControlTemplate>
@@ -94,7 +92,7 @@
                       Command="ScrollBar.PageUpCommand" />
                 </Track.DecreaseRepeatButton>
                 <Track.Thumb>
-                    <Thumb Style="{StaticResource ScrollBarThumb}" Margin="1,0,1,0" BorderThickness="0" BorderBrush="Transparent" Background="{DynamicResource SecondaryBrush}"/>
+                    <Thumb Style="{StaticResource ScrollBarThumb}" Margin="1,0,1,0" BorderThickness="0" BorderBrush="Transparent" Background="{DynamicResource PrimaryBrush}"/>
                 </Track.Thumb>
                 <Track.IncreaseRepeatButton>
                     <RepeatButton Style="{StaticResource ScrollBarPageButton}"
@@ -132,7 +130,7 @@
                       Command="ScrollBar.PageLeftCommand" />
                 </Track.DecreaseRepeatButton>
                 <Track.Thumb>
-                    <Thumb Style="{StaticResource ScrollBarThumb}" Margin="1,0,1,0" BorderThickness="0" BorderBrush="Transparent" Background="{DynamicResource SecondaryBrush}"/>
+                    <Thumb Style="{StaticResource ScrollBarThumb}" Margin="1,0,1,0" BorderThickness="0" BorderBrush="Transparent" Background="{DynamicResource PrimaryBrush}"/>
                 </Track.Thumb>
                 <Track.IncreaseRepeatButton>
                     <RepeatButton Style="{StaticResource ScrollBarPageButton}"

@@ -60,7 +60,7 @@
         <SolidColorBrush x:Key="RushQBBrush" Color="{DynamicResource RushQB}" Opacity="0.1"/>
     </UserControl.Resources>
 
-    <Grid Margin="0,5" Width="196">
+    <Grid Margin="0,5" Width="190">
         <Grid.RowDefinitions>
             <RowDefinition/>
             <RowDefinition/>
@@ -275,7 +275,7 @@
             <ItemsControl
                 IsEnabled="False"
                 x:Name="iclPlayers"
-                ItemsSource="{Binding CurrentPackage}">
+                ItemsSource="{Binding PlayerPlayartView}">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
                         <Canvas 
@@ -290,9 +290,8 @@
                         <UserControls:PlayerIcon
                             x:Name="clnIcon"
                             Player="{Binding}"
-                            IconColor="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type TreeViewItem}}, Path=Foreground}"
                             Scale="2.5"
-                            ShowPosition="True"
+                            ShowPosition="False"
                             AbsolutePositioning="True"/>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
@@ -300,10 +299,15 @@
                     <Style>
                         <Setter 
                             Property="Canvas.Left" 
-                            Value="{Binding fmtx}"/>
+                            Value="{Binding SETP.fmtx}"/>
                         <Setter 
                             Property="Canvas.Top" 
-                            Value="{Binding fmty}"/>
+                            Value="{Binding SETP.fmty}"/>
+                        <Setter Property="UserControls:PlayerIcon.Effect">
+                            <Setter.Value>
+                                <DropShadowEffect Color="Black" Direction="225" ShadowDepth="0" BlurRadius="10" Opacity="1.0" />
+                            </Setter.Value>
+                        </Setter>
                     </Style>
                 </ItemsControl.ItemContainerStyle>
                 <ItemsControl.LayoutTransform>

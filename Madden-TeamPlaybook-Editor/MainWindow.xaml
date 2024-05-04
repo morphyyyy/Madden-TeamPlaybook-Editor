@@ -186,7 +186,8 @@
                                             StrokeThickness="1"
                                             Fill="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type TreeViewItem}}, Path=Foreground}"
                                             Stroke="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type TreeViewItem}}, Path=BorderBrush}"
-                                            Margin="0,2,0,2"/>
+                                            Margin="0,2,0,2">
+                                        </classes:TextPath>
 
                                     </HierarchicalDataTemplate>
 
@@ -298,30 +299,10 @@
                             </TreeView.ItemContainerStyle>
 
                         </TreeView>
-
-                        <Canvas Name="bdrField"
-                            Width="533"
-                            Height="1048"
-                            VerticalAlignment="Top"
-                            HorizontalAlignment="Left"
-                            Grid.Column="1"
-                            Margin="0,-100.5"
-                            OpacityMask="{StaticResource FieldBrush}">
-                            <Canvas.Background>
-                                <SolidColorBrush Color="{DynamicResource TextColor}"/>
-                            </Canvas.Background>
-                            
-                            <Line X1="0" Y1="749" X2="533" Y2="749" StrokeThickness="5" Grid.Column="1" Stroke="{DynamicResource PrimaryBrush}" Opacity=".5"/>
-
-                            <Line X1="0" Y1="649" X2="533" Y2="649" StrokeThickness="5" Grid.Column="1" Stroke="{DynamicResource SecondaryBrush}" Opacity=".5"/>
-
-                            <Line X1="74" Y1="0" X2="74" Y2="1048" StrokeThickness="3" Grid.Column="1" Stroke="{DynamicResource QuaternaryBrush}" Opacity=".2"/>
-
-                            <Line X1="458.5" Y1="0" X2="458.5" Y2="1048" StrokeThickness="3" Grid.Column="1" Stroke="{DynamicResource QuaternaryBrush}" Opacity=".2"/>
-
-                        </Canvas>
-
-                        <UserControls:PlayModal x:Name="uclPlayModal" Grid.Column="1"/>
+                        
+                        <UserControls:PlayModal x:Name="uclPlayModal" 
+                            Visibility="Hidden" 
+                            Grid.Column="1"/>
 
                         <UserControls:SubFormationModal x:Name="uclSubFormationModal" 
                             Visibility="Hidden" 

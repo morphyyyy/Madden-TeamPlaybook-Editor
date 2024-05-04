@@ -18,33 +18,27 @@
 
         <Canvas x:Name="cvsField" Grid.Column="0" Height="900" Width="533"  VerticalAlignment="Top">
 
-            <!--<Border 
-                Name="bdrField"
-                Background="{StaticResource FieldBrush}"
-                CornerRadius="10"
+            <Canvas Name="bdrField"
                 Width="533"
-                Height="900"
-                />
+                Height="1048"
+                VerticalAlignment="Top"
+                HorizontalAlignment="Left"
+                Grid.Column="1"
+                Margin="0,-100.5"
+                OpacityMask="{StaticResource FieldBrush}">
+                <Canvas.Background>
+                    <SolidColorBrush Color="{DynamicResource TextColor}"/>
+                </Canvas.Background>
+                            
+                <Line X1="0" Y1="749" X2="533" Y2="749" StrokeThickness="5" Grid.Column="1" Stroke="{DynamicResource PrimaryBrush}" Opacity=".5"/>
 
-            <Line X1="0" Y1="599.5" X2="533" Y2="599.5" StrokeThickness="5">
-                <Line.Stroke>
-                    <SolidColorBrush>
-                        <SolidColorBrush.Color>
-                            <Color A="96" R="0" G="0" B="0"/>
-                        </SolidColorBrush.Color>
-                    </SolidColorBrush>
-                </Line.Stroke>
-            </Line>
+                <Line X1="0" Y1="649" X2="533" Y2="649" StrokeThickness="5" Grid.Column="1" Stroke="{DynamicResource SecondaryBrush}" Opacity=".5"/>
 
-            <Line X1="0" Y1="499.5" X2="533" Y2="499.5" StrokeThickness="5">
-                <Line.Stroke>
-                    <SolidColorBrush>
-                        <SolidColorBrush.Color>
-                            <Color A="144" R="204" G="128" B="40"/>
-                        </SolidColorBrush.Color>
-                    </SolidColorBrush>
-                </Line.Stroke>
-            </Line>-->
+                <Line X1="74" Y1="0" X2="74" Y2="1048" StrokeThickness="3" Grid.Column="1" Stroke="{DynamicResource QuaternaryBrush}" Opacity=".2"/>
+
+                <Line X1="458.5" Y1="0" X2="458.5" Y2="1048" StrokeThickness="3" Grid.Column="1" Stroke="{DynamicResource QuaternaryBrush}" Opacity=".2"/>
+
+            </Canvas>
 
             <ItemsControl 
                 IsEnabled="True"
@@ -67,6 +61,7 @@
                                 ShowPosition="True"
                                 AbsolutePositioning="True"
                                 Draggable="True"
+                                MouseDown="iclIconMouseDown"
                                 MouseRightButtonUp="iclIconMouseRightButtonUp"/>
                         </Canvas>
                     </DataTemplate>
@@ -133,6 +128,7 @@
 
         <Grid Margin="5" Grid.Column="1">
             <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             
@@ -293,16 +289,37 @@
                 </DockPanel>
             </GroupBox>
 
-            <!--<GroupBox Header="Player" x:Name="tabPlayer" Grid.Row="1" Margin="5">
-                <DockPanel Margin="5" LastChildFill="False">
-                    <TextBlock DockPanel.Dock="Top" Margin="5"
+            <GroupBox Header="Player" x:Name="tabPlayer" Grid.Row="1" Margin="5">
+                <StackPanel Margin="5">
+                    <TextBox 
+                        TextChanged="PBST_name_changed"
+                        Margin="5"
                         FontFamily="Tahoma" 
                         FontSize="24"
+                        BorderThickness="0"
                         FontWeight="Bold"
-                        Text="{Binding Label}" 
-                        HorizontalAlignment="Left"/>
-                </DockPanel>
-            </GroupBox>-->
+                        Text="{Binding Label, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" 
+                        HorizontalAlignment="Stretch"
+                        HorizontalContentAlignment="Left"
+                        DockPanel.Dock="Top"/>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" Grid.Row="0" Text="SETP" HorizontalAlignment="Right" />
+                        <ComboBox Grid.Column="1" Grid.Row="0"
+                            x:Name="cbxSETP" 
+                            ItemsSource="{Binding Source={x:Static MaddenTeamPlaybook:SETP.SetGroupType}}"
+                            SelectedValue="{Binding SETP.SGT_, Mode=TwoWay}" 
+                            SelectedValuePath="Key" 
+                            DisplayMemberPath="Value" 
+                            Background="Transparent" 
+                            BorderBrush="Transparent" 
+                            HorizontalAlignment="Left"/>
+                    </Grid>
+                </StackPanel>
+            </GroupBox>
             
         </Grid>
 
