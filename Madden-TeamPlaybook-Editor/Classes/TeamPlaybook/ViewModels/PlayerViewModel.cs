@@ -348,6 +348,11 @@ namespace MaddenTeamPlaybookEditor.ViewModels
 
         public void GetARTLcolor()
         {
+            if (Play == null)
+            {
+                artlColor = ARTLColor.Undefined;
+                return;
+            }
             artlColor =
                 PLYS.poso != 0 ?
                 Play.PLYL.vpos == PLYS.poso ?

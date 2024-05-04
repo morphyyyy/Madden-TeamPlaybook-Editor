@@ -1,6 +1,8 @@
 ﻿using Madden.Team;
 using Madden.TeamPlaybook;
+using MaddenCustomPlaybookEditor.ViewModels;
 using MaddenTeamPlaybookEditor.ExtensionMethods;
+using MaddenTeamPlaybookEditor.User_Controls;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -8,6 +10,7 @@ using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Media;
 using TDBAccess;
 
@@ -34,11 +37,11 @@ namespace MaddenTeamPlaybookEditor.ViewModels
             { "Cardinals", new List<string>{"#E7E8E7", "#8B2533", "#E7E8E7", "#777C7E", "#E7E8E7", "#8B2533", "#2C2C30"} },
             { "Chargers", new List<string>{"#E7E8E7", "#2D3B7C", "#F0B115", "#E7E8E7", "#E7E8E7", "#1C80BB", "#F0B115"} },
             { "Chiefs", new List<string>{"#E7E8E7", "#B62332", "#E7E8E7", "#F0B115", "#E7E8E7", "#B62332", "#F0B115"} },
-            { "Colts", new List<string>{"#E7E8E7", "#23406E", "#E7E8E7", "#E7E8E7", "#E7E8E7", "#23406E", "#23406E"} },
+            { "Colts", new List<string>{"#777C7E", "#23406E", "#E7E8E7", "#E7E8E7", "#E7E8E7", "#23406E", "#23406E"} },
             { "Commanders", new List<string>{"#E7E8E7", "#6E2733", "#E7E8E7", "#F0B115", "#E7E8E7", "#6E2733", "#2C2C30"} },
             { "Cowboys", new List<string>{"#E7E8E7", "#2C3244", "#E7E8E7", "#E7E8E7", "#E7E8E7", "#2D3B7C", "#2D3B7C"} },
             { "Dolphins", new List<string>{"#E7E8E7", "#008A86", "#E7E8E7", "#FA471C", "#E7E8E7", "#008A86", "#FA471C"} },
-            { "Eagles", new List<string>{"#E7E8E7", "#20484D", "#E7E8E7", "#2C2C30", "#E7E8E7", "#20484D", "#2C2C30"} },
+            { "Eagles", new List<string>{"#0B5933", "#20484D", "#E7E8E7", "#2C2C30", "#E7E8E7", "#20484D", "#2C2C30"} },
             { "Falcons", new List<string>{"#E7E8E7", "#2C2C30", "#E7E8E7", "#9A2133", "#E7E8E7", "#2C2C30", "#9A2133"} },
             { "Giants", new List<string>{"#E7E8E7", "#313C71", "#E7E8E7", "#E7E8E7", "#E7E8E7", "#9A2133", "#9A2133"} },
             { "Jaguars", new List<string>{"#977538", "#006675", "#E7E8E7", "#007E98", "#E7E8E7", "#2C2C30", "#2C2C30"} },
@@ -1464,28 +1467,26 @@ namespace MaddenTeamPlaybookEditor.ViewModels
                     };
                     foreach (var _route in PLYS.Select(x => new { x.PSAL, x.PLRR }).Where(x => x.PLRR == _type.Key).Distinct().OrderBy(x => x.PSAL))
                     {
-                        PlayerVM player = new PlayerVM
+                        PlayerVM player = new PlayerVM();
+                        player.PLYS = PLYS.FirstOrDefault(plys => plys.PSAL == _route.PSAL);
+                        player.SETG = new Madden.TeamPlaybook.SETG
                         {
-                            PLYS = PLYS.FirstOrDefault(plys => plys.PSAL == _route.PSAL),
-                            SETG = new Madden.TeamPlaybook.SETG
-                            {
-                                x___ = 0,
-                                y___ = 0,
-                                fx__ = 0,
-                                fy__ = 0
-                            },
-                            SETP = new Madden.TeamPlaybook.SETP
-                            {
-                                artx = 90,
-                                arty = 80
-                            },
-                            ARTL = ARTL.FirstOrDefault(_psal => _psal.artl == PLYS.FirstOrDefault(plys => plys.PSAL == _route.PSAL).ARTL),
-                            artlColor = ARTLColor.Undefined,
-                            PSAL = PSAL.Where(_psal => _psal.psal == _route.PSAL).OrderBy(s => s.step).ToList(),
-                            Icon = new EllipseGeometry(new Point(0, 0), 4, 4).GetFlattenedPathGeometry(),
-                            EPos = "",
-                            DPos = "1"
+                            x___ = 0,
+                            y___ = 0,
+                            fx__ = 0,
+                            fy__ = 0
                         };
+                        player.SETP = new Madden.TeamPlaybook.SETP
+                        {
+                            artx = 90,
+                            arty = 80
+                        };
+                        player.ARTL = ARTL.FirstOrDefault(_psal => _psal.artl == player.PLYS.ARTL);
+                        player.artlColor = ARTLColor.Undefined;
+                        player.PSAL = PSAL.Where(_psal => _psal.psal == _route.PSAL).OrderBy(s => s.step).ToList();
+                        player.Icon = new EllipseGeometry(new Point(0, 0), 4, 4).GetFlattenedPathGeometry();
+                        player.EPos = "";
+                        player.DPos = "1";
                         PlayVM play = new PlayVM
                         {
                             PBPL = new Madden.TeamPlaybook.PBPL { name = "PSAL: " + _route.PSAL.ToString() },
