@@ -21,43 +21,13 @@
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="ContextMenu">
-                        <Border CornerRadius="4" BorderThickness="0" Background="{Binding PrimaryBrush}" SnapsToDevicePixels="True">
+                        <Border CornerRadius="4" BorderThickness="0" Background="{DynamicResource PrimaryBrush}" SnapsToDevicePixels="True">
                             <ItemsPresenter />
                         </Border>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
         </Style>
-        <SolidColorBrush x:Key="BorderBrush" Color="{DynamicResource Primary}" Opacity="1"/>
-        <SolidColorBrush x:Key="PrimaryBrush"  Color="{DynamicResource Primary}" Opacity="1"/>
-        <SolidColorBrush x:Key="SecondaryBrush" Color="{DynamicResource Secondary}" />
-        <SolidColorBrush x:Key="TertiaryBrush" Color="{DynamicResource Tertiary}" Opacity="1"/>
-        <SolidColorBrush x:Key="QuaternaryBrush" Color="{DynamicResource Quaternary}" />
-        <SolidColorBrush x:Key="QuinaryBrush" Color="{DynamicResource Quinary}" />
-        <SolidColorBrush x:Key="SenaryBrush" Color="{DynamicResource Senary}"/>
-        <SolidColorBrush x:Key="UndefinedBrush" Color="{DynamicResource Undefined}" Opacity="0.1"/>
-        <SolidColorBrush x:Key="BlockBrush"  Color="{DynamicResource Block}" Opacity="0.1"/>
-        <SolidColorBrush x:Key="BaseRouteBrush" Color="{DynamicResource BaseRoute}" Opacity="0.1"/>
-        <SolidColorBrush x:Key="PrimaryRouteBrush" Color="{DynamicResource PrimaryRoute}" Opacity="0.1"/>
-        <SolidColorBrush x:Key="DelayRouteBrush" Color="{DynamicResource DelayRoute}" Opacity="0.1"/>
-        <SolidColorBrush x:Key="MotionRouteBrush" Color="{DynamicResource MotionRoute}" Opacity="0.1"/>
-        <SolidColorBrush x:Key="RunBrush"  Color="{DynamicResource Run}" Opacity="0.1"/>
-        <SolidColorBrush x:Key="QBScrambleBrush" Color="{DynamicResource QBScramble}" Opacity="0.1"/>
-        <SolidColorBrush x:Key="QBHandoffBrush" Color="{DynamicResource QBHandoff}" Opacity="0.1"/>
-        <SolidColorBrush x:Key="KickoffBrush" Color="{DynamicResource Kickoff}" Opacity="0.1"/>
-        <SolidColorBrush x:Key="CloudFlatBrush" Color="{DynamicResource CloudFlat}" Opacity="0.1"/>
-        <SolidColorBrush x:Key="HardFlatBrush" Color="{DynamicResource HardFlat}" Opacity="0.1"/>
-        <SolidColorBrush x:Key="SoftSquatBrush" Color="{DynamicResource SoftSquat}" Opacity="0.1"/>
-        <SolidColorBrush x:Key="MidReadBrush" Color="{DynamicResource MidRead}" Opacity="0.1"/>
-        <SolidColorBrush x:Key="ThreeReceiverHookBrush" Color="{DynamicResource ThreeReceiverHook}" Opacity="0.1"/>
-        <SolidColorBrush x:Key="HookCurlBrush" Color="{DynamicResource HookCurl}" Opacity="0.1"/>
-        <SolidColorBrush x:Key="VertHookBrush" Color="{DynamicResource VertHook}" Opacity="0.1"/>
-        <SolidColorBrush x:Key="CurlFlatBrush" Color="{DynamicResource CurlFlat}" Opacity="0.1"/>
-        <SolidColorBrush x:Key="SeamFlatBrush" Color="{DynamicResource SeamFlat}" Opacity="0.1"/>
-        <SolidColorBrush x:Key="QuarterFlatBrush" Color="{DynamicResource QuarterFlat}" Opacity="0.1"/>
-        <SolidColorBrush x:Key="DeepZoneBrush" Color="{DynamicResource DeepZone}" Opacity="0.1"/>
-        <SolidColorBrush x:Key="QBSpyBrush" Color="{DynamicResource QBSpy}" Opacity="0.1"/>
-        <SolidColorBrush x:Key="RushQBBrush" Color="{DynamicResource RushQB}" Opacity="0.1"/>
     </UserControl.Resources>
 
     <Grid Margin="0,5" Width="190">

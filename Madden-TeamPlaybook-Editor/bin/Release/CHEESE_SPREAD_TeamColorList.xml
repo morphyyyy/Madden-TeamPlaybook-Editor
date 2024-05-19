@@ -1,0 +1,88 @@
+<TeamPlaybookEditorColors>
+    <ColorList Count="7">
+		<Accent Index="0">
+			<TeamColorData>
+				<ColorValue>
+					<Vec4>
+						<x>0.01520851</x>
+						<y>0.01520851</y>
+						<z>0.01599629</z>
+						<w>1</w>
+					</Vec4>
+				</ColorValue>
+			</TeamColorData>
+		</Accent>
+		<Primary Index="1">
+			<TeamColorData>
+				<ColorValue>
+					<Vec4>
+						<x>0.8069522</x>
+						<y>0.8148466</y>
+						<z>0.8069522</z>
+						<w>1</w>
+					</Vec4>
+				</ColorValue>
+			</TeamColorData>
+		</Primary>
+		<Secondary Index="2">
+			<TeamColorData>
+				<ColorValue>
+					<Vec4>
+						<x>0.01520851</x>
+						<y>0.01520851</y>
+						<z>0.01599629</z>
+						<w>1</w>
+					</Vec4>
+				</ColorValue>
+			</TeamColorData>
+		</Secondary>
+		<Tertiary Index="3">
+			<TeamColorData>
+				<ColorValue>
+					<Vec4>
+						<x>0.8069522</x>
+						<y>0.8148466</y>
+						<z>0.8069522</z>
+						<w>1</w>
+					</Vec4>
+				</ColorValue>
+			</TeamColorData>
+		</Tertiary>
+		<Quaternary Index="4">
+			<TeamColorData>
+				<ColorValue>
+					<Vec4>
+						<x>0.8069522</x>
+						<y>0.8148466</y>
+						<z>0.8069522</z>
+						<w>1</w>
+					</Vec4>
+				</ColorValue>
+			</TeamColorData>
+		</Quaternary>
+		<Quinary Index="5">
+			<TeamColorData>
+				<ColorValue>
+					<Vec4>
+						<x>0.01520851</x>
+						<y>0.01520851</y>
+						<z>0.01599629</z>
+						<w>1</w>
+					</Vec4>
+				</ColorValue>
+			</TeamColorData>
+		</Quinary>
+		<Senary Index="6">
+			<TeamColorData>
+				<ColorValue>
+					<Vec4>
+						<x>0.8069522</x>
+						<y>0.8148466</y>
+						<z>0.8069522</z>
+						<w>1</w>
+					</Vec4>
+				</ColorValue>
+			</TeamColorData>
+		</Senary>
+	</ColorList>
+</FootballTeamColorData>

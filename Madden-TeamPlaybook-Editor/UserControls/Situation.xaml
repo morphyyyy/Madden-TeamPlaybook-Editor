@@ -16,7 +16,7 @@
 
         <Canvas>
             <Canvas.Background>
-                <SolidColorBrush Color="{DynamicResource TextColor}" Opacity="0.25"/>
+                <SolidColorBrush Color="{DynamicResource Text}" Opacity="0.25"/>
             </Canvas.Background>
             <Canvas.OpacityMask>
                 <ImageBrush
@@ -48,7 +48,7 @@
                 Value="{Binding prct, Mode=TwoWay, NotifyOnSourceUpdated=True, NotifyOnTargetUpdated=True, UpdateSourceTrigger=PropertyChanged}" 
                 BorderBrush="Transparent"
                 Background="Transparent"
-                Foreground="{DynamicResource SecondaryBrush}"/>
+                Foreground="{DynamicResource AccentBrush}"/>
         </Canvas>
 
         <TextBlock x:Name="tbkPlayName" Text="{Binding PlayName}"  Grid.Column="1"/>

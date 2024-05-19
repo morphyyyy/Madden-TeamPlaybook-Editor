@@ -4,45 +4,43 @@
     xmlns:classes="clr-namespace:MaddenTeamPlaybookEditor.Classes">
 
     <Style x:Key="lbiTeamColorStyle" TargetType="ListBoxItem">
-        <Style.Setters>
-            <Setter Property="FontFamily" Value="DK Crayon Crumble" />
-            <Setter Property="FontSize" Value="14" />
-            <Setter Property="Background" Value="Transparent" />
-            <Setter Property="Foreground" Value="{DynamicResource TertiaryBrush}" />
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="ListBoxItem">
-                        <Border 
-                            BorderBrush="{TemplateBinding BorderBrush}"
-                            BorderThickness="{TemplateBinding BorderThickness}"
-                            Background="{TemplateBinding Background}" 
-                            Padding="{TemplateBinding Padding}"
-                            Margin="{TemplateBinding Margin}"
-                            CornerRadius="4">
-                            <ContentPresenter />
-                        </Border>
+        <Setter Property="FontFamily" Value="DK Crayon Crumble" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Foreground" Value="{DynamicResource TertiaryBrush}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ListBoxItem">
+                    <Border 
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        Background="{TemplateBinding Background}" 
+                        Padding="{TemplateBinding Padding}"
+                        Margin="{TemplateBinding Margin}"
+                        CornerRadius="4">
+                        <ContentPresenter />
+                    </Border>
 
-                        <ControlTemplate.Triggers>
+                    <ControlTemplate.Triggers>
 
-                            <Trigger Property="IsSelected" Value="True">
-                                <Setter Property="Background" Value="{DynamicResource SecondaryBrush}"/>
-                                <Setter Property="Foreground" Value="{DynamicResource TertiaryBrush}"/>
-                            </Trigger>
-                            <Trigger Property="IsSelected" Value="False">
-                                <Setter Property="Background" Value="{DynamicResource PrimaryBrush}"/>
-                                <Setter Property="Foreground" Value="{DynamicResource TertiaryBrush}"/>
-                            </Trigger>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter Property="Background" Value="{DynamicResource SecondaryBrush}"/>
-                                <Setter Property="Foreground" Value="{DynamicResource TertiaryBrush}"/>
-                            </Trigger>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter Property="Background" Value="{DynamicResource SecondaryBrush}"/>
+                            <Setter Property="Foreground" Value="{DynamicResource TertiaryBrush}"/>
+                        </Trigger>
+                        <Trigger Property="IsSelected" Value="False">
+                            <Setter Property="Background" Value="{DynamicResource PrimaryBrush}"/>
+                            <Setter Property="Foreground" Value="{DynamicResource TertiaryBrush}"/>
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="{DynamicResource SecondaryBrush}"/>
+                            <Setter Property="Foreground" Value="{DynamicResource TertiaryBrush}"/>
+                        </Trigger>
 
-                        </ControlTemplate.Triggers>
+                    </ControlTemplate.Triggers>
                         
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style.Setters>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
         
     </Style>
 </ResourceDictionary>

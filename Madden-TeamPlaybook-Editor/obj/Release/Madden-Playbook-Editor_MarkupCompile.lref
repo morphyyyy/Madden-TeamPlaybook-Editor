@@ -1,5 +1,6 @@
 ﻿
 FD:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\App.xaml;;
+FD:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\Styles\chbxTeamColorStyle.xaml;;
 FD:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\Styles\lbiTeamColorStyle.xaml;;
 FD:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\Styles\cbxTeamColorStyle.xaml;;
 FD:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\Styles\tciTeamColorStyle.xaml;;
@@ -7,6 +8,7 @@ FD:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\MainWindow.xaml;;
 FD:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\Styles\lviTeamColorStyle.xaml;;
 FD:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\Styles\sbrTeamColorStyle.xaml;;
 FD:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\Styles\tviTeamColorStyle.xaml;;
+FD:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\UserControls\ColorTheme.xaml;;
 FD:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\UserControls\SubFormation_Modal.xaml;;
 FD:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\UserControls\Play_Modal.xaml;;
 FD:\dev\Madden-TeamPlaybook-Editor\Madden-TeamPlaybook-Editor\UserControls\PlayerIcon.xaml;;

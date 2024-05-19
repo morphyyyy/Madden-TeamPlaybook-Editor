@@ -139,6 +139,7 @@ namespace MaddenTeamPlaybookEditor.User_Controls
 
         private void PBST_name_changed(object sender, TextChangedEventArgs e)
         {
+            if (subFormation.SETL == null) return;
             subFormation.SETL.name = subFormation.PBST.name;
         }
 

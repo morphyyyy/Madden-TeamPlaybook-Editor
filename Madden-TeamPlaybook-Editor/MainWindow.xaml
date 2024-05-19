@@ -20,15 +20,13 @@
     Width="1920"
     Height="1080"
     WindowState="Maximized"
-    UseLayoutRounding="True">
-    <Window.Background>
-        <SolidColorBrush Color="{DynamicResource BackgroundColor}"/>
-    </Window.Background>
+    UseLayoutRounding="True"
+    Background="{DynamicResource BackgroundBrush}">
     <Window.CommandBindings>
         <CommandBinding Command="ApplicationCommands.Paste" Executed="PasteFromClipboard" />
     </Window.CommandBindings>
     <Window.Resources>
-        <SolidColorBrush x:Key="BorderBrush" Color="{DynamicResource Primary}" Opacity="1"/>
+        <SolidColorBrush x:Key="AccentBrush" Color="{DynamicResource Accent}" Opacity="1"/>
         <SolidColorBrush x:Key="PrimaryBrush"  Color="{DynamicResource Primary}" Opacity="1"/>
         <SolidColorBrush x:Key="SecondaryBrush" Color="{DynamicResource Secondary}" />
         <SolidColorBrush x:Key="TertiaryBrush" Color="{DynamicResource Tertiary}" Opacity="1"/>
@@ -66,7 +64,7 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <Canvas Grid.Row="1" Background="{StaticResource BackgroundBrush}" Opacity="1"/>
+        <Canvas Grid.Row="1" Background="{DynamicResource BackgroundBrush}" Opacity="1"/>
 
         <Menu IsMainMenu="True" Grid.Row="0">
             <MenuItem Header="_File">
@@ -106,13 +104,10 @@
                 </Hyperlink>
             </MenuItem>
             <MenuItem Header="Themes">
+                <MenuItem Header="Colors" Click="btnSetTheme_Click"/>
+                <Separator />
                 <MenuItem Header="Load Theme" Click="btnLoadTheme_Click"/>
             </MenuItem>
-            <ComboBox x:Name="lvwTeamColors"
-                SelectedValuePath="Value"
-                DisplayMemberPath="Key"
-                SelectionChanged="lvwTeamColors_Selected"
-                ItemsSource="{Binding Source={x:Static TeamPlaybookViewModels:TeamPlaybook.TeamColors}}"/>
         </Menu>
 
         <Grid Margin="5" Grid.Row="1">
@@ -402,7 +397,7 @@
                                                     </DataTemplate>
                                                 </ListView.ItemTemplate>
                                                 <ListView.ItemContainerStyle>
-                                                    <Style TargetType="{x:Type ListViewItem}" BasedOn="{StaticResource lbiTeamColorStyle}"></Style>
+                                                    <Style TargetType="{x:Type ListViewItem}" BasedOn="{DynamicResource lbiTeamColorStyle}"></Style>
                                                 </ListView.ItemContainerStyle>
                                                 <ListView.ItemsPanel>
                                                     <ItemsPanelTemplate>
@@ -413,13 +408,13 @@
                                         </DataTemplate>
                                     </TabControl.ContentTemplate>
                                     <TabControl.ItemContainerStyle>
-                                        <Style TargetType="{x:Type TabItem}" BasedOn="{StaticResource tciTeamColorStyle}"></Style>
+                                        <Style TargetType="{x:Type TabItem}" BasedOn="{DynamicResource tciTeamColorStyle}"></Style>
                                     </TabControl.ItemContainerStyle>
                                 </TabControl>
                             </DataTemplate>
                         </TabControl.ContentTemplate>
                         <TabControl.ItemContainerStyle>
-                            <Style TargetType="{x:Type TabItem}" BasedOn="{StaticResource tciTeamColorStyle}"></Style>
+                            <Style TargetType="{x:Type TabItem}" BasedOn="{DynamicResource tciTeamColorStyle}"></Style>
                         </TabControl.ItemContainerStyle>
                     </TabControl>
                     
@@ -642,7 +637,7 @@
                                 <HierarchicalDataTemplate DataType="{x:Type TeamPlaybookViewModels:FormationVM}" ItemsSource="{Binding SubFormations}">
 
                                     <HierarchicalDataTemplate.ItemContainerStyle>
-                                        <Style TargetType="TreeViewItem" BasedOn="{StaticResource SubtviTeamColorStyle}">
+                                        <Style TargetType="TreeViewItem" BasedOn="{DynamicResource SubtviTeamColorStyle}">
                                             <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}" />
                                             <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay}" />
                                             <Style.Triggers>
@@ -692,7 +687,7 @@
                         </TreeView.Resources>
 
                         <TreeView.ItemContainerStyle>
-                            <Style TargetType="{x:Type TreeViewItem}" BasedOn="{StaticResource tviTeamColorStyle}">
+                            <Style TargetType="{x:Type TreeViewItem}" BasedOn="{DynamicResource tviTeamColorStyle}">
                                 <EventSetter Event="DragOver"  Handler="treeView_DragOver"/>
                                 <EventSetter Event="Drop" Handler="treeView_Drop"/>
                                 <EventSetter Event="MouseMove" Handler="treeView_MouseMove"/>
@@ -720,7 +715,7 @@
                         
                         <TabControl x:Name="tclSituationsOffense">
                             <TabControl.ItemContainerStyle>
-                                <Style TargetType="{x:Type TabItem}" BasedOn="{StaticResource tciTeamColorStyle}"></Style>
+                                <Style TargetType="{x:Type TabItem}" BasedOn="{DynamicResource tciTeamColorStyle}"></Style>
                             </TabControl.ItemContainerStyle>
 
                             <TabItem Header="Down and Distance">
@@ -1669,7 +1664,7 @@
 
                                 <TabControl>
                                     <TabControl.ItemContainerStyle>
-                                        <Style TargetType="{x:Type TabItem}" BasedOn="{StaticResource tciTeamColorStyle}"></Style>
+                                        <Style TargetType="{x:Type TabItem}" BasedOn="{DynamicResource tciTeamColorStyle}"></Style>
                                     </TabControl.ItemContainerStyle>
 
                                     <TabItem Header="Extra Point">

@@ -35,10 +35,8 @@
                 HorizontalAlignment="Left"
                 Grid.Column="1"
                 Margin="0,-100.5"
-                OpacityMask="{StaticResource FieldBrush}">
-                <Canvas.Background>
-                    <SolidColorBrush Color="{DynamicResource TextColor}"/>
-                </Canvas.Background>
+                OpacityMask="{StaticResource FieldBrush}"
+                Background="{DynamicResource TextBrush}">
 
                 <Line X1="0" Y1="749" X2="533" Y2="749" StrokeThickness="5" Grid.Column="1" Stroke="{DynamicResource PrimaryBrush}" Opacity=".5"/>
 
@@ -338,7 +336,7 @@
                         </Grid.ColumnDefinitions>
                         <DockPanel Grid.Column="0" LastChildFill="False">
                             <GroupBox Header="PLRD" DockPanel.Dock="Top" Margin="5">
-                                <TextBox Text="{Binding PLRD.hole, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                <ComboBox x:Name="cbxPLRD_hole" Grid.Column="1" Grid.Row="1" ItemsSource="{Binding Source={x:Static MaddenTeamPlaybook:PLRD.Hole}}" SelectedValue="{Binding PLRD.hole, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="Key" DisplayMemberPath="Value" SelectionChanged="plylChanged" HorizontalAlignment="Left"/>
                             </GroupBox>
                             <GroupBox Header="PLPD" DockPanel.Dock="Top" Margin="5">
                                 <DataGrid 
@@ -642,7 +640,8 @@
                                         Text="{Binding PBFM.name}"
                                         TextWrapping="NoWrap" 
                                         TextAlignment="Center"
-                                        FontSize="26"/>
+                                        FontSize="26"
+                                        Foreground="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type TreeViewItem}}, Path=Foreground}"/>
 
                                 </HierarchicalDataTemplate>
 
@@ -675,7 +674,8 @@
                                         TextWrapping="NoWrap" 
                                         TextAlignment="Center"
                                         FontSize="26"
-                                        Width="270"/>
+                                        Width="270"
+                                        Foreground="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type TreeViewItem}}, Path=Foreground}"/>
 
                                 </HierarchicalDataTemplate>
 
@@ -689,9 +689,7 @@
                                         
                                         <UserControls:Play Grid.Row="0"
                                             x:Name="uclPlay"
-                                            play="{Binding}" 
-                                            DockPanel.Dock="Top"
-                                            HorizontalAlignment="Center"/>
+                                            play="{Binding}"/>
 
                                         <TextBlock  Grid.Row="1"
                                             Text="{Binding PBPL.name}"
@@ -701,8 +699,7 @@
                                             TextWrapping="Wrap" 
                                             TextAlignment="Center" 
                                             Background="Transparent" 
-                                            Foreground="LightGray" 
-                                            />
+                                            Foreground="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type TreeViewItem}}, Path=Foreground}"/>
 
                                     </Grid>
 
