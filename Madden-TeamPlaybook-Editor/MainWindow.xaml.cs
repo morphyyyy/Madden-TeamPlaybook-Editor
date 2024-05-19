@@ -1,5 +1,6 @@
 ﻿using Madden.Team;
 using Madden.TeamPlaybook;
+using Madden.TeamPlaybook.Editor.UserControls;
 using MaddenCustomPlaybookEditor;
 using MaddenTeamPlaybookEditor.Classes;
 using MaddenTeamPlaybookEditor.User_Controls;
@@ -154,22 +155,22 @@ namespace MaddenTeamPlaybookEditor
                     tclCustomPlaybook.Visibility = Visibility.Visible;
                     tclTeamPlaybook.Visibility = Visibility.Collapsed;
 
-                    //Window codePopup = new Window { Title = "Create Playbook", Height = 200, Width = 300, SizeToContent = SizeToContent.WidthAndHeight };
-                    //ComboBox listUnit = new ComboBox { DisplayMemberPath = "Key", SelectedValuePath = "Value", ItemsSource = new List<KeyValuePair<string, string>> { new KeyValuePair<string, string>("Offense", "Madden_"), new KeyValuePair<string, string>("Defense", "Madden_Def_") } };
-                    //ComboBox listTeam = new ComboBox { ItemsSource = CustomPlaybook.PBFI.Select(p => p.name.Substring(p.name.LastIndexOf('_') + 1)).Distinct().OrderBy(p => p) };
-                    //StackPanel content = new StackPanel { CanVerticallyScroll = true };
-                    //content.Children.Add(listUnit);
-                    //content.Children.Add(listTeam);
-                    //codePopup.Content = content;
-                    //codePopup.ShowDialog();
+                    Window codePopup = new Window { Title = "Create Playbook", Height = 200, Width = 300, SizeToContent = SizeToContent.WidthAndHeight, ResizeMode = ResizeMode.NoResize };
+                    ComboBox listUnit = new ComboBox { DisplayMemberPath = "Key", SelectedValuePath = "Value", ItemsSource = new List<KeyValuePair<string, string>> { new KeyValuePair<string, string>("Offense", "Madden_"), new KeyValuePair<string, string>("Defense", "Madden_Def_") } };
+                    ComboBox listTeam = new ComboBox { ItemsSource = CustomPlaybook.PBFI.Select(p => p.name.Substring(p.name.LastIndexOf('_') + 1)).Distinct().OrderBy(p => p) };
+                    StackPanel content = new StackPanel { CanVerticallyScroll = true };
+                    content.Children.Add(listUnit);
+                    content.Children.Add(listTeam);
+                    codePopup.Content = content;
+                    codePopup.ShowDialog();
 
-                    //PBFI BOKL = CustomPlaybook.PBFI.FirstOrDefault(p => p.name == (string)listUnit.SelectedValue + (string)listTeam.SelectedValue);
+                    Madden.CustomPlaybook.PBFI BOKL = CustomPlaybook.PBFI.FirstOrDefault(p => p.name == (string)listUnit.SelectedValue + (string)listTeam.SelectedValue);
 
-                    //TeamPlaybook = new TeamPlaybook();
-                    //foreach (MaddenCustomPlaybookEditor.ViewModels.FormationVM formation in CustomPlaybook.Formations)
-                    //{
-                    //    TeamPlaybook.AddFormation(formation);
-                    //}
+                    TeamPlaybook = new TeamPlaybook();
+                    foreach (MaddenCustomPlaybookEditor.ViewModels.FormationVM formation in CustomPlaybook.Formations)
+                    {
+                        TeamPlaybook.AddFormation(formation);
+                    }
                 }
             }
             else
@@ -200,7 +201,11 @@ namespace MaddenTeamPlaybookEditor
 
         public void BindPlaybook(TeamPlaybook Playbook)
         {
-            SetTeamColors(this.TeamPlaybook.TeamColor.Value);
+            string UseTeamColors = Application.Current.Resources["UseTeamColors"].ToString();
+            if (UseTeamColors == "True")
+            {
+                SetTeamColors(this.TeamPlaybook.TeamColor.Value);
+            }
 
             wdwPlaybookEditor.Title = "Madden Team Playbook Editor - " + Path.GetFileName(Playbook.filePath);
             tvwPlaybook.DataContext = Playbook;
@@ -315,7 +320,7 @@ namespace MaddenTeamPlaybookEditor
             tclCustomPlaybook.DataContext = Playbook;
         }
 
-        public void SetTeamColors(List<string> TeamColors)
+        public static void SetTeamColors(List<string> TeamColors)
         {
             if (TeamColors == null) return;
 
@@ -1423,13 +1428,6 @@ namespace MaddenTeamPlaybookEditor
             }
         }
 
-        private void lvwTeamColors_Selected(object sender, SelectionChangedEventArgs e)
-        {
-            if (lvwTeamColors.SelectedValue == null) return;
-            List<string> teamColors = lvwTeamColors.SelectedValue as List<string>;
-            SetTeamColors(teamColors);
-        }
-
         private void btnLoadTheme_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -1492,6 +1490,13 @@ namespace MaddenTeamPlaybookEditor
             {
                 MessageBox.Show("Can't read XML. Only designed for color lists exported from frosty");
             }
+        }
+
+        private void btnSetTheme_Click(object sender, RoutedEventArgs e)
+        {
+            Window wndw = new Window { SizeToContent = SizeToContent.WidthAndHeight };
+            wndw.Content = new ColorTheme();
+            wndw.Show();
         }
 
         #endregion

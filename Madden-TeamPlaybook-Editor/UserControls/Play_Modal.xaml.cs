@@ -72,17 +72,20 @@ namespace MaddenTeamPlaybookEditor.User_Controls
             foreach (FormationVM _psalType in _player.Play.SubFormation.Formation.Playbook.PSALs)
             {
                 _psalType.IsExpanded = false;
+                _psalType.IsVisible = false;
                 foreach (SubFormationVM _psalPlayer in _psalType.SubFormations)
                 {
                     _psalPlayer.IsExpanded = false;
+                    _psalPlayer.IsVisible = false;
                     foreach (PlayVM _psal in _psalPlayer.Plays)
                     {
-                        _psal.IsExpanded = false;
                         PlayVM _psalPlay = _psal.Players.SingleOrDefault(player => player.PSAL.Intersect(_player.PSAL)?.Count() > 0 )?.Play;
                         if (_psalPlay != null)
                         {
                             _psalPlay.SubFormation.Formation.IsExpanded = true;
+                            _psalPlay.SubFormation.Formation.IsVisible = true;
                             _psalPlay.SubFormation.IsExpanded = true;
+                            _psalPlay.SubFormation.IsVisible = true;
                             _psalPlay.IsSelected = true;
                         }
                     }

@@ -8,6 +8,24 @@ namespace Madden.TeamPlaybook
     [Serializable]
     public class PLRD
     {
+        public static readonly Dictionary<int, string> Hole = new Dictionary<int, string>
+        {
+            {0, "A Gap (Right)"},
+            {1, "A Gap (Left)"},
+            {2, "B Gap (Right)"},
+            {3, "B Gap (Left)"},
+            {4, "C Gap (Right)"},
+            {5, "C Gap (Left)"},
+            {6, "D Gap (Right)"},
+            {7, "D Gap (Left)"},
+            {8, "E Gap (Right)"},
+            {9, "E Gap (Left)"},
+            {10, "F Gap (Right)"},
+            {11, "F Gap (Left)"},
+            {12, "# Gaps"},
+            {-1, "Invalid"}
+        };
+
         public int rec { get; set; }
         /// <summary>
         /// PLYL.plyl

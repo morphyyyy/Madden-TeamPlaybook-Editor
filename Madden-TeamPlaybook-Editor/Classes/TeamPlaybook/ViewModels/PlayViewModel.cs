@@ -651,7 +651,8 @@ namespace MaddenTeamPlaybookEditor.ViewModels
             {
                 if (_flag >= key.Key)
                 {
-                    this.GetType()?.GetProperty(key.Value)?.SetValue(this, true);
+                    System.Reflection.PropertyInfo propInfo = this.GetType()?.GetProperty(key.Value.Replace(" ", ""));
+                    propInfo?.SetValue(this, true);
                     PLYL.PLF_ = PLYL.PLF_ - key.Key;
                     _flag -= key.Key;
                 }

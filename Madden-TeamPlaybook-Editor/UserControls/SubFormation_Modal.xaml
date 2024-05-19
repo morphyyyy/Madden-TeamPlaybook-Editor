@@ -25,11 +25,9 @@
                 HorizontalAlignment="Left"
                 Grid.Column="1"
                 Margin="0,-100.5"
-                OpacityMask="{StaticResource FieldBrush}">
-                <Canvas.Background>
-                    <SolidColorBrush Color="{DynamicResource TextColor}"/>
-                </Canvas.Background>
-                            
+                OpacityMask="{StaticResource FieldBrush}"
+                Background="{DynamicResource TextBrush}">
+
                 <Line X1="0" Y1="749" X2="533" Y2="749" StrokeThickness="5" Grid.Column="1" Stroke="{DynamicResource PrimaryBrush}" Opacity=".5"/>
 
                 <Line X1="0" Y1="649" X2="533" Y2="649" StrokeThickness="5" Grid.Column="1" Stroke="{DynamicResource SecondaryBrush}" Opacity=".5"/>
@@ -132,8 +130,8 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             
-            <GroupBox Header="Sub-Formation" x:Name="tabSubFormation" Grid.Row="0" Margin="5">
-                <DockPanel Margin="5" LastChildFill="False">
+            <GroupBox Header="Sub-Formation" x:Name="tabSubFormation" Grid.Row="0" Margin="5" VerticalAlignment="Stretch" VerticalContentAlignment="Stretch">
+                <StackPanel Margin="5">
                     <TextBox 
                         TextChanged="PBST_name_changed"
                         Margin="5"
@@ -145,31 +143,18 @@
                         HorizontalAlignment="Stretch"
                         HorizontalContentAlignment="Left"
                         DockPanel.Dock="Top"/>
-                    <Grid DockPanel.Dock="Top">
+                    <Grid DockPanel.Dock="Top" VerticalAlignment="Stretch">
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
                         <Grid>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition/>
-                                <ColumnDefinition/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
-                            <Grid HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="0" Margin="5">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto"/>
-                                    <ColumnDefinition Width="*"/>
-                                </Grid.ColumnDefinitions>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition />
-                                    <RowDefinition />
-                                    <RowDefinition />
-                                    <RowDefinition />
-                                    <RowDefinition />
-                                    <RowDefinition />
-                                </Grid.RowDefinitions>
+                            <StackPanel  Grid.Column="0" Margin="5"
+                                HorizontalAlignment="Stretch" 
+                                VerticalAlignment="Stretch">
                                 <!--<TextBlock Grid.Column="0" Grid.Row="0" Text="rec"/>
                                 <TextBox Grid.Column="0" Grid.Row="1" Text="{Binding SETL.rec, Mode=TwoWay}"/>
                                 <TextBlock Grid.Column="1" Grid.Row="0" Text="setl"/>
@@ -178,82 +163,95 @@
                                 <TextBox Grid.Column="2" Grid.Row="1" Text="{Binding SETL.FORM, Mode=TwoWay}"/>-->
                                 <!--<TextBlock Grid.Column="3" Grid.Row="0" Text="MOTN"/>
                                 <TextBox Grid.Column="3" Grid.Row="1" Text="{Binding SETL.MOTN, Mode=TwoWay}"/>-->
-                                <TextBlock Grid.Column="0" Grid.Row="0" Text="Alignment" HorizontalAlignment="Right" />
-                                <ComboBox  Grid.Column="1" Grid.Row="0"
-                                    x:Name="lvwAlignments" 
-                                    ItemsSource="{Binding Alignments}"
-                                    SelectedIndex="0"
-                                    DisplayMemberPath="SGFM.name"
-                                    Background="Transparent" 
-                                    BorderBrush="Transparent" 
-                                    HorizontalAlignment="Left"
-                                    SelectionChanged="lvwAlignments_SelectionChanged"/>
-                                <TextBlock Grid.Column="0" Grid.Row="1" Text="Package" HorizontalAlignment="Right" />
-                                <ComboBox  Grid.Column="1" Grid.Row="1"
-                                    x:Name="lvwPackages" 
-                                    ItemsSource="{Binding Packages}"
-                                    SelectedIndex="0"
-                                    DisplayMemberPath="SPKF.name"
-                                    Background="Transparent" 
-                                    BorderBrush="Transparent" 
-                                    HorizontalAlignment="Left"
-                                    SelectionChanged="lvwPackagesSelectionChanged"/>
-                                <TextBlock Grid.Column="0" Grid.Row="2" Text="Classification" HorizontalAlignment="Right" />
-                                <ComboBox Grid.Column="1" Grid.Row="2"
-                                    x:Name="cbxSETL_CLAS"  
-                                    ItemsSource="{Binding Source={x:Static MaddenTeamPlaybook:SETL.SetClassification}}" 
-                                    SelectedValue="{Binding SETL.CLAS, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                                    SelectedValuePath="Key" 
-                                    DisplayMemberPath="Value" 
-                                    HorizontalAlignment="Left"/>
-                                <TextBlock Grid.Column="0" Grid.Row="3" Text="Type" HorizontalAlignment="Right" />
-                                <ComboBox x:Name="cbxSETL_SETT" Grid.Column="1" Grid.Row="3" ItemsSource="{Binding Source={x:Static MaddenTeamPlaybook:SETL.SetType}}" SelectedValue="{Binding SETL.SETT, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="Key" DisplayMemberPath="Value" HorizontalAlignment="Left"/>
-                                <TextBlock Grid.Column="0" Grid.Row="4" Text="Situation" HorizontalAlignment="Right" />
-                                <ComboBox x:Name="cbxSETL_SITT" Grid.Column="1" Grid.Row="4" ItemsSource="{Binding Source={x:Static MaddenTeamPlaybook:SETL.Situation}}" SelectedValue="{Binding SETL.SITT, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="Key" DisplayMemberPath="Value" HorizontalAlignment="Left"/>
-                                <TextBlock Grid.Column="0" Grid.Row="5" Text="poso" HorizontalAlignment="Right" />
-                                <ComboBox x:Name="cbxSETL_poso" Grid.Column="1" Grid.Row="5" SelectedValue="{Binding SETL.poso, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left">
-                                    <ComboBox.ItemsSource>
-                                        <x:Array Type="{x:Type sys:Int32}">
-                                            <sys:Int32>0</sys:Int32>
-                                            <sys:Int32>1</sys:Int32>
-                                            <sys:Int32>2</sys:Int32>
-                                            <sys:Int32>3</sys:Int32>
-                                            <sys:Int32>4</sys:Int32>
-                                            <sys:Int32>5</sys:Int32>
-                                            <sys:Int32>6</sys:Int32>
-                                            <sys:Int32>7</sys:Int32>
-                                            <sys:Int32>8</sys:Int32>
-                                            <sys:Int32>9</sys:Int32>
-                                            <sys:Int32>10</sys:Int32>
-                                        </x:Array>
-                                    </ComboBox.ItemsSource>
-                                </ComboBox>
-                            </Grid>
-                            <ScrollViewer Margin="5" Grid.Column="1" ScrollViewer.VerticalScrollBarVisibility="Hidden" ScrollViewer.HorizontalScrollBarVisibility="Hidden">
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition/>
-                                        <ColumnDefinition/>
-                                    </Grid.ColumnDefinitions>
-                                    <StackPanel Margin="5" Grid.Column="0">
-                                        <CheckBox Content="Bunch" IsChecked="{Binding Bunch, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                                        <CheckBox Content="Can Flip" IsChecked="{Binding CanFlip, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                                        <CheckBox Content="Close" IsChecked="{Binding Close, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                                        <CheckBox Content="DimebacK at Position 5" IsChecked="{Binding DimebacKatPosition5, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                                        <CheckBox Content="Non Symmetrical" IsChecked="{Binding NonSymmetrical, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                                        <CheckBox Content="No Wide Alignment" IsChecked="{Binding NoWideAlignment, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                                        <CheckBox Content="Pass Oriented" IsChecked="{Binding PassOriented, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                                    </StackPanel>
-                                    <StackPanel Margin="5" Grid.Column="1">
-                                        <CheckBox Content="Pass Oriented" IsChecked="{Binding PassOriented, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                                        <CheckBox Content="Prevent Defense" IsChecked="{Binding PreventDefense, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                                        <CheckBox Content="Prevent Audible" IsChecked="{Binding PreventAudible, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                                        <CheckBox Content="Prowl Defense" IsChecked="{Binding ProwlDefense, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                                        <CheckBox Content="Run Oriented" IsChecked="{Binding RunOriented, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                                        <CheckBox Content="Special Oriented" IsChecked="{Binding SpecialOriented, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                                        <CheckBox Content="Tight" IsChecked="{Binding Tight, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                                    </StackPanel>
-                                </Grid>
+                                <GroupBox Header="Alignment" HorizontalAlignment="Stretch">
+                                    <ComboBox x:Name="lvwAlignments" 
+                                        ItemsSource="{Binding Alignments}"
+                                        SelectedIndex="0"
+                                        DisplayMemberPath="SGFM.name"
+                                        Background="Transparent" 
+                                        BorderBrush="Transparent" 
+                                        HorizontalAlignment="Stretch"
+                                        SelectionChanged="lvwAlignments_SelectionChanged"/>
+                                </GroupBox>
+                                <GroupBox Header="Package" HorizontalAlignment="Stretch" >
+                                    <ComboBox x:Name="lvwPackages" 
+                                        ItemsSource="{Binding Packages}"
+                                        SelectedIndex="0"
+                                        DisplayMemberPath="SPKF.name"
+                                        Background="Transparent" 
+                                        BorderBrush="Transparent" 
+                                        HorizontalAlignment="Stretch"
+                                        SelectionChanged="lvwPackagesSelectionChanged"/>
+                                </GroupBox>
+                                <GroupBox Header="Classification" HorizontalAlignment="Stretch" >
+                                    <ComboBox x:Name="cbxSETL_CLAS"  
+                                        ItemsSource="{Binding Source={x:Static MaddenTeamPlaybook:SETL.SetClassification}}" 
+                                        SelectedValue="{Binding SETL.CLAS, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                        SelectedValuePath="Key" 
+                                        DisplayMemberPath="Value" 
+                                        HorizontalAlignment="Stretch"/>
+                                </GroupBox>
+                                <GroupBox Header="Type" HorizontalAlignment="Stretch" >
+                                    <ComboBox x:Name="cbxSETL_SETT" 
+                                        ItemsSource="{Binding Source={x:Static MaddenTeamPlaybook:SETL.SetType}}" 
+                                        SelectedValue="{Binding SETL.SETT, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                        SelectedValuePath="Key" 
+                                        DisplayMemberPath="Value" 
+                                        HorizontalAlignment="Stretch"/>
+                                </GroupBox>
+                                <GroupBox Header="Situation" HorizontalAlignment="Stretch" >
+                                    <ComboBox x:Name="cbxSETL_SITT" 
+                                        ItemsSource="{Binding Source={x:Static MaddenTeamPlaybook:SETL.Situation}}" 
+                                        SelectedValue="{Binding SETL.SITT, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                        SelectedValuePath="Key" 
+                                        DisplayMemberPath="Value" 
+                                        HorizontalAlignment="Stretch"/>
+                                </GroupBox>
+                                <GroupBox Header="poso" HorizontalAlignment="Stretch">
+                                    <ComboBox x:Name="cbxSETL_poso" 
+                                              SelectedValue="{Binding SETL.poso, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                              HorizontalAlignment="Stretch">
+                                        <ComboBox.ItemsSource>
+                                            <x:Array Type="{x:Type sys:Int32}">
+                                                <sys:Int32>0</sys:Int32>
+                                                <sys:Int32>1</sys:Int32>
+                                                <sys:Int32>2</sys:Int32>
+                                                <sys:Int32>3</sys:Int32>
+                                                <sys:Int32>4</sys:Int32>
+                                                <sys:Int32>5</sys:Int32>
+                                                <sys:Int32>6</sys:Int32>
+                                                <sys:Int32>7</sys:Int32>
+                                                <sys:Int32>8</sys:Int32>
+                                                <sys:Int32>9</sys:Int32>
+                                                <sys:Int32>10</sys:Int32>
+                                            </x:Array>
+                                        </ComboBox.ItemsSource>
+                                    </ComboBox>
+                                </GroupBox>
+                            </StackPanel>
+                            <ScrollViewer 
+                                Margin="5" Grid.Column="1" 
+                                ScrollViewer.VerticalScrollBarVisibility="Hidden" 
+                                ScrollViewer.HorizontalScrollBarVisibility="Hidden" 
+                                VerticalAlignment="Stretch" 
+                                VerticalContentAlignment="Stretch" 
+                                HorizontalAlignment="Stretch"
+                                HorizontalContentAlignment="Stretch">
+                                <StackPanel Margin="5" Grid.Column="0" VerticalAlignment="Stretch">
+                                    <CheckBox Content="Bunch" IsChecked="{Binding Bunch, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                    <CheckBox Content="Can Flip" IsChecked="{Binding CanFlip, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                    <CheckBox Content="Close" IsChecked="{Binding Close, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                    <CheckBox Content="DimebacK at Position 5" IsChecked="{Binding DimebacKatPosition5, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                    <CheckBox Content="Non Symmetrical" IsChecked="{Binding NonSymmetrical, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                    <CheckBox Content="No Wide Alignment" IsChecked="{Binding NoWideAlignment, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                    <CheckBox Content="Pass Oriented" IsChecked="{Binding PassOriented, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                    <CheckBox Content="Prevent Defense" IsChecked="{Binding PreventDefense, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                    <CheckBox Content="Prevent Audible" IsChecked="{Binding PreventAudible, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                    <CheckBox Content="Prowl Defense" IsChecked="{Binding ProwlDefense, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                    <CheckBox Content="Run Oriented" IsChecked="{Binding RunOriented, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                    <CheckBox Content="Special Oriented" IsChecked="{Binding SpecialOriented, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                    <CheckBox Content="Tight" IsChecked="{Binding Tight, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                </StackPanel>
                             </ScrollViewer>
                             <!--<Grid HorizontalAlignment="Center" Grid.Row="0">
                                 <Grid.ColumnDefinitions>
@@ -286,7 +284,7 @@
                             </Grid>-->
                         </Grid>
                     </Grid>
-                </DockPanel>
+                </StackPanel>
             </GroupBox>
 
             <GroupBox Header="Player" x:Name="tabPlayer" Grid.Row="1" Margin="5">

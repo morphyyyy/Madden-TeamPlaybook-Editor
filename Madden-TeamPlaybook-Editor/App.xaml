@@ -4,14 +4,36 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:math="http://hexinnovation.com/math"
     xmlns:classes="clr-namespace:MaddenTeamPlaybookEditor.Classes"
-    StartupUri="MainWindow.xaml">
+    xmlns:sys="clr-namespace:System;assembly=mscorlib"
+    StartupUri="MainWindow.xaml"
+    Startup="App_Startup" 
+    Exit="App_Exit">
 
     <Application.Resources>
         <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Styles/chbxTeamColorStyle.xaml" />
+                <ResourceDictionary Source="/Styles/cbxTeamColorStyle.xaml" />
+                <ResourceDictionary Source="/Styles/sbrTeamColorStyle.xaml" />
+                <ResourceDictionary Source="/Styles/tciTeamColorStyle.xaml" />
+                <ResourceDictionary Source="/Styles/lviTeamColorStyle.xaml" />
+                <ResourceDictionary Source="/Styles/lbiTeamColorStyle.xaml" />
+                <ResourceDictionary Source="/Styles/tviTeamColorStyle.xaml" />
+                <ResourceDictionary Source="/Styles/FormationTabItemStyle.xaml" />
+                <ResourceDictionary Source="/Styles/SubFormationTabItemStyle.xaml" />
+                <ResourceDictionary Source="/Styles/tviFieldStyle.xaml" />
+                <ResourceDictionary Source="/Styles/PlayTabItemStyle.xaml" />
+                <ResourceDictionary Source="/Styles/SituationStyle.xaml" />
+                <ResourceDictionary Source="/Styles/AudibleDeep.xaml" />
+                <ResourceDictionary Source="/Styles/AudibleFake.xaml" />
+                <ResourceDictionary Source="/Styles/AudibleQuick.xaml" />
+                <ResourceDictionary Source="/Styles/AudibleRun.xaml" />
+            </ResourceDictionary.MergedDictionaries>
             <math:MathConverter x:Key="Math" />
-            <Color x:Key="TextColor">LightGray</Color>
-            <Color x:Key="BackgroundColor">black</Color>
-            <Color x:Key="Accent">White</Color>
+            <sys:Boolean x:Key="UseTeamColors">true</sys:Boolean>
+            <Color x:Key="Text">#D3D3D3</Color>
+            <Color x:Key="Background">#000000</Color>
+            <Color x:Key="Accent">#E7E8E7</Color>
             <Color x:Key="Primary">#2C2C30</Color>
             <Color x:Key="Secondary">#C1B28C</Color>
             <Color x:Key="Tertiary">#E7E8E7</Color>
@@ -41,6 +63,7 @@
             <Color x:Key="DeepZone">#316df7</Color>
             <Color x:Key="QBSpy">#c87810</Color>
             <Color x:Key="RushQB">#db4155</Color>
+            <SolidColorBrush x:Key="TextBrush" Color="{DynamicResource Text}" Opacity="1"/>
             <SolidColorBrush x:Key="AccentBrush" Color="{DynamicResource Accent}" Opacity="1"/>
             <SolidColorBrush x:Key="PrimaryBrush"  Color="{DynamicResource Primary}" Opacity="1"/>
             <SolidColorBrush x:Key="SecondaryBrush" Color="{DynamicResource Secondary}" />
@@ -105,7 +128,7 @@
                 <Setter Property="Background" Value="{DynamicResource PrimaryBrush}"/>
             </Style>
             <Style TargetType="{x:Type ContextMenu}">
-                <Setter Property="ItemsPanel" Value="{StaticResource MenuItemPanelTemplate}"/>
+                <Setter Property="ItemsPanel" Value="{DynamicResource MenuItemPanelTemplate}"/>
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="ContextMenu">
@@ -118,29 +141,13 @@
             </Style>
             <Style TargetType="{x:Type DataGrid}">
                 <Setter Property="Background" Value="Transparent" />
-                <Setter Property="BorderBrush">
-                    <Setter.Value>
-                        <SolidColorBrush Color="{DynamicResource TextColor}"/>
-                    </Setter.Value>
-                </Setter>
+                <Setter Property="BorderBrush" Value="{DynamicResource TextBrush}"/>
                 <Setter Property="BorderThickness" Value="1"/>
                 <Setter Property="RowBackground" Value="Transparent" />
-                <Setter Property="Foreground">
-                    <Setter.Value>
-                        <SolidColorBrush Color="{DynamicResource TextColor}"/>
-                    </Setter.Value>
-                </Setter>
+                <Setter Property="Foreground" Value="{DynamicResource TextBrush}"/>
                 <Setter Property="GridLinesVisibility" Value="All"/>
-                <Setter Property="HorizontalGridLinesBrush">
-                    <Setter.Value>
-                        <SolidColorBrush Color="{DynamicResource TextColor}"/>
-                    </Setter.Value>
-                </Setter>
-                <Setter Property="VerticalGridLinesBrush">
-                    <Setter.Value>
-                        <SolidColorBrush Color="{DynamicResource TextColor}"/>
-                    </Setter.Value>
-                </Setter>
+                <Setter Property="HorizontalGridLinesBrush" Value="{DynamicResource TextBrush}"/>
+                <Setter Property="VerticalGridLinesBrush" Value="{DynamicResource TextBrush}"/>
                 <Setter Property="CanUserAddRows" Value="False"/>
                 <Setter Property="CanUserDeleteRows" Value="False"/>
             </Style>
@@ -149,21 +156,17 @@
             </Style>
             <Style TargetType="{x:Type TextBlock}">
                 <Setter Property="Background" Value="Transparent" />
-                <Setter Property="Foreground">
-                    <Setter.Value>
-                        <SolidColorBrush Color="{DynamicResource TextColor}"/>
-                    </Setter.Value>
-                </Setter>
+                <Setter Property="Foreground" Value="{DynamicResource TextBrush}"/>
                 <Setter Property="Effect">
                     <Setter.Value>
-                        <DropShadowEffect Color="{DynamicResource BackgroundColor}" Direction="225" ShadowDepth="0" BlurRadius="3" Opacity="5.0" />
+                        <DropShadowEffect Color="{DynamicResource Background}" Direction="225" ShadowDepth="0" BlurRadius="3" Opacity="5.0" />
                     </Setter.Value>
                 </Setter>
             </Style>
             <Style TargetType="{x:Type classes:TextPath}">
                 <Setter Property="Effect">
                     <Setter.Value>
-                        <DropShadowEffect Color="{DynamicResource BackgroundColor}" Direction="225" ShadowDepth="0" BlurRadius="3" Opacity="10.0" />
+                        <DropShadowEffect Color="{DynamicResource Background}" Direction="225" ShadowDepth="0" BlurRadius="3" Opacity="10.0" />
                     </Setter.Value>
                 </Setter>
             </Style>
@@ -191,14 +194,14 @@
                                             <VisualState x:Name="Disabled">
                                                 <Storyboard>
                                                     <ColorAnimationUsingKeyFrames Storyboard.TargetName="Border" Storyboard.TargetProperty="(Panel.Background).(SolidColorBrush.Color)">
-                                                        <EasingColorKeyFrame KeyTime="0" Value="{StaticResource Tertiary}" />
+                                                        <EasingColorKeyFrame KeyTime="0" Value="{DynamicResource Tertiary}" />
                                                     </ColorAnimationUsingKeyFrames>
                                                 </Storyboard>
                                             </VisualState>
                                             <VisualState x:Name="ReadOnly">
                                                 <Storyboard>
                                                     <ColorAnimationUsingKeyFrames Storyboard.TargetName="Border" Storyboard.TargetProperty="(Panel.Background).(SolidColorBrush.Color)">
-                                                        <EasingColorKeyFrame KeyTime="0" Value="{StaticResource Tertiary}" />
+                                                        <EasingColorKeyFrame KeyTime="0" Value="{DynamicResource Tertiary}" />
                                                     </ColorAnimationUsingKeyFrames>
                                                 </Storyboard>
                                             </VisualState>
@@ -225,12 +228,8 @@
             <Style TargetType="{x:Type GroupBox}">
                 <Setter Property="BorderBrush" Value="{DynamicResource PrimaryBrush}"/>
                 <Setter Property="BorderThickness" Value="1"/>
-                <Setter Property="Foreground">
-                    <Setter.Value>
-                        <SolidColorBrush Color="{DynamicResource TextColor}"/>
-                    </Setter.Value>
-                </Setter>
-                <Setter Property="Template">
+                <Setter Property="Foreground" Value="{DynamicResource TextBrush}"/>
+                    <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="{x:Type GroupBox}">
                             <Grid SnapsToDevicePixels="true">
@@ -261,40 +260,6 @@
                                     </Border.OpacityMask>
                                 </Border>
                             </Grid>
-                        </ControlTemplate>
-                    </Setter.Value>
-                </Setter>
-            </Style>
-            <Style TargetType="{x:Type CheckBox}">
-                <Setter Property="Margin" Value="0,1" />
-                <Setter Property="Template">
-                    <Setter.Value>
-                        <ControlTemplate TargetType="{x:Type CheckBox}">
-                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" >
-                                <Border BorderBrush="{DynamicResource PrimaryBrush}" Background="{DynamicResource PrimaryBrush}" CornerRadius="2" BorderThickness="0" Width="15" Height="15">
-                                    <Grid>
-                                        <Grid Margin="1" Visibility="Collapsed" Name="nullBlock">
-                                            <Grid.Background>
-                                                <SolidColorBrush Color="{DynamicResource TextColor}"/>
-                                            </Grid.Background>
-                                        </Grid>
-                                        <Border Name="eliCheck" Background="{DynamicResource SecondaryBrush}" CornerRadius="1" BorderThickness="0" Width="11" Height="11" Visibility="Collapsed"/>
-                                    </Grid>
-                                </Border>
-                                <TextBlock Margin="2,0,0,0"  VerticalAlignment="Center" Text="{TemplateBinding Content}">
-                                    <TextBlock.Foreground>
-                                        <SolidColorBrush Color="{DynamicResource TextColor}"/>
-                                    </TextBlock.Foreground>
-                                </TextBlock>
-                            </StackPanel>
-                            <ControlTemplate.Triggers>
-                                <Trigger Property="IsChecked" Value="True">
-                                    <Setter TargetName="eliCheck" Property="Visibility" Value="Visible"></Setter>
-                                </Trigger>
-                                <Trigger Property="IsChecked" Value="{x:Null}">
-                                    <Setter TargetName="nullBlock" Property="Visibility" Value="Visible"></Setter>
-                                </Trigger>
-                            </ControlTemplate.Triggers>
                         </ControlTemplate>
                     </Setter.Value>
                 </Setter>
@@ -395,23 +360,6 @@
                     </Setter.Value> 
                 </Setter> 
             </Style>
-            <ResourceDictionary.MergedDictionaries>
-                        <ResourceDictionary Source="/Styles/cbxTeamColorStyle.xaml" />
-                        <ResourceDictionary Source="/Styles/sbrTeamColorStyle.xaml" />
-                        <ResourceDictionary Source="/Styles/tciTeamColorStyle.xaml" />
-                        <ResourceDictionary Source="/Styles/lviTeamColorStyle.xaml" />
-                        <ResourceDictionary Source="/Styles/lbiTeamColorStyle.xaml" />
-                        <ResourceDictionary Source="/Styles/tviTeamColorStyle.xaml" />
-                        <ResourceDictionary Source="/Styles/FormationTabItemStyle.xaml" />
-                        <ResourceDictionary Source="/Styles/SubFormationTabItemStyle.xaml" /> 
-                        <ResourceDictionary Source="/Styles/tviFieldStyle.xaml" />
-                        <ResourceDictionary Source="/Styles/PlayTabItemStyle.xaml" />
-                        <ResourceDictionary Source="/Styles/SituationStyle.xaml" />
-                        <ResourceDictionary Source="/Styles/AudibleDeep.xaml" />
-                        <ResourceDictionary Source="/Styles/AudibleFake.xaml" />
-                        <ResourceDictionary Source="/Styles/AudibleQuick.xaml" />
-                        <ResourceDictionary Source="/Styles/AudibleRun.xaml" />
-                    </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>
 

@@ -28,35 +28,35 @@ namespace MaddenTeamPlaybookEditor.ViewModels
         public static readonly Dictionary<string, List<string>> TeamColors = new Dictionary<string, List<string>>
         {
             { "49ers", new List<string>{"#BF9F67", "#9A2133", "#E7E8E7", "#E7E8E7", "#E7E8E7", "#9A2133", "#9A2133"} },
-            { "Bears", new List<string>{"#E7E8E7", "#333342", "#E7E8E7", "#F55625", "#E7E8E7", "#333342", "#F55625"} },
-            { "Bengals", new List<string>{"#E7E8E7", "#2C2C30", "#E7E8E7", "#F55625", "#E7E8E7", "#2C2C30", "#F55625"} },
-            { "Bills", new List<string>{"#E7E8E7", "#2D3B7C", "#E7E8E7", "#B62332", "#E7E8E7", "#2D3B7C", "#B62332"} },
-            { "Broncos", new List<string>{"#E7E8E7", "#2C3244", "#E7E8E7", "#F45727", "#E7E8E7", "#2C3244", "#F45727"} },
+            { "Bears", new List<string>{"#F55625", "#333342", "#E7E8E7", "#F55625", "#E7E8E7", "#333342", "#F55625"} },
+            { "Bengals", new List<string>{"#F55625", "#2C2C30", "#E7E8E7", "#F55625", "#E7E8E7", "#2C2C30", "#F55625"} },
+            { "Bills", new List<string>{"#B62332", "#2D3B7C", "#E7E8E7", "#B62332", "#E7E8E7", "#2D3B7C", "#B62332"} },
+            { "Broncos", new List<string>{"#F45727", "#2C3244", "#E7E8E7", "#F45727", "#E7E8E7", "#2C3244", "#F45727"} },
             { "Browns", new List<string>{"#D84532", "#3E3634", "#E7E8E7", "#E7E8E7", "#E7E8E7", "#3E3634", "#3E3634"} },
             { "Buccaneers", new List<string>{"#DA712C", "#403E3C", "#E7E8E7", "#B62332", "#E7E8E7", "#B62332", "#403E3C"} },
             { "Cardinals", new List<string>{"#E7E8E7", "#8B2533", "#E7E8E7", "#777C7E", "#E7E8E7", "#8B2533", "#2C2C30"} },
-            { "Chargers", new List<string>{"#E7E8E7", "#2D3B7C", "#F0B115", "#E7E8E7", "#E7E8E7", "#1C80BB", "#F0B115"} },
-            { "Chiefs", new List<string>{"#E7E8E7", "#B62332", "#E7E8E7", "#F0B115", "#E7E8E7", "#B62332", "#F0B115"} },
-            { "Colts", new List<string>{"#777C7E", "#23406E", "#E7E8E7", "#E7E8E7", "#E7E8E7", "#23406E", "#23406E"} },
-            { "Commanders", new List<string>{"#E7E8E7", "#6E2733", "#E7E8E7", "#F0B115", "#E7E8E7", "#6E2733", "#2C2C30"} },
-            { "Cowboys", new List<string>{"#E7E8E7", "#2C3244", "#E7E8E7", "#E7E8E7", "#E7E8E7", "#2D3B7C", "#2D3B7C"} },
-            { "Dolphins", new List<string>{"#E7E8E7", "#008A86", "#E7E8E7", "#FA471C", "#E7E8E7", "#008A86", "#FA471C"} },
-            { "Eagles", new List<string>{"#0B5933", "#20484D", "#E7E8E7", "#2C2C30", "#E7E8E7", "#20484D", "#2C2C30"} },
-            { "Falcons", new List<string>{"#E7E8E7", "#2C2C30", "#E7E8E7", "#9A2133", "#E7E8E7", "#2C2C30", "#9A2133"} },
-            { "Giants", new List<string>{"#E7E8E7", "#313C71", "#E7E8E7", "#E7E8E7", "#E7E8E7", "#9A2133", "#9A2133"} },
+            { "Chargers", new List<string>{"#F0B115", "#2D3B7C", "#F0B115", "#E7E8E7", "#E7E8E7", "#1C80BB", "#F0B115"} },
+            { "Chiefs", new List<string>{"#F0B115", "#B62332", "#E7E8E7", "#F0B115", "#E7E8E7", "#B62332", "#F0B115"} },
+            { "Colts", new List<string>{"#E7E8E7", "#23406E", "#E7E8E7", "#E7E8E7", "#E7E8E7", "#23406E", "#23406E"} },
+            { "Commanders", new List<string>{"#F0B115", "#6E2733", "#E7E8E7", "#F0B115", "#E7E8E7", "#6E2733", "#2C2C30"} },
+            { "Cowboys", new List<string>{"#AAB0AE", "#2C3244", "#E7E8E7", "#E7E8E7", "#E7E8E7", "#2D3B7C", "#2D3B7C"} },
+            { "Dolphins", new List<string>{"#FA471C", "#008A86", "#E7E8E7", "#FA471C", "#E7E8E7", "#008A86", "#FA471C"} },
+            { "Eagles", new List<string>{"#BAC2CA", "#20484D", "#E7E8E7", "#2C2C30", "#E7E8E7", "#20484D", "#2C2C30"} },
+            { "Falcons", new List<string>{"#C2233A", "#2C2C30", "#E7E8E7", "#9A2133", "#E7E8E7", "#2C2C30", "#9A2133"} },
+            { "Giants", new List<string>{"#9A2133", "#313C71", "#E7E8E7", "#E7E8E7", "#E7E8E7", "#9A2133", "#9A2133"} },
             { "Jaguars", new List<string>{"#977538", "#006675", "#E7E8E7", "#007E98", "#E7E8E7", "#2C2C30", "#2C2C30"} },
             { "Jets", new List<string>{"#E7E8E7", "#254235", "#E7E8E7", "#2C2C30", "#E7E8E7", "#254235", "#2C2C30"} },
-            { "Lions", new List<string>{"#E7E8E7", "#195B8F", "#E7E8E7", "#9FA1A6", "#E7E8E7", "#195B8F", "#9FA1A6"} },
+            { "Lions", new List<string>{"#9FA1A6", "#195B8F", "#E7E8E7", "#9FA1A6", "#E7E8E7", "#195B8F", "#9FA1A6"} },
             { "Packers", new List<string>{"#F0B115", "#254235", "#E7E8E7", "#E7E8E7", "#E7E8E7", "#254235", "#254235"} },
-            { "Panthers", new List<string>{"#E7E8E7", "#2C2C30", "#E7E8E7", "#007699", "#E7E8E7", "#2C2C30", "#007699"} },
-            { "Patriots", new List<string>{"#E7E8E7", "#2C3244", "#E7E8E7", "#B62332", "#E7E8E7", "#2C3244", "#B62332"} },
-            { "Raiders", new List<string>{"#E7E8E7", "#2C2C30", "#A6ADB6", "#E7E8E7", "#E7E8E7", "#2C2C30", "#A6ADB6"} },
-            { "Rams", new List<string>{"#E7E8E7", "#304C9D", "#F3C731", "#F3C731", "#E7E8E7", "#304C9D", "#304C9D"} },
-            { "Ravens", new List<string>{"#E7E8E7", "#423862", "#E7E8E7", "#9E7C0C", "#E7E8E7", "#423862", "#9E7C0C"} },
-            { "Saints", new List<string>{"#E7E8E7", "#2C2C30", "#C1B28C", "#E7E8E7", "#E7E8E7", "#2C2C30", "#C1B28C"} },
-            { "Seahawks", new List<string>{"#E7E8E7", "#2C3244", "#A5ACAF", "#79C446", "#E7E8E7", "#173882", "#79C446"} },
+            { "Panthers", new List<string>{"#ABAAAF", "#2C2C30", "#E7E8E7", "#007699", "#E7E8E7", "#2C2C30", "#007699"} },
+            { "Patriots", new List<string>{"#B62332", "#2C3244", "#E7E8E7", "#B62332", "#E7E8E7", "#2C3244", "#B62332"} },
+            { "Raiders", new List<string>{"#A6ADB6", "#2C2C30", "#A6ADB6", "#E7E8E7", "#E7E8E7", "#2C2C30", "#A6ADB6"} },
+            { "Rams", new List<string>{"#F3C731", "#304C9D", "#F3C731", "#F3C731", "#E7E8E7", "#304C9D", "#304C9D"} },
+            { "Ravens", new List<string>{"#9E7C0C", "#423862", "#E7E8E7", "#9E7C0C", "#E7E8E7", "#423862", "#9E7C0C"} },
+            { "Saints", new List<string>{"#C1B28C", "#2C2C30", "#C1B28C", "#E7E8E7", "#E7E8E7", "#2C2C30", "#C1B28C"} },
+            { "Seahawks", new List<string>{"#79C446", "#2C3244", "#A5ACAF", "#79C446", "#E7E8E7", "#173882", "#79C446"} },
             { "Steelers", new List<string>{"#F0B115", "#2C2C30", "#E7E8E7", "#E7E8E7", "#E7E8E7", "#2C2C30", "#2C2C30"} },
-            { "Texans", new List<string>{"#E7E8E7", "#22273D", "#E7E8E7", "#B62332", "#E7E8E7", "#B62332", "#22273D"} },
+            { "Texans", new List<string>{"#B62332", "#22273D", "#E7E8E7", "#B62332", "#E7E8E7", "#B62332", "#22273D"} },
             { "Titans", new List<string>{"#B62332", "#0C2340", "#E7E8E7", "#418FDE", "#E7E8E7", "#0C2340", "#418FDE"} },
             { "Vikings", new List<string>{"#EAAC36", "#443167", "#E7E8E7", "#E7E8E7", "#E7E8E7", "#443167", "#443167"} }
         };
@@ -1479,7 +1479,7 @@ namespace MaddenTeamPlaybookEditor.ViewModels
                         player.SETP = new Madden.TeamPlaybook.SETP
                         {
                             artx = 90,
-                            arty = 80
+                            arty = 60
                         };
                         player.ARTL = ARTL.FirstOrDefault(_psal => _psal.artl == player.PLYS.ARTL);
                         player.artlColor = ARTLColor.Undefined;
@@ -1500,6 +1500,12 @@ namespace MaddenTeamPlaybookEditor.ViewModels
                         };
                         player.Play = play;
                         player.ConvertARTL(player.ARTL);
+                        double routeWidth = player.ARTLpath.Sum(a => a.Data.Bounds.Width);
+                        double routeLeft = player.ARTLpath.Sum(a => a.Data.Bounds.Left);
+                        double routeHeight = player.ARTLpath.Sum(a => a.Data.Bounds.Height);
+                        double routeTop = player.ARTLpath.Sum(a => a.Data.Bounds.Top);
+                        player.SETP.artx += routeLeft < 0 ? (int)(Math.Round(routeWidth * .5, 0)) : (int)(Math.Round(routeWidth * -.5, 0));
+                        player.SETP.arty += routeTop < 0 ? (int)(Math.Round(routeHeight * .5, 0)) : (int)(Math.Round(routeHeight * -.5, 0));
                         player.GetARTLcolor();
                         player.ConvertPSAL(player.PSAL);
                         player.GetRouteCap();

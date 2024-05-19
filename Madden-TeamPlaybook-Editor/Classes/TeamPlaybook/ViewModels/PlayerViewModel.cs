@@ -620,16 +620,18 @@ namespace MaddenTeamPlaybookEditor.ViewModels
 
                         if (RoutePoints.Count > 0) Offset = RoutePoints[RoutePoints.Count - 1];
 
+                        int dir = i == 0 ? 32 : PSAL[i - 1].val2;
+
                         //1 = 45 degrees
                         if (PSAL[i].val2 == 1)
                         {
                             if (PSAL[i].val1 == 1)
                             {
-                                RoutePoints.Add(MoveDistDirToXY(24, (int)(PSAL[i - 1].val2 - (45 * Madden.TeamPlaybook.PSAL.AngleRatio)), Offset, flipPSAL));
+                                RoutePoints.Add(MoveDistDirToXY(24, (int)(dir - (45 * Madden.TeamPlaybook.PSAL.AngleRatio)), Offset, flipPSAL));
                             }
                             else if (PSAL[i].val1 == 2)
                             {
-                                RoutePoints.Add(MoveDistDirToXY(24, (int)(PSAL[i - 1].val2 + (45 * Madden.TeamPlaybook.PSAL.AngleRatio)), Offset, flipPSAL));
+                                RoutePoints.Add(MoveDistDirToXY(24, (int)(dir + (45 * Madden.TeamPlaybook.PSAL.AngleRatio)), Offset, flipPSAL));
                             }
                         }
 
@@ -638,11 +640,11 @@ namespace MaddenTeamPlaybookEditor.ViewModels
                         {
                             if (PSAL[i].val1 == 1)
                             {
-                                RoutePoints.Add(MoveDistDirToXY(24, (int)(PSAL[i - 1].val2 - (90 * Madden.TeamPlaybook.PSAL.AngleRatio)), Offset, flipPSAL));
+                                RoutePoints.Add(MoveDistDirToXY(24, (int)(dir - (90 * Madden.TeamPlaybook.PSAL.AngleRatio)), Offset, flipPSAL));
                             }
                             else if (PSAL[i].val1 == 2)
                             {
-                                RoutePoints.Add(MoveDistDirToXY(24, (int)(PSAL[i - 1].val2 + (90 * Madden.TeamPlaybook.PSAL.AngleRatio)), Offset, flipPSAL));
+                                RoutePoints.Add(MoveDistDirToXY(24, (int)(dir + (90 * Madden.TeamPlaybook.PSAL.AngleRatio)), Offset, flipPSAL));
                             }
                         }
 
@@ -651,11 +653,11 @@ namespace MaddenTeamPlaybookEditor.ViewModels
                         {
                             if (PSAL[i].val1 == 1)
                             {
-                                RoutePoints.Add(MoveDistDirToXY(24, (int)(PSAL[i - 1].val2 - (22 * Madden.TeamPlaybook.PSAL.AngleRatio)), Offset, flipPSAL));
+                                RoutePoints.Add(MoveDistDirToXY(24, (int)(dir - (22 * Madden.TeamPlaybook.PSAL.AngleRatio)), Offset, flipPSAL));
                             }
                             else if (PSAL[i].val1 == 2)
                             {
-                                RoutePoints.Add(MoveDistDirToXY(24, (int)(PSAL[i - 1].val2 + (22 * Madden.TeamPlaybook.PSAL.AngleRatio)), Offset, flipPSAL));
+                                RoutePoints.Add(MoveDistDirToXY(24, (int)(dir + (22 * Madden.TeamPlaybook.PSAL.AngleRatio)), Offset, flipPSAL));
                             }
                         }
 
@@ -664,11 +666,11 @@ namespace MaddenTeamPlaybookEditor.ViewModels
                         {
                             if (PSAL[i].val1 == 1)
                             {
-                                RoutePoints.Add(MoveDistDirToXY(24, (int)(PSAL[i - 1].val2 - (67 * Madden.TeamPlaybook.PSAL.AngleRatio)), Offset, flipPSAL));
+                                RoutePoints.Add(MoveDistDirToXY(24, (int)(dir - (67 * Madden.TeamPlaybook.PSAL.AngleRatio)), Offset, flipPSAL));
                             }
                             else if (PSAL[i].val1 == 2)
                             {
-                                RoutePoints.Add(MoveDistDirToXY(24, (int)(PSAL[i - 1].val2 + (67 * Madden.TeamPlaybook.PSAL.AngleRatio)), Offset, flipPSAL));
+                                RoutePoints.Add(MoveDistDirToXY(24, (int)(dir + (67 * Madden.TeamPlaybook.PSAL.AngleRatio)), Offset, flipPSAL));
                             }
                         }
 
@@ -677,11 +679,11 @@ namespace MaddenTeamPlaybookEditor.ViewModels
                         {
                             if (PSAL[i].val1 == 1)
                             {
-                                RoutePoints.Add(MoveDistDirToXY(24, (int)(PSAL[i - 1].val2 - (135 * Madden.TeamPlaybook.PSAL.AngleRatio)), Offset, flipPSAL));
+                                RoutePoints.Add(MoveDistDirToXY(24, (int)(dir - (135 * Madden.TeamPlaybook.PSAL.AngleRatio)), Offset, flipPSAL));
                             }
                             else if (PSAL[i].val1 == 2)
                             {
-                                RoutePoints.Add(MoveDistDirToXY(24, (int)(PSAL[i - 1].val2 + (135 * Madden.TeamPlaybook.PSAL.AngleRatio)), Offset, flipPSAL));
+                                RoutePoints.Add(MoveDistDirToXY(24, (int)(dir + (135 * Madden.TeamPlaybook.PSAL.AngleRatio)), Offset, flipPSAL));
                             }
                         }
 
@@ -690,11 +692,11 @@ namespace MaddenTeamPlaybookEditor.ViewModels
                         {
                             if (PSAL[i].val1 == 1)
                             {
-                                RoutePoints.Add(MoveDistDirToXY(8, (int)(PSAL[i - 1].val2 - (105 * Madden.TeamPlaybook.PSAL.AngleRatio)), Offset, flipPSAL));
+                                RoutePoints.Add(MoveDistDirToXY(8, (int)(dir - (105 * Madden.TeamPlaybook.PSAL.AngleRatio)), Offset, flipPSAL));
                             }
                             else if (PSAL[i].val1 == 2)
                             {
-                                RoutePoints.Add(MoveDistDirToXY(8, (int)(PSAL[i - 1].val2 + (105 * Madden.TeamPlaybook.PSAL.AngleRatio)), Offset, flipPSAL));
+                                RoutePoints.Add(MoveDistDirToXY(8, (int)(dir + (105 * Madden.TeamPlaybook.PSAL.AngleRatio)), Offset, flipPSAL));
                             }
                         }
 
@@ -703,11 +705,11 @@ namespace MaddenTeamPlaybookEditor.ViewModels
                         {
                             if (PSAL[i].val1 == 1)
                             {
-                                RoutePoints.Add(MoveDistDirToXY(24, (int)(PSAL[i - 1].val2 - (105 * Madden.TeamPlaybook.PSAL.AngleRatio)), Offset, flipPSAL));
+                                RoutePoints.Add(MoveDistDirToXY(24, (int)(dir - (105 * Madden.TeamPlaybook.PSAL.AngleRatio)), Offset, flipPSAL));
                             }
                             else if (PSAL[i].val1 == 2)
                             {
-                                RoutePoints.Add(MoveDistDirToXY(24, (int)(PSAL[i - 1].val2 + (105 * Madden.TeamPlaybook.PSAL.AngleRatio)), Offset, flipPSAL));
+                                RoutePoints.Add(MoveDistDirToXY(24, (int)(dir + (105 * Madden.TeamPlaybook.PSAL.AngleRatio)), Offset, flipPSAL));
                             }
                         }
 
@@ -767,11 +769,11 @@ namespace MaddenTeamPlaybookEditor.ViewModels
                         {
                             if (PSAL[i].val1 == 1)
                             {
-                                RoutePoints.Add(MoveDistDirToXY(16, (int)(PSAL[i - 1].val2 - (105 * Madden.TeamPlaybook.PSAL.AngleRatio)), Offset, flipPSAL));
+                                RoutePoints.Add(MoveDistDirToXY(16, (int)(dir - (105 * Madden.TeamPlaybook.PSAL.AngleRatio)), Offset, flipPSAL));
                             }
                             else if (PSAL[i].val1 == 2)
                             {
-                                RoutePoints.Add(MoveDistDirToXY(16, (int)(PSAL[i - 1].val2 + (105 * Madden.TeamPlaybook.PSAL.AngleRatio)), Offset, flipPSAL));
+                                RoutePoints.Add(MoveDistDirToXY(16, (int)(dir + (105 * Madden.TeamPlaybook.PSAL.AngleRatio)), Offset, flipPSAL));
                             }
                         }
 
@@ -780,11 +782,11 @@ namespace MaddenTeamPlaybookEditor.ViewModels
                         {
                             if (PSAL[i].val1 == 1)
                             {
-                                RoutePoints.Add(MoveDistDirToXY(8, (int)(PSAL[i - 1].val2 + (67 * Madden.TeamPlaybook.PSAL.AngleRatio)), Offset, flipPSAL));
+                                RoutePoints.Add(MoveDistDirToXY(8, (int)(dir + (67 * Madden.TeamPlaybook.PSAL.AngleRatio)), Offset, flipPSAL));
                             }
                             else if (PSAL[i].val1 == 2)
                             {
-                                RoutePoints.Add(MoveDistDirToXY(8, (int)(PSAL[i - 1].val2 - (67 * Madden.TeamPlaybook.PSAL.AngleRatio)), Offset, flipPSAL));
+                                RoutePoints.Add(MoveDistDirToXY(8, (int)(dir - (67 * Madden.TeamPlaybook.PSAL.AngleRatio)), Offset, flipPSAL));
                             }
                         }
 
@@ -793,11 +795,11 @@ namespace MaddenTeamPlaybookEditor.ViewModels
                         {
                             if (PSAL[i].val1 == 1)
                             {
-                                RoutePoints.Add(MoveDistDirToXY(8, (int)(PSAL[i - 1].val2 - (67 * Madden.TeamPlaybook.PSAL.AngleRatio)), Offset, flipPSAL));
+                                RoutePoints.Add(MoveDistDirToXY(8, (int)(dir - (67 * Madden.TeamPlaybook.PSAL.AngleRatio)), Offset, flipPSAL));
                             }
                             else if (PSAL[i].val1 == 2)
                             {
-                                RoutePoints.Add(MoveDistDirToXY(8, (int)(PSAL[i - 1].val2 + (67 * Madden.TeamPlaybook.PSAL.AngleRatio)), Offset, flipPSAL));
+                                RoutePoints.Add(MoveDistDirToXY(8, (int)(dir + (67 * Madden.TeamPlaybook.PSAL.AngleRatio)), Offset, flipPSAL));
                             }
                         }
 
@@ -819,11 +821,11 @@ namespace MaddenTeamPlaybookEditor.ViewModels
                         {
                             if (PSAL[i].val1 == 1)
                             {
-                                RoutePoints.Add(MoveDistDirToXY(48, (int)(PSAL[i - 1].val2 + (45 * Madden.TeamPlaybook.PSAL.AngleRatio)), Offset, flipPSAL));
+                                RoutePoints.Add(MoveDistDirToXY(48, (int)(dir + (45 * Madden.TeamPlaybook.PSAL.AngleRatio)), Offset, flipPSAL));
                             }
                             else if (PSAL[i].val1 == 2)
                             {
-                                RoutePoints.Add(MoveDistDirToXY(48, (int)(PSAL[i - 1].val2 - (45 * Madden.TeamPlaybook.PSAL.AngleRatio)), Offset, flipPSAL));
+                                RoutePoints.Add(MoveDistDirToXY(48, (int)(dir - (45 * Madden.TeamPlaybook.PSAL.AngleRatio)), Offset, flipPSAL));
                             }
                         }
 
@@ -832,11 +834,11 @@ namespace MaddenTeamPlaybookEditor.ViewModels
                         {
                             if (PSAL[i].val1 == 1)
                             {
-                                RoutePoints.Add(MoveDistDirToXY(4, (int)(PSAL[i - 1].val2 + (90 * Madden.TeamPlaybook.PSAL.AngleRatio)), Offset, flipPSAL));
+                                RoutePoints.Add(MoveDistDirToXY(4, (int)(dir + (90 * Madden.TeamPlaybook.PSAL.AngleRatio)), Offset, flipPSAL));
                             }
                             else if (PSAL[i].val1 == 2)
                             {
-                                RoutePoints.Add(MoveDistDirToXY(4, (int)(PSAL[i - 1].val2 - (90 * Madden.TeamPlaybook.PSAL.AngleRatio)), Offset, flipPSAL));
+                                RoutePoints.Add(MoveDistDirToXY(4, (int)(dir - (90 * Madden.TeamPlaybook.PSAL.AngleRatio)), Offset, flipPSAL));
                             }
                         }
 
