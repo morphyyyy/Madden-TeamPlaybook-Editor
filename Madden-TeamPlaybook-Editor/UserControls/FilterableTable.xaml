@@ -13,18 +13,14 @@
             x:Name="dataGrid"
             Margin="5"
             MaxHeight="835"
-            Background="{x:Null}" 
-            BorderBrush="{x:Null}" 
-            Foreground="Black"
             ItemsSource="{Binding ElementName=uclFilterableTable, Path=Data, Mode=TwoWay}"
-            HorizontalGridLinesBrush="#FFD6D6D6"
-            VerticalGridLinesBrush="Black"
-            GridLinesVisibility="Horizontal"
+            GridLinesVisibility="All"
             CanUserAddRows="False"
             CanUserDeleteRows="False"
             EnableColumnVirtualization="True"
             EnableRowVirtualization="True"
-            DataContextChanged="dataContextChanged"/>
+            DataContextChanged="dataContextChanged"
+            HorizontalAlignment="Left"/>
     </StackPanel>
     
 </UserControl>

@@ -112,7 +112,9 @@
 
         <Grid Margin="5" Grid.Row="1">
 
-            <TabControl Background="Transparent" BorderThickness="0" BorderBrush="Transparent" x:Name="tclTeamPlaybook" Grid.Row="0" SelectionChanged="tclTeamPlaybook_TabChanged">
+            <TabControl x:Name="tclTeamPlaybook" 
+                        Grid.Row="0" 
+                        SelectionChanged="tclTeamPlaybook_TabChanged">
                 <TabControl.ItemContainerStyle>
                     <!--<Style TargetType="{x:Type TabItem}" BasedOn="{DynamicResource tciTeamColorStyle}"></Style>-->
                     <Style TargetType="{x:Type TabItem}">
@@ -124,7 +126,7 @@
 
                     <Grid ClipToBounds="True">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="600"/>
+                            <ColumnDefinition Width="615"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
@@ -142,7 +144,6 @@
                             MouseDoubleClick="tvwPlaybook_DoubleClick"
                             AllowDrop="True"
                             ItemsSource="{Binding Formations}"
-                            ScrollViewer.VerticalScrollBarVisibility="Hidden"
                             ScrollViewer.HorizontalScrollBarVisibility="Hidden"
                             VirtualizingPanel.IsVirtualizing="False"
                             VirtualizingPanel.VirtualizationMode="Standard">
@@ -397,7 +398,7 @@
                                                     </DataTemplate>
                                                 </ListView.ItemTemplate>
                                                 <ListView.ItemContainerStyle>
-                                                    <Style TargetType="{x:Type ListViewItem}" BasedOn="{DynamicResource lbiTeamColorStyle}"></Style>
+                                                    <Style TargetType="{x:Type ListViewItem}" BasedOn="{StaticResource lbiTeamColorStyle}"></Style>
                                                 </ListView.ItemContainerStyle>
                                                 <ListView.ItemsPanel>
                                                     <ItemsPanelTemplate>

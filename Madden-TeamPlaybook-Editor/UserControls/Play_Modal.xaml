@@ -716,7 +716,7 @@
                                 <Setter Property="LayoutTransform">
                                     <Setter.Value>
                                         <TransformGroup>
-                                            <ScaleTransform ScaleX="0.6" ScaleY="0.6"/>
+                                            <ScaleTransform ScaleX="0.55" ScaleY="0.55"/>
                                         </TransformGroup>
                                     </Setter.Value>
                                 </Setter>

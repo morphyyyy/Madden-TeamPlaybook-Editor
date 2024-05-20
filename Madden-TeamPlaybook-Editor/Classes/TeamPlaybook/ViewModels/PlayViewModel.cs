@@ -623,10 +623,12 @@ namespace MaddenTeamPlaybookEditor.ViewModels
             _ContainLeft =
             _ContainRight =
             _Cover2Defense =
+            _CoverageShell =
             _DisableLockOn =
             _EndComplement =
             _IsBoosted =
             _NoWideAlign =
+            _NoPlaymaker =
             _OptionStop =
             _OutsideRunStop =
             _PassLeft =
@@ -858,7 +860,7 @@ namespace MaddenTeamPlaybookEditor.ViewModels
                 this.PLYL.PLF_ += _NoPlaymaker ?
                     PLYL.PlayListFlag
                     .FirstOrDefault(k => String.Equals(k.Value, "NoPlaymaker", StringComparison.OrdinalIgnoreCase)).Key :
-                    -1 * PLYL.PlayListFlag
+                    -1*PLYL.PlayListFlag
                     .FirstOrDefault(k => String.Equals(k.Value, "NoPlaymaker", StringComparison.OrdinalIgnoreCase)).Key;
                 OnPropertyChanged("NoPlaymaker");
             }
