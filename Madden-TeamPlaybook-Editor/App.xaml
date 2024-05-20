@@ -12,6 +12,7 @@
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Styles/tabTeamColorStyle.xaml" />
                 <ResourceDictionary Source="/Styles/chbxTeamColorStyle.xaml" />
                 <ResourceDictionary Source="/Styles/cbxTeamColorStyle.xaml" />
                 <ResourceDictionary Source="/Styles/sbrTeamColorStyle.xaml" />
@@ -140,12 +141,13 @@
                 </Setter>
             </Style>
             <Style TargetType="{x:Type DataGrid}">
-                <Setter Property="Background" Value="Transparent" />
-                <Setter Property="BorderBrush" Value="{DynamicResource TextBrush}"/>
-                <Setter Property="BorderThickness" Value="1"/>
-                <Setter Property="RowBackground" Value="Transparent" />
+                <Setter Property="Background" Value="{x:Null}" />
+                <Setter Property="BorderBrush" Value="{x:Null}"/>
+                <Setter Property="BorderThickness" Value="0"/>
+                <Setter Property="RowBackground" Value="{x:Null}" />
                 <Setter Property="Foreground" Value="{DynamicResource TextBrush}"/>
                 <Setter Property="GridLinesVisibility" Value="All"/>
+                <Setter Property="HeadersVisibility" Value="Column"/>
                 <Setter Property="HorizontalGridLinesBrush" Value="{DynamicResource TextBrush}"/>
                 <Setter Property="VerticalGridLinesBrush" Value="{DynamicResource TextBrush}"/>
                 <Setter Property="CanUserAddRows" Value="False"/>
@@ -162,6 +164,32 @@
                         <DropShadowEffect Color="{DynamicResource Background}" Direction="225" ShadowDepth="0" BlurRadius="3" Opacity="5.0" />
                     </Setter.Value>
                 </Setter>
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource AncestorType=TabItem}}" Value="True">
+                        <Setter Property="Foreground" Value="{DynamicResource QuinaryBrush}"/>
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource AncestorType=TabItem}}" Value="False">
+                        <Setter Property="Foreground" Value="{DynamicResource SecondaryBrush}"/>
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding IsMouseOver, RelativeSource={RelativeSource AncestorType=TabItem}}" Value="True">
+                        <Setter Property="Foreground" Value="{DynamicResource QuinaryBrush}"/>
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding IsMouseOver, RelativeSource={RelativeSource AncestorType=TabItem}}" Value="False">
+                        <Setter Property="Foreground" Value="{DynamicResource SecondaryBrush}"/>
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource AncestorType=ListViewItem}}" Value="True">
+                        <Setter Property="Foreground" Value="{DynamicResource QuinaryBrush}"/>
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource AncestorType=ListViewItem}}" Value="False">
+                        <Setter Property="Foreground" Value="{DynamicResource SecondaryBrush}"/>
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding IsMouseOver, RelativeSource={RelativeSource AncestorType=ListViewItem}}" Value="True">
+                        <Setter Property="Foreground" Value="{DynamicResource QuinaryBrush}"/>
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding IsMouseOver, RelativeSource={RelativeSource AncestorType=ListViewItem}}" Value="False">
+                        <Setter Property="Foreground" Value="{DynamicResource SecondaryBrush}"/>
+                    </DataTrigger>
+                </Style.Triggers>
             </Style>
             <Style TargetType="{x:Type classes:TextPath}">
                 <Setter Property="Effect">

@@ -43,122 +43,158 @@
     <Grid>
         <Canvas Grid.Row="1" Background="{StaticResource BackgroundBrush}" Opacity="1"/>
         <StackPanel Margin="5">
-            <GroupBox Header="Options" Margin="5">
-                <CheckBox x:Name="cbxUseTeamColors" Margin="5" Content="Load Colors with Playbook" IsChecked="{DynamicResource UseTeamColors}" Checked="UseTeamColors" Unchecked="UseTeamColors"/>
+            <GroupBox Header="Team Color Themes" Margin="5">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <ComboBox Grid.Column="0" Margin="5" x:Name="lvwTeamColors"
+                        SelectedValuePath="Value"
+                        DisplayMemberPath="Key"
+                        SelectionChanged="lvwTeamColors_Selected"
+                        ItemsSource="{Binding Source={x:Static TeamPlaybookViewModels:TeamPlaybook.TeamColors}}"/>
+                    <CheckBox Grid.Column="1" x:Name="cbxUseTeamColors" Margin="5" Content="Use Team Color Theme" IsChecked="{DynamicResource UseTeamColors}" Checked="UseTeamColors" Unchecked="UseTeamColors"/>
+                </Grid>
             </GroupBox>
-            <GroupBox Header="Team Color" Margin="5">
-                <ComboBox Margin="5" x:Name="lvwTeamColors"
-                    SelectedValuePath="Value"
-                    DisplayMemberPath="Key"
-                    SelectionChanged="lvwTeamColors_Selected"
-                    ItemsSource="{Binding Source={x:Static TeamPlaybookViewModels:TeamPlaybook.TeamColors}}"/>
+            <GroupBox Header="Custom Color Theme" Margin="5">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <WrapPanel Grid.Column="0">
+                        <GroupBox Header="Home" Margin="5">
+                            <StackPanel>
+                                <xctk:ColorPicker Name="Primary" 
+                                                  Margin="5" 
+                                                  Height="45" 
+                                                  Width="45" 
+                                                  BorderThickness="0"
+                                                  BorderBrush="Transparent"
+                                                  Background="Transparent"
+                                                  ColorMode="ColorCanvas"
+                                                  SelectedColor="{DynamicResource Primary}"
+                                                  ShowDropDownButton="False"
+                                                  SelectedColorChanged="ClrPcker_Background_SelectedColorChanged"/>
+                                <xctk:ColorPicker Name="Secondary" 
+                                                    Margin="5" 
+                                                    Height="45" 
+                                                    Width="45" 
+                                                    BorderThickness="0"
+                                                    BorderBrush="Transparent"
+                                                    Background="Transparent"
+                                                    ColorMode="ColorCanvas"
+                                                    SelectedColor="{DynamicResource Secondary}"
+                                                    ShowDropDownButton="False"
+                                                    SelectedColorChanged="ClrPcker_Background_SelectedColorChanged"/>
+                                <xctk:ColorPicker Name="Tertiary" 
+                                                    Margin="5" 
+                                                    Height="45" 
+                                                    Width="45" 
+                                                    BorderThickness="0"
+                                                    BorderBrush="Transparent"
+                                                    Background="Transparent"
+                                                    ColorMode="ColorCanvas"
+                                                    SelectedColor="{DynamicResource Tertiary}"
+                                                    ShowDropDownButton="False"
+                                                    SelectedColorChanged="ClrPcker_Background_SelectedColorChanged"/>
+                            </StackPanel>
+                        </GroupBox>
+                        <GroupBox Header="Away" Margin="5">
+                            <StackPanel>
+                                <xctk:ColorPicker Name="Quaternary" 
+                                                  Margin="5" 
+                                                  Height="45" 
+                                                  Width="45" 
+                                                  BorderThickness="0"
+                                                  BorderBrush="Transparent"
+                                                  Background="Transparent"
+                                                  ColorMode="ColorCanvas"
+                                                  SelectedColor="{DynamicResource Quaternary}"
+                                                  ShowDropDownButton="False"
+                                                  SelectedColorChanged="ClrPcker_Background_SelectedColorChanged"/>
+                                <xctk:ColorPicker Name="Quinary" 
+                                                  Margin="5" 
+                                                  Height="45" 
+                                                  Width="45" 
+                                                  BorderThickness="0"
+                                                  BorderBrush="Transparent"
+                                                  Background="Transparent"
+                                                  ColorMode="ColorCanvas"
+                                                  SelectedColor="{DynamicResource Quinary}"
+                                                  ShowDropDownButton="False"
+                                                  SelectedColorChanged="ClrPcker_Background_SelectedColorChanged"/>
+                                <xctk:ColorPicker Name="Senary" 
+                                                  Margin="5" 
+                                                  Height="45" 
+                                                  Width="45" 
+                                                  BorderThickness="0"
+                                                  BorderBrush="Transparent"
+                                                  Background="Transparent"
+                                                  ColorMode="ColorCanvas"
+                                                  SelectedColor="{DynamicResource Senary}"
+                                                  ShowDropDownButton="False"
+                                                  SelectedColorChanged="ClrPcker_Background_SelectedColorChanged"/>
+                            </StackPanel>
+                        </GroupBox>
+                    </WrapPanel>
+                    <Grid Grid.Column="1" Margin="5,15,5,5" VerticalAlignment="Center">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="55"/>
+                            <RowDefinition Height="55"/>
+                            <RowDefinition Height="55"/>
+                        </Grid.RowDefinitions>
+                        <TextBlock Grid.Row="0" VerticalAlignment="Center" FontSize="25" Text="Jersey"/>
+                        <TextBlock Grid.Row="1" VerticalAlignment="Center" FontSize="25" Text="Number"/>
+                        <TextBlock Grid.Row="2" VerticalAlignment="Center" FontSize="25" Text="Number Border"/>
+                    </Grid>
+                </Grid>
             </GroupBox>
-            <GroupBox Header="Home" Margin="5">
-                <StackPanel>
-                    <WrapPanel Margin="5">
-                        <xctk:ColorPicker Name="Primary" 
-                                          Margin="5" 
-                                          Height="30" 
-                                          Width="90" 
-                                          BorderThickness="0"
-                                          BorderBrush="Transparent"
-                                          Background="Transparent"
-                                          ColorMode="ColorCanvas"
-                                          SelectedColor="{DynamicResource Primary}"
-                                          ShowDropDownButton="False"
-                                          SelectedColorChanged="ClrPcker_Background_SelectedColorChanged"/>
-                        <TextBlock Margin="5" VerticalAlignment="Center" FontSize="25" Text="Jersey"/>
-                    </WrapPanel>
-                    <WrapPanel Margin="5">
-                        <xctk:ColorPicker Name="Secondary" 
-                                          Margin="5" 
-                                          Height="30" 
-                                          Width="90" 
-                                          BorderThickness="0"
-                                          BorderBrush="Transparent"
-                                          Background="Transparent"
-                                          ColorMode="ColorCanvas"
-                                          SelectedColor="{DynamicResource Secondary}"
-                                          ShowDropDownButton="False"
-                                          SelectedColorChanged="ClrPcker_Background_SelectedColorChanged"/>
-                        <TextBlock Margin="5" VerticalAlignment="Center" FontSize="25" Text="Number"/>
-                    </WrapPanel>
-                    <WrapPanel Margin="5">
-                        <xctk:ColorPicker Name="Tertiary" 
-                                          Margin="5" 
-                                          Height="30" 
-                                          Width="90" 
-                                          BorderThickness="0"
-                                          BorderBrush="Transparent"
-                                          Background="Transparent"
-                                          ColorMode="ColorCanvas"
-                                          SelectedColor="{DynamicResource Tertiary}"
-                                          ShowDropDownButton="False"
-                                          SelectedColorChanged="ClrPcker_Background_SelectedColorChanged"/>
-                        <TextBlock Margin="5" VerticalAlignment="Center" FontSize="25" Text="Number Border"/>
-                    </WrapPanel>
-                </StackPanel>
-            </GroupBox>
-            <GroupBox Header="Away" Margin="5">
-                <StackPanel>
-                    <WrapPanel Margin="5">
-                        <xctk:ColorPicker Name="Quaternary" 
-                                          Margin="5" 
-                                          Height="30" 
-                                          Width="90" 
-                                          BorderThickness="0"
-                                          BorderBrush="Transparent"
-                                          Background="Transparent"
-                                          ColorMode="ColorCanvas"
-                                          SelectedColor="{DynamicResource Quaternary}"
-                                          ShowDropDownButton="False"
-                                          SelectedColorChanged="ClrPcker_Background_SelectedColorChanged"/>
-                        <TextBlock Margin="5" VerticalAlignment="Center" FontSize="25" Text="Jersey"/>
-                    </WrapPanel>
-                    <WrapPanel Margin="5">
-                        <xctk:ColorPicker Name="Quinary" 
-                                          Margin="5" 
-                                          Height="30" 
-                                          Width="90" 
-                                          BorderThickness="0"
-                                          BorderBrush="Transparent"
-                                          Background="Transparent"
-                                          ColorMode="ColorCanvas"
-                                          SelectedColor="{DynamicResource Quinary}"
-                                          ShowDropDownButton="False"
-                                          SelectedColorChanged="ClrPcker_Background_SelectedColorChanged"/>
-                        <TextBlock Margin="5" VerticalAlignment="Center" FontSize="25" Text="Number"/>
-                    </WrapPanel>
-                    <WrapPanel Margin="5">
-                        <xctk:ColorPicker Name="Senary" 
-                                          Margin="5" 
-                                          Height="30" 
-                                          Width="90" 
-                                          BorderThickness="0"
-                                          BorderBrush="Transparent"
-                                          Background="Transparent"
-                                          ColorMode="ColorCanvas"
-                                          SelectedColor="{DynamicResource Senary}"
-                                          ShowDropDownButton="False"
-                                          SelectedColorChanged="ClrPcker_Background_SelectedColorChanged"/>
-                        <TextBlock Margin="5" VerticalAlignment="Center" FontSize="25" Text="Number Border"/>
-                    </WrapPanel>
-                </StackPanel>
-            </GroupBox>
-            <WrapPanel Margin="15">
-                <xctk:ColorPicker Name="Accent" 
-                                          Margin="5" 
-                                          Height="30" 
-                                          Width="90" 
-                                          BorderThickness="0"
-                                          BorderBrush="Transparent"
-                                          Background="Transparent"
-                                          ColorMode="ColorCanvas"
-                                          SelectedColor="{DynamicResource Accent}"
-                                          ShowDropDownButton="False"
-                                          SelectedColorChanged="ClrPcker_Background_SelectedColorChanged"/>
-                <TextBlock Margin="5" VerticalAlignment="Center" FontSize="25" Text="Accent"/>
-            </WrapPanel>
+            <StackPanel>
+                <WrapPanel Margin="5">
+                    <xctk:ColorPicker Name="Accent" 
+                                              Margin="5" 
+                                              Height="45" 
+                                              Width="45" 
+                                              BorderThickness="0"
+                                              BorderBrush="Transparent"
+                                              Background="Transparent"
+                                              ColorMode="ColorCanvas"
+                                              SelectedColor="{DynamicResource Accent}"
+                                              ShowDropDownButton="False"
+                                              SelectedColorChanged="ClrPcker_Background_SelectedColorChanged"/>
+                    <TextBlock Margin="5" VerticalAlignment="Center" FontSize="25" Text="Accent"/>
+                </WrapPanel>
+                <WrapPanel Margin="5">
+                    <xctk:ColorPicker Name="Text" 
+                                              Margin="5" 
+                                              Height="45" 
+                                              Width="45" 
+                                              BorderThickness="0"
+                                              BorderBrush="Transparent"
+                                              Background="Transparent"
+                                              ColorMode="ColorCanvas"
+                                              SelectedColor="{DynamicResource Text}"
+                                              ShowDropDownButton="False"
+                                              SelectedColorChanged="ClrPcker_Background_SelectedColorChanged"/>
+                    <TextBlock Margin="5" VerticalAlignment="Center" FontSize="25" Text="Text"/>
+                </WrapPanel>
+                <WrapPanel Margin="5">
+                    <xctk:ColorPicker Name="Background" 
+                                              Margin="5" 
+                                              Height="45" 
+                                              Width="45" 
+                                              BorderThickness="0"
+                                              BorderBrush="Transparent"
+                                              Background="Transparent"
+                                              ColorMode="ColorCanvas"
+                                              SelectedColor="{DynamicResource Background}"
+                                              ShowDropDownButton="False"
+                                              SelectedColorChanged="ClrPcker_Background_SelectedColorChanged"/>
+                    <TextBlock Margin="5" VerticalAlignment="Center" FontSize="25" Text="Background"/>
+                </WrapPanel>
+            </StackPanel>
         </StackPanel>
     </Grid>
 </UserControl>

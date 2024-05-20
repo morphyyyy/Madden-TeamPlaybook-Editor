@@ -317,8 +317,12 @@ namespace Madden.TeamPlaybook
                 new KeyValuePair<int, string>(57, "Defensive Alignment"),
                 new Dictionary<KeyValuePair<string, string>, Dictionary<int, string>>
                 {
-                    { 
-                        new KeyValuePair<string, string>("val1", "Receiver SubPosition"),
+                    {
+                        new KeyValuePair<string, string>("val1", "Alignment"),
+                        new Dictionary<int, string>()
+                    },
+                    {
+                        new KeyValuePair<string, string>("val2", "Receiver SubPosition"),
                         new Dictionary<int, string>
                         {
                             { -1, "Invalid" },
@@ -347,7 +351,7 @@ namespace Madden.TeamPlaybook
                         }
                     },
                     { 
-                        new KeyValuePair<string, string>("val2", "Alignment Technique"),
+                        new KeyValuePair<string, string>("val3", "Alignment Technique"),
                         new Dictionary<int, string>
                         {
                             {0, "No Align" },
@@ -368,7 +372,21 @@ namespace Madden.TeamPlaybook
             },
             {
                 new KeyValuePair<int, string>(58, "Canned Handoff"),
-                new Dictionary<KeyValuePair<string, string>, Dictionary<int, string>>{ }
+                new Dictionary<KeyValuePair<string, string>, Dictionary<int, string>>
+                {
+                    {
+                        new KeyValuePair<string, string>("val1", "Player Number"),
+                        new Dictionary<int, string>()
+                    },
+                    {
+                        new KeyValuePair<string, string>("val2", "Handoff Animation"),
+                        new Dictionary<int, string>()
+                    },
+                    {
+                        new KeyValuePair<string, string>("val3", "Flipped Handoff Animation"),
+                        new Dictionary<int, string>()
+                    }
+                }
             },
             {
                 new KeyValuePair<int, string>(59, "Get Ball"),
