@@ -593,10 +593,18 @@
                                 </Grid>
                             </GroupBox>-->
                             <GroupBox Header="PSAL" DockPanel.Dock="Top" Margin="5">
-                                <DataGrid 
+                                <DataGrid x:Name="dgdPSALs"
                                     ItemsSource="{Binding PSAL, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                     HorizontalAlignment="Stretch"
-                                    CurrentCellChanged="dgdPSALupdated"/>
+                                    CurrentCellChanged="dgdPSALupdated">
+                                    <DataGrid.ContextMenu>
+                                        <ContextMenu>
+                                            <TextBlock Text="Insert" MouseUp="PSALinsertStep"/>
+                                            <TextBlock Text="Append" MouseUp="PSALappendStep"/>
+                                            <TextBlock Text="Delete" MouseUp="PSALdeleteStep"/>
+                                        </ContextMenu>
+                                    </DataGrid.ContextMenu>
+                                </DataGrid>
                             </GroupBox>
                         </DockPanel>
                     </DockPanel>
@@ -615,6 +623,12 @@
                         ScrollViewer.VerticalScrollBarVisibility="Hidden"
                         ScrollViewer.HorizontalScrollBarVisibility="Hidden">
 
+                        <TreeView.ContextMenu>
+                            <ContextMenu>
+                                <TextBlock Text="Add New PSAL" MouseUp="AddNewPSAL"/>
+                            </ContextMenu>
+                        </TreeView.ContextMenu>
+                        
                         <TreeView.Resources>
 
                             <ResourceDictionary>

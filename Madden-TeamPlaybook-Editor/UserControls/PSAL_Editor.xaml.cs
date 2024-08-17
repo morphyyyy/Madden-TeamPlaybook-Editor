@@ -52,7 +52,8 @@ namespace MaddenTeamPlaybookEditor.User_Controls
 
             PSAL_Canvas.Children.Add(PSALpath);
             PSAL_Canvas.Children.Add(PSALpathHighlighted);
-
+            Canvas.SetZIndex(PSALpath, 100);
+            Canvas.SetZIndex(PSALpathHighlighted, 101);
         }
 
         protected override void OnRender(DrawingContext dc)

@@ -27,6 +27,8 @@ namespace MaddenTeamPlaybookEditor.User_Controls
         public PlayerIcon()
         {
             InitializeComponent();
+            Player = new PlayerVM { Play = new PlayVM { SubFormation = new SubFormationVM { Formation = new FormationVM { Playbook = new TeamPlaybook() } } } };
+            SolidColorBrush playerIconBrush = IconColor ?? new SolidColorBrush(Madden.TeamPlaybook.ARTLColor.PlayerIconColor);
             this.MouseLeftButtonDown += new MouseButtonEventHandler(UserControl_MouseLeftButtonDown);
             this.MouseLeftButtonUp += new MouseButtonEventHandler(UserControl_MouseLeftButtonUp);
             this.MouseMove += new MouseEventHandler(UserControl_MouseMove);

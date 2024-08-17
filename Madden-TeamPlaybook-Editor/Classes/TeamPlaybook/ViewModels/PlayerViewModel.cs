@@ -22,7 +22,7 @@ namespace MaddenTeamPlaybookEditor.ViewModels
             PlayerVM_string += SETG.ToString() + "\n";
             foreach (PSAL psal in PSAL) PlayerVM_string += psal.ToString() + "\n";
             //PlayerVM_string += "Rec#: " + ARTL.rec + "\tartl: " + ARTL.artl + "\tacnt: " + ARTL.acnt + "\n";
-            PlayerVM_string += ARTL.ToString();
+            PlayerVM_string += ARTL?.ToString();
             return PlayerVM_string;
         }
 
@@ -111,7 +111,7 @@ namespace MaddenTeamPlaybookEditor.ViewModels
         {
             get
             {
-                return DCHT == null ? EPos + (Int32.Parse(DPos) > 1 ? " " + DPos : "") : Number.ToString();
+                return DCHT == null ? EPos + (Int32.Parse(DPos ?? "1") > 1 ? " " + DPos : "") : Number.ToString();
             }
         }
         public string DPos { get; set; }
@@ -121,10 +121,10 @@ namespace MaddenTeamPlaybookEditor.ViewModels
         public int Number { get; set; }
         public int Speed { get; set; }
 
-        [field: NonSerialized] 
-        public PathGeometry Icon { get; set; }
         [field: NonSerialized]
-        public ARTLColor artlColor { get; set; }
+        public PathGeometry Icon { get; set; } = new EllipseGeometry(new Point(0, 0), 4, 4).GetFlattenedPathGeometry(.1, ToleranceType.Absolute);
+        [field: NonSerialized]
+        public ARTLColor artlColor { get; set; } = ARTLColor.Undefined;
         [field: NonSerialized] 
         public List<Path> ARTLpath { get; set; }
         [field: NonSerialized] 
@@ -350,16 +350,12 @@ namespace MaddenTeamPlaybookEditor.ViewModels
         {
             if (Play == null)
             {
-                artlColor = ARTLColor.Undefined;
                 return;
             }
-            artlColor =
-                PLYS.poso != 0 ?
-                Play.PLYL.vpos == PLYS.poso ?
-                artlColor = ARTLColor.PrimaryRoute :
-                artlColor = ARTLColor.Undefined :
-                artlColor = ARTLColor.Undefined
-                ;
+            if (PLYS.poso != 0)
+            {
+                artlColor = Play.PLYL.vpos == PLYS.poso ? artlColor = ARTLColor.PrimaryRoute : artlColor = ARTLColor.Undefined;
+            }
 
             //switch (ARTL.acnt)
             //{
@@ -375,7 +371,7 @@ namespace MaddenTeamPlaybookEditor.ViewModels
             {
                 RouteCap = ARTL.Block;
             }
-            else if (ARTL != null )
+            else if (ARTL != null)
             {
                 if (ARTL.ARTList != null)
                 {
@@ -929,7 +925,6 @@ namespace MaddenTeamPlaybookEditor.ViewModels
 
                         if (PSAL[i].val1 == 0)
                         {
-                            //assign route color
                             artlColor = ARTLColor.Block;
 
                             //manual offset of 2 yards back
@@ -956,7 +951,6 @@ namespace MaddenTeamPlaybookEditor.ViewModels
 
                         if (PSAL[i].val1 == 0)
                         {
-                            //assign route color
                             artlColor = ARTLColor.Block;
 
                             //manual offset of 2 yards forward
@@ -989,7 +983,11 @@ namespace MaddenTeamPlaybookEditor.ViewModels
                     case 18:
                         #region LeadBlock
 
-                        artlColor = ARTLColor.Block;
+                        //assign route color
+                        if (!PSAL.Exists(p => p.code == 25) || !PSAL.Exists(p => p.code == 45) || !PSAL.Exists(p => p.code == 46))
+                        {
+                            artlColor = artlColor = ARTLColor.Block;
+                        }
                         break;
 
                     #endregion

@@ -61,7 +61,7 @@ namespace MaddenTeamPlaybookEditor.User_Controls
                 {
                     _play.AddSituation(situation);
                 }
-                _mainWindow.lvwPlaysBySituation.Items.Filter = _mainWindow.SituationFilter;
+                //_mainWindow.lvwPlaysBySituation.Items.Filter = _mainWindow.SituationFilter;
 
                 isDragging = true;
             }

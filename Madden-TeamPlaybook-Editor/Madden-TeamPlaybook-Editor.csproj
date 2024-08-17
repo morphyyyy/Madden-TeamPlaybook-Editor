@@ -64,6 +64,9 @@
     <Reference Include="MathConverter, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\MathConverter.2.2.0\lib\net35\MathConverter.dll</HintPath>
     </Reference>
+    <Reference Include="MoreLinq, Version=4.2.0.0, Culture=neutral, PublicKeyToken=384d532d7e88985d, processorArchitecture=MSIL">
+      <HintPath>..\packages\morelinq.4.2.0\lib\netstandard2.0\MoreLinq.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -141,6 +144,7 @@
     <Compile Include="Classes\CustomPlaybook\ViewModels\SubFormationViewModel.cs" />
     <Compile Include="Classes\DraggableAdorner.cs" />
     <Compile Include="Classes\ExtentionMethods.cs" />
+    <Compile Include="Classes\PSALviewModel.cs" />
     <Compile Include="Classes\TeamPlaybook\RedDobe.cs" />
     <Compile Include="Classes\TeamPlaybook\Tables\FORM.cs" />
     <Compile Include="Classes\TeamPlaybook\Tables\PBCC.cs" />
@@ -174,6 +178,9 @@
     <Compile Include="Classes\UniformGridWithOrientation.cs" />
     <Compile Include="UserControls\ColorTheme.xaml.cs">
       <DependentUpon>ColorTheme.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\CustomPlaybookTables.xaml.cs">
+      <DependentUpon>CustomPlaybookTables.xaml</DependentUpon>
     </Compile>
     <Compile Include="UserControls\SubFormation_Modal.xaml.cs">
       <DependentUpon>SubFormation_Modal.xaml</DependentUpon>
@@ -209,6 +216,12 @@
       <DependentUpon>SubFormation.xaml</DependentUpon>
     </Compile>
     <Compile Include="Classes\TeamPlaybook\ViewModels\SituationViewModel.cs" />
+    <Compile Include="UserControls\TeamPlaybookGameplan.xaml.cs">
+      <DependentUpon>TeamPlaybookGameplan.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\TeamPlaybookTables.xaml.cs">
+      <DependentUpon>TeamPlaybookTables.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\TestUserControl.xaml.cs">
       <DependentUpon>TestUserControl.xaml</DependentUpon>
     </Compile>
@@ -307,6 +320,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="UserControls\CustomPlaybookTables.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="UserControls\SubFormation_Modal.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -348,6 +365,14 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="UserControls\SubFormation.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\TeamPlaybookGameplan.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\TeamPlaybookTables.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

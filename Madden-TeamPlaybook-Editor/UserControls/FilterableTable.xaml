@@ -13,7 +13,7 @@
             x:Name="dataGrid"
             Margin="5"
             MaxHeight="835"
-            ItemsSource="{Binding ElementName=uclFilterableTable, Path=Data, Mode=TwoWay}"
+            ItemsSource="{Binding ElementName=uclFilterableTable, Path=DataContext, Mode=TwoWay}"
             GridLinesVisibility="All"
             CanUserAddRows="False"
             CanUserDeleteRows="False"

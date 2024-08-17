@@ -386,7 +386,8 @@ namespace MaddenTeamPlaybookEditor.ViewModels
                     play.PLYL = Play.PLYL.plyl;
                 }
             }
-            
+            Play.PLYL.SETL = SETL.setl;
+
             Formation.Playbook.PLYL.Add(Play.PLYL);
 
             #endregion
@@ -624,21 +625,21 @@ namespace MaddenTeamPlaybookEditor.ViewModels
 
             #region Hidden Formation Check
 
-            SETL PBhiddenSETL = Formation.Playbook.SETL.FirstOrDefault(subFormation => subFormation.setl == Play.PLYL.SETL);
-            SETL PlayhiddenSETL = Play.SubFormation.Formation.Playbook.SETL.FirstOrDefault(subFormation => subFormation.setl == Play.PLYL.SETL);
-            FORM hiddenFORM = Formation.Playbook.FORM.FirstOrDefault(formation => formation.form == PlayhiddenSETL.FORM);
+            //SETL PBhiddenSETL = Formation.Playbook.SETL.FirstOrDefault(subFormation => subFormation.setl == Play.PLYL.SETL);
+            //SETL PlayhiddenSETL = Play.SubFormation.Formation.Playbook.SETL.FirstOrDefault(subFormation => subFormation.setl == Play.PLYL.SETL);
+            //FORM hiddenFORM = Formation.Playbook.FORM.FirstOrDefault(formation => formation.form == PlayhiddenSETL.FORM);
 
             //Check for Hidden Sub-Formation
-            if (PBhiddenSETL == null)
-            {
-                Play.AddHiddenSubFormation(Play, Formation.Playbook);
-            }
+            //if (PBhiddenSETL == null)
+            //{
+            //    Play.AddHiddenSubFormation(Play, Formation.Playbook);
+            //}
 
             //Check for Hidden Formation
-            if (hiddenFORM == null)
-            {
-                Formation.Playbook.FORM.Add(Play.SubFormation.Formation.Playbook.FORM.FirstOrDefault(formation => formation.form == PlayhiddenSETL.FORM));
-            }
+            //if (hiddenFORM == null)
+            //{
+            //    Formation.Playbook.FORM.Add(Play.SubFormation.Formation.Playbook.FORM.FirstOrDefault(formation => formation.form == PlayhiddenSETL.FORM));
+            //}
 
             #endregion
 

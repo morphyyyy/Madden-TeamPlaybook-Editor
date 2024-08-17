@@ -33,7 +33,7 @@
             <math:MathConverter x:Key="Math" />
             <sys:Boolean x:Key="UseTeamColors">true</sys:Boolean>
             <Color x:Key="Text">#D3D3D3</Color>
-            <Color x:Key="Background">#000000</Color>
+            <Color x:Key="Background">#242424</Color>
             <Color x:Key="Accent">#E7E8E7</Color>
             <Color x:Key="Primary">#2C2C30</Color>
             <Color x:Key="Secondary">#C1B28C</Color>
@@ -67,11 +67,11 @@
             <SolidColorBrush x:Key="TextBrush" Color="{DynamicResource Text}" Opacity="1"/>
             <SolidColorBrush x:Key="AccentBrush" Color="{DynamicResource Accent}" Opacity="1"/>
             <SolidColorBrush x:Key="PrimaryBrush"  Color="{DynamicResource Primary}" Opacity="1"/>
-            <SolidColorBrush x:Key="SecondaryBrush" Color="{DynamicResource Secondary}" />
+            <SolidColorBrush x:Key="SecondaryBrush" Color="{DynamicResource Secondary}" Opacity="1"/>
             <SolidColorBrush x:Key="TertiaryBrush" Color="{DynamicResource Tertiary}" Opacity="1"/>
-            <SolidColorBrush x:Key="QuaternaryBrush" Color="{DynamicResource Quaternary}" />
-            <SolidColorBrush x:Key="QuinaryBrush" Color="{DynamicResource Quinary}" />
-            <SolidColorBrush x:Key="SenaryBrush" Color="{DynamicResource Senary}"/>
+            <SolidColorBrush x:Key="QuaternaryBrush" Color="{DynamicResource Quaternary}" Opacity="1"/>
+            <SolidColorBrush x:Key="QuinaryBrush" Color="{DynamicResource Quinary}" Opacity="1" />
+            <SolidColorBrush x:Key="SenaryBrush" Color="{DynamicResource Senary}" Opacity="1"/>
             <SolidColorBrush x:Key="UndefinedBrush" Color="{DynamicResource Undefined}" Opacity="0.1"/>
             <SolidColorBrush x:Key="BlockBrush"  Color="{DynamicResource Block}" Opacity="0.1"/>
             <SolidColorBrush x:Key="BaseRouteBrush" Color="{DynamicResource BaseRoute}" Opacity="0.1"/>

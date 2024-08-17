@@ -1,6 +1,9 @@
-﻿using Madden.TeamPlaybook;
+﻿using Madden.Team;
+using Madden.TeamPlaybook;
 using MaddenTeamPlaybookEditor.ViewModels;
 using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Linq;
 using System.Windows;
@@ -18,6 +21,7 @@ namespace MaddenTeamPlaybookEditor.User_Controls
         {
             InitializeComponent();
             ((INotifyCollectionChanged)lvwSituations.Items).CollectionChanged += lvwSituations_CollectionChanged;
+            ((INotifyCollectionChanged)dgdPSALs.Items).CollectionChanged += DataGrid_CollectionChanged;
         }
 
         public static DependencyProperty PlayProperty = DependencyProperty.Register("play", typeof(PlayVM), typeof(PlayModal));
@@ -279,6 +283,51 @@ namespace MaddenTeamPlaybookEditor.User_Controls
             //    tvi.IsSelected = false;
             //    e.Handled = true;
             //}
+        }
+
+        void DataGrid_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            // Execute your logic here
+        }
+
+        private void PSALinsertStep(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            foreach (PSAL psal in play.SubFormation.Formation.Playbook.PSAL.Where(p => p.psal == ((PSAL)dgdPSALs.SelectedItem).psal && p.step >= ((PSAL)dgdPSALs.SelectedItem).step))
+            {
+                psal.step++;
+            }
+            play.SubFormation.Formation.Playbook.PSAL.Add(new PSAL { rec = play.SubFormation.Formation.Playbook.PSAL.Count(), step = ((PSAL)dgdPSALs.SelectedItem).step - 1, psal = ((PSAL)dgdPSALs.SelectedItem).psal });
+            PlayerVM player = play.Players.FirstOrDefault(p => p.IsSelected);
+            player.UpdatePlayer();
+            dgdPSALs.Items.Refresh();
+            GetPlayer();
+        }
+
+        private void PSALappendStep(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            play.SubFormation.Formation.Playbook.PSAL.Add(new PSAL { rec = play.SubFormation.Formation.Playbook.PSAL.Count(), step = ((PSAL)dgdPSALs.SelectedItem).step + 1, psal = ((PSAL)dgdPSALs.SelectedItem).psal });
+            PlayerVM player = play.Players.FirstOrDefault(p => p.IsSelected);
+            player.UpdatePlayer();
+            dgdPSALs.Items.Refresh();
+            GetPlayer();
+        }
+
+        private void PSALdeleteStep(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            foreach (PSAL psal in play.SubFormation.Formation.Playbook.PSAL.Where(p => p.psal == ((PSAL)dgdPSALs.SelectedItem).psal && p.step > ((PSAL)dgdPSALs.SelectedItem).step))
+            {
+                psal.step--;
+            }
+            play.SubFormation.Formation.Playbook.PSAL.Remove(((PSAL)dgdPSALs.SelectedItem));
+            PlayerVM player = play.Players.FirstOrDefault(p => p.IsSelected);
+            player.UpdatePlayer();
+            dgdPSALs.Items.Refresh();
+            GetPlayer();
+        }
+
+        private void AddNewPSAL(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+
         }
     }
 }

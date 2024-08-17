@@ -7,26 +7,35 @@
     xmlns:UserControls="clr-namespace:MaddenTeamPlaybookEditor.User_Controls"
     mc:Ignorable="d"
     x:Name="uclPSALEditor"
+    Background="{DynamicResource BackgroundBrush}"
     >
 
-    <DockPanel Height="Auto">
-        <Canvas  
-            DockPanel.Dock="Top"
+    <Grid Height="Auto">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Canvas Grid.Row="0"
             Name="PSAL_Canvas" 
             Width="533"
-            Height="850"
+            Height="1048"
+            Margin="0,-100.5"
             MouseDown="PSAL_Canvas_MouseDown" 
             MouseMove="PSAL_Canvas_MouseMove"
             MouseUp="PSAL_Canvas_MouseUp"
+            OpacityMask="{StaticResource FieldBrush}"
+            Background="{DynamicResource TextBrush}"
             >
-            <Canvas.Background>
-                <ImageBrush ImageSource="/Resources/full_field.jpg" Stretch="UniformToFill" AlignmentY="Top" Opacity=".5"/>
-            </Canvas.Background>
         </Canvas>
-        <!--<DataGrid 
-            x:Name="PSAL_List" 
-            DockPanel.Dock="Bottom" 
+        
+        <UserControls:PlayerIcon />
+
+        <DataGrid Grid.Row="1"
+            x:Name="PSAL_List"
             ItemsSource="{Binding PSAL}"
-            />-->
-    </DockPanel>
+            CanUserAddRows="True"
+            CanUserDeleteRows="True"
+            />
+    </Grid>
 </UserControl>

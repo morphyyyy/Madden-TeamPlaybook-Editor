@@ -3,12 +3,14 @@ using Madden.TeamPlaybook;
 using MaddenCustomPlaybookEditor.ViewModels;
 using MaddenTeamPlaybookEditor.ExtensionMethods;
 using MaddenTeamPlaybookEditor.User_Controls;
+using MoreLinq;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -528,6 +530,7 @@ namespace MaddenTeamPlaybookEditor.ViewModels
 
         public static readonly Dictionary<int, List<string>> RouteType = new Dictionary<int, List<string>>
         {
+            {-1, new List<string> { "Unassigned", "Unassigned" } },
             {0, new List<string> { "Invalid", "Invalid" } },
             {1, new List<string> { "Block", "Pass" } },
             {2, new List<string> { "Block", "Run" } },
@@ -1436,6 +1439,8 @@ namespace MaddenTeamPlaybookEditor.ViewModels
             ObservableCollection<FormationVM> formations = new ObservableCollection<FormationVM>();
             TeamPlaybook playbook = new TeamPlaybook { Formations = formations };
             var routePositions = RouteType.GroupBy(type => type.Value[0]).ToDictionary(type => type.Key, type => type.ToList());
+            var plyss = PLYS.DistinctBy(p => p.PSAL).Select(x => new { x.PSAL, x.PLRR, x.ARTL }).OrderBy(x => x.PSAL).ToList();
+            plyss.AddRange(PSAL.Where(p => !plyss.Exists(pl => pl.PSAL == p.psal)).DistinctBy(p => p.psal).Select(p => new { PSAL = p.psal, PLRR = -1, ARTL = -1 }).OrderBy(p => p.PSAL).ToList());
 
             foreach (var _position in routePositions)
             {
@@ -1465,10 +1470,18 @@ namespace MaddenTeamPlaybookEditor.ViewModels
                             new SubFormationVM.Alignment(new Madden.TeamPlaybook.SGFM(), new List<Madden.TeamPlaybook.SETG>())
                         }
                     };
-                    foreach (var _route in PLYS.Select(x => new { x.PSAL, x.PLRR }).Where(x => x.PLRR == _type.Key).Distinct().OrderBy(x => x.PSAL))
+                    foreach (var _route in plyss.Where(x => x.PLRR == _type.Key))
                     {
+                        if (_route.PLRR == -1)
+                        {
+                            Console.WriteLine(_route.PSAL);
+                        }
                         PlayerVM player = new PlayerVM();
                         player.PLYS = PLYS.FirstOrDefault(plys => plys.PSAL == _route.PSAL);
+                        if (player.PLYS == null)
+                        {
+                            player.PLYS = new PLYS { PSAL = _route.PSAL, PLRR = _route.PLRR, ARTL = _route.ARTL };
+                        }
                         player.SETG = new Madden.TeamPlaybook.SETG
                         {
                             x___ = 0,
@@ -1508,6 +1521,113 @@ namespace MaddenTeamPlaybookEditor.ViewModels
                         player.SETP.arty += routeTop < 0 ? (int)(Math.Round(routeHeight * .5, 0)) : (int)(Math.Round(routeHeight * -.5, 0));
                         player.GetARTLcolor();
                         player.ConvertPSAL(player.PSAL);
+                        player.GetRouteCap();
+                        play.GetPlayerPlayartViewList();
+                        Plays.Add(play);
+                    }
+                    if (subFormation.Plays.Count() > 0)
+                    {
+                        subFormations.Add(subFormation);
+                    }
+                }
+                if (formation.SubFormations.Count() > 0)
+                {
+                    formations.Add(formation);
+                }
+            }
+
+            return formations;
+        }
+
+        public ObservableCollection<FormationVM> GetPSALlist2()
+        {
+            ObservableCollection<FormationVM> formations = new ObservableCollection<FormationVM>();
+            TeamPlaybook playbook = new TeamPlaybook { Formations = formations };
+            var routePositions = RouteType.GroupBy(type => type.Value[0]).ToDictionary(type => type.Key, type => type.ToList());
+            var plyss = PLYS.DistinctBy(p => p.PSAL).Select(x => new { x.PSAL, x.PLRR, x.ARTL }).OrderBy(x => x.PSAL).ToList();
+            plyss.AddRange(PSAL.Where(p => !plyss.Exists(pl => pl.PSAL == p.psal)).DistinctBy(p => p.psal).Select(p => new { PSAL = p.psal, PLRR = -1, ARTL = -1 }).OrderBy(p => p.PSAL).ToList());
+
+            foreach (var _position in routePositions)
+            {
+                ObservableCollection<SubFormationVM> subFormations = new ObservableCollection<SubFormationVM>();
+                FormationVM formation = new FormationVM
+                {
+                    PBFM = new Madden.TeamPlaybook.PBFM { name = _position.Key },
+                    SubFormations = subFormations,
+                    Playbook = playbook,
+                    IsVisible = true
+                };
+                foreach (var _type in _position.Value)
+                {
+                    ObservableCollection<PlayVM> Plays = new ObservableCollection<PlayVM>();
+                    SubFormationVM subFormation = new SubFormationVM
+                    {
+                        PBST = new PBST { name = /*_type.Key.ToString() + ": " +*/ _type.Value[1] },
+                        Plays = Plays,
+                        Formation = formation,
+                        CurrentPackage = new List<Madden.TeamPlaybook.SETP>(),
+                        Packages = new List<SubFormationVM.Package>
+                        {
+                            new SubFormationVM.Package(new Madden.TeamPlaybook.SPKF(), new List<Madden.TeamPlaybook.SPKG>())
+                        },
+                        Alignments = new List<SubFormationVM.Alignment>
+                        {
+                            new SubFormationVM.Alignment(new Madden.TeamPlaybook.SGFM(), new List<Madden.TeamPlaybook.SETG>())
+                        }
+                    };
+                    foreach (var _route in plyss.Where(x => x.PLRR == _type.Key))
+                    {
+                        if (_route.PLRR == -1)
+                        {
+                            Console.WriteLine(_route.PSAL);
+                        }
+                        PlayerVM player = new PlayerVM();
+                        player.PLYS = PLYS.FirstOrDefault(plys => plys.PSAL == _route.PSAL);
+                        if (player.PLYS == null)
+                        {
+                            player.PLYS = new PLYS { PSAL = _route.PSAL, PLRR = _route.PLRR, ARTL = _route.ARTL };
+                        }
+                        player.SETG = new Madden.TeamPlaybook.SETG
+                        {
+                            x___ = 0,
+                            y___ = 0,
+                            fx__ = 0,
+                            fy__ = 0
+                        };
+                        player.SETP = new Madden.TeamPlaybook.SETP
+                        {
+                            artx = 90,
+                            arty = 60
+                        };
+                        player.ARTL = ARTL.FirstOrDefault(_psal => _psal.artl == player.PLYS.ARTL);
+                        player.artlColor = ARTLColor.Undefined;
+                        player.PSAL = PSAL.Where(_psal => _psal.psal == _route.PSAL).OrderBy(s => s.step).ToList();
+                        player.Icon = new EllipseGeometry(new Point(0, 0), 4, 4).GetFlattenedPathGeometry();
+                        player.EPos = "";
+                        player.DPos = "1";
+                        PlayVM play = new PlayVM
+                        {
+                            PBPL = new Madden.TeamPlaybook.PBPL { name = "PSAL: " + _route.PSAL.ToString() },
+                            PLYL = new PLYL { vpos = 0 },
+                            PLYS = new List<Madden.TeamPlaybook.PLYS>(),
+                            Players = new ObservableCollection<PlayerVM>
+                            {
+                                player
+                            },
+                            SubFormation = subFormation
+                        };
+                        player.Play = play;
+                        PSALvM psalVM = new PSALvM(player.PSAL, player.ARTL);
+                        player.Icon = psalVM.Icon;
+                        player.ARTLpath = psalVM.ARTLpath;
+                        double routeWidth = player.ARTLpath.Sum(a => a.Data.Bounds.Width);
+                        double routeLeft = player.ARTLpath.Sum(a => a.Data.Bounds.Left);
+                        double routeHeight = player.ARTLpath.Sum(a => a.Data.Bounds.Height);
+                        double routeTop = player.ARTLpath.Sum(a => a.Data.Bounds.Top);
+                        player.SETP.artx += routeLeft < 0 ? (int)(Math.Round(routeWidth * .5, 0)) : (int)(Math.Round(routeWidth * -.5, 0));
+                        player.SETP.arty += routeTop < 0 ? (int)(Math.Round(routeHeight * .5, 0)) : (int)(Math.Round(routeHeight * -.5, 0));
+                        player.artlColor = psalVM.artlColor;
+                        player.PSALpath = psalVM.PSALpath;
                         player.GetRouteCap();
                         play.GetPlayerPlayartViewList();
                         Plays.Add(play);

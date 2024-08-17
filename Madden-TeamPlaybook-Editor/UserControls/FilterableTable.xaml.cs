@@ -1,7 +1,4 @@
-﻿using Madden.TeamPlaybook;
-using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System;
 using System.Linq;
 using System.Reflection;
 using System.Windows;
@@ -14,20 +11,6 @@ namespace MaddenTeamPlaybookEditor.User_Controls
         public FilterableTable()
         {
             InitializeComponent();
-        }
-
-        public static DependencyProperty DataProperty = DependencyProperty.Register("Data", typeof(IList), typeof(FilterableTable));
-
-        public IList Data
-        {
-            get
-            {
-                return GetValue(DataProperty) as IList;
-            }
-            set
-            {
-                SetValue(DataProperty, value);
-            }
         }
 
         private bool Filter(object obj)
@@ -58,14 +41,7 @@ namespace MaddenTeamPlaybookEditor.User_Controls
 
         private void dataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-            Type type = Data?.GetType().GetProperty("Item").PropertyType;
-            cbxFilter.ItemsSource = type?.GetProperties().Select(o => o.Name);
-            dataGrid.Items.Filter = Filter;
-        }
-
-        private void dataSourceChanged(object sender, System.Windows.Data.DataTransferEventArgs e)
-        {
-            Type type = Data?.GetType().GetProperty("Item").PropertyType;
+            Type type = DataContext?.GetType().GetProperty("Item").PropertyType;
             cbxFilter.ItemsSource = type?.GetProperties().Select(o => o.Name);
             dataGrid.Items.Filter = Filter;
         }

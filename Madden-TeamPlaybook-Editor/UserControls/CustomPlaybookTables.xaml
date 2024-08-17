@@ -1,0 +1,112 @@
+﻿<UserControl x:Class="MaddenTeamPlaybookEditor.User_Controls.CustomPlaybookTables"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:UserControls="clr-namespace:MaddenTeamPlaybookEditor.User_Controls"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800"
+             Background="{DynamicResource BackgroundBrush}">
+    <Grid>
+
+        <TabControl x:Name="tclCustomPlaybook">
+
+            <TabItem Header="ARTO">
+                <UserControls:FilterableTable DataContext="{Binding ARTO, Mode=TwoWay}"/>
+            </TabItem>
+
+            <TabItem Header="ARTD">
+                <UserControls:FilterableTable DataContext="{Binding ARTD, Mode=TwoWay}"/>
+            </TabItem>
+
+            <TabItem Header="CPFM">
+                <UserControls:FilterableTable DataContext="{Binding CPFM, Mode=TwoWay}"/>
+            </TabItem>
+
+            <TabItem Header="PBFI">
+                <UserControls:FilterableTable DataContext="{Binding PBFI, Mode=TwoWay}"/>
+            </TabItem>
+
+            <TabItem Header="PBFM">
+                <UserControls:FilterableTable DataContext="{Binding PBFM, Mode=TwoWay}"/>
+            </TabItem>
+
+            <TabItem Header="PBPL">
+                <UserControls:FilterableTable DataContext="{Binding PBPL, Mode=TwoWay}"/>
+            </TabItem>
+
+            <TabItem Header="PBPN">
+                <UserControls:FilterableTable DataContext="{Binding PBPN, Mode=TwoWay}"/>
+            </TabItem>
+
+            <TabItem Header="PIDX">
+                <UserControls:FilterableTable DataContext="{Binding PIDX, Mode=TwoWay}"/>
+            </TabItem>
+
+            <TabItem Header="PLCM">
+                <UserControls:FilterableTable DataContext="{Binding PLCM, Mode=TwoWay}"/>
+            </TabItem>
+
+            <TabItem Header="PLPD">
+                <UserControls:FilterableTable DataContext="{Binding PLPD, Mode=TwoWay}"/>
+            </TabItem>
+
+            <TabItem Header="PLRD">
+                <UserControls:FilterableTable DataContext="{Binding PLRD, Mode=TwoWay}"/>
+            </TabItem>
+
+            <TabItem Header="PLYS">
+                <UserControls:FilterableTable DataContext="{Binding PLYS, Mode=TwoWay}"/>
+            </TabItem>
+
+            <TabItem Header="PPCT">
+                <UserControls:FilterableTable DataContext="{Binding PPCT, Mode=TwoWay}"/>
+            </TabItem>
+
+            <TabItem Header="PSLO">
+                <UserControls:FilterableTable DataContext="{Binding PSLO, Mode=TwoWay}"/>
+            </TabItem>
+
+            <TabItem Header="PSLD">
+                <UserControls:FilterableTable DataContext="{Binding PSLD, Mode=TwoWay}"/>
+            </TabItem>
+
+            <TabItem Header="SDEF">
+                <UserControls:FilterableTable DataContext="{Binding SDEF, Mode=TwoWay}"/>
+            </TabItem>
+
+            <TabItem Header="SETG">
+                <UserControls:FilterableTable DataContext="{Binding SETG, Mode=TwoWay}"/>
+            </TabItem>
+
+            <TabItem Header="SETL">
+                <UserControls:FilterableTable DataContext="{Binding SETL, Mode=TwoWay}"/>
+            </TabItem>
+
+            <TabItem Header="SETP">
+                <UserControls:FilterableTable DataContext="{Binding SETP, Mode=TwoWay}"/>
+            </TabItem>
+
+            <TabItem Header="SGFF">
+                <UserControls:FilterableTable DataContext="{Binding SGFF, Mode=TwoWay}"/>
+            </TabItem>
+
+            <TabItem Header="SPKF">
+                <UserControls:FilterableTable DataContext="{Binding SPKF, Mode=TwoWay}"/>
+            </TabItem>
+
+            <TabItem Header="SPKG">
+                <UserControls:FilterableTable DataContext="{Binding SPKG, Mode=TwoWay}"/>
+            </TabItem>
+
+            <TabItem Header="SRFT">
+                <UserControls:FilterableTable DataContext="{Binding SRFT, Mode=TwoWay}"/>
+            </TabItem>
+
+            <TabItem Header="STID">
+                <UserControls:FilterableTable DataContext="{Binding STID, Mode=TwoWay}"/>
+            </TabItem>
+
+        </TabControl>
+    </Grid>
+</UserControl>

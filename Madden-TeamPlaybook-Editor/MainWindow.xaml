@@ -2,6 +2,7 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:UserControls="clr-namespace:MaddenTeamPlaybookEditor.User_Controls"
+    xmlns:User_Controls="clr-namespace:MaddenTeamPlaybookEditor.User_Controls"
     xmlns:TeamPlaybookViewModels="clr-namespace:MaddenTeamPlaybookEditor.ViewModels"
     xmlns:CustomPlaybookViewModels="clr-namespace:MaddenCustomPlaybookEditor.ViewModels"
     xmlns:local="clr-namespace:MaddenTeamPlaybookEditor"
@@ -27,7 +28,7 @@
     </Window.CommandBindings>
     <Window.Resources>
         <SolidColorBrush x:Key="AccentBrush" Color="{DynamicResource Accent}" Opacity="1"/>
-        <SolidColorBrush x:Key="PrimaryBrush"  Color="{DynamicResource Primary}" Opacity="1"/>
+        <SolidColorBrush x:Key="PrimaryBrush" Color="{DynamicResource Primary}" Opacity="1"/>
         <SolidColorBrush x:Key="SecondaryBrush" Color="{DynamicResource Secondary}" />
         <SolidColorBrush x:Key="TertiaryBrush" Color="{DynamicResource Tertiary}" Opacity="1"/>
         <SolidColorBrush x:Key="QuaternaryBrush" Color="{DynamicResource Quaternary}" />
@@ -493,7 +494,6 @@
                                 </Style>
                             </TreeView.ItemContainerStyle>
                         </TreeView>-->
-
                         
                         <ListView x:Name="lvwPlaysBySituation" Grid.Column="1"
                             Margin="5,1"
@@ -2454,207 +2454,9 @@
                 </TabItem>-->
 
                 <TabItem Header="Tables">
-                        
-                    <TabControl 
-                        x:Name="tclTables">
 
-                        <TabItem Header="ARTL">
-                            <UserControls:FilterableTable Data="{Binding ARTL, Mode=TwoWay}"/>
-                        </TabItem>
-
-                        <TabItem Header="FORM">
-                            <UserControls:FilterableTable Data="{Binding FORM, Mode=TwoWay}"/>
-                        </TabItem>
-
-                        <TabItem Header="PBFM">
-                            <UserControls:FilterableTable Data="{Binding PBFM, Mode=TwoWay}"/>
-                        </TabItem>
-
-                        <TabItem Header="PBST">
-                            <UserControls:FilterableTable Data="{Binding PBST, Mode=TwoWay}"/>
-                        </TabItem>
-
-                        <!--<TabItem Header="PBAI">
-                            <UserControls:FilterableTable x:Name="uclPBAITable" Data="{Binding PBAI, Mode=TwoWay}"/>
-                        </TabItem>-->
-
-                        <TabItem Header="PBAU">
-                            <UserControls:FilterableTable Data="{Binding PBAU, Mode=TwoWay}"/>
-                        </TabItem>
-
-                        <TabItem Header="PBCC">
-                            <UserControls:FilterableTable Data="{Binding PBCC, Mode=TwoWay}"/>
-                        </TabItem>
-
-                        <TabItem Header="PBPL">
-                            <UserControls:FilterableTable Data="{Binding PBPL, Mode=TwoWay}"/>
-                        </TabItem>
-
-                        <TabItem Header="PLCM">
-                            <UserControls:FilterableTable Data="{Binding PLCM, Mode=TwoWay}"/>
-                        </TabItem>
-
-                        <TabItem Header="PLPD">
-                            <UserControls:FilterableTable Data="{Binding PLPD, Mode=TwoWay}"/>
-                        </TabItem>
-
-                        <TabItem Header="PLRD">
-                            <UserControls:FilterableTable Data="{Binding PLRD, Mode=TwoWay}"/>
-                        </TabItem>
-
-                        <TabItem Header="PLYL">
-                            <UserControls:FilterableTable Data="{Binding PLYL, Mode=TwoWay}"/>
-                        </TabItem>
-
-                        <TabItem Header="PLYS">
-                            <UserControls:FilterableTable Data="{Binding PLYS, Mode=TwoWay}"/>
-                        </TabItem>
-
-                        <TabItem Header="PPCT">
-                            <UserControls:FilterableTable Data="{Binding PPCT, Mode=TwoWay}"/>
-                        </TabItem>
-
-                        <TabItem Header="PSAL">
-                            <UserControls:FilterableTable x:Name="uclPSALTable" Data="{Binding PSAL, Mode=TwoWay}"/>
-                        </TabItem>
-                            
-                        <TabItem Header="SDEF">
-                            <UserControls:FilterableTable Data="{Binding SDEF, Mode=TwoWay}"/>
-                        </TabItem>
-
-                        <TabItem Header="SETG">
-                            <UserControls:FilterableTable Data="{Binding SETG, Mode=TwoWay}"/>
-                        </TabItem>
-
-                        <TabItem Header="SETL">
-                            <UserControls:FilterableTable Data="{Binding SETL, Mode=TwoWay}"/>
-                        </TabItem>
-
-                        <TabItem Header="SETP">
-                            <UserControls:FilterableTable Data="{Binding SETP, Mode=TwoWay}"/>
-                        </TabItem>
-
-                        <TabItem Header="SGFM">
-                            <UserControls:FilterableTable Data="{Binding SGFM, Mode=TwoWay}"/>
-                        </TabItem>
-                            
-                        <TabItem Header="SPKF">
-                            <UserControls:FilterableTable Data="{Binding SPKF, Mode=TwoWay}"/>
-                        </TabItem>
-
-                        <TabItem Header="SPKG">
-                            <UserControls:FilterableTable Data="{Binding SPKG, Mode=TwoWay}"/>
-                        </TabItem>
-
-                        <TabItem Header="SRFT">
-                            <UserControls:FilterableTable Data="{Binding SRFT, Mode=TwoWay}"/>
-                        </TabItem>
-
-                    </TabControl>
-                        
-                </TabItem>
-
-            </TabControl>
-
-            <TabControl x:Name="tclCustomPlaybook"
-                        Width="600" 
-                        Visibility="Hidden"
-                        Grid.Row="0">
-
-                <TabItem Header="ARTO">
-                    <UserControls:FilterableTable Data="{Binding ARTO, Mode=TwoWay}"/>
-                </TabItem>
-
-                <TabItem Header="ARTD">
-                    <UserControls:FilterableTable Data="{Binding ARTD, Mode=TwoWay}"/>
-                </TabItem>
-
-                <TabItem Header="CPFM">
-                    <UserControls:FilterableTable Data="{Binding CPFM, Mode=TwoWay}"/>
-                </TabItem>
-
-                <TabItem Header="PBFI">
-                    <UserControls:FilterableTable Data="{Binding PBFI, Mode=TwoWay}"/>
-                </TabItem>
-
-                <TabItem Header="PBFM">
-                    <UserControls:FilterableTable Data="{Binding PBFM, Mode=TwoWay}"/>
-                </TabItem>
-
-                <TabItem Header="PBPL">
-                    <UserControls:FilterableTable Data="{Binding PBPL, Mode=TwoWay}"/>
-                </TabItem>
-
-                <TabItem Header="PBPN">
-                    <UserControls:FilterableTable Data="{Binding PBPN, Mode=TwoWay}"/>
-                </TabItem>
-
-                <TabItem Header="PIDX">
-                    <UserControls:FilterableTable Data="{Binding PIDX, Mode=TwoWay}"/>
-                </TabItem>
-
-                <TabItem Header="PLCM">
-                    <UserControls:FilterableTable Data="{Binding PLCM, Mode=TwoWay}"/>
-                </TabItem>
-
-                <TabItem Header="PLPD">
-                    <UserControls:FilterableTable Data="{Binding PLPD, Mode=TwoWay}"/>
-                </TabItem>
-
-                <TabItem Header="PLRD">
-                    <UserControls:FilterableTable Data="{Binding PLRD, Mode=TwoWay}"/>
-                </TabItem>
-
-                <TabItem Header="PLYS">
-                    <UserControls:FilterableTable Data="{Binding PLYS, Mode=TwoWay}"/>
-                </TabItem>
-
-                <TabItem Header="PPCT">
-                    <UserControls:FilterableTable Data="{Binding PPCT, Mode=TwoWay}"/>
-                </TabItem>
-
-                <TabItem Header="PSLO">
-                    <UserControls:FilterableTable Data="{Binding PSLO, Mode=TwoWay}"/>
-                </TabItem>
-
-                <TabItem Header="PSLD">
-                    <UserControls:FilterableTable Data="{Binding PSLD, Mode=TwoWay}"/>
-                </TabItem>
-
-                <TabItem Header="SDEF">
-                    <UserControls:FilterableTable Data="{Binding SDEF, Mode=TwoWay}"/>
-                </TabItem>
-
-                <TabItem Header="SETG">
-                    <UserControls:FilterableTable Data="{Binding SETG, Mode=TwoWay}"/>
-                </TabItem>
-
-                <TabItem Header="SETL">
-                    <UserControls:FilterableTable Data="{Binding SETL, Mode=TwoWay}"/>
-                </TabItem>
-
-                <TabItem Header="SETP">
-                    <UserControls:FilterableTable Data="{Binding SETP, Mode=TwoWay}"/>
-                </TabItem>
-
-                <TabItem Header="SGFF">
-                    <UserControls:FilterableTable Data="{Binding SGFF, Mode=TwoWay}"/>
-                </TabItem>
-
-                <TabItem Header="SPKF">
-                    <UserControls:FilterableTable Data="{Binding SPKF, Mode=TwoWay}"/>
-                </TabItem>
-
-                <TabItem Header="SPKG">
-                    <UserControls:FilterableTable Data="{Binding SPKG, Mode=TwoWay}"/>
-                </TabItem>
-
-                <TabItem Header="SRFT">
-                    <UserControls:FilterableTable Data="{Binding SRFT, Mode=TwoWay}"/>
-                </TabItem>
-
-                <TabItem Header="STID">
-                    <UserControls:FilterableTable Data="{Binding STID, Mode=TwoWay}"/>
+                    <UserControls:TeamPlaybookTables x:Name="tclTables"/>
+                    
                 </TabItem>
 
             </TabControl>
